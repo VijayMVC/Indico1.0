@@ -1,0 +1,2867 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="IndicoModel1StoreContainer" CdmEntityContainer="IndicoEntities1">
+    <EntitySetMapping Name="Accessories">
+      <EntityTypeMapping TypeName="IndicoModel1.Accessory">
+        <MappingFragment StoreEntitySet="Accessory">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="AccessoryCategory" ColumnName="AccessoryCategory" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="SuppCode" ColumnName="SuppCode" />
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="Supplier" ColumnName="Supplier" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AccessoryCategories">
+      <EntityTypeMapping TypeName="IndicoModel1.AccessoryCategory">
+        <MappingFragment StoreEntitySet="AccessoryCategory">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AccessoryColors">
+      <EntityTypeMapping TypeName="IndicoModel1.AccessoryColor">
+        <MappingFragment StoreEntitySet="AccessoryColor">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="ColorValue" ColumnName="ColorValue" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AcquiredVisulaLayoutNames">
+      <EntityTypeMapping TypeName="IndicoModel1.AcquiredVisulaLayoutName">
+        <MappingFragment StoreEntitySet="AcquiredVisulaLayoutName">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AgeGroups">
+      <EntityTypeMapping TypeName="IndicoModel1.AgeGroup">
+        <MappingFragment StoreEntitySet="AgeGroup">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ArtWorks">
+      <EntityTypeMapping TypeName="IndicoModel1.ArtWork">
+        <MappingFragment StoreEntitySet="ArtWork">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ReferenceNo" ColumnName="ReferenceNo" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="FabricCode" ColumnName="FabricCode" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+          <ScalarProperty Name="NNPFilePath" ColumnName="NNPFilePath" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ResolutionProfile" ColumnName="ResolutionProfile" />
+          <ScalarProperty Name="PocketType" ColumnName="PocketType" />
+          <ScalarProperty Name="IsConvertedToVL" ColumnName="IsConvertedToVL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ArtWorktAccessories">
+      <EntityTypeMapping TypeName="IndicoModel1.ArtWorktAccessory">
+        <MappingFragment StoreEntitySet="ArtWorktAccessory">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ArtWork" ColumnName="ArtWork" />
+          <ScalarProperty Name="Accessory" ColumnName="Accessory" />
+          <ScalarProperty Name="AccessoryColor" ColumnName="AccessoryColor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AutoOrderNumbers">
+      <EntityTypeMapping TypeName="IndicoModel1.AutoOrderNumber">
+        <MappingFragment StoreEntitySet="AutoOrderNumber">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Banks">
+      <EntityTypeMapping TypeName="IndicoModel1.Bank">
+        <MappingFragment StoreEntitySet="Bank">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Branch" ColumnName="Branch" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Postcode" ColumnName="Postcode" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
+          <ScalarProperty Name="SwiftCode" ColumnName="SwiftCode" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cartons">
+      <EntityTypeMapping TypeName="IndicoModel1.Carton">
+        <MappingFragment StoreEntitySet="Carton">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categories">
+      <EntityTypeMapping TypeName="IndicoModel1.Category">
+        <MappingFragment StoreEntitySet="Category">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clients">
+      <EntityTypeMapping TypeName="IndicoModel1.Client">
+        <MappingFragment StoreEntitySet="Client">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="FOCPenalty" ColumnName="FOCPenalty" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ClientTypes">
+      <EntityTypeMapping TypeName="IndicoModel1.ClientType">
+        <MappingFragment StoreEntitySet="ClientType">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ColourProfiles">
+      <EntityTypeMapping TypeName="IndicoModel1.ColourProfile">
+        <MappingFragment StoreEntitySet="ColourProfile">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Companies">
+      <EntityTypeMapping TypeName="IndicoModel1.Company">
+        <MappingFragment StoreEntitySet="Company">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="IsDistributor" ColumnName="IsDistributor" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Address1" ColumnName="Address1" />
+          <ScalarProperty Name="Address2" ColumnName="Address2" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Postcode" ColumnName="Postcode" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Phone1" ColumnName="Phone1" />
+          <ScalarProperty Name="Phone2" ColumnName="Phone2" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="NickName" ColumnName="NickName" />
+          <ScalarProperty Name="Coordinator" ColumnName="Coordinator" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="SecondaryCoordinator" ColumnName="SecondaryCoordinator" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="IsBackOrder" ColumnName="IsBackOrder" />
+          <ScalarProperty Name="IsEnableBackOrderReporting" ColumnName="IsEnableBackOrderReporting" />
+          <ScalarProperty Name="DistributorType" ColumnName="DistributorType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CompanyTypes">
+      <EntityTypeMapping TypeName="IndicoModel1.CompanyType">
+        <MappingFragment StoreEntitySet="CompanyType">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CoordinatorEmailAddresses">
+      <EntityTypeMapping TypeName="IndicoModel1.CoordinatorEmailAddress">
+        <MappingFragment StoreEntitySet="CoordinatorEmailAddress">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="User" ColumnName="User" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CostSheets">
+      <EntityTypeMapping TypeName="IndicoModel1.CostSheet">
+        <MappingFragment StoreEntitySet="CostSheet">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="Fabric" ColumnName="Fabric" />
+          <ScalarProperty Name="TotalFabricCost" ColumnName="TotalFabricCost" />
+          <ScalarProperty Name="TotalAccessoriesCost" ColumnName="TotalAccessoriesCost" />
+          <ScalarProperty Name="HPCost" ColumnName="HPCost" />
+          <ScalarProperty Name="LabelCost" ColumnName="LabelCost" />
+          <ScalarProperty Name="Other" ColumnName="Other" />
+          <ScalarProperty Name="Finance" ColumnName="Finance" />
+          <ScalarProperty Name="Wastage" ColumnName="Wastage" />
+          <ScalarProperty Name="FOBExp" ColumnName="FOBExp" />
+          <ScalarProperty Name="CM" ColumnName="CM" />
+          <ScalarProperty Name="JKFOBCost" ColumnName="JKFOBCost" />
+          <ScalarProperty Name="QuotedFOBCost" ColumnName="QuotedFOBCost" />
+          <ScalarProperty Name="Roundup" ColumnName="Roundup" />
+          <ScalarProperty Name="SMVRate" ColumnName="SMVRate" />
+          <ScalarProperty Name="CalculateCM" ColumnName="CalculateCM" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="SubWastage" ColumnName="SubWastage" />
+          <ScalarProperty Name="SubFinance" ColumnName="SubFinance" />
+          <ScalarProperty Name="SubCons" ColumnName="SubCons" />
+          <ScalarProperty Name="DutyRate" ColumnName="DutyRate" />
+          <ScalarProperty Name="CF1" ColumnName="CF1" />
+          <ScalarProperty Name="CF2" ColumnName="CF2" />
+          <ScalarProperty Name="CF3" ColumnName="CF3" />
+          <ScalarProperty Name="CONS1" ColumnName="CONS1" />
+          <ScalarProperty Name="CONS2" ColumnName="CONS2" />
+          <ScalarProperty Name="CONS3" ColumnName="CONS3" />
+          <ScalarProperty Name="InkCons" ColumnName="InkCons" />
+          <ScalarProperty Name="PaperCons" ColumnName="PaperCons" />
+          <ScalarProperty Name="Rate1" ColumnName="Rate1" />
+          <ScalarProperty Name="Rate2" ColumnName="Rate2" />
+          <ScalarProperty Name="Rate3" ColumnName="Rate3" />
+          <ScalarProperty Name="InkRate" ColumnName="InkRate" />
+          <ScalarProperty Name="PaperRate" ColumnName="PaperRate" />
+          <ScalarProperty Name="MarginRate" ColumnName="MarginRate" />
+          <ScalarProperty Name="FOBAUD" ColumnName="FOBAUD" />
+          <ScalarProperty Name="Duty" ColumnName="Duty" />
+          <ScalarProperty Name="Cost1" ColumnName="Cost1" />
+          <ScalarProperty Name="Cost2" ColumnName="Cost2" />
+          <ScalarProperty Name="Cost3" ColumnName="Cost3" />
+          <ScalarProperty Name="InkCost" ColumnName="InkCost" />
+          <ScalarProperty Name="PaperCost" ColumnName="PaperCost" />
+          <ScalarProperty Name="MGTOH" ColumnName="MGTOH" />
+          <ScalarProperty Name="IndicoOH" ColumnName="IndicoOH" />
+          <ScalarProperty Name="Depr" ColumnName="Depr" />
+          <ScalarProperty Name="Landed" ColumnName="Landed" />
+          <ScalarProperty Name="IndimanCIF" ColumnName="IndimanCIF" />
+          <ScalarProperty Name="QuotedCIF" ColumnName="QuotedCIF" />
+          <ScalarProperty Name="FobFactor" ColumnName="FobFactor" />
+          <ScalarProperty Name="IndimanFOB" ColumnName="IndimanFOB" />
+          <ScalarProperty Name="CalMGN" ColumnName="CalMGN" />
+          <ScalarProperty Name="ActMgn" ColumnName="ActMgn" />
+          <ScalarProperty Name="MP" ColumnName="MP" />
+          <ScalarProperty Name="QuotedMP" ColumnName="QuotedMP" />
+          <ScalarProperty Name="ExchangeRate" ColumnName="ExchangeRate" />
+          <ScalarProperty Name="AirFregiht" ColumnName="AirFregiht" />
+          <ScalarProperty Name="ImpCharges" ColumnName="ImpCharges" />
+          <ScalarProperty Name="IndimanModifier" ColumnName="IndimanModifier" />
+          <ScalarProperty Name="IndimanModifiedDate" ColumnName="IndimanModifiedDate" />
+          <ScalarProperty Name="ShowToIndico" ColumnName="ShowToIndico" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CostSheetRemarks">
+      <EntityTypeMapping TypeName="IndicoModel1.CostSheetRemark">
+        <MappingFragment StoreEntitySet="CostSheetRemarks">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CostSheet" ColumnName="CostSheet" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Countries">
+      <EntityTypeMapping TypeName="IndicoModel1.Country">
+        <MappingFragment StoreEntitySet="Country">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Iso2" ColumnName="Iso2" />
+          <ScalarProperty Name="Iso3" ColumnName="Iso3" />
+          <ScalarProperty Name="IsoCountryNumber" ColumnName="IsoCountryNumber" />
+          <ScalarProperty Name="DialingPrefix" ColumnName="DialingPrefix" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+          <ScalarProperty Name="HasLocationData" ColumnName="HasLocationData" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Currencies">
+      <EntityTypeMapping TypeName="IndicoModel1.Currency">
+        <MappingFragment StoreEntitySet="Currency">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Symbol" ColumnName="Symbol" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DefaultValuesPriceLists">
+      <EntityTypeMapping TypeName="IndicoModel1.DefaultValuesPriceList">
+        <MappingFragment StoreEntitySet="DefaultValuesPriceList">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CreativeDesign" ColumnName="CreativeDesign" />
+          <ScalarProperty Name="StudioDesign" ColumnName="StudioDesign" />
+          <ScalarProperty Name="ThirdPartyDesign" ColumnName="ThirdPartyDesign" />
+          <ScalarProperty Name="Position1" ColumnName="Position1" />
+          <ScalarProperty Name="Position2" ColumnName="Position2" />
+          <ScalarProperty Name="Position3" ColumnName="Position3" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DeliveryMethods">
+      <EntityTypeMapping TypeName="IndicoModel1.DeliveryMethod">
+        <MappingFragment StoreEntitySet="DeliveryMethod">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DeliveryOptions">
+      <EntityTypeMapping TypeName="IndicoModel1.DeliveryOption">
+        <MappingFragment StoreEntitySet="DeliveryOption">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DesignTypes">
+      <EntityTypeMapping TypeName="IndicoModel1.DesignType">
+        <MappingFragment StoreEntitySet="DesignType">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DestinationPorts">
+      <EntityTypeMapping TypeName="IndicoModel1.DestinationPort">
+        <MappingFragment StoreEntitySet="DestinationPort">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DistributorClientAddresses">
+      <EntityTypeMapping TypeName="IndicoModel1.DistributorClientAddress">
+        <MappingFragment StoreEntitySet="DistributorClientAddress">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Suburb" ColumnName="Suburb" />
+          <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+          <ScalarProperty Name="ContactPhone" ColumnName="ContactPhone" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Port" ColumnName="Port" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="AddressType" ColumnName="AddressType" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+          <ScalarProperty Name="IsAdelaideWarehouse" ColumnName="IsAdelaideWarehouse" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DistributorEmailAddresses">
+      <EntityTypeMapping TypeName="IndicoModel1.DistributorEmailAddress">
+        <MappingFragment StoreEntitySet="DistributorEmailAddress">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DistributorPriceLevelCosts">
+      <EntityTypeMapping TypeName="IndicoModel1.DistributorPriceLevelCost">
+        <MappingFragment StoreEntitySet="DistributorPriceLevelCost">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="PriceTerm" ColumnName="PriceTerm" />
+          <ScalarProperty Name="PriceLevelCost" ColumnName="PriceLevelCost" />
+          <ScalarProperty Name="IndicoCost" ColumnName="IndicoCost" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DistributorPriceLevelCostHistories">
+      <EntityTypeMapping TypeName="IndicoModel1.DistributorPriceLevelCostHistory">
+        <MappingFragment StoreEntitySet="DistributorPriceLevelCostHistory">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="PriceTerm" ColumnName="PriceTerm" />
+          <ScalarProperty Name="PriceLevelCost" ColumnName="PriceLevelCost" />
+          <ScalarProperty Name="IndicoCost" ColumnName="IndicoCost" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DistributorPriceMarkups">
+      <EntityTypeMapping TypeName="IndicoModel1.DistributorPriceMarkup">
+        <MappingFragment StoreEntitySet="DistributorPriceMarkup">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="PriceLevel" ColumnName="PriceLevel" />
+          <ScalarProperty Name="Markup" ColumnName="Markup" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DistributorSendMailCounts">
+      <EntityTypeMapping TypeName="IndicoModel1.DistributorSendMailCount">
+        <MappingFragment StoreEntitySet="DistributorSendMailCount">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="WeeklyProductionCapacity" ColumnName="WeeklyProductionCapacity" />
+          <ScalarProperty Name="Count" ColumnName="Count" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DistributorTypes">
+      <EntityTypeMapping TypeName="IndicoModel1.DistributorType">
+        <MappingFragment StoreEntitySet="DistributorType">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmailLogoes">
+      <EntityTypeMapping TypeName="IndicoModel1.EmailLogo">
+        <MappingFragment StoreEntitySet="EmailLogo">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="EmailLogoPath" ColumnName="EmailLogoPath" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Embroideries">
+      <EntityTypeMapping TypeName="IndicoModel1.Embroidery">
+        <MappingFragment StoreEntitySet="Embroidery">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="EmbStrikeOffDate" ColumnName="EmbStrikeOffDate" />
+          <ScalarProperty Name="JobName" ColumnName="JobName" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+          <ScalarProperty Name="Coordinator" ColumnName="Coordinator" />
+          <ScalarProperty Name="Product" ColumnName="Product" />
+          <ScalarProperty Name="PhotoRequiredBy" ColumnName="PhotoRequiredBy" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="Assigned" ColumnName="Assigned" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmbroideryDetails">
+      <EntityTypeMapping TypeName="IndicoModel1.EmbroideryDetail">
+        <MappingFragment StoreEntitySet="EmbroideryDetails">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="FabricColor" ColumnName="FabricColor" />
+          <ScalarProperty Name="FabricType" ColumnName="FabricType" />
+          <ScalarProperty Name="Width" ColumnName="Width" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="Embroidery" ColumnName="Embroidery" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmbroideryImages">
+      <EntityTypeMapping TypeName="IndicoModel1.EmbroideryImage">
+        <MappingFragment StoreEntitySet="EmbroideryImage">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="EmbroideryDetails" ColumnName="EmbroideryDetails" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="Filename" ColumnName="Filename" />
+          <ScalarProperty Name="Extension" ColumnName="Extension" />
+          <ScalarProperty Name="IsRequested" ColumnName="IsRequested" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmbroideryStatus">
+      <EntityTypeMapping TypeName="IndicoModel1.EmbroideryStatu">
+        <MappingFragment StoreEntitySet="EmbroideryStatus">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FabricCodes">
+      <EntityTypeMapping TypeName="IndicoModel1.FabricCode">
+        <MappingFragment StoreEntitySet="FabricCode">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Material" ColumnName="Material" />
+          <ScalarProperty Name="GSM" ColumnName="GSM" />
+          <ScalarProperty Name="Supplier" ColumnName="Supplier" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="DenierCount" ColumnName="DenierCount" />
+          <ScalarProperty Name="Filaments" ColumnName="Filaments" />
+          <ScalarProperty Name="NickName" ColumnName="NickName" />
+          <ScalarProperty Name="SerialOrder" ColumnName="SerialOrder" />
+          <ScalarProperty Name="FabricPrice" ColumnName="FabricPrice" />
+          <ScalarProperty Name="LandedCurrency" ColumnName="LandedCurrency" />
+          <ScalarProperty Name="Fabricwidth" ColumnName="Fabricwidth" />
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="FabricColor" ColumnName="FabricColor" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsPure" ColumnName="IsPure" />
+          <ScalarProperty Name="IsLiningFabric" ColumnName="IsLiningFabric" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FabricCodeTypes">
+      <EntityTypeMapping TypeName="IndicoModel1.FabricCodeType">
+        <MappingFragment StoreEntitySet="FabricCodeType">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FabricTypes">
+      <EntityTypeMapping TypeName="IndicoModel1.FabricType">
+        <MappingFragment StoreEntitySet="FabricType">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FactoryOrderDetials">
+      <EntityTypeMapping TypeName="IndicoModel1.FactoryOrderDetial">
+        <MappingFragment StoreEntitySet="FactoryOrderDetial">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="OrderDetail" ColumnName="OrderDetail" />
+          <ScalarProperty Name="OrderDetailStatus" ColumnName="OrderDetailStatus" />
+          <ScalarProperty Name="CompletedQty" ColumnName="CompletedQty" />
+          <ScalarProperty Name="StartedDate" ColumnName="StartedDate" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FactoryPriceRemarks">
+      <EntityTypeMapping TypeName="IndicoModel1.FactoryPriceRemark">
+        <MappingFragment StoreEntitySet="FactoryPriceRemarks">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Genders">
+      <EntityTypeMapping TypeName="IndicoModel1.Gender">
+        <MappingFragment StoreEntitySet="Gender">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HSCodes">
+      <EntityTypeMapping TypeName="IndicoModel1.HSCode">
+        <MappingFragment StoreEntitySet="HSCode">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ItemSubCategory" ColumnName="ItemSubCategory" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Images">
+      <EntityTypeMapping TypeName="IndicoModel1.Image">
+        <MappingFragment StoreEntitySet="Image">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="VisualLayout" ColumnName="VisualLayout" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="Filename" ColumnName="Filename" />
+          <ScalarProperty Name="Extension" ColumnName="Extension" />
+          <ScalarProperty Name="IsHero" ColumnName="IsHero" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IndimanCostSheetRemarks">
+      <EntityTypeMapping TypeName="IndicoModel1.IndimanCostSheetRemark">
+        <MappingFragment StoreEntitySet="IndimanCostSheetRemarks">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CostSheet" ColumnName="CostSheet" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IndimanPriceRemarks">
+      <EntityTypeMapping TypeName="IndicoModel1.IndimanPriceRemark">
+        <MappingFragment StoreEntitySet="IndimanPriceRemarks">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Invoices">
+      <EntityTypeMapping TypeName="IndicoModel1.Invoice">
+        <MappingFragment StoreEntitySet="Invoice">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="InvoiceNo" ColumnName="InvoiceNo" />
+          <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+          <ScalarProperty Name="ShipTo" ColumnName="ShipTo" />
+          <ScalarProperty Name="AWBNo" ColumnName="AWBNo" />
+          <ScalarProperty Name="WeeklyProductionCapacity" ColumnName="WeeklyProductionCapacity" />
+          <ScalarProperty Name="IndimanInvoiceNo" ColumnName="IndimanInvoiceNo" />
+          <ScalarProperty Name="ShipmentMode" ColumnName="ShipmentMode" />
+          <ScalarProperty Name="IndimanInvoiceDate" ColumnName="IndimanInvoiceDate" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ShipmentDate" ColumnName="ShipmentDate" />
+          <ScalarProperty Name="BillTo" ColumnName="BillTo" />
+          <ScalarProperty Name="IsBillTo" ColumnName="IsBillTo" />
+          <ScalarProperty Name="Bank" ColumnName="Bank" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InvoiceOrders">
+      <EntityTypeMapping TypeName="IndicoModel1.InvoiceOrder">
+        <MappingFragment StoreEntitySet="InvoiceOrder">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Invoice" ColumnName="Invoice" />
+          <ScalarProperty Name="OrderDetail" ColumnName="OrderDetail" />
+          <ScalarProperty Name="FactoryPrice" ColumnName="FactoryPrice" />
+          <ScalarProperty Name="IndimanPrice" ColumnName="IndimanPrice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InvoiceStatus">
+      <EntityTypeMapping TypeName="IndicoModel1.InvoiceStatu">
+        <MappingFragment StoreEntitySet="InvoiceStatus">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Key" ColumnName="Key" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Items">
+      <EntityTypeMapping TypeName="IndicoModel1.Item">
+        <MappingFragment StoreEntitySet="Item">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Parent" ColumnName="Parent" />
+          <ScalarProperty Name="ItemType" ColumnName="ItemType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ItemAttributes">
+      <EntityTypeMapping TypeName="IndicoModel1.ItemAttribute">
+        <MappingFragment StoreEntitySet="ItemAttribute">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Parent" ColumnName="Parent" />
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ItemMeasurementGuideImages">
+      <EntityTypeMapping TypeName="IndicoModel1.ItemMeasurementGuideImage">
+        <MappingFragment StoreEntitySet="ItemMeasurementGuideImage">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="Filename" ColumnName="Filename" />
+          <ScalarProperty Name="Extension" ColumnName="Extension" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ItemTypes">
+      <EntityTypeMapping TypeName="IndicoModel1.ItemType">
+        <MappingFragment StoreEntitySet="ItemType">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobNames">
+      <EntityTypeMapping TypeName="IndicoModel1.JobName">
+        <MappingFragment StoreEntitySet="JobName">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobTitles">
+      <EntityTypeMapping TypeName="IndicoModel1.JobTitle">
+        <MappingFragment StoreEntitySet="JobTitle">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Keywords">
+      <EntityTypeMapping TypeName="IndicoModel1.Keyword">
+        <MappingFragment StoreEntitySet="Keyword">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Labels">
+      <EntityTypeMapping TypeName="IndicoModel1.Label">
+        <MappingFragment StoreEntitySet="Label">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="LabelImagePath" ColumnName="LabelImagePath" />
+          <ScalarProperty Name="IsSample" ColumnName="IsSample" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LabelPriceLevelCosts">
+      <EntityTypeMapping TypeName="IndicoModel1.LabelPriceLevelCost">
+        <MappingFragment StoreEntitySet="LabelPriceLevelCost">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Label" ColumnName="Label" />
+          <ScalarProperty Name="PriceTerm" ColumnName="PriceTerm" />
+          <ScalarProperty Name="PriceLevelCost" ColumnName="PriceLevelCost" />
+          <ScalarProperty Name="IndicoCost" ColumnName="IndicoCost" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LabelPriceListDownloads">
+      <EntityTypeMapping TypeName="IndicoModel1.LabelPriceListDownload">
+        <MappingFragment StoreEntitySet="LabelPriceListDownloads">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Label" ColumnName="Label" />
+          <ScalarProperty Name="PriceTerm" ColumnName="PriceTerm" />
+          <ScalarProperty Name="EditedPrice" ColumnName="EditedPrice" />
+          <ScalarProperty Name="CreativeDesign" ColumnName="CreativeDesign" />
+          <ScalarProperty Name="StudioDesign" ColumnName="StudioDesign" />
+          <ScalarProperty Name="ThirdPartyDesign" ColumnName="ThirdPartyDesign" />
+          <ScalarProperty Name="Position1" ColumnName="Position1" />
+          <ScalarProperty Name="Position2" ColumnName="Position2" />
+          <ScalarProperty Name="Position3" ColumnName="Position3" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LabelPriceMarkups">
+      <EntityTypeMapping TypeName="IndicoModel1.LabelPriceMarkup">
+        <MappingFragment StoreEntitySet="LabelPriceMarkup">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Label" ColumnName="Label" />
+          <ScalarProperty Name="PriceLevel" ColumnName="PriceLevel" />
+          <ScalarProperty Name="Markup" ColumnName="Markup" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MeasurementLocations">
+      <EntityTypeMapping TypeName="IndicoModel1.MeasurementLocation">
+        <MappingFragment StoreEntitySet="MeasurementLocation">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="Key" ColumnName="Key" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IsSend" ColumnName="IsSend" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MenuItems">
+      <EntityTypeMapping TypeName="IndicoModel1.MenuItem">
+        <MappingFragment StoreEntitySet="MenuItem">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Page" ColumnName="Page" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Parent" ColumnName="Parent" />
+          <ScalarProperty Name="Position" ColumnName="Position" />
+          <ScalarProperty Name="IsVisible" ColumnName="IsVisible" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MYOBCardFiles">
+      <EntityTypeMapping TypeName="IndicoModel1.MYOBCardFile">
+        <MappingFragment StoreEntitySet="MYOBCardFile">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NickNames">
+      <EntityTypeMapping TypeName="IndicoModel1.NickName">
+        <MappingFragment StoreEntitySet="NickName">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="IndicoModel1.Order">
+        <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="OrderSubmittedDate" ColumnName="OrderSubmittedDate" />
+          <ScalarProperty Name="EstimatedCompletionDate" ColumnName="EstimatedCompletionDate" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="ShipmentDate" ColumnName="ShipmentDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+          <ScalarProperty Name="OrderUsage" ColumnName="OrderUsage" />
+          <ScalarProperty Name="PurchaseOrderNo" ColumnName="PurchaseOrderNo" />
+          <ScalarProperty Name="Converted" ColumnName="Converted" />
+          <ScalarProperty Name="OldPONo" ColumnName="OldPONo" />
+          <ScalarProperty Name="Invoice" ColumnName="Invoice" />
+          <ScalarProperty Name="IsTemporary" ColumnName="IsTemporary" />
+          <ScalarProperty Name="ShipmentMode" ColumnName="ShipmentMode" />
+          <ScalarProperty Name="ShipTo" ColumnName="ShipTo" />
+          <ScalarProperty Name="DespatchTo" ColumnName="DespatchTo" />
+          <ScalarProperty Name="IsWeeklyShipment" ColumnName="IsWeeklyShipment" />
+          <ScalarProperty Name="IsCourierDelivery" ColumnName="IsCourierDelivery" />
+          <ScalarProperty Name="IsAdelaideWareHouse" ColumnName="IsAdelaideWareHouse" />
+          <ScalarProperty Name="IsMentionAddress" ColumnName="IsMentionAddress" />
+          <ScalarProperty Name="IsFollowingAddress" ColumnName="IsFollowingAddress" />
+          <ScalarProperty Name="Reservation" ColumnName="Reservation" />
+          <ScalarProperty Name="IsShipToDistributor" ColumnName="IsShipToDistributor" />
+          <ScalarProperty Name="IsShipExistingDistributor" ColumnName="IsShipExistingDistributor" />
+          <ScalarProperty Name="IsShipNewClient" ColumnName="IsShipNewClient" />
+          <ScalarProperty Name="IsDespatchDistributor" ColumnName="IsDespatchDistributor" />
+          <ScalarProperty Name="IsDespatchExistingDistributor" ColumnName="IsDespatchExistingDistributor" />
+          <ScalarProperty Name="IsDespatchNewClient" ColumnName="IsDespatchNewClient" />
+          <ScalarProperty Name="DeliveryOption" ColumnName="DeliveryOption" />
+          <ScalarProperty Name="IsDateNegotiable" ColumnName="IsDateNegotiable" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="IsAcceptedTermsAndConditions" ColumnName="IsAcceptedTermsAndConditions" />
+          <ScalarProperty Name="AddressType" ColumnName="AddressType" />
+          <ScalarProperty Name="MYOBCardFile" ColumnName="MYOBCardFile" />
+          <ScalarProperty Name="DeliveryCharges" ColumnName="DeliveryCharges" />
+          <ScalarProperty Name="ArtWorkCharges" ColumnName="ArtWorkCharges" />
+          <ScalarProperty Name="OtherCharges" ColumnName="OtherCharges" />
+          <ScalarProperty Name="OtherChargesDescription" ColumnName="OtherChargesDescription" />
+          <ScalarProperty Name="IsOtherDelivery" ColumnName="IsOtherDelivery" />
+          <ScalarProperty Name="OtherDeliveryDescription" ColumnName="OtherDeliveryDescription" />
+          <ScalarProperty Name="BillingAddress" ColumnName="BillingAddress" />
+          <ScalarProperty Name="DespatchToAddress" ColumnName="DespatchToAddress" />
+          <ScalarProperty Name="IsGSTExcluded" ColumnName="IsGSTExcluded" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderDetails">
+      <EntityTypeMapping TypeName="IndicoModel1.OrderDetail">
+        <MappingFragment StoreEntitySet="OrderDetail">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+          <ScalarProperty Name="VisualLayout" ColumnName="VisualLayout" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="FabricCode" ColumnName="FabricCode" />
+          <ScalarProperty Name="VisualLayoutNotes" ColumnName="VisualLayoutNotes" />
+          <ScalarProperty Name="NameAndNumbersFilePath" ColumnName="NameAndNumbersFilePath" />
+          <ScalarProperty Name="Order" ColumnName="Order" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ShipmentDate" ColumnName="ShipmentDate" />
+          <ScalarProperty Name="SheduledDate" ColumnName="SheduledDate" />
+          <ScalarProperty Name="IsRepeat" ColumnName="IsRepeat" />
+          <ScalarProperty Name="RequestedDate" ColumnName="RequestedDate" />
+          <ScalarProperty Name="EditedPrice" ColumnName="EditedPrice" />
+          <ScalarProperty Name="EditedPriceRemarks" ColumnName="EditedPriceRemarks" />
+          <ScalarProperty Name="Reservation" ColumnName="Reservation" />
+          <ScalarProperty Name="PhotoApprovalReq" ColumnName="PhotoApprovalReq" />
+          <ScalarProperty Name="IsRequiredNamesNumbers" ColumnName="IsRequiredNamesNumbers" />
+          <ScalarProperty Name="IsBrandingKit" ColumnName="IsBrandingKit" />
+          <ScalarProperty Name="IsLockerPatch" ColumnName="IsLockerPatch" />
+          <ScalarProperty Name="ArtWork" ColumnName="ArtWork" />
+          <ScalarProperty Name="Label" ColumnName="Label" />
+          <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+          <ScalarProperty Name="ShipmentMode" ColumnName="ShipmentMode" />
+          <ScalarProperty Name="IsWeeklyShipment" ColumnName="IsWeeklyShipment" />
+          <ScalarProperty Name="IsCourierDelivery" ColumnName="IsCourierDelivery" />
+          <ScalarProperty Name="DespatchTo" ColumnName="DespatchTo" />
+          <ScalarProperty Name="PromoCode" ColumnName="PromoCode" />
+          <ScalarProperty Name="FactoryInstructions" ColumnName="FactoryInstructions" />
+          <ScalarProperty Name="Surcharge" ColumnName="Surcharge" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderDetailQties">
+      <EntityTypeMapping TypeName="IndicoModel1.OrderDetailQty">
+        <MappingFragment StoreEntitySet="OrderDetailQty">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="OrderDetail" ColumnName="OrderDetail" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderDetailStatus">
+      <EntityTypeMapping TypeName="IndicoModel1.OrderDetailStatu">
+        <MappingFragment StoreEntitySet="OrderDetailStatus">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="Priority" ColumnName="Priority" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderStatus">
+      <EntityTypeMapping TypeName="IndicoModel1.OrderStatu">
+        <MappingFragment StoreEntitySet="OrderStatus">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderTypes">
+      <EntityTypeMapping TypeName="IndicoModel1.OrderType">
+        <MappingFragment StoreEntitySet="OrderType">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PackingLists">
+      <EntityTypeMapping TypeName="IndicoModel1.PackingList">
+        <MappingFragment StoreEntitySet="PackingList">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CartonNo" ColumnName="CartonNo" />
+          <ScalarProperty Name="WeeklyProductionCapacity" ColumnName="WeeklyProductionCapacity" />
+          <ScalarProperty Name="OrderDetail" ColumnName="OrderDetail" />
+          <ScalarProperty Name="PackingQty" ColumnName="PackingQty" />
+          <ScalarProperty Name="Carton" ColumnName="Carton" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PackingListCartonItems">
+      <EntityTypeMapping TypeName="IndicoModel1.PackingListCartonItem">
+        <MappingFragment StoreEntitySet="PackingListCartonItem">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PackingList" ColumnName="PackingList" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="Count" ColumnName="Count" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PackingListSizeQties">
+      <EntityTypeMapping TypeName="IndicoModel1.PackingListSizeQty">
+        <MappingFragment StoreEntitySet="PackingListSizeQty">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PackingList" ColumnName="PackingList" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pages">
+      <EntityTypeMapping TypeName="IndicoModel1.Page">
+        <MappingFragment StoreEntitySet="Page">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Heading" ColumnName="Heading" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Patterns">
+      <EntityTypeMapping TypeName="IndicoModel1.Pattern">
+        <MappingFragment StoreEntitySet="Pattern">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="SubItem" ColumnName="SubItem" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="AgeGroup" ColumnName="AgeGroup" />
+          <ScalarProperty Name="SizeSet" ColumnName="SizeSet" />
+          <ScalarProperty Name="CoreCategory" ColumnName="CoreCategory" />
+          <ScalarProperty Name="PrinterType" ColumnName="PrinterType" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="OriginRef" ColumnName="OriginRef" />
+          <ScalarProperty Name="NickName" ColumnName="NickName" />
+          <ScalarProperty Name="Keywords" ColumnName="Keywords" />
+          <ScalarProperty Name="CorePattern" ColumnName="CorePattern" />
+          <ScalarProperty Name="FactoryDescription" ColumnName="FactoryDescription" />
+          <ScalarProperty Name="Consumption" ColumnName="Consumption" />
+          <ScalarProperty Name="ConvertionFactor" ColumnName="ConvertionFactor" />
+          <ScalarProperty Name="SpecialAttributes" ColumnName="SpecialAttributes" />
+          <ScalarProperty Name="PatternNotes" ColumnName="PatternNotes" />
+          <ScalarProperty Name="PriceRemarks" ColumnName="PriceRemarks" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="IsTemplate" ColumnName="IsTemplate" />
+          <ScalarProperty Name="Parent" ColumnName="Parent" />
+          <ScalarProperty Name="GarmentSpecStatus" ColumnName="GarmentSpecStatus" />
+          <ScalarProperty Name="IsActiveWS" ColumnName="IsActiveWS" />
+          <ScalarProperty Name="HTSCode" ColumnName="HTSCode" />
+          <ScalarProperty Name="GUID" ColumnName="GUID" />
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="SMV" ColumnName="SMV" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="IsCoreRange" ColumnName="IsCoreRange" />
+          <ScalarProperty Name="PatternCompressionImage" ColumnName="PatternCompressionImage" />
+          <ScalarProperty Name="PatternSupplier" ColumnName="PatternSupplier" />
+          <ScalarProperty Name="ProductionLine" ColumnName="ProductionLine" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PatternAccessories">
+      <EntityTypeMapping TypeName="IndicoModel1.PatternAccessory">
+        <MappingFragment StoreEntitySet="PatternAccessory">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="Accessory" ColumnName="Accessory" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PatternCompressionImages">
+      <EntityTypeMapping TypeName="IndicoModel1.PatternCompressionImage">
+        <MappingFragment StoreEntitySet="PatternCompressionImage">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Filename" ColumnName="Filename" />
+          <ScalarProperty Name="Extension" ColumnName="Extension" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PatternHistories">
+      <EntityTypeMapping TypeName="IndicoModel1.PatternHistory">
+        <MappingFragment StoreEntitySet="PatternHistory">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="Meassage" ColumnName="Meassage" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PatternItemAttributeSubs">
+      <EntityTypeMapping TypeName="IndicoModel1.PatternItemAttributeSub">
+        <MappingFragment StoreEntitySet="PatternItemAttributeSub">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="ItemAttribute" ColumnName="ItemAttribute" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PatternSuppliers">
+      <EntityTypeMapping TypeName="IndicoModel1.PatternSupplier">
+        <MappingFragment StoreEntitySet="PatternSupplier">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address1" ColumnName="Address1" />
+          <ScalarProperty Name="Address2" ColumnName="Address2" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Postcode" ColumnName="Postcode" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="TelephoneNumber" ColumnName="TelephoneNumber" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PatternSupportAccessories">
+      <EntityTypeMapping TypeName="IndicoModel1.PatternSupportAccessory">
+        <MappingFragment StoreEntitySet="PatternSupportAccessory">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Accessory" ColumnName="Accessory" />
+          <ScalarProperty Name="AccConstant" ColumnName="AccConstant" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="CostSheet" ColumnName="CostSheet" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PatternSupportFabrics">
+      <EntityTypeMapping TypeName="IndicoModel1.PatternSupportFabric">
+        <MappingFragment StoreEntitySet="PatternSupportFabric">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Fabric" ColumnName="Fabric" />
+          <ScalarProperty Name="FabConstant" ColumnName="FabConstant" />
+          <ScalarProperty Name="CostSheet" ColumnName="CostSheet" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PatternTemplateImages">
+      <EntityTypeMapping TypeName="IndicoModel1.PatternTemplateImage">
+        <MappingFragment StoreEntitySet="PatternTemplateImage">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="Filename" ColumnName="Filename" />
+          <ScalarProperty Name="Extension" ColumnName="Extension" />
+          <ScalarProperty Name="IsHero" ColumnName="IsHero" />
+          <ScalarProperty Name="ImageOrder" ColumnName="ImageOrder" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PaymentMethods">
+      <EntityTypeMapping TypeName="IndicoModel1.PaymentMethod">
+        <MappingFragment StoreEntitySet="PaymentMethod">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PocketTypes">
+      <EntityTypeMapping TypeName="IndicoModel1.PocketType">
+        <MappingFragment StoreEntitySet="PocketType">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Key" ColumnName="Key" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Prices">
+      <EntityTypeMapping TypeName="IndicoModel1.Price">
+        <MappingFragment StoreEntitySet="Price">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="FabricCode" ColumnName="FabricCode" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="EnableForPriceList" ColumnName="EnableForPriceList" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PriceChangeEmailLists">
+      <EntityTypeMapping TypeName="IndicoModel1.PriceChangeEmailList">
+        <MappingFragment StoreEntitySet="PriceChangeEmailList">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="User" ColumnName="User" />
+          <ScalarProperty Name="IsCC" ColumnName="IsCC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PriceHistroys">
+      <EntityTypeMapping TypeName="IndicoModel1.PriceHistroy">
+        <MappingFragment StoreEntitySet="PriceHistroy">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="FabricCode" ColumnName="FabricCode" />
+          <ScalarProperty Name="PriceLevel" ColumnName="PriceLevel" />
+          <ScalarProperty Name="PriceLevelCost" ColumnName="PriceLevelCost" />
+          <ScalarProperty Name="FactoryCost" ColumnName="FactoryCost" />
+          <ScalarProperty Name="IndimanCost" ColumnName="IndimanCost" />
+          <ScalarProperty Name="ConvertionFactor" ColumnName="ConvertionFactor" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PriceLevels">
+      <EntityTypeMapping TypeName="IndicoModel1.PriceLevel">
+        <MappingFragment StoreEntitySet="PriceLevel">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Volume" ColumnName="Volume" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PriceLevelCosts">
+      <EntityTypeMapping TypeName="IndicoModel1.PriceLevelCost">
+        <MappingFragment StoreEntitySet="PriceLevelCost">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="PriceLevel" ColumnName="PriceLevel" />
+          <ScalarProperty Name="FactoryCost" ColumnName="FactoryCost" />
+          <ScalarProperty Name="IndimanCost" ColumnName="IndimanCost" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PriceLevelNews">
+      <EntityTypeMapping TypeName="IndicoModel1.PriceLevelNew">
+        <MappingFragment StoreEntitySet="PriceLevelNew">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Volume" ColumnName="Volume" />
+          <ScalarProperty Name="Markup" ColumnName="Markup" />
+          <ScalarProperty Name="LastModifier" ColumnName="LastModifier" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PriceListDownloads">
+      <EntityTypeMapping TypeName="IndicoModel1.PriceListDownload">
+        <MappingFragment StoreEntitySet="PriceListDownloads">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="PriceTerm" ColumnName="PriceTerm" />
+          <ScalarProperty Name="EditedPrice" ColumnName="EditedPrice" />
+          <ScalarProperty Name="CreativeDesign" ColumnName="CreativeDesign" />
+          <ScalarProperty Name="StudioDesign" ColumnName="StudioDesign" />
+          <ScalarProperty Name="ThirdPartyDesign" ColumnName="ThirdPartyDesign" />
+          <ScalarProperty Name="Position1" ColumnName="Position1" />
+          <ScalarProperty Name="Position2" ColumnName="Position2" />
+          <ScalarProperty Name="Position3" ColumnName="Position3" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PriceMarkupLabels">
+      <EntityTypeMapping TypeName="IndicoModel1.PriceMarkupLabel">
+        <MappingFragment StoreEntitySet="PriceMarkupLabel">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PriceRemarks">
+      <EntityTypeMapping TypeName="IndicoModel1.PriceRemark">
+        <MappingFragment StoreEntitySet="PriceRemarks">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PriceTerms">
+      <EntityTypeMapping TypeName="IndicoModel1.PriceTerm">
+        <MappingFragment StoreEntitySet="PriceTerm">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Key" ColumnName="Key" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Printers">
+      <EntityTypeMapping TypeName="IndicoModel1.Printer">
+        <MappingFragment StoreEntitySet="Printer">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PrinterTypes">
+      <EntityTypeMapping TypeName="IndicoModel1.PrinterType">
+        <MappingFragment StoreEntitySet="PrinterType">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Prefix" ColumnName="Prefix" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="IndicoModel1.Product">
+        <MappingFragment StoreEntitySet="Product">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ProductNumber" ColumnName="ProductNumber" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="ResolutionProfile" ColumnName="ResolutionProfile" />
+          <ScalarProperty Name="ColourProfile" ColumnName="ColourProfile" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="FabricCodes" ColumnName="FabricCodes" />
+          <ScalarProperty Name="DistributorLabel" ColumnName="DistributorLabel" />
+          <ScalarProperty Name="Label" ColumnName="Label" />
+          <ScalarProperty Name="Printer" ColumnName="Printer" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductionLines">
+      <EntityTypeMapping TypeName="IndicoModel1.ProductionLine">
+        <MappingFragment StoreEntitySet="ProductionLine">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductionPlannings">
+      <EntityTypeMapping TypeName="IndicoModel1.ProductionPlanning">
+        <MappingFragment StoreEntitySet="ProductionPlanning">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="WeeklyProductionCapacity" ColumnName="WeeklyProductionCapacity" />
+          <ScalarProperty Name="OrderDetail" ColumnName="OrderDetail" />
+          <ScalarProperty Name="ProductionLine" ColumnName="ProductionLine" />
+          <ScalarProperty Name="SewingDate" ColumnName="SewingDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductSequences">
+      <EntityTypeMapping TypeName="IndicoModel1.ProductSequence">
+        <MappingFragment StoreEntitySet="ProductSequence">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Quotes">
+      <EntityTypeMapping TypeName="IndicoModel1.Quote">
+        <MappingFragment StoreEntitySet="Quote">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DateQuoted" ColumnName="DateQuoted" />
+          <ScalarProperty Name="QuoteExpiryDate" ColumnName="QuoteExpiryDate" />
+          <ScalarProperty Name="ClientEmail" ColumnName="ClientEmail" />
+          <ScalarProperty Name="JobName" ColumnName="JobName" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="Currency" ColumnName="Currency" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QuoteChangeEmailLists">
+      <EntityTypeMapping TypeName="IndicoModel1.QuoteChangeEmailList">
+        <MappingFragment StoreEntitySet="QuoteChangeEmailList">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="User" ColumnName="User" />
+          <ScalarProperty Name="IsCC" ColumnName="IsCC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QuoteDetails">
+      <EntityTypeMapping TypeName="IndicoModel1.QuoteDetail">
+        <MappingFragment StoreEntitySet="QuoteDetail">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="Fabric" ColumnName="Fabric" />
+          <ScalarProperty Name="PriceTerm" ColumnName="PriceTerm" />
+          <ScalarProperty Name="DesignType" ColumnName="DesignType" />
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="IsGST" ColumnName="IsGST" />
+          <ScalarProperty Name="GST" ColumnName="GST" />
+          <ScalarProperty Name="IndimanPrice" ColumnName="IndimanPrice" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="DelivaryDate" ColumnName="DelivaryDate" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="DesignFee" ColumnName="DesignFee" />
+          <ScalarProperty Name="Quote" ColumnName="Quote" />
+          <ScalarProperty Name="VisualLayout" ColumnName="VisualLayout" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QuoteStatus">
+      <EntityTypeMapping TypeName="IndicoModel1.QuoteStatu">
+        <MappingFragment StoreEntitySet="QuoteStatus">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Key" ColumnName="Key" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reservations">
+      <EntityTypeMapping TypeName="IndicoModel1.Reservation">
+        <MappingFragment StoreEntitySet="Reservation">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ReservationNo" ColumnName="ReservationNo" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="Coordinator" ColumnName="Coordinator" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+          <ScalarProperty Name="ShipTo" ColumnName="ShipTo" />
+          <ScalarProperty Name="ShipmentMode" ColumnName="ShipmentMode" />
+          <ScalarProperty Name="ShipmentDate" ColumnName="ShipmentDate" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReservationStatus">
+      <EntityTypeMapping TypeName="IndicoModel1.ReservationStatu">
+        <MappingFragment StoreEntitySet="ReservationStatus">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ResolutionProfiles">
+      <EntityTypeMapping TypeName="IndicoModel1.ResolutionProfile">
+        <MappingFragment StoreEntitySet="ResolutionProfile">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="IndicoModel1.Role">
+        <MappingFragment StoreEntitySet="Role">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Settings">
+      <EntityTypeMapping TypeName="IndicoModel1.Setting">
+        <MappingFragment StoreEntitySet="Settings">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Key" ColumnName="Key" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShipmentModes">
+      <EntityTypeMapping TypeName="IndicoModel1.ShipmentMode">
+        <MappingFragment StoreEntitySet="ShipmentMode">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sizes">
+      <EntityTypeMapping TypeName="IndicoModel1.Size">
+        <MappingFragment StoreEntitySet="Size">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="SizeSet" ColumnName="SizeSet" />
+          <ScalarProperty Name="SizeName" ColumnName="SizeName" />
+          <ScalarProperty Name="SeqNo" ColumnName="SeqNo" />
+          <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SizeCharts">
+      <EntityTypeMapping TypeName="IndicoModel1.SizeChart">
+        <MappingFragment StoreEntitySet="SizeChart">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="MeasurementLocation" ColumnName="MeasurementLocation" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="Val" ColumnName="Val" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SizeSets">
+      <EntityTypeMapping TypeName="IndicoModel1.SizeSet">
+        <MappingFragment StoreEntitySet="SizeSet">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SportsCategories">
+      <EntityTypeMapping TypeName="IndicoModel1.SportsCategory">
+        <MappingFragment StoreEntitySet="SportsCategory">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Suppliers">
+      <EntityTypeMapping TypeName="IndicoModel1.Supplier">
+        <MappingFragment StoreEntitySet="Supplier">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Units">
+      <EntityTypeMapping TypeName="IndicoModel1.Unit">
+        <MappingFragment StoreEntitySet="Unit">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IndicoModel1.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="IsDistributor" ColumnName="IsDistributor" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="GivenName" ColumnName="GivenName" />
+          <ScalarProperty Name="FamilyName" ColumnName="FamilyName" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="PhotoPath" ColumnName="PhotoPath" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Guid" ColumnName="Guid" />
+          <ScalarProperty Name="OfficeTelephoneNumber" ColumnName="OfficeTelephoneNumber" />
+          <ScalarProperty Name="MobileTelephoneNumber" ColumnName="MobileTelephoneNumber" />
+          <ScalarProperty Name="HomeTelephoneNumber" ColumnName="HomeTelephoneNumber" />
+          <ScalarProperty Name="DateLastLogin" ColumnName="DateLastLogin" />
+          <ScalarProperty Name="HaveAccessForHTTPPost" ColumnName="HaveAccessForHTTPPost" />
+          <ScalarProperty Name="Designation" ColumnName="Designation" />
+          <ScalarProperty Name="IsDirectSalesPerson" ColumnName="IsDirectSalesPerson" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserHistories">
+      <EntityTypeMapping TypeName="IndicoModel1.UserHistory">
+        <MappingFragment StoreEntitySet="UserHistory">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="User" ColumnName="User" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="GivenName" ColumnName="GivenName" />
+          <ScalarProperty Name="FamilyName" ColumnName="FamilyName" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Guid" ColumnName="Guid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserLogins">
+      <EntityTypeMapping TypeName="IndicoModel1.UserLogin">
+        <MappingFragment StoreEntitySet="UserLogin">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="User" ColumnName="User" />
+          <ScalarProperty Name="IpAddress" ColumnName="IpAddress" />
+          <ScalarProperty Name="Success" ColumnName="Success" />
+          <ScalarProperty Name="DateLogin" ColumnName="DateLogin" />
+          <ScalarProperty Name="DateLogout" ColumnName="DateLogout" />
+          <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserStatus">
+      <EntityTypeMapping TypeName="IndicoModel1.UserStatu">
+        <MappingFragment StoreEntitySet="UserStatus">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Key" ColumnName="Key" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VisualLayouts">
+      <EntityTypeMapping TypeName="IndicoModel1.VisualLayout">
+        <MappingFragment StoreEntitySet="VisualLayout">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NamePrefix" ColumnName="NamePrefix" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="FabricCode" ColumnName="FabricCode" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+          <ScalarProperty Name="NNPFilePath" ColumnName="NNPFilePath" />
+          <ScalarProperty Name="NameSuffix" ColumnName="NameSuffix" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="IsCommonProduct" ColumnName="IsCommonProduct" />
+          <ScalarProperty Name="IsGenerated" ColumnName="IsGenerated" />
+          <ScalarProperty Name="ResolutionProfile" ColumnName="ResolutionProfile" />
+          <ScalarProperty Name="PocketType" ColumnName="PocketType" />
+          <ScalarProperty Name="Printer" ColumnName="Printer" />
+          <ScalarProperty Name="ArtWork" ColumnName="ArtWork" />
+          <ScalarProperty Name="Where" ColumnName="Where" />
+          <ScalarProperty Name="BySizeArtWork" ColumnName="BySizeArtWork" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VisualLayoutAccessories">
+      <EntityTypeMapping TypeName="IndicoModel1.VisualLayoutAccessory">
+        <MappingFragment StoreEntitySet="VisualLayoutAccessory">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="VisualLayout" ColumnName="VisualLayout" />
+          <ScalarProperty Name="Accessory" ColumnName="Accessory" />
+          <ScalarProperty Name="AccessoryColor" ColumnName="AccessoryColor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VisualLayoutFabrics">
+      <EntityTypeMapping TypeName="IndicoModel1.VisualLayoutFabric">
+        <MappingFragment StoreEntitySet="VisualLayoutFabric">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Fabric" ColumnName="Fabric" />
+          <ScalarProperty Name="VisualLayout" ColumnName="VisualLayout" />
+          <ScalarProperty Name="FabricCodeType" ColumnName="FabricCodeType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WeeklyProductionCapacities">
+      <EntityTypeMapping TypeName="IndicoModel1.WeeklyProductionCapacity">
+        <MappingFragment StoreEntitySet="WeeklyProductionCapacity">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="WeekNo" ColumnName="WeekNo" />
+          <ScalarProperty Name="WeekendDate" ColumnName="WeekendDate" />
+          <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="NoOfHolidays" ColumnName="NoOfHolidays" />
+          <ScalarProperty Name="SalesTarget" ColumnName="SalesTarget" />
+          <ScalarProperty Name="HoursPerDay" ColumnName="HoursPerDay" />
+          <ScalarProperty Name="OrderCutOffDate" ColumnName="OrderCutOffDate" />
+          <ScalarProperty Name="EstimatedDateOfDespatch" ColumnName="EstimatedDateOfDespatch" />
+          <ScalarProperty Name="EstimatedDateOfArrival" ColumnName="EstimatedDateOfArrival" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WeeklyProductionCapacityDetails">
+      <EntityTypeMapping TypeName="IndicoModel1.WeeklyProductionCapacityDetail">
+        <MappingFragment StoreEntitySet="WeeklyProductionCapacityDetails">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="WeeklyProductionCapacity" ColumnName="WeeklyProductionCapacity" />
+          <ScalarProperty Name="ItemType" ColumnName="ItemType" />
+          <ScalarProperty Name="TotalCapacity" ColumnName="TotalCapacity" />
+          <ScalarProperty Name="FivePcsCapacity" ColumnName="FivePcsCapacity" />
+          <ScalarProperty Name="SampleCapacity" ColumnName="SampleCapacity" />
+          <ScalarProperty Name="Workers" ColumnName="Workers" />
+          <ScalarProperty Name="Efficiency" ColumnName="Efficiency" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AccessoryDetailsViews">
+      <EntityTypeMapping TypeName="IndicoModel1.AccessoryDetailsView">
+        <MappingFragment StoreEntitySet="AccessoryDetailsView">
+          <ScalarProperty Name="Accessory" ColumnName="Accessory" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="AccessoryCategoryID" ColumnName="AccessoryCategoryID" />
+          <ScalarProperty Name="AccessoryCategory" ColumnName="AccessoryCategory" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+          <ScalarProperty Name="SuppCode" ColumnName="SuppCode" />
+          <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="Supplier" ColumnName="Supplier" />
+          <ScalarProperty Name="IsPatternAccessoryWherethisAccessory" ColumnName="IsPatternAccessoryWherethisAccessory" />
+          <ScalarProperty Name="IsPatternSupportAccessorySubWherethisAccessory" ColumnName="IsPatternSupportAccessorySubWherethisAccessory" />
+          <ScalarProperty Name="IsVisualLayoutAccessorySubWherethisAccessory" ColumnName="IsVisualLayoutAccessorySubWherethisAccessory" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ClientOrderDetailsViews">
+      <EntityTypeMapping TypeName="IndicoModel1.ClientOrderDetailsView">
+        <MappingFragment StoreEntitySet="ClientOrderDetailsView">
+          <ScalarProperty Name="OrderDetailId" ColumnName="OrderDetailId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="DesiredDeliveryDate" ColumnName="DesiredDeliveryDate" />
+          <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+          <ScalarProperty Name="IsTemporary" ColumnName="IsTemporary" />
+          <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+          <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+          <ScalarProperty Name="OrderTypeId" ColumnName="OrderTypeId" />
+          <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+          <ScalarProperty Name="VisualLayoutId" ColumnName="VisualLayoutId" />
+          <ScalarProperty Name="NamePrefix" ColumnName="NamePrefix" />
+          <ScalarProperty Name="NameSuffix" ColumnName="NameSuffix" />
+          <ScalarProperty Name="PatternId" ColumnName="PatternId" />
+          <ScalarProperty Name="PatternNumber" ColumnName="PatternNumber" />
+          <ScalarProperty Name="FabricId" ColumnName="FabricId" />
+          <ScalarProperty Name="Fabric" ColumnName="Fabric" />
+          <ScalarProperty Name="FabricNickName" ColumnName="FabricNickName" />
+          <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CostSheetDetailsViews">
+      <EntityTypeMapping TypeName="IndicoModel1.CostSheetDetailsView">
+        <MappingFragment StoreEntitySet="CostSheetDetailsView">
+          <ScalarProperty Name="CostSheet" ColumnName="CostSheet" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="Fabric" ColumnName="Fabric" />
+          <ScalarProperty Name="QuotedFOBCost" ColumnName="QuotedFOBCost" />
+          <ScalarProperty Name="QuotedCIF" ColumnName="QuotedCIF" />
+          <ScalarProperty Name="QuotedMP" ColumnName="QuotedMP" />
+          <ScalarProperty Name="ExchangeRate" ColumnName="ExchangeRate" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="SMV" ColumnName="SMV" />
+          <ScalarProperty Name="SMVRate" ColumnName="SMVRate" />
+          <ScalarProperty Name="CalculateCM" ColumnName="CalculateCM" />
+          <ScalarProperty Name="TotalFabricCost" ColumnName="TotalFabricCost" />
+          <ScalarProperty Name="TotalAccessoriesCost" ColumnName="TotalAccessoriesCost" />
+          <ScalarProperty Name="HPCost" ColumnName="HPCost" />
+          <ScalarProperty Name="LabelCost" ColumnName="LabelCost" />
+          <ScalarProperty Name="CM" ColumnName="CM" />
+          <ScalarProperty Name="JKFOBCost" ColumnName="JKFOBCost" />
+          <ScalarProperty Name="Roundup" ColumnName="Roundup" />
+          <ScalarProperty Name="DutyRate" ColumnName="DutyRate" />
+          <ScalarProperty Name="SubCons" ColumnName="SubCons" />
+          <ScalarProperty Name="MarginRate" ColumnName="MarginRate" />
+          <ScalarProperty Name="Duty" ColumnName="Duty" />
+          <ScalarProperty Name="FOBAUD" ColumnName="FOBAUD" />
+          <ScalarProperty Name="AirFregiht" ColumnName="AirFregiht" />
+          <ScalarProperty Name="ImpCharges" ColumnName="ImpCharges" />
+          <ScalarProperty Name="Landed" ColumnName="Landed" />
+          <ScalarProperty Name="MGTOH" ColumnName="MGTOH" />
+          <ScalarProperty Name="IndicoOH" ColumnName="IndicoOH" />
+          <ScalarProperty Name="InkCost" ColumnName="InkCost" />
+          <ScalarProperty Name="PaperCost" ColumnName="PaperCost" />
+          <ScalarProperty Name="ShowToIndico" ColumnName="ShowToIndico" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DistributorClientAddressDetailsViews">
+      <EntityTypeMapping TypeName="IndicoModel1.DistributorClientAddressDetailsView">
+        <MappingFragment StoreEntitySet="DistributorClientAddressDetailsView">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Suburb" ColumnName="Suburb" />
+          <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="ContactPhone" ColumnName="ContactPhone" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="AddressType" ColumnName="AddressType" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Port" ColumnName="Port" />
+          <ScalarProperty Name="PortID" ColumnName="PortID" />
+          <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DistributorNullPatternPriceLevelCostViews">
+      <EntityTypeMapping TypeName="IndicoModel1.DistributorNullPatternPriceLevelCostView">
+        <MappingFragment StoreEntitySet="DistributorNullPatternPriceLevelCostView">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="PriceLevel" ColumnName="PriceLevel" />
+          <ScalarProperty Name="FactoryCost" ColumnName="FactoryCost" />
+          <ScalarProperty Name="IndimanCost" ColumnName="IndimanCost" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="Markup" ColumnName="Markup" />
+          <ScalarProperty Name="EditedCIFPrice" ColumnName="EditedCIFPrice" />
+          <ScalarProperty Name="EditedFOBPrice" ColumnName="EditedFOBPrice" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DistributorPatternPriceLevelCostViews">
+      <EntityTypeMapping TypeName="IndicoModel1.DistributorPatternPriceLevelCostView">
+        <MappingFragment StoreEntitySet="DistributorPatternPriceLevelCostView">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="PriceLevel" ColumnName="PriceLevel" />
+          <ScalarProperty Name="FactoryCost" ColumnName="FactoryCost" />
+          <ScalarProperty Name="IndimanCost" ColumnName="IndimanCost" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="Markup" ColumnName="Markup" />
+          <ScalarProperty Name="EditedCIFPrice" ColumnName="EditedCIFPrice" />
+          <ScalarProperty Name="EditedFOBPrice" ColumnName="EditedFOBPrice" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmbroideryDetailsViews">
+      <EntityTypeMapping TypeName="IndicoModel1.EmbroideryDetailsView">
+        <MappingFragment StoreEntitySet="EmbroideryDetailsView">
+          <ScalarProperty Name="Embroidery" ColumnName="Embroidery" />
+          <ScalarProperty Name="EmbStrikeOffDate" ColumnName="EmbStrikeOffDate" />
+          <ScalarProperty Name="JobName" ColumnName="JobName" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+          <ScalarProperty Name="Coordinator" ColumnName="Coordinator" />
+          <ScalarProperty Name="Product" ColumnName="Product" />
+          <ScalarProperty Name="PhotoRequiredBy" ColumnName="PhotoRequiredBy" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="Assign" ColumnName="Assign" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ExcelPriceLevelCostViews">
+      <EntityTypeMapping TypeName="IndicoModel1.ExcelPriceLevelCostView">
+        <MappingFragment StoreEntitySet="ExcelPriceLevelCostView">
+          <ScalarProperty Name="PriceID" ColumnName="PriceID" />
+          <ScalarProperty Name="SportsCategory" ColumnName="SportsCategory" />
+          <ScalarProperty Name="OtherCategories" ColumnName="OtherCategories" />
+          <ScalarProperty Name="PatternID" ColumnName="PatternID" />
+          <ScalarProperty Name="ItemSubCategoris" ColumnName="ItemSubCategoris" />
+          <ScalarProperty Name="NickName" ColumnName="NickName" />
+          <ScalarProperty Name="FabricCodeName" ColumnName="FabricCodeName" />
+          <ScalarProperty Name="FabricCodenNickName" ColumnName="FabricCodenNickName" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="ConvertionFactor" ColumnName="ConvertionFactor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FabricCodeDetailsViews">
+      <EntityTypeMapping TypeName="IndicoModel1.FabricCodeDetailsView">
+        <MappingFragment StoreEntitySet="FabricCodeDetailsView">
+          <ScalarProperty Name="Fabric" ColumnName="Fabric" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Material" ColumnName="Material" />
+          <ScalarProperty Name="GSM" ColumnName="GSM" />
+          <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+          <ScalarProperty Name="Supplier" ColumnName="Supplier" />
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="DenierCount" ColumnName="DenierCount" />
+          <ScalarProperty Name="Filaments" ColumnName="Filaments" />
+          <ScalarProperty Name="NickName" ColumnName="NickName" />
+          <ScalarProperty Name="SerialOrder" ColumnName="SerialOrder" />
+          <ScalarProperty Name="FabricPrice" ColumnName="FabricPrice" />
+          <ScalarProperty Name="LandedCurrency" ColumnName="LandedCurrency" />
+          <ScalarProperty Name="FabricWidth" ColumnName="FabricWidth" />
+          <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+          <ScalarProperty Name="Unit" ColumnName="Unit" />
+          <ScalarProperty Name="FabricColorID" ColumnName="FabricColorID" />
+          <ScalarProperty Name="FabricColor" ColumnName="FabricColor" />
+          <ScalarProperty Name="ColorCode" ColumnName="ColorCode" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsPure" ColumnName="IsPure" />
+          <ScalarProperty Name="IsLiningFabric" ColumnName="IsLiningFabric" />
+          <ScalarProperty Name="IsCostSheetWherethisFabricCode" ColumnName="IsCostSheetWherethisFabricCode" />
+          <ScalarProperty Name="IsPriceWherethisFabricCode" ColumnName="IsPriceWherethisFabricCode" />
+          <ScalarProperty Name="IsQuoteWherethisFabricCode" ColumnName="IsQuoteWherethisFabricCode" />
+          <ScalarProperty Name="IsVisualLayoutWherethisFabricCode" ColumnName="IsVisualLayoutWherethisFabricCode" />
+          <ScalarProperty Name="IsPatternSupportFabricWherethisFabricCode" ColumnName="IsPatternSupportFabricWherethisFabricCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GetMeasureLocForPatternSizeViews">
+      <EntityTypeMapping TypeName="IndicoModel1.GetMeasureLocForPatternSizeView">
+        <MappingFragment StoreEntitySet="GetMeasureLocForPatternSizeView">
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="SizeName" ColumnName="SizeName" />
+          <ScalarProperty Name="SeqNo" ColumnName="SeqNo" />
+          <ScalarProperty Name="Key" ColumnName="Key" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Val" ColumnName="Val" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GetNonAssignedPriceMarkupDistributorsViews">
+      <EntityTypeMapping TypeName="IndicoModel1.GetNonAssignedPriceMarkupDistributorsView">
+        <MappingFragment StoreEntitySet="GetNonAssignedPriceMarkupDistributorsView">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HSCodeDetails">
+      <EntityTypeMapping TypeName="IndicoModel1.HSCodeDetail">
+        <MappingFragment StoreEntitySet="HSCodeDetails">
+          <ScalarProperty Name="HSCode" ColumnName="HSCode" />
+          <ScalarProperty Name="ItemSubCategoryID" ColumnName="ItemSubCategoryID" />
+          <ScalarProperty Name="ItemSubCategory" ColumnName="ItemSubCategory" />
+          <ScalarProperty Name="GenderID" ColumnName="GenderID" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IndicoCIFPriceViews">
+      <EntityTypeMapping TypeName="IndicoModel1.IndicoCIFPriceView">
+        <MappingFragment StoreEntitySet="IndicoCIFPriceView">
+          <ScalarProperty Name="CostSheetId" ColumnName="CostSheetId" />
+          <ScalarProperty Name="CoreCategory" ColumnName="CoreCategory" />
+          <ScalarProperty Name="ItemCategory" ColumnName="ItemCategory" />
+          <ScalarProperty Name="PatternId" ColumnName="PatternId" />
+          <ScalarProperty Name="PatternCode" ColumnName="PatternCode" />
+          <ScalarProperty Name="PatternNickName" ColumnName="PatternNickName" />
+          <ScalarProperty Name="FabricId" ColumnName="FabricId" />
+          <ScalarProperty Name="FabricCode" ColumnName="FabricCode" />
+          <ScalarProperty Name="FabricName" ColumnName="FabricName" />
+          <ScalarProperty Name="FabricPrice" ColumnName="FabricPrice" />
+          <ScalarProperty Name="ConversionFactor" ColumnName="ConversionFactor" />
+          <ScalarProperty Name="IndimanPrice" ColumnName="IndimanPrice" />
+          <ScalarProperty Name="QuotedFOBPrice" ColumnName="QuotedFOBPrice" />
+          <ScalarProperty Name="FOBCost" ColumnName="FOBCost" />
+          <ScalarProperty Name="LastModifier" ColumnName="LastModifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="ActMgn" ColumnName="ActMgn" />
+          <ScalarProperty Name="QuotedMp" ColumnName="QuotedMp" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IndimanPriceViews">
+      <EntityTypeMapping TypeName="IndicoModel1.IndimanPriceView">
+        <MappingFragment StoreEntitySet="IndimanPriceView">
+          <ScalarProperty Name="SportsCategory" ColumnName="SportsCategory" />
+          <ScalarProperty Name="ItemSubCategory" ColumnName="ItemSubCategory" />
+          <ScalarProperty Name="OtherCategories" ColumnName="OtherCategories" />
+          <ScalarProperty Name="PatternNumber" ColumnName="PatternNumber" />
+          <ScalarProperty Name="PatternDsc" ColumnName="PatternDsc" />
+          <ScalarProperty Name="FabricDsc" ColumnName="FabricDsc" />
+          <ScalarProperty Name="IndimanCost" ColumnName="IndimanCost" />
+          <ScalarProperty Name="ConvertionFactor" ColumnName="ConvertionFactor" />
+          <ScalarProperty Name="EnableForPriceList" ColumnName="EnableForPriceList" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ItemAttributesDetailsViews">
+      <EntityTypeMapping TypeName="IndicoModel1.ItemAttributesDetailsView">
+        <MappingFragment StoreEntitySet="ItemAttributesDetailsView">
+          <ScalarProperty Name="Attribute" ColumnName="Attribute" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="IsItemAttributesSubWherethisFabricCode" ColumnName="IsItemAttributesSubWherethisFabricCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LabelPatternPriceLevelCostViews">
+      <EntityTypeMapping TypeName="IndicoModel1.LabelPatternPriceLevelCostView">
+        <MappingFragment StoreEntitySet="LabelPatternPriceLevelCostView">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="PriceLevel" ColumnName="PriceLevel" />
+          <ScalarProperty Name="FactoryCost" ColumnName="FactoryCost" />
+          <ScalarProperty Name="IndimanCost" ColumnName="IndimanCost" />
+          <ScalarProperty Name="Label" ColumnName="Label" />
+          <ScalarProperty Name="Markup" ColumnName="Markup" />
+          <ScalarProperty Name="EditedCIFPrice" ColumnName="EditedCIFPrice" />
+          <ScalarProperty Name="EditedFOBPrice" ColumnName="EditedFOBPrice" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LastRecordOfVisullayoutPrefixCS">
+      <EntityTypeMapping TypeName="IndicoModel1.LastRecordOfVisullayoutPrefixC">
+        <MappingFragment StoreEntitySet="LastRecordOfVisullayoutPrefixCS">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NamePrefix" ColumnName="NamePrefix" />
+          <ScalarProperty Name="NameSuffix" ColumnName="NameSuffix" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LastRecordOfVisullayoutPrefixDies">
+      <EntityTypeMapping TypeName="IndicoModel1.LastRecordOfVisullayoutPrefixDY">
+        <MappingFragment StoreEntitySet="LastRecordOfVisullayoutPrefixDY">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NamePrefix" ColumnName="NamePrefix" />
+          <ScalarProperty Name="NameSuffix" ColumnName="NameSuffix" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LastRecordOfVisullayoutPrefixVLs">
+      <EntityTypeMapping TypeName="IndicoModel1.LastRecordOfVisullayoutPrefixVL">
+        <MappingFragment StoreEntitySet="LastRecordOfVisullayoutPrefixVL">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NamePrefix" ColumnName="NamePrefix" />
+          <ScalarProperty Name="NameSuffix" ColumnName="NameSuffix" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderDetailsViews">
+      <EntityTypeMapping TypeName="IndicoModel1.OrderDetailsView">
+        <MappingFragment StoreEntitySet="OrderDetailsView">
+          <ScalarProperty Name="OrderDetail" ColumnName="OrderDetail" />
+          <ScalarProperty Name="EditedPrice" ColumnName="EditedPrice" />
+          <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+          <ScalarProperty Name="VisualLayout" ColumnName="VisualLayout" />
+          <ScalarProperty Name="VisualLayoutID" ColumnName="VisualLayoutID" />
+          <ScalarProperty Name="PatternID" ColumnName="PatternID" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="FabricID" ColumnName="FabricID" />
+          <ScalarProperty Name="Fabric" ColumnName="Fabric" />
+          <ScalarProperty Name="VisualLayoutNotes" ColumnName="VisualLayoutNotes" />
+          <ScalarProperty Name="Order" ColumnName="Order" />
+          <ScalarProperty Name="OrderDetailStatus" ColumnName="OrderDetailStatus" />
+          <ScalarProperty Name="OrderDetailStatusID" ColumnName="OrderDetailStatusID" />
+          <ScalarProperty Name="ShipmentDate" ColumnName="ShipmentDate" />
+          <ScalarProperty Name="SheduledDate" ColumnName="SheduledDate" />
+          <ScalarProperty Name="RequestedDate" ColumnName="RequestedDate" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="DateDiffrence" ColumnName="DateDiffrence" />
+          <ScalarProperty Name="PurONo" ColumnName="PurONo" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="Coordinator" ColumnName="Coordinator" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+          <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+          <ScalarProperty Name="OrderStatusID" ColumnName="OrderStatusID" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatorID" ColumnName="CreatorID" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+          <ScalarProperty Name="ShipmentMethod" ColumnName="ShipmentMethod" />
+          <ScalarProperty Name="WeeklyShiment" ColumnName="WeeklyShiment" />
+          <ScalarProperty Name="CourierDelivery" ColumnName="CourierDelivery" />
+          <ScalarProperty Name="AdelaideWareHouse" ColumnName="AdelaideWareHouse" />
+          <ScalarProperty Name="FollowingAddress" ColumnName="FollowingAddress" />
+          <ScalarProperty Name="BillingAddress" ColumnName="BillingAddress" />
+          <ScalarProperty Name="ShippingAddress" ColumnName="ShippingAddress" />
+          <ScalarProperty Name="DestinationPort" ColumnName="DestinationPort" />
+          <ScalarProperty Name="ResolutionProfile" ColumnName="ResolutionProfile" />
+          <ScalarProperty Name="IsAcceptedTermsAndConditions" ColumnName="IsAcceptedTermsAndConditions" />
+          <ScalarProperty Name="Surcharge" ColumnName="Surcharge" />
+          <ScalarProperty Name="FOCPenalty" ColumnName="FOCPenalty" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PackingListViews">
+      <EntityTypeMapping TypeName="IndicoModel1.PackingListView">
+        <MappingFragment StoreEntitySet="PackingListView">
+          <ScalarProperty Name="PackingList" ColumnName="PackingList" />
+          <ScalarProperty Name="WeeklyProductionCapacity" ColumnName="WeeklyProductionCapacity" />
+          <ScalarProperty Name="CartonNo" ColumnName="CartonNo" />
+          <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+          <ScalarProperty Name="OrderDetail" ColumnName="OrderDetail" />
+          <ScalarProperty Name="VLName" ColumnName="VLName" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+          <ScalarProperty Name="WeekendDate" ColumnName="WeekendDate" />
+          <ScalarProperty Name="PackingTotal" ColumnName="PackingTotal" />
+          <ScalarProperty Name="ScannedTotal" ColumnName="ScannedTotal" />
+          <ScalarProperty Name="ShimentModeID" ColumnName="ShimentModeID" />
+          <ScalarProperty Name="ShipmentMode" ColumnName="ShipmentMode" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Suberb" ColumnName="Suberb" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="ContactDetails" ColumnName="ContactDetails" />
+          <ScalarProperty Name="IsWeeklyShipment" ColumnName="IsWeeklyShipment" />
+          <ScalarProperty Name="IsAdelaideWareHouse" ColumnName="IsAdelaideWareHouse" />
+          <ScalarProperty Name="ShipTo" ColumnName="ShipTo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PatternCoreCategoriesViews">
+      <EntityTypeMapping TypeName="IndicoModel1.PatternCoreCategoriesView">
+        <MappingFragment StoreEntitySet="PatternCoreCategoriesView">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CoreCategory" ColumnName="CoreCategory" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PendingPricesViews">
+      <EntityTypeMapping TypeName="IndicoModel1.PendingPricesView">
+        <MappingFragment StoreEntitySet="PendingPricesView">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PatternNumber" ColumnName="PatternNumber" />
+          <ScalarProperty Name="NickName" ColumnName="NickName" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="SubItemName" ColumnName="SubItemName" />
+          <ScalarProperty Name="AgeGroup" ColumnName="AgeGroup" />
+          <ScalarProperty Name="CoreCategory" ColumnName="CoreCategory" />
+          <ScalarProperty Name="CorePattern" ColumnName="CorePattern" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PriceLevelCostViews">
+      <EntityTypeMapping TypeName="IndicoModel1.PriceLevelCostView">
+        <MappingFragment StoreEntitySet="PriceLevelCostView">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="FabricCode" ColumnName="FabricCode" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="NickName" ColumnName="NickName" />
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="SubItem" ColumnName="SubItem" />
+          <ScalarProperty Name="CoreCategory" ColumnName="CoreCategory" />
+          <ScalarProperty Name="FabricCodeName" ColumnName="FabricCodeName" />
+          <ScalarProperty Name="ItemSubCategory" ColumnName="ItemSubCategory" />
+          <ScalarProperty Name="OtherCategories" ColumnName="OtherCategories" />
+          <ScalarProperty Name="ConvertionFactor" ColumnName="ConvertionFactor" />
+          <ScalarProperty Name="EnableForPriceList" ColumnName="EnableForPriceList" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QuotesDetailsViews">
+      <EntityTypeMapping TypeName="IndicoModel1.QuotesDetailsView">
+        <MappingFragment StoreEntitySet="QuotesDetailsView">
+          <ScalarProperty Name="Quote" ColumnName="Quote" />
+          <ScalarProperty Name="DateQuoted" ColumnName="DateQuoted" />
+          <ScalarProperty Name="QuoteExpiryDate" ColumnName="QuoteExpiryDate" />
+          <ScalarProperty Name="ClietEMail" ColumnName="ClietEMail" />
+          <ScalarProperty Name="JobName" ColumnName="JobName" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatorID" ColumnName="CreatorID" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReservationDetailsViews">
+      <EntityTypeMapping TypeName="IndicoModel1.ReservationDetailsView">
+        <MappingFragment StoreEntitySet="ReservationDetailsView">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ReservationNo" ColumnName="ReservationNo" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="PatternID" ColumnName="PatternID" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="CoordinatorID" ColumnName="CoordinatorID" />
+          <ScalarProperty Name="Coordinator" ColumnName="Coordinator" />
+          <ScalarProperty Name="DistributorID" ColumnName="DistributorID" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+          <ScalarProperty Name="ShipToID" ColumnName="ShipToID" />
+          <ScalarProperty Name="ShipTo" ColumnName="ShipTo" />
+          <ScalarProperty Name="ShipmentModeID" ColumnName="ShipmentModeID" />
+          <ScalarProperty Name="ShipmentMode" ColumnName="ShipmentMode" />
+          <ScalarProperty Name="ShipmentDate" ColumnName="ShipmentDate" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="UsedQty" ColumnName="UsedQty" />
+          <ScalarProperty Name="Balance" ColumnName="Balance" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+          <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+          <ScalarProperty Name="CreatorID" ColumnName="CreatorID" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="ModifierID" ColumnName="ModifierID" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnBackOrdersViews">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnBackOrdersView">
+        <MappingFragment StoreEntitySet="ReturnBackOrdersView">
+          <ScalarProperty Name="DistributorID" ColumnName="DistributorID" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="Coordinator" ColumnName="Coordinator" />
+          <ScalarProperty Name="CoordinatorID" ColumnName="CoordinatorID" />
+          <ScalarProperty Name="BackOrder" ColumnName="BackOrder" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="DistributorEmailAddress" ColumnName="DistributorEmailAddress" />
+          <ScalarProperty Name="CoordinatorEmailAddress" ColumnName="CoordinatorEmailAddress" />
+          <ScalarProperty Name="Count" ColumnName="Count" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnCartonsDetailsViews">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnCartonsDetailsView">
+        <MappingFragment StoreEntitySet="ReturnCartonsDetailsView">
+          <ScalarProperty Name="Carton" ColumnName="Carton" />
+          <ScalarProperty Name="FillQty" ColumnName="FillQty" />
+          <ScalarProperty Name="TotalQty" ColumnName="TotalQty" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Suberb" ColumnName="Suberb" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="ShimentModeID" ColumnName="ShimentModeID" />
+          <ScalarProperty Name="ShipmentMode" ColumnName="ShipmentMode" />
+          <ScalarProperty Name="ShipTo" ColumnName="ShipTo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnClientsDetailsViews">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnClientsDetailsView">
+        <MappingFragment StoreEntitySet="ReturnClientsDetailsView">
+          <ScalarProperty Name="Client" ColumnName="Client" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="NickName" ColumnName="NickName" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="VisualLayouts" ColumnName="VisualLayouts" />
+          <ScalarProperty Name="Order" ColumnName="Order" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnDetailReportByClients">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnDetailReportByClient">
+        <MappingFragment StoreEntitySet="ReturnDetailReportByClient">
+          <ScalarProperty Name="GrossMargin" ColumnName="GrossMargin" />
+          <ScalarProperty Name="GrossProfit" ColumnName="GrossProfit" />
+          <ScalarProperty Name="VLName" ColumnName="VLName" />
+          <ScalarProperty Name="SubItemName" ColumnName="SubItemName" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnDistributorDetailsViews">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnDistributorDetailsView">
+        <MappingFragment StoreEntitySet="ReturnDistributorDetailsView">
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="IsDistributor" ColumnName="IsDistributor" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Address1" ColumnName="Address1" />
+          <ScalarProperty Name="Address2" ColumnName="Address2" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Phone1" ColumnName="Phone1" />
+          <ScalarProperty Name="Phone2" ColumnName="Phone2" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="NickName" ColumnName="NickName" />
+          <ScalarProperty Name="PrimaryCoordinator" ColumnName="PrimaryCoordinator" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="SecondaryCoordinator" ColumnName="SecondaryCoordinator" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+          <ScalarProperty Name="Clients" ColumnName="Clients" />
+          <ScalarProperty Name="DistributorLabels" ColumnName="DistributorLabels" />
+          <ScalarProperty Name="DistributorPriceLevelCosts" ColumnName="DistributorPriceLevelCosts" />
+          <ScalarProperty Name="DistributorPriceMarkups" ColumnName="DistributorPriceMarkups" />
+          <ScalarProperty Name="DespatchTo" ColumnName="DespatchTo" />
+          <ScalarProperty Name="Order" ColumnName="Order" />
+          <ScalarProperty Name="ShipTo" ColumnName="ShipTo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnDistributorPrimaryCoordinators">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnDistributorPrimaryCoordinator">
+        <MappingFragment StoreEntitySet="ReturnDistributorPrimaryCoordinator">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnDistributorSecondaryCoordinators">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnDistributorSecondaryCoordinator">
+        <MappingFragment StoreEntitySet="ReturnDistributorSecondaryCoordinator">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnDownloadPriceListViews">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnDownloadPriceListView">
+        <MappingFragment StoreEntitySet="ReturnDownloadPriceListView">
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="Label" ColumnName="Label" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PriceTerm" ColumnName="PriceTerm" />
+          <ScalarProperty Name="EditedPrice" ColumnName="EditedPrice" />
+          <ScalarProperty Name="CreativeDesign" ColumnName="CreativeDesign" />
+          <ScalarProperty Name="StudioDesign" ColumnName="StudioDesign" />
+          <ScalarProperty Name="ThirdPartyDesign" ColumnName="ThirdPartyDesign" />
+          <ScalarProperty Name="Position1" ColumnName="Position1" />
+          <ScalarProperty Name="Position2" ColumnName="Position2" />
+          <ScalarProperty Name="Position3" ColumnName="Position3" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnIndimanPriceListDataViews">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnIndimanPriceListDataView">
+        <MappingFragment StoreEntitySet="ReturnIndimanPriceListDataView">
+          <ScalarProperty Name="SportsCategory" ColumnName="SportsCategory" />
+          <ScalarProperty Name="OtherCategories" ColumnName="OtherCategories" />
+          <ScalarProperty Name="PatternID" ColumnName="PatternID" />
+          <ScalarProperty Name="ItemSubCategoris" ColumnName="ItemSubCategoris" />
+          <ScalarProperty Name="NickName" ColumnName="NickName" />
+          <ScalarProperty Name="FabricName" ColumnName="FabricName" />
+          <ScalarProperty Name="FabricCodenNickName" ColumnName="FabricCodenNickName" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="ConvertionFactor" ColumnName="ConvertionFactor" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="PriceLevelCost" ColumnName="PriceLevelCost" />
+          <ScalarProperty Name="PriceLevel" ColumnName="PriceLevel" />
+          <ScalarProperty Name="FactoryCost" ColumnName="FactoryCost" />
+          <ScalarProperty Name="IndimanCost" ColumnName="IndimanCost" />
+          <ScalarProperty Name="Distribuotor" ColumnName="Distribuotor" />
+          <ScalarProperty Name="Markup" ColumnName="Markup" />
+          <ScalarProperty Name="EditedCIFPrice" ColumnName="EditedCIFPrice" />
+          <ScalarProperty Name="EditedFOBPrice" ColumnName="EditedFOBPrice" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnIntViews">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnIntView">
+        <MappingFragment StoreEntitySet="ReturnIntView">
+          <ScalarProperty Name="RetVal" ColumnName="RetVal" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnInvoiceDetails">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnInvoiceDetail">
+        <MappingFragment StoreEntitySet="ReturnInvoiceDetails">
+          <ScalarProperty Name="Invoice" ColumnName="Invoice" />
+          <ScalarProperty Name="InvoiceNo" ColumnName="InvoiceNo" />
+          <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+          <ScalarProperty Name="ShipTo" ColumnName="ShipTo" />
+          <ScalarProperty Name="AWBNo" ColumnName="AWBNo" />
+          <ScalarProperty Name="ETD" ColumnName="ETD" />
+          <ScalarProperty Name="IndimanInvoiceNo" ColumnName="IndimanInvoiceNo" />
+          <ScalarProperty Name="ShipmentMode" ColumnName="ShipmentMode" />
+          <ScalarProperty Name="IndimanInvoiceDate" ColumnName="IndimanInvoiceDate" />
+          <ScalarProperty Name="FactoryRate" ColumnName="FactoryRate" />
+          <ScalarProperty Name="IndimanRate" ColumnName="IndimanRate" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="FactoryTotal" ColumnName="FactoryTotal" />
+          <ScalarProperty Name="IndimanTotal" ColumnName="IndimanTotal" />
+          <ScalarProperty Name="WeeklyProductionCapacity" ColumnName="WeeklyProductionCapacity" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="BillTo" ColumnName="BillTo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnInvoiceOrderDetailViews">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnInvoiceOrderDetailView">
+        <MappingFragment StoreEntitySet="ReturnInvoiceOrderDetailView">
+          <ScalarProperty Name="OrderDetail" ColumnName="OrderDetail" />
+          <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+          <ScalarProperty Name="VisualLayout" ColumnName="VisualLayout" />
+          <ScalarProperty Name="VisualLayoutID" ColumnName="VisualLayoutID" />
+          <ScalarProperty Name="PatternID" ColumnName="PatternID" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="FabricID" ColumnName="FabricID" />
+          <ScalarProperty Name="Fabric" ColumnName="Fabric" />
+          <ScalarProperty Name="Order" ColumnName="Order" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="PurONo" ColumnName="PurONo" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="Coordinator" ColumnName="Coordinator" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+          <ScalarProperty Name="FactoryRate" ColumnName="FactoryRate" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="AgeGroup" ColumnName="AgeGroup" />
+          <ScalarProperty Name="IndimanRate" ColumnName="IndimanRate" />
+          <ScalarProperty Name="InvoiceOrder" ColumnName="InvoiceOrder" />
+          <ScalarProperty Name="ShipmentAddress" ColumnName="ShipmentAddress" />
+          <ScalarProperty Name="ShipmentMode" ColumnName="ShipmentMode" />
+          <ScalarProperty Name="DestinationPort" ColumnName="DestinationPort" />
+          <ScalarProperty Name="ShipmentTerm" ColumnName="ShipmentTerm" />
+          <ScalarProperty Name="CostSheet" ColumnName="CostSheet" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnOrderDetailsIndicoPriceViews">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnOrderDetailsIndicoPriceView">
+        <MappingFragment StoreEntitySet="ReturnOrderDetailsIndicoPriceView">
+          <ScalarProperty Name="OrderDetail" ColumnName="OrderDetail" />
+          <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+          <ScalarProperty Name="VisualLayout" ColumnName="VisualLayout" />
+          <ScalarProperty Name="VisualLayoutID" ColumnName="VisualLayoutID" />
+          <ScalarProperty Name="ArtWorkID" ColumnName="ArtWorkID" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="PatternID" ColumnName="PatternID" />
+          <ScalarProperty Name="FabricID" ColumnName="FabricID" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="Fabric" ColumnName="Fabric" />
+          <ScalarProperty Name="VisualLayoutNotes" ColumnName="VisualLayoutNotes" />
+          <ScalarProperty Name="Order" ColumnName="Order" />
+          <ScalarProperty Name="Label" ColumnName="Label" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+          <ScalarProperty Name="ShipmentDate" ColumnName="ShipmentDate" />
+          <ScalarProperty Name="SheduledDate" ColumnName="SheduledDate" />
+          <ScalarProperty Name="IsRepeat" ColumnName="IsRepeat" />
+          <ScalarProperty Name="RequestedDate" ColumnName="RequestedDate" />
+          <ScalarProperty Name="EditedPrice" ColumnName="EditedPrice" />
+          <ScalarProperty Name="EditedPriceRemarks" ColumnName="EditedPriceRemarks" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="EditedIndicoPrice" ColumnName="EditedIndicoPrice" />
+          <ScalarProperty Name="TotalIndicoPrice" ColumnName="TotalIndicoPrice" />
+          <ScalarProperty Name="Surcharge" ColumnName="Surcharge" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnOrderQuantitiesAndAmounts">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnOrderQuantitiesAndAmount">
+        <MappingFragment StoreEntitySet="ReturnOrderQuantitiesAndAmount">
+          <ScalarProperty Name="GrossMargin" ColumnName="GrossMargin" />
+          <ScalarProperty Name="GrossProfit" ColumnName="GrossProfit" />
+          <ScalarProperty Name="MonthAndYear" ColumnName="MonthAndYear" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="QuantityPercentage" ColumnName="QuantityPercentage" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="ValuePercentage" ColumnName="ValuePercentage" />
+          <ScalarProperty Name="AvgPrice" ColumnName="AvgPrice" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnOrdersClients">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnOrdersClient">
+        <MappingFragment StoreEntitySet="ReturnOrdersClients">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnOrdersCoordinators">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnOrdersCoordinator">
+        <MappingFragment StoreEntitySet="ReturnOrdersCoordinators">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnOrdersDistributors">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnOrdersDistributor">
+        <MappingFragment StoreEntitySet="ReturnOrdersDistributors">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnOrdersShipmentAddressViews">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnOrdersShipmentAddressView">
+        <MappingFragment StoreEntitySet="ReturnOrdersShipmentAddressView">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnPatternDetailsViews">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnPatternDetailsView">
+        <MappingFragment StoreEntitySet="ReturnPatternDetailsView">
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="SubItem" ColumnName="SubItem" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="AgeGroup" ColumnName="AgeGroup" />
+          <ScalarProperty Name="SizeSet" ColumnName="SizeSet" />
+          <ScalarProperty Name="CoreCategory" ColumnName="CoreCategory" />
+          <ScalarProperty Name="PrinterType" ColumnName="PrinterType" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="OriginRef" ColumnName="OriginRef" />
+          <ScalarProperty Name="NickName" ColumnName="NickName" />
+          <ScalarProperty Name="Keywords" ColumnName="Keywords" />
+          <ScalarProperty Name="CorePattern" ColumnName="CorePattern" />
+          <ScalarProperty Name="FactoryDescription" ColumnName="FactoryDescription" />
+          <ScalarProperty Name="Consumption" ColumnName="Consumption" />
+          <ScalarProperty Name="ConvertionFactor" ColumnName="ConvertionFactor" />
+          <ScalarProperty Name="SpecialAttributes" ColumnName="SpecialAttributes" />
+          <ScalarProperty Name="PatternNotes" ColumnName="PatternNotes" />
+          <ScalarProperty Name="PriceRemarks" ColumnName="PriceRemarks" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+          <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="IsTemplate" ColumnName="IsTemplate" />
+          <ScalarProperty Name="Parent" ColumnName="Parent" />
+          <ScalarProperty Name="GarmentSpecStatus" ColumnName="GarmentSpecStatus" />
+          <ScalarProperty Name="IsActiveWS" ColumnName="IsActiveWS" />
+          <ScalarProperty Name="IsCoreRange" ColumnName="IsCoreRange" />
+          <ScalarProperty Name="HTSCode" ColumnName="HTSCode" />
+          <ScalarProperty Name="SMV" ColumnName="SMV" />
+          <ScalarProperty Name="MarketingDescription" ColumnName="MarketingDescription" />
+          <ScalarProperty Name="PatternParent" ColumnName="PatternParent" />
+          <ScalarProperty Name="Reservation" ColumnName="Reservation" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="PatternTemplateImage" ColumnName="PatternTemplateImage" />
+          <ScalarProperty Name="Product" ColumnName="Product" />
+          <ScalarProperty Name="OrderDetail" ColumnName="OrderDetail" />
+          <ScalarProperty Name="VisualLayout" ColumnName="VisualLayout" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnProductionCapacitiesViews">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnProductionCapacitiesView">
+        <MappingFragment StoreEntitySet="ReturnProductionCapacitiesView">
+          <ScalarProperty Name="Firms" ColumnName="Firms" />
+          <ScalarProperty Name="ResevationOrders" ColumnName="ResevationOrders" />
+          <ScalarProperty Name="Resevations" ColumnName="Resevations" />
+          <ScalarProperty Name="Holds" ColumnName="Holds" />
+          <ScalarProperty Name="Less5Items" ColumnName="Less5Items" />
+          <ScalarProperty Name="Samples" ColumnName="Samples" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnProductionPlanningDetailsViews">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnProductionPlanningDetailsView">
+        <MappingFragment StoreEntitySet="ReturnProductionPlanningDetailsView">
+          <ScalarProperty Name="WeeklyProductionCapacity" ColumnName="WeeklyProductionCapacity" />
+          <ScalarProperty Name="Week" ColumnName="Week" />
+          <ScalarProperty Name="OrderDetail" ColumnName="OrderDetail" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+          <ScalarProperty Name="PurchaseOrder" ColumnName="PurchaseOrder" />
+          <ScalarProperty Name="Product" ColumnName="Product" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="SMV" ColumnName="SMV" />
+          <ScalarProperty Name="TotalSMV" ColumnName="TotalSMV" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+          <ScalarProperty Name="Mode" ColumnName="Mode" />
+          <ScalarProperty Name="ShipTo" ColumnName="ShipTo" />
+          <ScalarProperty Name="Port" ColumnName="Port" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="ProductionLine" ColumnName="ProductionLine" />
+          <ScalarProperty Name="SewingDate" ColumnName="SewingDate" />
+          <ScalarProperty Name="FOCPenalty" ColumnName="FOCPenalty" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnShiipingDetailsViews">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnShiipingDetailsView">
+        <MappingFragment StoreEntitySet="ReturnShiipingDetailsView">
+          <ScalarProperty Name="OrderDetail" ColumnName="OrderDetail" />
+          <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+          <ScalarProperty Name="VisualLayout" ColumnName="VisualLayout" />
+          <ScalarProperty Name="PatternID" ColumnName="PatternID" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="FabricID" ColumnName="FabricID" />
+          <ScalarProperty Name="Fabric" ColumnName="Fabric" />
+          <ScalarProperty Name="VisualLayoutNotes" ColumnName="VisualLayoutNotes" />
+          <ScalarProperty Name="Order" ColumnName="Order" />
+          <ScalarProperty Name="OrderDetailStatus" ColumnName="OrderDetailStatus" />
+          <ScalarProperty Name="ShipmentDate" ColumnName="ShipmentDate" />
+          <ScalarProperty Name="SheduledDate" ColumnName="SheduledDate" />
+          <ScalarProperty Name="RequestedDate" ColumnName="RequestedDate" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="PurONo" ColumnName="PurONo" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="Coordinator" ColumnName="Coordinator" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+          <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="SubItem" ColumnName="SubItem" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnShipmentDatesViews">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnShipmentDatesView">
+        <MappingFragment StoreEntitySet="ReturnShipmentDatesView">
+          <ScalarProperty Name="ShipmentDate" ColumnName="ShipmentDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnShippingAddressWeekendDates">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnShippingAddressWeekendDate">
+        <MappingFragment StoreEntitySet="ReturnShippingAddressWeekendDate">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnStringViews">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnStringView">
+        <MappingFragment StoreEntitySet="ReturnStringView">
+          <ScalarProperty Name="RetVal" ColumnName="RetVal" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnVisualLayoutDetailsViews">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnVisualLayoutDetailsView">
+        <MappingFragment StoreEntitySet="ReturnVisualLayoutDetailsView">
+          <ScalarProperty Name="VisualLayout" ColumnName="VisualLayout" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="Fabric" ColumnName="Fabric" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="Coordinator" ColumnName="Coordinator" />
+          <ScalarProperty Name="NNPFilePath" ColumnName="NNPFilePath" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="IsCommonProduct" ColumnName="IsCommonProduct" />
+          <ScalarProperty Name="ResolutionProfile" ColumnName="ResolutionProfile" />
+          <ScalarProperty Name="Printer" ColumnName="Printer" />
+          <ScalarProperty Name="SizeSet" ColumnName="SizeSet" />
+          <ScalarProperty Name="OrderDetails" ColumnName="OrderDetails" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnWeeklyAddressDetails">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnWeeklyAddressDetail">
+        <MappingFragment StoreEntitySet="ReturnWeeklyAddressDetails">
+          <ScalarProperty Name="OrderDetail" ColumnName="OrderDetail" />
+          <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+          <ScalarProperty Name="VisualLayout" ColumnName="VisualLayout" />
+          <ScalarProperty Name="VisualLayoutID" ColumnName="VisualLayoutID" />
+          <ScalarProperty Name="PatternID" ColumnName="PatternID" />
+          <ScalarProperty Name="Pattern" ColumnName="Pattern" />
+          <ScalarProperty Name="FabricID" ColumnName="FabricID" />
+          <ScalarProperty Name="FabricCode" ColumnName="FabricCode" />
+          <ScalarProperty Name="FabricName" ColumnName="FabricName" />
+          <ScalarProperty Name="FabricMaterial" ColumnName="FabricMaterial" />
+          <ScalarProperty Name="VisualLayoutNotes" ColumnName="VisualLayoutNotes" />
+          <ScalarProperty Name="Order" ColumnName="Order" />
+          <ScalarProperty Name="Label" ColumnName="Label" />
+          <ScalarProperty Name="OrderDetailStatus" ColumnName="OrderDetailStatus" />
+          <ScalarProperty Name="OrderDetailStatusID" ColumnName="OrderDetailStatusID" />
+          <ScalarProperty Name="ShipmentDate" ColumnName="ShipmentDate" />
+          <ScalarProperty Name="SheduledDate" ColumnName="SheduledDate" />
+          <ScalarProperty Name="RequestedDate" ColumnName="RequestedDate" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="PurONo" ColumnName="PurONo" />
+          <ScalarProperty Name="Distributor" ColumnName="Distributor" />
+          <ScalarProperty Name="Coordinator" ColumnName="Coordinator" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+          <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+          <ScalarProperty Name="OrderStatusID" ColumnName="OrderStatusID" />
+          <ScalarProperty Name="ShimentModeID" ColumnName="ShimentModeID" />
+          <ScalarProperty Name="ShipmentMode" ColumnName="ShipmentMode" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Suberb" ColumnName="Suberb" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="ContactDetails" ColumnName="ContactDetails" />
+          <ScalarProperty Name="IsWeeklyShipment" ColumnName="IsWeeklyShipment" />
+          <ScalarProperty Name="IsAdelaideWareHouse" ColumnName="IsAdelaideWareHouse" />
+          <ScalarProperty Name="ShipTo" ColumnName="ShipTo" />
+          <ScalarProperty Name="HSCode" ColumnName="HSCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnWeeklyOrderDetailQtysViews">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnWeeklyOrderDetailQtysView">
+        <MappingFragment StoreEntitySet="ReturnWeeklyOrderDetailQtysView">
+          <ScalarProperty Name="OrderDetail" ColumnName="OrderDetail" />
+          <ScalarProperty Name="SizeID" ColumnName="SizeID" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReturnWeeklySummaryViews">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnWeeklySummaryView">
+        <MappingFragment StoreEntitySet="ReturnWeeklySummaryView">
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="ShipmentMode" ColumnName="ShipmentMode" />
+          <ScalarProperty Name="ShipmentModeID" ColumnName="ShipmentModeID" />
+          <ScalarProperty Name="DistributorClientAddress" ColumnName="DistributorClientAddress" />
+          <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+          <ScalarProperty Name="InvoiceStatus" ColumnName="InvoiceStatus" />
+          <ScalarProperty Name="ShipmentDate" ColumnName="ShipmentDate" />
+          <ScalarProperty Name="Invoice" ColumnName="Invoice" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SupplierDetailsViews">
+      <EntityTypeMapping TypeName="IndicoModel1.SupplierDetailsView">
+        <MappingFragment StoreEntitySet="SupplierDetailsView">
+          <ScalarProperty Name="Supplier" ColumnName="Supplier" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="IsAccessoriesWherethisSupplier" ColumnName="IsAccessoriesWherethisSupplier" />
+          <ScalarProperty Name="IsFabricCodesWherethisSupplier" ColumnName="IsFabricCodesWherethisSupplier" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserMenuItemRoleViews">
+      <EntityTypeMapping TypeName="IndicoModel1.UserMenuItemRoleView">
+        <MappingFragment StoreEntitySet="UserMenuItemRoleView">
+          <ScalarProperty Name="User" ColumnName="User" />
+          <ScalarProperty Name="Page" ColumnName="Page" />
+          <ScalarProperty Name="MenuItem" ColumnName="MenuItem" />
+          <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+          <ScalarProperty Name="Parent" ColumnName="Parent" />
+          <ScalarProperty Name="Position" ColumnName="Position" />
+          <ScalarProperty Name="IsVisible" ColumnName="IsVisible" />
+          <ScalarProperty Name="PageName" ColumnName="PageName" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Heading" ColumnName="Heading" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UsersDetailsViews">
+      <EntityTypeMapping TypeName="IndicoModel1.UsersDetailsView">
+        <MappingFragment StoreEntitySet="UsersDetailsView">
+          <ScalarProperty Name="User" ColumnName="User" />
+          <ScalarProperty Name="Company" ColumnName="Company" />
+          <ScalarProperty Name="IsDistributor" ColumnName="IsDistributor" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="CompanyType" ColumnName="CompanyType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VisualLayoutClients">
+      <EntityTypeMapping TypeName="IndicoModel1.VisualLayoutClient">
+        <MappingFragment StoreEntitySet="VisualLayoutClients">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VisualLayoutCoordinators">
+      <EntityTypeMapping TypeName="IndicoModel1.VisualLayoutCoordinator">
+        <MappingFragment StoreEntitySet="VisualLayoutCoordinators">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="GivenName" ColumnName="GivenName" />
+          <ScalarProperty Name="FamilyName" ColumnName="FamilyName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VisualLayoutDistributors">
+      <EntityTypeMapping TypeName="IndicoModel1.VisualLayoutDistributor">
+        <MappingFragment StoreEntitySet="VisualLayoutDistributors">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="DistributorLabel" TypeName="IndicoModel1.DistributorLabel" StoreEntitySet="DistributorLabel">
+      <EndProperty Name="Company">
+        <ScalarProperty Name="ID" ColumnName="Distributor" />
+      </EndProperty>
+      <EndProperty Name="Label">
+        <ScalarProperty Name="ID" ColumnName="Label" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="MenuItemRole" TypeName="IndicoModel1.MenuItemRole" StoreEntitySet="MenuItemRole">
+      <EndProperty Name="MenuItem">
+        <ScalarProperty Name="ID" ColumnName="MenuItem" />
+      </EndProperty>
+      <EndProperty Name="Role">
+        <ScalarProperty Name="ID" ColumnName="Role" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PatternOtherCategory" TypeName="IndicoModel1.PatternOtherCategory" StoreEntitySet="PatternOtherCategory">
+      <EndProperty Name="Category">
+        <ScalarProperty Name="ID" ColumnName="Category" />
+      </EndProperty>
+      <EndProperty Name="Pattern">
+        <ScalarProperty Name="ID" ColumnName="Pattern" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UserRole" TypeName="IndicoModel1.UserRole" StoreEntitySet="UserRole">
+      <EndProperty Name="Role">
+        <ScalarProperty Name="ID" ColumnName="Role" />
+      </EndProperty>
+      <EndProperty Name="User">
+        <ScalarProperty Name="ID" ColumnName="User" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <FunctionImportMapping FunctionImportName="GetDetailReportByClient" FunctionName="IndicoModel1.Store.SPC_GetDetailReportByClient" />
+    <FunctionImportMapping FunctionImportName="GetOrderQuantitiesAndAmountForDistributorsForGivenDateRange" FunctionName="IndicoModel1.Store.SPC_GetOrderQuantitiesAndAmountForDistributorsForGivenDateRange" />
+    <EntitySetMapping Name="ReturnDetailReportByDistributors">
+      <EntityTypeMapping TypeName="IndicoModel1.ReturnDetailReportByDistributor">
+        <MappingFragment StoreEntitySet="ReturnDetailReportByDistributor">
+          <ScalarProperty Name="GrossMargin" ColumnName="GrossMargin" />
+          <ScalarProperty Name="GrossProfit" ColumnName="GrossProfit" />
+          <ScalarProperty Name="IndimanPrice" ColumnName="IndimanPrice" />
+          <ScalarProperty Name="AvgPrice" ColumnName="AvgPrice" />
+          <ScalarProperty Name="ValuePercentage" ColumnName="ValuePercentage" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="QuantityPercentage" ColumnName="QuantityPercentage" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="Client" ColumnName="Client" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MonthAndYear" ColumnName="MonthAndYear" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetDetailReportByDistributor" FunctionName="IndicoModel1.Store.SPC_GetDetailReportByDistributor" />
+  </EntityContainerMapping>
+</Mapping>

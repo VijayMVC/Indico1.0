@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1ca18ea1c978435abe5c13f0c40493e7" Name="Diagram1">
+        <EntityTypeShape EntityType="IndicoModel1.Accessory" Width="1.5" PointX="27.75" PointY="95.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.AccessoryCategory" Width="1.5" PointX="25.5" PointY="79.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.AccessoryColor" Width="1.5" PointX="28.5" PointY="91.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.AcquiredVisulaLayoutName" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.AgeGroup" Width="1.5" PointX="26.25" PointY="89.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ArtWork" Width="1.5" PointX="15.75" PointY="88.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ArtWorktAccessory" Width="1.5" PointX="18" PointY="86.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.AutoOrderNumber" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Bank" Width="1.5" PointX="3" PointY="98" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Carton" Width="1.5" PointX="38.75" PointY="92.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Category" Width="1.5" PointX="26.25" PointY="86.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Client" Width="1.5" PointX="8.25" PointY="94.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ClientType" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ColourProfile" Width="1.5" PointX="10.5" PointY="87.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Company" Width="1.5" PointX="6" PointY="95" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.CompanyType" Width="1.5" PointX="3.75" PointY="95.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.CoordinatorEmailAddress" Width="1.5" PointX="19.5" PointY="97.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.CostSheet" Width="1.5" PointX="22.5" PointY="105.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.CostSheetRemark" Width="1.5" PointX="27.75" PointY="116.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Country" Width="1.5" PointX="0.75" PointY="98.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Currency" Width="1.5" PointX="28.5" PointY="88.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.DefaultValuesPriceList" Width="1.5" PointX="19.5" PointY="115.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.DeliveryMethod" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.DeliveryOption" Width="1.5" PointX="17.25" PointY="81" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.DesignType" Width="1.5" PointX="38.75" PointY="83" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.DestinationPort" Width="1.5" PointX="16.5" PointY="83.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.DistributorClientAddress" Width="1.5" PointX="18.75" PointY="90.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.DistributorEmailAddress" Width="1.5" PointX="8.25" PointY="97.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.DistributorPriceLevelCost" Width="1.5" PointX="11.25" PointY="99.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.DistributorPriceLevelCostHistory" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.DistributorPriceMarkup" Width="1.5" PointX="11.25" PointY="104.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.DistributorSendMailCount" Width="1.5" PointX="13.25" PointY="96.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.DistributorType" Width="1.5" PointX="3.75" PointY="103.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.EmailLogo" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Embroidery" Width="1.5" PointX="14.25" PointY="100" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.EmbroideryDetail" Width="1.5" PointX="22.5" PointY="100.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.EmbroideryImage" Width="1.5" PointX="24.75" PointY="93.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.EmbroideryStatu" Width="1.5" PointX="20.25" PointY="87.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.FabricCode" Width="1.5" PointX="30.75" PointY="91" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.FabricCodeType" Width="1.5" PointX="33.75" PointY="91.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.FabricType" Width="1.5" PointX="20.25" PointY="120.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.FactoryOrderDetial" Width="1.5" PointX="33" PointY="115.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.FactoryPriceRemark" Width="1.5" PointX="38.25" PointY="98.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Gender" Width="1.5" PointX="26.25" PointY="83" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.HSCode" Width="1.5" PointX="35.5" PointY="115.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Image" Width="1.5" PointX="36" PointY="94.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.IndimanCostSheetRemark" Width="1.5" PointX="24.75" PointY="117.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.IndimanPriceRemark" Width="1.5" PointX="38.25" PointY="95.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Invoice" Width="1.5" PointX="8.25" PointY="101.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.InvoiceOrder" Width="1.5" PointX="13.5" PointY="106.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.InvoiceStatu" Width="1.5" PointX="6" PointY="92.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Item" Width="1.5" PointX="26.25" PointY="122.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ItemAttribute" Width="1.5" PointX="31.5" PointY="119" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ItemMeasurementGuideImage" Width="1.5" PointX="28.5" PointY="126.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ItemType" Width="1.5" PointX="24" PointY="123.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.JobName" Width="1.5" PointX="10.5" PointY="93.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.JobTitle" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Keyword" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Label" Width="1.5" PointX="8.25" PointY="115.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.LabelPriceLevelCost" Width="1.5" PointX="25.5" PointY="106.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.LabelPriceListDownload" Width="1.5" PointX="25.5" PointY="101.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.LabelPriceMarkup" Width="1.5" PointX="44.25" PointY="110.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.MeasurementLocation" Width="1.5" PointX="34.5" PointY="119.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.MenuItem" Width="1.5" PointX="12.75" PointY="110" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.MYOBCardFile" Width="1.5" PointX="17.25" PointY="77.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.NickName" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Order" Width="1.5" PointX="19.5" PointY="100.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.OrderDetail" Width="1.5" PointX="30.75" PointY="99.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.OrderDetailQty" Width="1.5" PointX="39" PointY="102.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.OrderDetailStatu" Width="1.5" PointX="8.25" PointY="118.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.OrderStatu" Width="1.5" PointX="17.25" PointY="74.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.OrderType" Width="1.5" PointX="28.5" PointY="84.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PackingList" Width="1.5" PointX="41" PointY="106.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PackingListCartonItem" Width="1.5" PointX="43.25" PointY="107.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PackingListSizeQty" Width="1.5" PointX="44.25" PointY="104.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Page" Width="1.5" PointX="10.5" PointY="110.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Pattern" Width="1.5" PointX="28.5" PointY="101.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PatternAccessory" Width="1.5" PointX="36.75" PointY="102.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PatternCompressionImage" Width="1.5" PointX="26.25" PointY="127" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PatternHistory" Width="1.5" PointX="30.75" PointY="111.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PatternItemAttributeSub" Width="1.5" PointX="33.75" PointY="112.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PatternSupplier" Width="1.5" PointX="25.5" PointY="111.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PatternSupportAccessory" Width="1.5" PointX="38.75" PointY="106" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PatternSupportFabric" Width="1.5" PointX="36" PointY="98.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PatternTemplateImage" Width="1.5" PointX="30.75" PointY="115.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PaymentMethod" Width="1.5" PointX="17.25" PointY="117.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PocketType" Width="1.5" PointX="13.5" PointY="82.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Price" Width="1.5" PointX="36" PointY="105.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PriceChangeEmailList" Width="1.5" PointX="19.5" PointY="148.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PriceHistroy" Width="1.5" PointX="38.25" PointY="114.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PriceLevel" Width="1.5" PointX="39" PointY="123.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PriceLevelCost" Width="1.5" PointX="41.25" PointY="111.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PriceLevelNew" Width="1.5" PointX="19.5" PointY="151.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PriceListDownload" Width="1.5" PointX="13.25" PointY="91.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PriceMarkupLabel" Width="1.5" PointX="23.25" PointY="97.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PriceRemark" Width="1.5" PointX="38.25" PointY="119.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PriceTerm" Width="1.5" PointX="11" PointY="82.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Printer" Width="1.5" PointX="31.5" PointY="85.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PrinterType" Width="1.5" PointX="26.25" PointY="129.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Product" Width="1.5" PointX="12.75" PointY="85.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ProductionLine" Width="1.5" PointX="26.25" PointY="132.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ProductionPlanning" Width="1.5" PointX="41" PointY="98.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ProductSequence" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Quote" Width="1.5" PointX="16.25" PointY="94" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.QuoteChangeEmailList" Width="1.5" PointX="19.5" PointY="154.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.QuoteDetail" Width="1.5" PointX="41" PointY="92.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.QuoteStatu" Width="1.5" PointX="14" PointY="76.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Reservation" Width="1.5" PointX="33.75" PointY="104.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReservationStatu" Width="1.5" PointX="31.5" PointY="87.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ResolutionProfile" Width="1.5" PointX="13.5" PointY="79" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Role" Width="1.5" PointX="15" PointY="110.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Setting" Width="1.5" PointX="2.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ShipmentMode" Width="1.5" PointX="6" PointY="106.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Size" Width="1.5" PointX="36.75" PointY="86.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.SizeChart" Width="1.5" PointX="36.75" PointY="111.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.SizeSet" Width="1.5" PointX="26.25" PointY="134.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.SportsCategory" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Supplier" Width="1.5" PointX="25.5" PointY="97" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.Unit" Width="1.5" PointX="26.25" PointY="137.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.User" Width="1.5" PointX="17.25" PointY="99.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.UserHistory" Width="1.5" PointX="19.5" PointY="160.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.UserLogin" Width="1.5" PointX="19.5" PointY="165.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.UserStatu" Width="1.5" PointX="15" PointY="114" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.VisualLayout" Width="1.5" PointX="33.75" PointY="96.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.VisualLayoutAccessory" Width="1.5" PointX="42" PointY="102.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.VisualLayoutFabric" Width="1.5" PointX="36" PointY="91" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.WeeklyProductionCapacity" Width="1.5" PointX="6" PointY="109.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.WeeklyProductionCapacityDetail" Width="1.5" PointX="29.25" PointY="120.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.AccessoryDetailsView" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ClientOrderDetailsView" Width="1.5" PointX="8.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.CostSheetDetailsView" Width="1.5" PointX="4.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.DistributorClientAddressDetailsView" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.DistributorNullPatternPriceLevelCostView" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.DistributorPatternPriceLevelCostView" Width="1.5" PointX="10.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.EmbroideryDetailsView" Width="1.5" PointX="10.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ExcelPriceLevelCostView" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.FabricCodeDetailsView" Width="1.5" PointX="12.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.GetMeasureLocForPatternSizeView" Width="1.5" PointX="12.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.GetNonAssignedPriceMarkupDistributorsView" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.HSCodeDetail" Width="1.5" PointX="0.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.IndicoCIFPriceView" Width="1.5" PointX="14.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.IndimanPriceView" Width="1.5" PointX="6.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ItemAttributesDetailsView" Width="1.5" PointX="8.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.LabelPatternPriceLevelCostView" Width="1.5" PointX="14.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.LastRecordOfVisullayoutPrefixC" Width="1.5" PointX="14.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.LastRecordOfVisullayoutPrefixDY" Width="1.5" PointX="16.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.LastRecordOfVisullayoutPrefixVL" Width="1.5" PointX="16.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.OrderDetailsView" Width="1.5" PointX="16.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PackingListView" Width="1.5" PointX="10.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PatternCoreCategoriesView" Width="1.5" PointX="12.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PendingPricesView" Width="1.5" PointX="14.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.PriceLevelCostView" Width="1.5" PointX="16.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.QuotesDetailsView" Width="1.5" PointX="0.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReservationDetailsView" Width="1.5" PointX="2.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnBackOrdersView" Width="1.5" PointX="18.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnCartonsDetailsView" Width="1.5" PointX="18.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnClientsDetailsView" Width="1.5" PointX="4.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnDetailReportByClient" Width="1.5" PointX="6.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnDistributorDetailsView" Width="1.5" PointX="18.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnDistributorPrimaryCoordinator" Width="1.5" PointX="20.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnDistributorSecondaryCoordinator" Width="1.5" PointX="20.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnDownloadPriceListView" Width="1.5" PointX="20.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnIndimanPriceListDataView" Width="1.5" PointX="20.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnIntView" Width="1.5" PointX="12.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnInvoiceDetail" Width="1.5" PointX="20.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnInvoiceOrderDetailView" Width="1.5" PointX="6.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnOrderDetailsIndicoPriceView" Width="1.5" PointX="14.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnOrderQuantitiesAndAmount" Width="1.5" PointX="16.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnOrdersClient" Width="1.5" PointX="22.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnOrdersCoordinator" Width="1.5" PointX="22.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnOrdersDistributor" Width="1.5" PointX="22.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnOrdersShipmentAddressView" Width="1.5" PointX="22.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnPatternDetailsView" Width="1.5" PointX="22.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnProductionCapacitiesView" Width="1.5" PointX="22.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnProductionPlanningDetailsView" Width="1.5" PointX="8.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnShiipingDetailsView" Width="1.5" PointX="10.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnShipmentDatesView" Width="1.5" PointX="18.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnShippingAddressWeekendDate" Width="1.5" PointX="24.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnStringView" Width="1.5" PointX="0.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnVisualLayoutDetailsView" Width="1.5" PointX="2.75" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnWeeklyAddressDetail" Width="1.5" PointX="24.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnWeeklyOrderDetailQtysView" Width="1.5" PointX="24.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnWeeklySummaryView" Width="1.5" PointX="24.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.SupplierDetailsView" Width="1.5" PointX="24.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.UserMenuItemRoleView" Width="1.5" PointX="24.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.UsersDetailsView" Width="1.5" PointX="16.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.VisualLayoutClient" Width="1.5" PointX="18.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.VisualLayoutCoordinator" Width="1.5" PointX="20.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IndicoModel1.VisualLayoutDistributor" Width="1.5" PointX="26.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="IndicoModel1.FK_Accessory_AccessoryCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Accessory_Supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Accessory_Unit" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_ArtWorktAccessory_Accessory" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PatternAccessory_Accessory" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PatternSupportAccessory_Accessory" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_VisualLayoutAccessory_Accessory" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_ArtWorktAccessory_AccessoryColor" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_EmbroideryDetails_FabricColor" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_FabricCode_FabricColor" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_VisualLayoutAccessory_AccessoryColor" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Pattern_AgeGroup" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_ArtWork_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_ArtWork_FabricCode" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_ArtWork_Pattern" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_ArtWork_PocketType" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_ArtWork_ResolutionProfile" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_ArtWorktAccessory_ArtWork" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_OrderDetail_ArtWork" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_VisualLayout_ArtWork" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Bank_Country" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Bank_Creator" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Bank_Modifier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Invoice_Bank" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PackingList_Carton" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Pattern_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Client_CompanyDistributor" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_JobName_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Product_ColourProfile" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Company_Coordinator" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Company_Country" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Company_Creator" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Company_DistributorType" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Company_Modifier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Company_Owner" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Company_Type" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_DistributorClientAddress_Distributor" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_DistributorEmailAddress_Distributor" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_DistributorPriceLevelCost_Distributor" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_DistributorPriceMarkup_Company" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_DistributorSendMailCount_Distributor" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Embroidery_Distributor" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Order_DespatchTo" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Order_Distributor" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Order_ShipTo" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_OrderDetailStatus_Company" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PriceListDownloads_Distributor" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Quote_Distributor" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Reservation_Distributor" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_SecondaryCoordinator_User" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_User_Company" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_CoordinatorEmailAddress_Distributor" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_CostSheet_Creator" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_CostSheet_Fabric" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_CostSheet_IndimanModifier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_CostSheet_Modifier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_CostSheet_Pattern" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_CostSheetRemarks_CostSheet" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_IndimanCostSheetRemarks_CostSheet" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PatternSupportAccessory_CostSheet" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PatternSupportFabric_CostSheet" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_CostSheetRemarks_Modifier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_DistributorAddressr_Country" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_FabricCode_Country" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PatternSupplier_Country" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Supplier_Country" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_FabricCode_Currency" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Quote_Currency" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK__DefaultVa__Creat__1D7209DB" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK__DefaultVa__Modif__1E662E14" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Order_DeliveryOption" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_QuoteDetail_DesignType" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_DistributorAddressr_Port" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_DistributorClientAddress_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Invoice_BillTo" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Invoice_ShipTo" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Order_BillingAddress" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Order_DespatchToAddress" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_OrderDetail_DespatchTo" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Reservation_ShipTo" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_DistributorPriceLevelCost_Modifier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_DistributorPriceLevelCost_PriceLevelCost" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_DistributorPriceLevelCost_PriceTerm" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_DistributorPriceMarkup_PriceLevel" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_DistributorSendMailCount_WeeklyProductionCapacity" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Embroidery_Assigned" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Embroidery_Coordinator" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Embroidery_Creator" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Embroidery_Modifier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_EmbroideryDetails_Embroidery" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_EmbroideryDetails_FabricType" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_EmbroideryDetails_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_EmbroideryImage_EmbroideryDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_FabricCode_Supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_FabricCode_Unit" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_OrderDetail_FabricCode" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PatternSupportFabric_Fabric" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Price_Fabric" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_QuoteDetail_Fabric" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_VisualLayout_FabricCode" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_VisualLayoutFabric_Fabric" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_VisualLayoutFabric_FabricCodeType" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_FactoryOrderDetial_OrderDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_FactoryOrderDetial_OrderDetailStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_FactoryOrderDetial_Size" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_FactoryPriceRemarks_Price" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_HSCode_Gender" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Pattern_Gender" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_HSCode_ItemSubCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Image_VisualLayout" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_IndimanCostSheetRemarks_Modifier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_IndimanPriceRemarks_Price" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Invoice_Creator" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Invoice_Modifier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Invoice_ShipmentMode" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Invoice_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Invoice_WeeklyProductionCapacity" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_InvoiceOrder_Invoice" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Order_Invoice" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_InvoiceOrder_OrderDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Item_ItemType" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Item_Parent" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_ItemAttribute_Item" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_ItemMeasurementGuideImage_Item" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_MeasurementLocation_Item" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Pattern_Item" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Pattern_SubItem" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_ItemAttribute_Parent" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PatternItemAttributeSub_ItemAttribute" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_WeeklyProductionCapacityDetails_ItemType" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Client_Creator" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Client_Modifier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Order_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Product_Contact" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_VisualLayout_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_OrderDetail_Label" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_LabelPriceLevelCost_Label" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_LabelPriceLevelCost_Modifier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_LabelPriceLevelCost_PriceLevelCost" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_LabelPriceLevelCost_PriceTerm" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_LabelPriceListDownloads_Creator" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_LabelPriceListDownloads_Label" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_LabelPriceListDownloads_PriceTerm" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_LabelPriceMarkup_Label" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_LabelPriceMarkup_PriceLevel" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_SizeChart_MeasurementLocation" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_MenuItem_Page" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_MenuItem_Parent" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Order_MYOBCardFile" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Order_Creator" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Order_Modifier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Order_OrderStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Order_PaymentMethod" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Order_Reservation" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Order_ShipmentMode" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_OrderDetail_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_OrderDetail_OrderType" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_OrderDetail_Pattern" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_OrderDetail_PaymentMethod" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_OrderDetail_Reservation" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_OrderDetail_ShipmentMode" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_OrderDetail_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_OrderDetail_VisualLayout" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_OrderDetailQty_OrderDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PackingList_OrderDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_ProductionPlanning_OrderDetail" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_OrderDetailQty_Size" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PackingList_Creator" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PackingList_Modifier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PackingList_WeeklyProductionCapacity" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PackingListCartonItem_PackingList" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PackingListSizeQty_PackingList" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PackingListCartonItem_Size" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PackingListSizeQty_Size1" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Image_Pattern" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Pattern_Creator" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Pattern_Modifier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Pattern_Parent" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Pattern_PatternCompressionImage" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Pattern_PatternSupplier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Pattern_PrinterType" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Pattern_ProductionLine" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Pattern_SizeSet" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Pattern_Unit" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PatternAccessory_Pattern" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PatternHistory_Pattern" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PatternItemAttributeSub_Pattern" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PatternSupportAccessory_Pattern" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Price_Pattern" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Product_Pattern" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_QuoteDetail_Pattern" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Reservation_Pattern" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_SizeChart_Pattern" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_VisualLayout_Pattern" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PatternHistory_Modifier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PatternSupplier_Creator" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PatternSupplier_Modifier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_VisualLayout_PocketType" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Price_Creator" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Price_Modifier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PriceHistroy_Price" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PriceLevelCost_Price" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PriceRemarks_Price" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Price_User" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PriceLevelCost_PriceLevel" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PriceLevelCost_Creator" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PriceLevelCost_Modifier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PriceLevelNew_User" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PriceListDownloads_Creator" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_PriceListDownloads_PriceTerm" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_QuoteDetail_PriceTerm" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Product_Printer" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_VisualLayout_Printer" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Product_ResolutionProfile" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_ProductionPlanning_ProductionLine" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_ProductionPlanning_WeeklyProductionCapacity" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Quote_Creator" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Quote_Modifier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Quote_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_QuoteDetail_Quote" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_QuoteChangeEmailList_User" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_QuoteDetail_Unit" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_QuoteDetail_VisualLayout" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Reservation_Coordinator" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Reservation_Creator" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Reservation_Modifier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Reservation_ShipmentMode" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Reservation_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_VisualLayout_ResolutionProfile" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Size_SizeSet" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_SizeChart_Size" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Supplier_Creator" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_Supplier_Modifier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_User_Creator" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_User_Modifier" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_User_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_UserHistory_Creator" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_UserHistory_User" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_UserLogin_User" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_VisualLayoutAccessory_VisualLayout" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_VisualLayoutFabric_VisualLayout" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.FK_WeeklyProductionCapacityDetails_WeeklyProductionCapacity" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.DistributorLabel" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.MenuItemRole" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.PatternOtherCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="IndicoModel1.UserRole" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="IndicoModel1.ReturnDetailReportByDistributor" Width="1.5" PointX="27.375" PointY="3.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

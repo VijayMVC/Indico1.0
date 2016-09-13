@@ -1,0 +1,17 @@
+USE [Indico]
+GO
+
+ALTER TABLE [dbo].[Client]
+ALTER COLUMN [Email] NVARCHAR(255) NULL
+GO
+
+ALTER TABLE [dbo].[Pattern]
+ADD [GUID] NVARCHAR(36) NULL 
+GO
+
+UPDATE [dbo].[Pattern] SET [GUID] = NEWID()
+GO
+
+ALTER TABLE [dbo].[Pattern]
+ALTER COLUMN [GUID] NVARCHAR(36) NOT NULL 
+GO
