@@ -1819,9 +1819,9 @@ namespace Indico
                                 objPCI.Filename = Path.GetFileName(fileNames[0]);
                                 objPCI.Extension = Path.GetExtension(fileNames[0]);
 
-                                this.ObjContext.SaveChanges();
-                                objPattern.PatternCompressionImage = objPCI.ID;
-                                //objPCI.PatternsWhereThisIsPatternCompressionImage.Add(objPattern);
+                                //this.ObjContext.SaveChanges();
+                                //objPattern.PatternCompressionImage = objPCI.ID;
+                                objPCI.PatternsWhereThisIsPatternCompressionImage.Add(objPattern);
                             }
                             catch (Exception ex)
                             {
@@ -2874,7 +2874,7 @@ namespace Indico
             {
                 PatternBO objPattern = new PatternBO();
                 objPattern.ID = this.QueryID;
-                objPattern.GetObject();
+                objPattern.GetObject(false);
 
                 if ((objPattern.PatternCompressionImage ?? 0) > 0)
                 {
