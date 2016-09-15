@@ -136,13 +136,13 @@
                         </asp:DropDownList>
 
                         <label  style="margin-left: 50px;" >From Job name </label>
-                        <asp:DropDownList ID="FromJobNameDropDown" Width="300" runat="server" CssClass="input-medium select2" AutoPostBack="True"
+                        <asp:DropDownList ID="FromJobNameDropDown" Width="300"  runat="server" CssClass="input-medium select2" AutoPostBack="True"
                             OnSelectedIndexChanged="OnFromJobNameDropDownSelectionChanged">
                         </asp:DropDownList>
                     </div>
                     <div style="margin-top: 20px;">
                         <label class="text-info">(control and click to select multiple items)</label>
-                        <telerik:RadListBox RenderMode="Native" runat="server" ID="ProductsListBox" SelectionMode="Multiple" Height="600px" Width="400px">
+                        <telerik:RadListBox CheckBoxes="True" ShowCheckAll="True" RenderMode="Native" runat="server" ID="ProductsListBox" SelectionMode="Multiple" Height="600px" Width="800px">
                             <Items>
                                
                             </Items>

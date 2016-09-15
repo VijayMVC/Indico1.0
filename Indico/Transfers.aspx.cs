@@ -97,7 +97,7 @@ namespace Indico
             ProductsListBox.Items.Clear();
             foreach (var product in products)
             {
-                ProductsListBox.Items.Add(new RadListBoxItem(product.Value, product.Key.ToString()));
+                ProductsListBox.Items.Add(new RadListBoxItem("  "+product.Value, product.Key.ToString()));
             }
 
             var distributors = GetAllDistributors();
@@ -122,7 +122,7 @@ namespace Indico
 
         protected void OnTransferProductsButtonClick(object sender, EventArgs e)
         {
-            var selected = ProductsListBox.SelectedItems;
+            var selected = ProductsListBox.CheckedItems;
             var selectedJobName = int.Parse(ToJobNameDropDown.SelectedValue);
             if (selected.Count < 1)
                 return;
@@ -148,6 +148,7 @@ namespace Indico
             ToJobNameDropDown.Items.Clear();
             ToJobNameDropDown.Enabled = false;
             TransferProductsButton.Enabled = false;
+            FromDistributorVlDropDown.SelectedIndex = 0;
 
         }
 
