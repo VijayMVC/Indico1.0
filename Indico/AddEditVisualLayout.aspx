@@ -73,8 +73,7 @@
                         </asp:TextBox>
                         <asp:Button ID="btnCheckName" runat="server" Text="Check Name" CssClass="btn-info" OnClick="btnCheckName_Click" />
                         <asp:Label ID="lblCheckName" runat="server"></asp:Label>
-                        <%--<button  ID="checkImageOnServerButton" class="btn-info" title="Check if the image is available in the server!">Check Image</button>--%>
-                        <%-- <label id="imageCheckStatusLabel">label name</label>--%>
+                        <button  ID="checkImageOnServerButton" class="btn-info" title="Check if the image is available in the server!">Check Image</button>
                         <asp:RequiredFieldValidator ID="rfvProductNumber" runat="server" ErrorMessage="Product number is required"
                             ControlToValidate="txtProductNumber" EnableClientScript="false" ValidationGroup="valGrpVL"
                             InitialValue="0">
@@ -984,64 +983,66 @@
             $('#addjobClient').modal('show');
         }
 
-        //function toggleImageCheckButton() {
-        //    var val = $("#iContentPlaceHolder_lblCheckName").text();
-        //    if (val === "Available.") {
-        //        var str = $("#iContentPlaceHolder_txtProductNumber").val();
-        //        var pattern = new RegExp("^[Vv][Ll]\\d{1,}$");
-        //        var result = pattern.test(str);
-        //        if (result)
-        //            $("#checkImageOnServerButton").show();
-        //        else {
-        //            $("#checkImageOnServerButton").hide();
-        //        }
-        //    }
-        //}
+        function toggleImageCheckButton() {
+            var val = $("#<%=lblCheckName.ClientID%>").text();
+            if (val === "Available.") {
+                var str = $("#<%=txtProductNumber.ClientID%>").val();
+                var pattern = new RegExp("[\\[Vv\\]\\[Ll\\]\\d{1,}.*]");
+                var result = pattern.test(str);
+                if (result)
+                    $("#checkImageOnServerButton").show();
+                else {
+                    $("#checkImageOnServerButton").hide();
+                }
+            }
+        }
 
-        //toggleImageCheckButton();
+        toggleImageCheckButton();
+
         //function showImageFoundModal(imagepath) {
         //    $("#imageFoundModalImage").attr("src",imagepath);
         //    $('#imageFoundModal').modal('show');
         //    // $("#imageFoundModal").modal().show();
         //}
-        //$("#checkImageOnServerButton").click(function(e) {
-        //    e.preventDefault();
-        //    console.log("clicked");
-        //    var target = $("#iContentPlaceHolder_txtProductNumber");
-        //    var vl = target.attr("value");
-        //    console.log(vl);
-        //    $(e.target).text("Checking .. please wait");
-        //    $(e.target).prop("disabled", true);
-        //    $.ajax(
-        //    {
-        //        url: "AddEditVisualLayout.aspx/CheckImageAvailable",
-        //        type: "POST",
-        //        contentType: "application/json; charset=utf-8",
-        //        data: JSON.stringify({ vlname: vl }),
-        //        dataType: "json",
-        //        async: true,
-        //        success: function (v) {
-        //            console.log(v);
-        //            var data = v.d;
-        //            if (data === null) {
-        //                $(e.target).text("No Image Available");
-        //                $(e.target).removeClass("btn-info");
-        //                $(e.target).addClass("btn-danger");
-        //                setTimeout(function () {
-        //                    $(e.target).text("Check Image");
-        //                    $(e.target).removeClass("btn-danger");
-        //                    $(e.target).addClass("btn-info");
-        //                    $(e.target).prop("disabled", false);
-        //                }, 3000);
-        //            }
-        //            else {
-        //                $(e.target).text("Check Image");
-        //                $(e.target).prop("disabled", false);
-        //                showImageFoundModal(data);
-        //            }
-        //        }
-        //    });
-        //});
+
+        $("#checkImageOnServerButton").click(function(e) {
+            e.preventDefault();
+            console.log("clicked");
+            var target = $("#<%=txtProductNumber.ClientID%>");
+            var vl = target.attr("value");
+            console.log(vl);
+            $(e.target).text("Checking .. please wait");
+            $(e.target).prop("disabled", true);
+            $.ajax(
+            {
+                url: "AddEditVisualLayout.aspx/CheckImageAvailable",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ vlname: vl }),
+                dataType: "json",
+                async: true,
+                success: function (v) {
+                    console.log(v);
+                    var data = v.d;
+                    if (data === null) {
+                        $(e.target).text("No Image Available");
+                        $(e.target).removeClass("btn-info");
+                        $(e.target).addClass("btn-danger");
+                        setTimeout(function () {
+                            $(e.target).text("Check Image");
+                            $(e.target).removeClass("btn-danger");
+                            $(e.target).addClass("btn-info");
+                            $(e.target).prop("disabled", false);
+                        }, 3000);
+                    }
+                    else {
+                        $(e.target).text("Check Image");
+                        $(e.target).prop("disabled", false);
+                        showImageFoundModal(data);
+                    }
+                }
+            });
+        });
     </script>
     <!-- / -->
 </asp:Content>

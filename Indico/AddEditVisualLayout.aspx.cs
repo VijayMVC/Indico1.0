@@ -11,6 +11,7 @@ using System.Linq;
 using System.Linq.Dynamic;
 using System.Text.RegularExpressions;
 using System.Transactions;
+using System.Web.Services;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using CheckBox = System.Web.UI.WebControls.CheckBox;
@@ -3279,13 +3280,15 @@ namespace Indico
 
         #endregion
 
-        //[WebMethod]
-        //public static string CheckImageAvailable(string vlname)
-        //{
-        //   
-        //    var imageService = new ImageService();
-        //    return @"\IndicoData\ImageServiceFiles\ImageFiles\VL48773 - little athletics sa - 574 - leisure shorts with pocket - unisex - youth(curves).png";
-        //    //return null;// imageService.GetVLImageFromServerIfAvailable(vlname);
-        //}
+        [WebMethod]
+        public static string CheckImageAvailable(string vlname)
+        {
+            using(var service= new ImageService())
+            {
+                service.GetVLImageFromServerIfAvailable(vlname);
+            }
+            return @"\IndicoData\ImageServiceFiles\ImageFiles\VL48773 - little athletics sa - 574 - leisure shorts with pocket - unisex - youth(curves).png";
+            //return null;// imageService.GetVLImageFromServerIfAvailable(vlname);
+        }
     }
 }
