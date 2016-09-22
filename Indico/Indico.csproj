@@ -14,12 +14,12 @@
     <RootNamespace>Indico</RootNamespace>
     <AssemblyName>Indico</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <UseIISExpress>true</UseIISExpress>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -622,6 +622,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\CustomModels.cs" />
+    <Compile Include="Common\ImageService.cs" />
     <Compile Include="Common\MyobService.cs" />
     <Compile Include="DrillDownReportByClient.aspx.cs">
       <DependentUpon>DrillDownReportByClient.aspx</DependentUpon>
@@ -1615,6 +1616,15 @@
     <Content Include="FileUpload.ashx" />
   </ItemGroup>
   <ItemGroup>
+    <COMReference Include="CorelDRAW">
+      <Guid>{FBF4300F-D921-11D1-B806-00A0C90646A9}</Guid>
+      <VersionMajor>18</VersionMajor>
+      <VersionMinor>1</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
     <COMReference Include="Microsoft.Office.Core">
       <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
       <VersionMajor>2</VersionMajor>
@@ -1644,8 +1654,8 @@
     </COMReference>
     <COMReference Include="VGCore">
       <Guid>{95E23C91-BC5A-49F3-8CD1-1FC515597048}</Guid>
-      <VersionMajor>17</VersionMajor>
-      <VersionMinor>0</VersionMinor>
+      <VersionMajor>18</VersionMajor>
+      <VersionMinor>1</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>
@@ -1730,9 +1740,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>54324</DevelopmentServerPort>
+          <DevelopmentServerPort>4798</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:54324/</IISUrl>
+          <IISUrl>http://local-indico.com</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>http://local-indico.com/</CustomServerUrl>

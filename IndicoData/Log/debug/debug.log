@@ -1,18 +1,129 @@
 [Started Indico DEBUG Log]
-2016-09-12 13:10:13,985 [1300    ] INFO  - CheckQuotes.Start() - Starting...
-2016-09-12 13:10:14,795 [1300    ] INFO  - CheckQuotes.Start() - Started.
-2016-09-12 13:10:15,035 [3572    ] DEBUG - DoCheckQuotesStatus() - cycle begins...
-2016-09-12 13:10:28,525 [3572    ] DEBUG - DoCheckQuotesStatus() - cycle ends.
+2016-09-19 08:43:08,461 [5536    ] INFO  - Login.btnLogin_Click() Login success for Siwanka De Silva (ID: 40) into host local-indico.com with session id m4bdahnamfeg5ia24ltiw4ls from 127.0.0.1
+2016-09-19 08:43:09,773 [5360    ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id m4bdahnamfeg5ia24ltiw4ls has 116 rows
 [Closed Indico DEBUG Log]
 [Started Indico DEBUG Log]
-2016-09-12 14:14:51,002 [4952    ] INFO  - CheckQuotes.Start() - Starting...
-2016-09-12 14:14:51,010 [4952    ] INFO  - CheckQuotes.Start() - Started.
-2016-09-12 14:14:51,012 [400     ] DEBUG - DoCheckQuotesStatus() - cycle begins...
-2016-09-12 14:14:52,318 [400     ] DEBUG - DoCheckQuotesStatus() - cycle ends.
+2016-09-19 10:44:55,981 [11812   ] INFO  - CheckQuotes.Start() - Starting...
+2016-09-19 10:44:56,020 [11812   ] INFO  - CheckQuotes.Start() - Started.
+2016-09-19 10:44:56,021 [6484    ] DEBUG - DoCheckQuotesStatus() - cycle begins...
+2016-09-19 10:44:58,065 [6484    ] DEBUG - DoCheckQuotesStatus() - cycle ends.
+2016-09-19 10:45:14,968 [8072    ] INFO  - Login.btnLogin_Click() Login success for Siwanka De Silva (ID: 40) into host local-indico.com with session id 5crnpwh0p252grqjugqrkrio from 127.0.0.1
+2016-09-19 10:45:16,453 [6044    ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id 5crnpwh0p252grqjugqrkrio has 116 rows
+2016-09-19 10:49:23,881 [6044    ] ERROR - IndicoConfiguration class: Unable to retrieve the config value for ImagesFtpUrl
+2016-09-19 10:49:23,881 [6044    ] ERROR - IndicoConfiguration class: Unable to retrieve the config value for ImagesFtpUserName
+2016-09-19 10:49:23,881 [6044    ] ERROR - IndicoConfiguration class: Unable to retrieve the config value for ImagesFtpPassword
 [Closed Indico DEBUG Log]
 [Started Indico DEBUG Log]
-2016-09-12 18:51:52,797 [7256    ] INFO  - CheckQuotes.Start() - Starting...
-2016-09-12 18:51:53,017 [7256    ] INFO  - CheckQuotes.Start() - Started.
-2016-09-12 18:51:53,047 [5152    ] DEBUG - DoCheckQuotesStatus() - cycle begins...
-2016-09-12 18:51:58,487 [5152    ] DEBUG - DoCheckQuotesStatus() - cycle ends.
+2016-09-19 10:51:02,611 [11812   ] INFO  - CheckQuotes.Start() - Starting...
+2016-09-19 10:51:02,628 [11812   ] INFO  - CheckQuotes.Start() - Started.
+2016-09-19 10:51:02,629 [10908   ] DEBUG - DoCheckQuotesStatus() - cycle begins...
+2016-09-19 10:51:05,330 [10908   ] DEBUG - DoCheckQuotesStatus() - cycle ends.
+2016-09-19 10:51:18,388 [9512    ] INFO  - Login.btnLogin_Click() Login success for Siwanka De Silva (ID: 40) into host local-indico.com with session id 5crnpwh0p252grqjugqrkrio from 127.0.0.1
+2016-09-19 10:51:18,388 [6044    ] INFO  - Login.btnLogin_Click() Login success for Siwanka De Silva (ID: 40) into host local-indico.com with session id 5crnpwh0p252grqjugqrkrio from 127.0.0.1
+2016-09-19 10:51:22,043 [11048   ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id 5crnpwh0p252grqjugqrkrio has 116 rows
+2016-09-19 10:51:35,596 [9512    ] ERROR - IndicoConfiguration class: Unable to retrieve the config value for ImagesFtpUrl
+2016-09-19 10:51:35,601 [9512    ] ERROR - IndicoConfiguration class: Unable to retrieve the config value for ImagesFtpUserName
+2016-09-19 10:51:35,602 [9512    ] ERROR - IndicoConfiguration class: Unable to retrieve the config value for ImagesFtpPassword
+[Closed Indico DEBUG Log]
+[Started Indico DEBUG Log]
+2016-09-19 10:54:47,675 [11116   ] INFO  - CheckQuotes.Start() - Starting...
+2016-09-19 10:54:47,693 [11116   ] INFO  - CheckQuotes.Start() - Started.
+2016-09-19 10:54:47,694 [1444    ] DEBUG - DoCheckQuotesStatus() - cycle begins...
+2016-09-19 10:54:51,159 [1444    ] DEBUG - DoCheckQuotesStatus() - cycle ends.
+2016-09-19 10:54:54,636 [8268    ] INFO  - Login.btnLogin_Click() Login success for Siwanka De Silva (ID: 40) into host local-indico.com with session id 5crnpwh0p252grqjugqrkrio from 127.0.0.1
+2016-09-19 10:55:09,119 [3000    ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id 5crnpwh0p252grqjugqrkrio has 116 rows
+2016-09-19 10:55:26,135 [8940    ] ERROR - IndicoConfiguration class: Unable to retrieve the config value for ImagesFtpUrl
+2016-09-19 10:55:26,141 [8940    ] ERROR - IndicoConfiguration class: Unable to retrieve the config value for ImagesFtpUserName
+2016-09-19 10:55:26,142 [8940    ] ERROR - IndicoConfiguration class: Unable to retrieve the config value for ImagesFtpPassword
+[Closed Indico DEBUG Log]
+[Started Indico DEBUG Log]
+2016-09-19 10:59:13,311 [11528   ] INFO  - CheckQuotes.Start() - Starting...
+2016-09-19 10:59:13,330 [11528   ] INFO  - CheckQuotes.Start() - Started.
+2016-09-19 10:59:13,332 [4584    ] DEBUG - DoCheckQuotesStatus() - cycle begins...
+2016-09-19 10:59:16,099 [4584    ] DEBUG - DoCheckQuotesStatus() - cycle ends.
+2016-09-19 10:59:23,409 [8940    ] INFO  - Login.btnLogin_Click() Login success for Siwanka De Silva (ID: 40) into host local-indico.com with session id 5crnpwh0p252grqjugqrkrio from 127.0.0.1
+2016-09-19 10:59:34,168 [9648    ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id 5crnpwh0p252grqjugqrkrio has 116 rows
+2016-09-19 11:01:03,534 [8940    ] ERROR - IndicoConfiguration class: Unable to retrieve the config value for ImagesFtpUrl
+[Closed Indico DEBUG Log]
+[Started Indico DEBUG Log]
+2016-09-19 11:04:39,230 [11812   ] INFO  - CheckQuotes.Start() - Starting...
+2016-09-19 11:04:39,248 [11812   ] INFO  - CheckQuotes.Start() - Started.
+2016-09-19 11:04:39,249 [12092   ] DEBUG - DoCheckQuotesStatus() - cycle begins...
+2016-09-19 11:04:42,179 [12092   ] DEBUG - DoCheckQuotesStatus() - cycle ends.
+2016-09-19 11:04:47,204 [4196    ] INFO  - Login.btnLogin_Click() Login success for Siwanka De Silva (ID: 40) into host local-indico.com with session id 5crnpwh0p252grqjugqrkrio from 127.0.0.1
+2016-09-19 11:05:02,104 [4196    ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id 5crnpwh0p252grqjugqrkrio has 116 rows
+2016-09-19 11:05:10,825 [9464    ] ERROR - IndicoConfiguration class: Unable to retrieve the config value for ImagesFtpUrl
+[Closed Indico DEBUG Log]
+[Started Indico DEBUG Log]
+2016-09-19 11:05:57,805 [8940    ] INFO  - Login.btnLogin_Click() Login success for Siwanka De Silva (ID: 40) into host local-indico.com with session id 5crnpwh0p252grqjugqrkrio from 127.0.0.1
+2016-09-19 11:06:11,048 [9464    ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id 5crnpwh0p252grqjugqrkrio has 116 rows
+2016-09-19 11:06:17,404 [7636    ] ERROR - IndicoConfiguration class: Unable to retrieve the config value for ImagesFtpUrl
+[Closed Indico DEBUG Log]
+[Started Indico DEBUG Log]
+2016-09-19 11:11:07,052 [10836   ] INFO  - Login.btnLogin_Click() Login success for Siwanka De Silva (ID: 40) into host local-indico.com with session id 5crnpwh0p252grqjugqrkrio from 127.0.0.1
+2016-09-19 11:11:07,052 [8940    ] INFO  - Login.btnLogin_Click() Login success for Siwanka De Silva (ID: 40) into host local-indico.com with session id 5crnpwh0p252grqjugqrkrio from 127.0.0.1
+2016-09-19 11:11:08,731 [8940    ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id 5crnpwh0p252grqjugqrkrio has 116 rows
+2016-09-19 11:11:16,887 [7636    ] ERROR - IndicoConfiguration class: Unable to retrieve the config value for ImagesFtpUrl
+[Closed Indico DEBUG Log]
+[Started Indico DEBUG Log]
+2016-09-19 11:25:18,548 [11812   ] INFO  - CheckQuotes.Start() - Starting...
+2016-09-19 11:25:18,565 [11812   ] INFO  - CheckQuotes.Start() - Started.
+2016-09-19 11:25:18,566 [5440    ] DEBUG - DoCheckQuotesStatus() - cycle begins...
+2016-09-19 11:25:22,075 [5440    ] DEBUG - DoCheckQuotesStatus() - cycle ends.
+2016-09-19 11:25:28,638 [7508    ] INFO  - Login.btnLogin_Click() Login success for Siwanka De Silva (ID: 40) into host local-indico.com with session id 5crnpwh0p252grqjugqrkrio from 127.0.0.1
+2016-09-19 11:25:33,276 [3028    ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id 5crnpwh0p252grqjugqrkrio has 116 rows
+2016-09-19 11:25:42,008 [9608    ] ERROR - IndicoConfiguration class: Unable to retrieve the config value for ImagesFtpUrl
+[Closed Indico DEBUG Log]
+[Started Indico DEBUG Log]
+2016-09-19 11:34:00,222 [11812   ] INFO  - CheckQuotes.Start() - Starting...
+2016-09-19 11:34:00,239 [11812   ] INFO  - CheckQuotes.Start() - Started.
+2016-09-19 11:34:00,240 [11188   ] DEBUG - DoCheckQuotesStatus() - cycle begins...
+2016-09-19 11:34:03,688 [11188   ] DEBUG - DoCheckQuotesStatus() - cycle ends.
+2016-09-19 11:34:11,502 [8344    ] INFO  - Login.btnLogin_Click() Login success for Siwanka De Silva (ID: 40) into host local-indico.com with session id 5crnpwh0p252grqjugqrkrio from 127.0.0.1
+2016-09-19 11:34:12,581 [8344    ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id 5crnpwh0p252grqjugqrkrio has 116 rows
+2016-09-19 11:34:27,861 [9608    ] ERROR - IndicoConfiguration class: Unable to retrieve the config value for ImagesFtpUrl
+[Closed Indico DEBUG Log]
+[Started Indico DEBUG Log]
+2016-09-19 11:43:47,952 [11812   ] INFO  - CheckQuotes.Start() - Starting...
+2016-09-19 11:43:47,969 [11812   ] INFO  - CheckQuotes.Start() - Started.
+2016-09-19 11:43:47,970 [9980    ] DEBUG - DoCheckQuotesStatus() - cycle begins...
+2016-09-19 11:43:50,908 [9980    ] DEBUG - DoCheckQuotesStatus() - cycle ends.
+2016-09-19 11:43:59,746 [9396    ] INFO  - Login.btnLogin_Click() Login success for Siwanka De Silva (ID: 40) into host local-indico.com with session id 5crnpwh0p252grqjugqrkrio from 127.0.0.1
+2016-09-19 11:44:00,824 [11564   ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id 5crnpwh0p252grqjugqrkrio has 116 rows
+2016-09-19 11:44:16,607 [6524    ] ERROR - IndicoConfiguration class: Unable to retrieve the config value for ImagesFtpUrl
+[Closed Indico DEBUG Log]
+[Started Indico DEBUG Log]
+2016-09-19 11:47:38,560 [11812   ] INFO  - CheckQuotes.Start() - Starting...
+2016-09-19 11:47:38,578 [11812   ] INFO  - CheckQuotes.Start() - Started.
+2016-09-19 11:47:38,579 [7100    ] DEBUG - DoCheckQuotesStatus() - cycle begins...
+2016-09-19 11:47:41,525 [7100    ] DEBUG - DoCheckQuotesStatus() - cycle ends.
+2016-09-19 11:47:44,201 [11564   ] INFO  - Login.btnLogin_Click() Login success for Siwanka De Silva (ID: 40) into host local-indico.com with session id 5crnpwh0p252grqjugqrkrio from 127.0.0.1
+2016-09-19 11:47:59,376 [3184    ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id 5crnpwh0p252grqjugqrkrio has 116 rows
+2016-09-19 11:48:10,574 [9396    ] ERROR - IndicoConfiguration class: Unable to retrieve the config value for ImagesFtpUrl
+[Closed Indico DEBUG Log]
+[Started Indico DEBUG Log]
+2016-09-20 10:46:27,704 [9792    ] INFO  - CheckQuotes.Start() - Starting...
+2016-09-20 10:46:27,719 [9792    ] INFO  - CheckQuotes.Start() - Started.
+2016-09-20 10:46:27,719 [2300    ] DEBUG - DoCheckQuotesStatus() - cycle begins...
+2016-09-20 10:46:29,706 [2300    ] DEBUG - DoCheckQuotesStatus() - cycle ends.
+2016-09-20 10:46:51,255 [6188    ] INFO  - Login.btnLogin_Click() Login success for Siwanka De Silva (ID: 40) into host local-indico.com with session id k0cks3kf2zqigvoykm35e5mb from 127.0.0.1
+2016-09-20 10:47:03,812 [10516   ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id k0cks3kf2zqigvoykm35e5mb has 116 rows
+[Closed Indico DEBUG Log]
+[Started Indico DEBUG Log]
+2016-09-20 13:19:44,270 [12032   ] INFO  - CheckQuotes.Start() - Starting...
+2016-09-20 13:19:44,286 [12032   ] INFO  - CheckQuotes.Start() - Started.
+2016-09-20 13:19:44,286 [5604    ] DEBUG - DoCheckQuotesStatus() - cycle begins...
+2016-09-20 13:19:45,367 [5604    ] DEBUG - DoCheckQuotesStatus() - cycle ends.
+2016-09-20 13:19:46,221 [5156    ] INFO  - Login.btnLogin_Click() Login success for Siwanka De Silva (ID: 40) into host local-indico.com with session id k0cks3kf2zqigvoykm35e5mb from 127.0.0.1
+2016-09-20 13:19:49,855 [4148    ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id k0cks3kf2zqigvoykm35e5mb has 116 rows
+2016-09-20 13:20:11,300 [1848    ] ERROR - IndicoConfiguration class: Unable to retrieve the config value for ImagesFtpUrl
+[Closed Indico DEBUG Log]
+[Started Indico DEBUG Log]
+2016-09-20 13:33:02,826 [12448   ] INFO  - CheckQuotes.Start() - Starting...
+2016-09-20 13:33:02,845 [12448   ] INFO  - CheckQuotes.Start() - Started.
+2016-09-20 13:33:02,846 [11488   ] DEBUG - DoCheckQuotesStatus() - cycle begins...
+2016-09-20 13:33:06,149 [11488   ] DEBUG - DoCheckQuotesStatus() - cycle ends.
+2016-09-20 13:33:16,066 [11328   ] INFO  - Login.btnLogin_Click() Login success for Siwanka De Silva (ID: 40) into host local-indico.com with session id k0cks3kf2zqigvoykm35e5mb from 127.0.0.1
+2016-09-20 13:33:22,603 [7076    ] ERROR - IndicoConfiguration class: Unable to retrieve the config value for ImagesFtpUrl
+2016-09-20 13:49:19,601 [12824   ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id k0cks3kf2zqigvoykm35e5mb has 116 rows
 [Closed Indico DEBUG Log]
