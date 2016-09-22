@@ -1,16 +1,12 @@
-\Indico\Web.config
-\Indico\bin\
-\Indico\obj\
-\IndicoData\
 
-\IndicoBusinessObjects\obj\
-\IndicoBusinessObjects\bin\
-
-
-\IndicoService\Web.config
-\IndicoService\bin\
-\IndicoService\obj\
-
-\packages\
-
-\Deployment\
+/IndicoService/bin
+/IndicoService/obj
+/IndicoService/Web.config
+/Indico/Web.config
+/Indico/bin
+/Indico/obj
+/IndicoBusinessObjects/obj
+/IndicoBusinessObjects/bin
+/IndicoData
+/packages
+/Deployment

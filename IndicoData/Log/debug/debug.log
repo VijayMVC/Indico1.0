@@ -1,8 +1,0 @@
-[Started Indico DEBUG Log]
-2016-09-21 11:03:03,709 [20584   ] INFO  - CheckQuotes.Start() - Starting...
-2016-09-21 11:03:03,771 [7108    ] DEBUG - DoCheckQuotesStatus() - cycle begins...
-2016-09-21 11:03:03,790 [20584   ] INFO  - CheckQuotes.Start() - Started.
-2016-09-21 14:15:35,051 [7108    ] DEBUG - DoCheckQuotesStatus() - cycle ends.
-2016-09-21 14:15:45,594 [3464    ] INFO  - Login.btnLogin_Click() Login success for Siwanka De Silva (ID: 40) into host local-indico.com with session id f143do55pty1pztyxt0zpsts from 127.0.0.1
-2016-09-21 14:15:45,836 [3464    ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id f143do55pty1pztyxt0zpsts has 116 rows
-[Closed Indico DEBUG Log]
