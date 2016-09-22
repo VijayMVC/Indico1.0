@@ -1,0 +1,12 @@
+
+/IndicoService/bin
+/IndicoService/obj
+/IndicoService/Web.config
+/Indico/Web.config
+/Indico/bin
+/Indico/obj
+/IndicoBusinessObjects/obj
+/IndicoBusinessObjects/bin
+/IndicoData
+/packages
+/Deployment

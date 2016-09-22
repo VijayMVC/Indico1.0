@@ -73,7 +73,7 @@
                         </asp:TextBox>
                         <asp:Button ID="btnCheckName" runat="server" Text="Check Name" CssClass="btn-info" OnClick="btnCheckName_Click" />
                         <asp:Label ID="lblCheckName" runat="server"></asp:Label>
-                        <button  ID="checkImageOnServerButton" class="btn-info" title="Check if the image is available in the server!">Check Image</button>
+                        <button style="display: none;"  ID="checkImageOnServerButton" class="btn-info" title="Check if the image is available in the server!">Check Image</button>
                         <asp:RequiredFieldValidator ID="rfvProductNumber" runat="server" ErrorMessage="Product number is required"
                             ControlToValidate="txtProductNumber" EnableClientScript="false" ValidationGroup="valGrpVL"
                             InitialValue="0">
@@ -997,7 +997,7 @@
             }
         }
 
-        toggleImageCheckButton();
+        //toggleImageCheckButton();
 
         //function showImageFoundModal(imagepath) {
         //    $("#imageFoundModalImage").attr("src",imagepath);

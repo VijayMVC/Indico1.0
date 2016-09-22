@@ -1,23 +1,20 @@
-﻿using Dapper;
-using Indico.BusinessObjects;
-using Indico.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Linq.Dynamic;
 using System.Text.RegularExpressions;
 using System.Transactions;
 using System.Web.Services;
+using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using CheckBox = System.Web.UI.WebControls.CheckBox;
-using Control = System.Web.UI.Control;
-using Label = System.Web.UI.WebControls.Label;
-using Path = System.IO.Path;
+using Dapper;
+using Indico.BusinessObjects;
+using Indico.Common;
+using Image = System.Drawing.Image;
 
 namespace Indico
 {
@@ -454,7 +451,7 @@ namespace Indico
 
                 try
                 {
-                    System.Drawing.Image VLOrigImage = System.Drawing.Image.FromFile(IndicoConfiguration.AppConfiguration.PathToProjectFolder + "\\" + VlImgLocation);
+                    Image VLOrigImage = Image.FromFile(IndicoConfiguration.AppConfiguration.PathToProjectFolder + "\\" + VlImgLocation);
                     SizeF origImageSize = VLOrigImage.PhysicalDimension;
                     VLOrigImage.Dispose();
 
@@ -1874,7 +1871,7 @@ namespace Indico
                 //objReturnInt = SettingsBO.ValidateField(itemID, "JobName", "Name", this.txtNewJobName.Text);
                 //args.IsValid = objReturnInt.RetVal == 1;
 
-                args.IsValid = IndicoPage.ValidateField2(itemID, "JobName", "Name", this.txtNewJobName.Text, "Client", clientID.ToString()) == 1;
+                args.IsValid = ValidateField2(itemID, "JobName", "Name", this.txtNewJobName.Text, "Client", clientID.ToString()) == 1;
             }
             catch (Exception ex)
             {
@@ -1893,7 +1890,7 @@ namespace Indico
                 //objReturnInt = SettingsBO.ValidateField(itemID, "Client", "Name", this.txtNewClient.Text);
                 //args.IsValid = objReturnInt.RetVal == 1;
 
-                args.IsValid = IndicoPage.ValidateField2(itemID, "Client", "Name", this.txtNewClient.Text, "Distributor", distributorID.ToString()) == 1;
+                args.IsValid = ValidateField2(itemID, "Client", "Name", this.txtNewClient.Text, "Distributor", distributorID.ToString()) == 1;
             }
             catch (Exception ex)
             {
@@ -2718,7 +2715,7 @@ namespace Indico
                             foreach (DataGridItem item in dgPatternAccessory.Items)
                             {
                                 Label lblAccessoryID = (Label)item.FindControl("lblAccessoryID");
-                                int id = int.Parse(((System.Web.UI.WebControls.WebControl)(lblAccessoryID)).Attributes["vlaid"].ToString());
+                                int id = int.Parse(((WebControl)(lblAccessoryID)).Attributes["vlaid"].ToString());
 
                                 if (id > 0)
                                 {
