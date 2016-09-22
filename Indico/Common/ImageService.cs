@@ -164,20 +164,20 @@ namespace Indico.Common
             try
             {
                 //TODO Convert using the Tool
-                var cdr = new CorelDRAW.Application();
-                cdr.OpenDocument(cdrFile.FullName, 1);
-                cdr.ActiveDocument.PageSizes.Add("A4", 297, 210);
-                cdr.ActiveDocument.ExportBitmap(
-                    imageFile.FullName,
-                    VGCore.cdrFilter.cdrPNG,
-                    VGCore.cdrExportRange.cdrCurrentPage,
-                    VGCore.cdrImageType.cdrRGBColorImage,
-                    0, 0, 72, 72,
-                    VGCore.cdrAntiAliasingType.cdrSupersampling,
-                    false,
-                    true).Finish();
-                cdr.ActiveDocument.Close();
-                cdr.Quit();
+                //var cdr = new CorelDRAW.Application();
+                //cdr.OpenDocument(cdrFile.FullName, 1);
+                //cdr.ActiveDocument.PageSizes.Add("A4", 297, 210);
+                //cdr.ActiveDocument.ExportBitmap(
+                //    imageFile.FullName,
+                //    VGCore.cdrFilter.cdrPNG,
+                //    VGCore.cdrExportRange.cdrCurrentPage,
+                //    VGCore.cdrImageType.cdrRGBColorImage,
+                //    0, 0, 72, 72,
+                //    VGCore.cdrAntiAliasingType.cdrSupersampling,
+                //    false,
+                //    true).Finish();
+                //cdr.ActiveDocument.Close();
+                //cdr.Quit();
             }
             catch (Exception e)
             {
@@ -303,11 +303,6 @@ namespace Indico.Common
             }
         }
 
-        private void AddToRegister(VLUrlRecord record)
-        {
-            
-
-        }
 
         public void Dispose()
         {

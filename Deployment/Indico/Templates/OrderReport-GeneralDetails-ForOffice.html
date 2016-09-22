@@ -1,0 +1,354 @@
+<table>
+    <tr>
+        <td>
+            <$headerimage$>
+        </td>
+    </tr>
+</table>
+<!--<table style="font-size: 10px; padding-left: 17px; padding-right: 17px">
+    <tr valign="top">
+        <td width="40"></td>
+        <td width="492">Order Overview Form for Office purpose only</td>
+    </tr>
+</table>-->
+<table cellpadding="17" style="font-size: 8px">
+    <tr valign="middle">
+        <td>
+            <table cellpadding="0">
+                <tr>
+                    <td>
+                        <table cellpadding="3" cellspacing="0">
+                            <tr align="left">
+                                <td valign="top">
+                                    <table>
+                                        <!-- <tr border="0" cellpadding="0">
+                                            <td>
+                                                <b>Order Overview Form for Office purpose only</b>
+                                            </td>
+                                            <td></td>
+                                        </tr>-->
+                                        <tr>
+                                            <td></td>
+                                            <td>SALES REP : <$myobcardfile$></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="line-height: 5px;">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table cellpadding="3" cellspacing="0">
+                            <tr align="left">
+                                <td valign="top">
+                                    <table border="0.5">
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="70" align="left" scope="row">
+                                                DATE
+                                            </td>
+                                            <td width="160"><$orderdate$></td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" align="left" scope="row" width="70">
+                                                CLIENT
+                                            </td>
+                                            <td width="160"><$Client$></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td valign="top">
+                                    <table border="0.5">
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="70" align="left" scope="row">
+                                                YOUR PO/ REF.
+                                            </td>
+                                            <td width="160"><$distributororderno$></td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="70" align="left" scope="row">
+                                                JOB NAME
+                                            </td>
+                                            <td width="160"><$jobname$></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="line-height: 12px;">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table cellpadding="3" cellspacing="0">
+                            <tr align="left" valign="middle">
+                                <td>
+                                    <table border="0.5" style="font-size: small; text-align: center">
+                                        <tr style="text-align: center">
+                                            <td colspan="2" style="background-color: #C0C0C0"><b>BILLING DETAILS</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="70" align="left" scope="row">
+                                                COMPANY
+                                            </td>
+                                            <td width="160">
+                                                <$billingcompanyname$>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="70" align="left" scope="row">
+                                                ADDRESS TYPE
+                                            </td>
+                                            <td colspan="3" width="160">
+                                                <$shiptoaddresstype$>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="70" align="left" scope="row">
+                                                ADDRESS
+                                            </td>
+                                            <td width="160">
+                                                <$billingaddress$>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="70" align="left" scope="row">
+                                                SUBURB
+                                            </td>
+                                            <td width="160">
+                                                <$billingsuberb$>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="70" align="left" scope="row">
+                                                POST CODE
+                                            </td>
+                                            <td width="160">
+                                                <$billingpostcode$>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="70" align="left" scope="row">
+                                                STATE
+                                            </td>
+                                            <td width="160">
+                                                <$billingstate$>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="70" align="left" scope="row">
+                                                COUNTRY
+                                            </td>
+                                            <td width="160">
+                                                <$billingcountry$>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="70" align="left" scope="row">
+                                                NAME
+                                            </td>
+                                            <td width="160">
+                                                <$billingcontactname$>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="70" align="left" scope="row">
+                                                PHONE
+                                            </td>
+                                            <td width="160">
+                                                <$billingphone$>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="70" align="left" scope="row">
+                                                EMAIL
+                                            </td>
+                                            <td width="160">
+                                                <$billingemail$>
+                                            </td>
+                                        </tr>
+                                        <!-- <tr>
+                                             <td bgcolor="#D3D3D3"  width="70" align="left" scope="row">CLIENT/JOB NAME
+                                             </td>
+                                             <td width="160"><$client$>
+                                             </td>
+                                         </tr>-->
+                                    </table>
+                                </td>
+                                <td>
+                                    <table border="0.5" style="font-size: small; text-align: center">
+                                        <tr style="text-align: center">
+                                            <td colspan="2" style="background-color: #C0C0C0"><b>DELIVERY DETAILS</b></td>
+                                            <!--DESPATCH TO-->
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="70" align="left" scope="row">
+                                                COMPANY
+                                            </td>
+                                            <td colspan="3" width="160">
+                                                <$shiptocompanyname$>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="70" align="left" scope="row">
+                                                ADDRESS TYPE
+                                            </td>
+                                            <td colspan="3" width="160">
+                                                <$shiptoaddresstype$>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="70" align="left" scope="row">
+                                                ADDRESS
+                                            </td>
+                                            <td colspan="3" width="160">
+                                                <$shiptoaddress$>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="70" align="left" scope="row">
+                                                SUBURB
+                                            </td>
+                                            <td colspan="3" width="160">
+                                                <$shiptosuburb$>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="70" align="left" scope="row">
+                                                POST CODE
+                                            </td>
+                                            <td colspan="3" width="160">
+                                                <$shiptopostcode$>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="70" align="left" scope="row">
+                                                STATE
+                                            </td>
+                                            <td colspan="3" width="160">
+                                                <$shiptostate$>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="70" align="left" scope="row">
+                                                COUNTRY
+                                            </td>
+                                            <td colspan="3" width="160">
+                                                <$shiptocountry$>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="70" align="left" scope="row">
+                                                NAME
+                                            </td>
+                                            <td colspan="3" width="160">
+                                                <$shiptocontact$>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="70" align="left" scope="row">
+                                                PHONE
+                                            </td>
+                                            <td colspan="3" width="160">
+                                                <$shiptophone$>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="70" align="left" scope="row">
+                                                EMAIL
+                                            </td>
+                                            <td colspan="3" width="160">
+                                                <$shiptoemail$>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="line-height: 12px;">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr valign="middle" style="line-height: 9px;">
+                    <td>
+                        <table cellpadding="3" cellspacing="0">
+                            <tr align="left" valign="middle">
+                                <td valign="top">
+                                    <table border="0.5">
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="133" valign="top">REQUIRED DATE</td>
+                                            <td width="133" valign="top"><$daterequire$></td>
+                                            <td bgcolor="#D3D3D3" width="133" valign="top">DELIVERY DATE FLEXIBLE</td>
+                                            <td width="133" valign="top"><$datenegotiable$></td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="133" valign="top">DESPATCH MODE</td>
+                                            <td width="133" valign="top"><$despatchmode$></td>
+                                            <td bgcolor="#D3D3D3" width="133" valign="top"><!--PORT--></td>
+                                            <td width="133" valign="top"><!--<$shipmentport$>--></td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="133" valign="top">DESPATCH FROM FACTORY</td>
+                                            <td width="133" valign="top"><$despatchfromfactory$></td>
+                                            <td bgcolor="#D3D3D3" width="133" valign="top">FACTORY DESPATCH MODE</td>
+                                            <td width="133" valign="top"><$factorydespatchmode$></td>
+                                        </tr>
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="133" valign="top">SPECIAL INSTRUCTIONS</td>
+                                            <td width="133" valign="top" colspan="3"><$ordernotes$></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="line-height: 12px;">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr valign="middle" style="line-height: 9px;">
+                    <td>
+                        <table cellpadding="3" cellspacing="0">
+                            <tr align="left" valign="middle">
+                                <td valign="top">
+                                    <table border="0.5">
+                                        <tr>
+                                            <td bgcolor="#D3D3D3" width="132" valign="top">
+                                                <b>FACTORY PO NUMBER</b>
+                                            </td>
+                                            <td style="font-weight: bold;" width="400" valign="top">
+                                                <$factorymasterpo$>
+                                            </td>
+                                        </tr>
+                                        <tr border="0">
+                                            <td colspan="2"><b>ORDER DETAILS</b></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <$orderdetail$>
+            </table>
+</table>

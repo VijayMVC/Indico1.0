@@ -1,0 +1,62 @@
+[Started Indico WARN Log]
+2016-09-15 17:51:45,533 [13580   ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id v0mqbiyp1yz2snzgg03stbhg has 116 rows
+2016-09-15 17:52:31,351 [18108   ] ERROR - Application_Error() Unhandled exception encountered. Message was "{0}" .
+System.IO.FileNotFoundException: C:\Projects\Indico1.0\IndicoData\PatternTemplates\One.jpg
+   at System.Drawing.Image.FromFile(String filename, Boolean useEmbeddedColorManagement)
+   at Indico.AddEditPattern.PopulatePatternTemplateImages() in C:\Projects\Indico1.0\Indico\AddEditPattern.aspx.cs:line 2839
+   at Indico.AddEditPattern.PopulateControls() in C:\Projects\Indico1.0\Indico\AddEditPattern.aspx.cs:line 1298
+   at Indico.AddEditPattern.Page_Load(Object sender, EventArgs e) in C:\Projects\Indico1.0\Indico\AddEditPattern.aspx.cs:line 183
+   at System.Web.UI.Control.OnLoad(EventArgs e)
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2016-09-15 17:54:46,744 [2576    ] ERROR - Application_Error() Unhandled exception encountered. Message was "{0}" .
+System.IO.FileNotFoundException: C:\Projects\Indico1.0\IndicoData\PatternTemplates\One.jpg
+   at System.Drawing.Image.FromFile(String filename, Boolean useEmbeddedColorManagement)
+   at Indico.AddEditPattern.PopulatePatternTemplateImages() in C:\Projects\Indico1.0\Indico\AddEditPattern.aspx.cs:line 2839
+   at Indico.AddEditPattern.PopulateControls() in C:\Projects\Indico1.0\Indico\AddEditPattern.aspx.cs:line 1298
+   at Indico.AddEditPattern.Page_Load(Object sender, EventArgs e) in C:\Projects\Indico1.0\Indico\AddEditPattern.aspx.cs:line 183
+   at System.Web.UI.Control.OnLoad(EventArgs e)
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+2016-09-15 17:56:30,194 [14644   ] ERROR - Application_Error() Unhandled exception encountered. Message was "{0}" .
+System.IO.FileNotFoundException: C:\Projects\Indico1.0\IndicoData\PatternTemplates\One.jpg
+   at System.Drawing.Image.FromFile(String filename, Boolean useEmbeddedColorManagement)
+   at Indico.AddEditPattern.PopulatePatternTemplateImages() in C:\Projects\Indico1.0\Indico\AddEditPattern.aspx.cs:line 2839
+   at Indico.AddEditPattern.PopulateControls() in C:\Projects\Indico1.0\Indico\AddEditPattern.aspx.cs:line 1298
+   at Indico.AddEditPattern.Page_Load(Object sender, EventArgs e) in C:\Projects\Indico1.0\Indico\AddEditPattern.aspx.cs:line 183
+   at System.Web.UI.Control.OnLoad(EventArgs e)
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+[Closed Indico WARN Log]
+[Started Indico WARN Log]
+2016-09-15 17:56:44,541 [1132    ] ERROR - Application_Error() Unhandled exception encountered. Message was "{0}" .
+System.IO.FileNotFoundException: C:\Projects\Indico1.0\IndicoData\PatternTemplates\One.jpg
+   at System.Drawing.Image.FromFile(String filename, Boolean useEmbeddedColorManagement)
+   at Indico.AddEditPattern.PopulatePatternTemplateImages() in C:\Projects\Indico1.0\Indico\AddEditPattern.aspx.cs:line 2839
+   at Indico.AddEditPattern.PopulateControls() in C:\Projects\Indico1.0\Indico\AddEditPattern.aspx.cs:line 1298
+   at Indico.AddEditPattern.Page_Load(Object sender, EventArgs e) in C:\Projects\Indico1.0\Indico\AddEditPattern.aspx.cs:line 183
+   at System.Web.UI.Control.OnLoad(EventArgs e)
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+[Closed Indico WARN Log]
+[Started Indico WARN Log]
+2016-09-15 17:58:03,063 [2576    ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id v0mqbiyp1yz2snzgg03stbhg has 116 rows
+[Closed Indico WARN Log]
+[Started Indico WARN Log]
+2016-09-15 17:59:39,024 [2576    ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id v0mqbiyp1yz2snzgg03stbhg has 116 rows
+[Closed Indico WARN Log]
+[Started Indico WARN Log]
+2016-09-15 18:12:27,191 [10540   ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id v0mqbiyp1yz2snzgg03stbhg has 116 rows
+[Closed Indico WARN Log]
+[Started Indico WARN Log]
+2016-09-15 18:24:58,742 [4684    ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id v0mqbiyp1yz2snzgg03stbhg has 116 rows
+[Closed Indico WARN Log]
+[Started Indico WARN Log]
+2016-09-15 18:31:20,162 [4684    ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id v0mqbiyp1yz2snzgg03stbhg has 116 rows
+[Closed Indico WARN Log]
+[Started Indico WARN Log]
+2016-09-15 18:32:44,433 [6152    ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id v0mqbiyp1yz2snzgg03stbhg has 116 rows
+[Closed Indico WARN Log]
+[Started Indico WARN Log]
+2016-09-15 18:35:46,372 [7216    ] WARN  - Navigation.AvailableUserPageRoles: Authorisation table for Siwanka De Silva (ID: 40) refreshed with session id v0mqbiyp1yz2snzgg03stbhg has 116 rows
+[Closed Indico WARN Log]
