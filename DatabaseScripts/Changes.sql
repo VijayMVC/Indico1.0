@@ -20,8 +20,18 @@ AS
 
 		IF (@Distributor > 0 AND @ToDistributor > 0)
 		BEGIN
-			UPDATE [dbo].[Client] SET Distributor = @ToDistributor
+			DECLARE @Label int
+			SET @Label=(SELECT TOP 1 dl.Label 
+							FROM [dbo].[DistributorLabel] dl WHERE dl.Distributor = @ToDistributor)
+
+			UPDATE od SET Label = @Label
+				FROM [dbo].[Order] o
+					INNER JOIN [dbo].[OrderDetail] od
+						ON od.[Order] = o.ID
 				WHERE Distributor = @Distributor
+
+			UPDATE [dbo].[Client] SET Distributor = @ToDistributor
+			WHERE Distributor = @Distributor
 		END
 	END
 
