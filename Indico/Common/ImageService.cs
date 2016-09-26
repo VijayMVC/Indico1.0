@@ -3,10 +3,11 @@ using System.IO;
 using System.Net;
 using Indico.BusinessObjects;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Xml.Serialization;
+
 namespace Indico.Common
 {
     /// <summary>
@@ -16,56 +17,71 @@ namespace Indico.Common
     {
         public DirectoryInfo ImageServiceFilesFolder { get; set; }
         public FileInfo RegisterFile { get; set; }
-        public List<VLUrlRecord> Register { get; set; }
+        public List<VlUrlRecord> Register { get; set; }
 
         public ImageService()
         {
-            ImageServiceFilesFolder= new DirectoryInfo(Path.Combine(Path.Combine(IndicoConfiguration.AppConfiguration.PathToDataFolder, @"ImageServiceFiles"))); ;
+            ImageServiceFilesFolder= new DirectoryInfo(Path.Combine(Path.Combine(IndicoConfiguration.AppConfiguration.PathToDataFolder, @"ImageServiceFiles")));
+            if(!ImageServiceFilesFolder.Exists)
+                ImageServiceFilesFolder.Create();
             RegisterFile= new FileInfo(Path.Combine(ImageServiceFilesFolder.FullName, "VLUrlRegister.indico"));
             Register = GetRegister();
         }
 
-        public string GetVLImageFromServerIfAvailable(string vlName)
+        public string GetVlImageFromServerIfAvailable(string vlName)
         {
             try
             {
-                var newRecord = false;
                 vlName = vlName.Trim();
                 var imageServiceDirectory = ImageServiceFilesFolder;
                 if (!imageServiceDirectory.Exists)
                     imageServiceDirectory.Create();
-                var register = GetRegister();
                 var record = Register.FirstOrDefault(r => r.VlName == vlName);
                 if (record == null)
                 {
-                    record = new VLUrlRecord { VlName = vlName };
-                    if (newRecord)
-                        Register.Add(record);
+                    record = new VlUrlRecord { VlName = vlName };
+                    Register.Add(record);
                 }
                    
                 if (string.IsNullOrWhiteSpace(record.FtpPath))
                 {
-                    var ftppath = CheckImageForVLAvailable(vlName);
+                    var ftppath = CheckImageForVlAvailable(ref record);
                     if (ftppath == null)
                         return null;
                     record.FtpPath = ftppath;
                 }
+                if (string.IsNullOrWhiteSpace(record.CdrPath))
+                {
+                    var cdrFolder = new DirectoryInfo(Path.Combine(IndicoConfiguration.AppConfiguration.PathToDataFolder, "ImageServiceFiles", "CDRFiles"));
+                    if (!cdrFolder.Exists)
+                        Directory.CreateDirectory(cdrFolder.FullName);
 
-                ConvertToImage(ref record);
+                    var fileData = DownloadFile(record.FtpPath);
+                    var cdrFile = new FileInfo(Path.Combine(cdrFolder.FullName, record.ImageFileName + ".cdr"));
+                    File.WriteAllBytes(cdrFile.FullName, fileData);
+                    record.CdrPath = cdrFile.FullName;
+                }
+
+                if (string.IsNullOrWhiteSpace(record.ImagePath))
+                {
+                    try { ConvertToImage(ref record); }
+                    catch (Exception) {/*ignored*/ }
+                }
+
                 if (string.IsNullOrEmpty(record.ImagePath))
                     return null;
-                ClearRegister(ref register);
-                return record.ImagePath;
+                CleanFiles();
+                return "/IndicoData/ImageServiceFiles/ImageFiles/"+new FileInfo(record.ImagePath).Name;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
         }
 
-        private string CheckImageForVLAvailable(string vlName)
+        private string CheckImageForVlAvailable(ref VlUrlRecord record)
         {
-            vlName = vlName.Trim();
+            var vlName = record.VlName.Trim();
             if (!Regex.IsMatch(vlName, @"^[Vv][Ll]\d{1,}$"))
                 return null;
             var folders = GetFilesInAFolder(IndicoConfiguration.AppConfiguration.ImagesFtpUrl);
@@ -104,6 +120,7 @@ namespace Indico.Common
                 var fileName = f.TrimEnd('/').Split('/').Last();
                 if (!fileName.Trim().StartsWith(vlName))
                     continue;
+                record.ImageFileName = fileName.Replace("|||","");
                 targetFile = f;
                 break;
             }
@@ -135,62 +152,33 @@ namespace Indico.Common
             return files;
         }
 
-        private void ConvertToImage(ref VLUrlRecord record)
+        private void ConvertToImage(ref VlUrlRecord record)
         {
-            if (!string.IsNullOrEmpty(record.ImagePath) && new FileInfo(record.ImagePath).Exists)
+            if (!string.IsNullOrEmpty(record.ImagePath) && string.IsNullOrWhiteSpace(record.CdrPath))
                 return;
-            FileInfo cdrFile;
-            var cdrFolder = new DirectoryInfo(Path.Combine(IndicoConfiguration.AppConfiguration.PathToDataFolder, "ImageServiceFiles", "CDRFiles"));
-            if (!cdrFolder.Exists)
-                Directory.CreateDirectory(cdrFolder.FullName);
+
             var imageFilesFolder = new DirectoryInfo(Path.Combine(IndicoConfiguration.AppConfiguration.PathToDataFolder, "ImageServiceFiles", "ImageFiles"));
             if (!imageFilesFolder.Exists)
                 Directory.CreateDirectory(imageFilesFolder.FullName);
 
-            if (!string.IsNullOrEmpty(record.ImagePath) && new FileInfo(record.CDRPath).Exists)
+            var imageFile = new FileInfo(Path.Combine(imageFilesFolder.FullName, record.ImageFileName + ".png"));
+
+            var pathtoConverter = IndicoConfiguration.AppConfiguration.PathToDataFolder + "\\Applications\\CDRConverter.exe";
+            var converter = new Process
             {
-                cdrFile = new FileInfo(record.CDRPath);
-            }
-            else
-            {
-                var fileData = DownloadFile(record.FtpPath);
-                cdrFile = new FileInfo(Path.Combine(cdrFolder.FullName, Guid.NewGuid() + "_.cdr"));
-                if (!cdrFile.Exists)
-                    cdrFile.Create().Dispose();
-                File.WriteAllBytes(cdrFile.FullName, fileData);
-                record.CDRPath = cdrFile.FullName;
-            }
-            var imageFile = new FileInfo(Path.Combine(imageFilesFolder.FullName, Guid.NewGuid() + "_.png"));
-            try
-            {
-                //TODO Convert using the Tool
-                //var cdr = new CorelDRAW.Application();
-                //cdr.OpenDocument(cdrFile.FullName, 1);
-                //cdr.ActiveDocument.PageSizes.Add("A4", 297, 210);
-                //cdr.ActiveDocument.ExportBitmap(
-                //    imageFile.FullName,
-                //    VGCore.cdrFilter.cdrPNG,
-                //    VGCore.cdrExportRange.cdrCurrentPage,
-                //    VGCore.cdrImageType.cdrRGBColorImage,
-                //    0, 0, 72, 72,
-                //    VGCore.cdrAntiAliasingType.cdrSupersampling,
-                //    false,
-                //    true).Finish();
-                //cdr.ActiveDocument.Close();
-                //cdr.Quit();
-            }
-            catch (Exception e)
-            {
-                //throw e;
-            }
-            finally
-            {
-                if (!imageFile.Exists)
+                StartInfo =
                 {
-                    if (cdrFile.Exists)
-                        cdrFile.Delete();
+                    FileName = pathtoConverter,
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    Arguments = string.Format("\"{0}\" \"{1}\"",record.CdrPath,imageFile.FullName),
+                    RedirectStandardError = true
                 }
-            }
+            };
+            converter.Start();
+
+            converter.WaitForExit();
+            
             if (imageFile.Exists)
                 record.ImagePath = imageFile.FullName;
         }
@@ -209,7 +197,7 @@ namespace Indico.Common
             return data;
         }
 
-        public static Byte[] ToByteArray(Stream stream)
+        public static byte[] ToByteArray(Stream stream)
         {
             MemoryStream ms = new MemoryStream();
             byte[] chunk = new byte[4096];
@@ -224,79 +212,53 @@ namespace Indico.Common
 
         private void CleanFiles()
         {
-            var date = DateTime.Now;
-            var cdrFolder = new DirectoryInfo(Path.Combine(IndicoConfiguration.AppConfiguration.PathToDataFolder, "ImageServiceFiles", "CDRFiles"));
-            if (!cdrFolder.Exists)
+            var cdrFolder = new DirectoryInfo(Path.Combine(ImageServiceFilesFolder.FullName, "CDRFiles"));
+            var imageFolder = new DirectoryInfo(Path.Combine(ImageServiceFilesFolder.FullName, "ImageFiles"));
+            if (cdrFolder.Exists)
             {
-                var files = cdrFolder.GetFiles("*", SearchOption.AllDirectories);
-                foreach (var file in files.Where(file => file.CreationTime.AddDays(7) > date || files.Length < 1))
+                var cdrFiles = cdrFolder.GetFiles("*", SearchOption.AllDirectories);
+                foreach (var 
+                    file1 in 
+                    cdrFiles.Where(file => file.Exists)
+                    .Where(file1 => Register.Count(r => r.CdrPath == file1.FullName) < 1))
                 {
-                    file.Delete();
+                    file1.Delete();
                 }
             }
-            var imageFilesFolder = new DirectoryInfo(Path.Combine(IndicoConfiguration.AppConfiguration.PathToDataFolder, "ImageServiceFiles", "ImageFiles"));
-            if (!imageFilesFolder.Exists)
+            if (!imageFolder.Exists)
                 return;
-            var imageFiles = imageFilesFolder.GetFiles("*", SearchOption.AllDirectories);
-            foreach (var file in imageFiles.Where(file => file.CreationTime.AddDays(7) > date || file.Length < 1))
+            var imageFiles = imageFolder.GetFiles("*", SearchOption.AllDirectories);
+            foreach (var
+                file1 in
+                imageFiles.Where(file => file.Exists)
+                    .Where(file1 => Register.Count(r => r.ImagePath == file1.FullName) < 1))
             {
-                file.Delete();
+                file1.Delete();
             }
         }
 
-        private void ClearRegister(ref List<VLUrlRecord> list)
-        {
-            var date = DateTime.Now;
-            foreach (var it in list)
-            {
-                var item = it;
-                if(item==null)
-                    continue;
-                if (!string.IsNullOrWhiteSpace(item.CDRPath))
-                {
-                    var cdr = new FileInfo(item.CDRPath);
-                    if (cdr.Exists && (cdr.CreationTime.AddDays(7) > date || cdr.Length < 1))
-                        cdr.Delete();
-                    else if(!cdr.Exists)
-                        it.ImagePath = null;
-                }
-                else
-                    it.CDRPath = null;
-                if (!string.IsNullOrWhiteSpace(item.ImagePath))
-                {
-                    var image = new FileInfo(item.ImagePath);
-                    if (image.Exists && (image.CreationTime.AddDays(7) > date || image.Length < 1))
-                        image.Delete();
-                    else if(!image.Exists)
-                        it.ImagePath = null;
-                }
-                else
-                    it.ImagePath = null;
-            }
-        }
-
-        private List<VLUrlRecord> GetRegister()
+        private List<VlUrlRecord> GetRegister()
         {
             var register = RegisterFile;
             if (!register.Exists)
             {
                 register.Create().Close();
-                return new List<VLUrlRecord>();
+                return new List<VlUrlRecord>();
             }
             
             var reader =new StreamReader(register.FullName);
             using (reader)
             {
-                var line = "";
-                var result = new List<VLUrlRecord>();
+                string line;
+                var result = new List<VlUrlRecord>();
                 while ((line=reader.ReadLine())!=null)
                 {
                     if (string.IsNullOrWhiteSpace(line))
                         continue;
-                    var splitted = line.Split(new string[] { "|||" }, 4, StringSplitOptions.None);
-                    if (splitted.Length > 3)
+                    var splitted = line.Split(new[] { "|||" }, 4, StringSplitOptions.None);
+                    if (splitted.Length > 2)
                     {
-                        result.Add(new VLUrlRecord { VlName = splitted[0], CDRPath = splitted[1], ImagePath = splitted[2], FtpPath = splitted[3] });
+                        result.Add(new VlUrlRecord { VlName = splitted[0], CdrPath = splitted[1], ImagePath = splitted[2], FtpPath = splitted[3] });
                     }
                 }
                 return result;
@@ -309,47 +271,35 @@ namespace Indico.Common
             var register = RegisterFile;
             if (!register.Exists)
                 register.Create().Close();
-            if (Register.Count > 0)
+            if (Register.Count <= 0)
+                return;
+            var writer = new StreamWriter(register.FullName);
+            var builder = new StringBuilder();
+            using (writer)
             {
-                var writer = new StreamWriter(register.FullName) { AutoFlush = true};
-                var builder = new StringBuilder();
-                using (writer)
+                foreach (var record in Register.Where(record => record != null && !string.IsNullOrWhiteSpace(record.VlName)))
                 {
-                    foreach (var record in Register)
-                    {
-                        if (record == null || string.IsNullOrWhiteSpace(record.VlName))
-                            continue;
-                        builder.Append(record.VlName);
-                        if (!string.IsNullOrWhiteSpace(record.CDRPath))
-                        {
-                            builder.Append("|||")
-                                .Append(record.CDRPath);
-                        }
-                        if (!string.IsNullOrWhiteSpace(record.ImagePath))
-                        {
-                            builder.Append("|||")
-                                .Append(record.ImagePath);
-                        }
-                        if (!string.IsNullOrWhiteSpace(record.FtpPath))
-                        {
-                            builder.Append("|||")
-                                .Append(record.FtpPath);
-                        }
-                        builder.Append(Environment.NewLine);
-                    }
-
-                    writer.Write(builder.ToString());
+                    builder.Append(record.VlName);
+                    builder.Append("|||")
+                        .Append(string.IsNullOrWhiteSpace(record.CdrPath) ? "" : record.CdrPath)
+                        .Append("|||")
+                        .Append(string.IsNullOrWhiteSpace(record.ImagePath) ? "" : record.ImagePath)
+                        .Append("|||")
+                        .Append(string.IsNullOrWhiteSpace(record.FtpPath) ? "" : record.FtpPath);
+                    builder.Append(Environment.NewLine);
                 }
+
+                writer.Write(builder.ToString());
             }
-           
         }
 
-        public class VLUrlRecord
+        public class VlUrlRecord
         {
             public string VlName { get; set; }
             public string FtpPath { get; set; }
             public string ImagePath { get; set; }
-            public string CDRPath { get; set; }
+            public string CdrPath { get; set; }
+            public string ImageFileName { get; set; }
         }
     }
 }
