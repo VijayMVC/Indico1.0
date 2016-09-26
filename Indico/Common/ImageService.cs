@@ -255,10 +255,10 @@ namespace Indico.Common
                 {
                     if (string.IsNullOrWhiteSpace(line))
                         continue;
-                    var splitted = line.Split(new[] { "|||" }, 4, StringSplitOptions.None);
-                    if (splitted.Length > 2)
+                    var splitted = line.Split(new[] { "|||" }, 5, StringSplitOptions.None);
+                    if (splitted.Length > 4)
                     {
-                        result.Add(new VlUrlRecord { VlName = splitted[0], CdrPath = splitted[1], ImagePath = splitted[2], FtpPath = splitted[3] });
+                        result.Add(new VlUrlRecord { VlName = splitted[0], CdrPath = splitted[1], ImagePath = splitted[2], FtpPath = splitted[3],ImageFileName=splitted[4] });
                     }
                 }
                 return result;
@@ -285,7 +285,9 @@ namespace Indico.Common
                         .Append("|||")
                         .Append(string.IsNullOrWhiteSpace(record.ImagePath) ? "" : record.ImagePath)
                         .Append("|||")
-                        .Append(string.IsNullOrWhiteSpace(record.FtpPath) ? "" : record.FtpPath);
+                        .Append(string.IsNullOrWhiteSpace(record.FtpPath) ? "" : record.FtpPath)
+                        .Append("|||")
+                        .Append(string.IsNullOrWhiteSpace(record.ImageFileName) ? "" : record.ImageFileName);
                     builder.Append(Environment.NewLine);
                 }
 
