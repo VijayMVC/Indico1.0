@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -72,9 +72,9 @@ namespace Indico.BusinessObjects
         private static string _myobDeveloperSecretKey = string.Empty;
 
         //MYOB Accounts for Item
-        private static int _myobItemCostOfSaleAccounNumber = 0;
-        private static int _myobItemIncomeAccountNumber = 0;
-        private static int _myobItemAssetAccountNumber = 0;
+        private static int _myobItemCostOfSaleAccounNumber;
+        private static int _myobItemIncomeAccountNumber;
+        private static int _myobItemAssetAccountNumber;
         
         //Myob Authorization
         private static string _myobOAuthUrl = string.Empty;
@@ -1276,8 +1276,9 @@ namespace Indico.BusinessObjects
                 }
                 return _imagesFtpPassword;
             }
-        }
 
+
+        }
 
 
         public static Thread GetContextAwareThread(ThreadStart s)
