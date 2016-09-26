@@ -100,7 +100,30 @@
                 <asp:Literal ID="HearText" runat="server"></asp:Literal>
             </h3>
         </div>
+
         <div class="page-content">
+
+        <div class="page-content">
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">Transfer Distributor</div>
+                <div class="panel-body">
+                    <div class="form-inline">
+                        <label>From  Distributor </label>
+                        <asp:DropDownList ID="FromDistributorDistributorDropDown" Width="300" runat="server" CssClass="input-medium select2" AutoPostBack="True"
+                            OnSelectedIndexChanged="OnFromDistributorDistributorDropDownChanged">
+                        </asp:DropDownList>
+
+                        <label style="margin-left: 20px;">To Distributor  </label>
+                        <asp:DropDownList ID="ToDistributorDistributorDropDown" Width="300" Enabled="False" runat="server" CssClass="input-medium select2" AutoPostBack="True"
+                            OnSelectedIndexChanged="OnToDistributorDistributorDropDownChanged">
+                        </asp:DropDownList>
+
+                        <asp:Button runat="server" ID="TransferDistributoButton" Text="Transfer Distributor" CssClass="btn btn-info transferButton" Enabled="False" OnClick="OnTransferDistributoButtonClick" />
+                    </div>
+                </div>
+            </div>
+
             <div class="panel panel-primary">
                 <div class="panel-heading">Transfer Job Names</div>
                 <div class="panel-body">

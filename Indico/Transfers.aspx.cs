@@ -15,8 +15,11 @@ namespace Indico
     public partial class Transfers : IndicoPage
     {
         #region Properties
+
         private SqlConnection Connection { get { return new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString); } }
+        
         #endregion
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack)
@@ -26,6 +29,54 @@ namespace Indico
         }
 
         #region Event handlers
+
+
+
+        protected void OnFromDistributorDistributorDropDownChanged(object sender, EventArgs e)
+        {
+            var selectedDistributorId = int.Parse(FromDistributorDistributorDropDown.SelectedValue);
+            if (selectedDistributorId < 1)
+                return;
+
+            var distributors = GetAllDistributors().Where(d=>d.Key!=selectedDistributorId).ToList();
+
+            if (distributors.Count < 1)
+                return;
+
+            ToDistributorDistributorDropDown.Items.Add(new ListItem("Select distributor", "0"));
+            foreach (var dis in distributors)
+                ToDistributorDistributorDropDown.Items.Add(new ListItem(dis.Value, dis.Key.ToString()));
+            ToDistributorDistributorDropDown.Enabled = true;
+                     
+        }
+
+        protected void OnToDistributorDistributorDropDownChanged(object sender, EventArgs e)
+        {
+
+            var selectedDistributorId = int.Parse(ToDistributorDistributorDropDown.SelectedValue);
+            if (selectedDistributorId < 1)
+                return;
+
+            TransferDistributoButton.Enabled = true;
+            
+        }
+
+
+        protected void OnTransferDistributoButtonClick(object sender,EventArgs e)
+        {
+            var fromDistributor = int.Parse(FromDistributorDistributorDropDown.SelectedValue);
+            var toDistributor = int.Parse(ToDistributorDistributorDropDown.SelectedValue);
+
+            if (fromDistributor < 1 || toDistributor < 1)
+                return;
+
+            TransferDistributor(fromDistributor, toDistributor);
+            ToDistributorDistributorDropDown.Items.Clear();
+            ToDistributorDistributorDropDown.Enabled = false;
+            FromDistributorDistributorDropDown.SelectedIndex = 0;
+        }
+
+
         protected void OnFromDistributorDropDownSelectionChanged(object sender, EventArgs e)
         {
             var selectedDistributorId = int.Parse(FromDistributorDropDown.SelectedValue);
@@ -43,6 +94,8 @@ namespace Indico
             }
             JobNameDropDown.Enabled = true;
         }
+
+
 
         protected void OnJobNameDropDownSelectionChanged(object sender, EventArgs e)
         {
@@ -200,11 +253,15 @@ namespace Indico
             FromDistributorVlDropDown.Items.Clear();
             FromDistributorDropDown.Items.Add(new ListItem("Select Distributor", 0.ToString()));
             FromDistributorVlDropDown.Items.Add(new ListItem("Select Distributor", 0.ToString()));
+            FromDistributorDistributorDropDown.Items.Add(new ListItem("Select Distributor", 0.ToString()));
+
             var distributors = GetAllDistributors();
             foreach (var distributor in distributors)
             {
                 FromDistributorDropDown.Items.Add(new ListItem(distributor.Value, distributor.Key.ToString()));
+                FromDistributorDistributorDropDown.Items.Add(new ListItem(distributor.Value, distributor.Key.ToString()));
             }
+
 
             distributors = GetAllDistributorsForProduct();
             foreach (var distributor in distributors)
@@ -221,6 +278,7 @@ namespace Indico
             TransferProductsButton.Enabled = false;
             ToDistributorVlDropDown.Enabled = false;
             ToJobNameDropDown.Enabled = false;
+            TransferDistributoButton.Enabled = false;
         }
 
         /// <summary>
@@ -357,7 +415,6 @@ namespace Indico
         /// <returns></returns>
         private Dictionary<int, string> GetProductsForJobName(int jobName)
         {
-
             var result = new Dictionary<int, string>();
             if (jobName < 1)
                 return result;
@@ -385,7 +442,7 @@ namespace Indico
             using (var connection = Connection)
             {
                 connection.Open();
-                connection.Execute(string.Format("EXEC [SPC_TransferJobName] {0}, {1}", jobName, distributor));
+                connection.Execute(string.Format("EXEC [dbo].[SPC_TransferJobName] {0}, {1}", jobName, distributor));
             }
         }
 
@@ -399,7 +456,23 @@ namespace Indico
             using (var connection = Connection)
             {
                 connection.Open();
-                connection.Execute(string.Format("EXEC [SPC_TransferVisualLayout] {0}, {1}", product, jobName));
+                connection.Execute(string.Format("EXEC [dbo].[SPC_TransferVisualLayout] {0}, {1}", product, jobName));
+            }
+        }
+
+        /// <summary>
+        /// Execute procedure and transfer Distributor to given Distributor
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        private void TransferDistributor(int from,int to)
+        {
+            if (from < 1 || to < 1)
+                return;
+
+            using(var connection = Connection)
+            {
+                connection.Execute(string.Format("EXEC [dbo].[SPC_TransferDistributor] {0}, {1}", from, to));
             }
         }
 

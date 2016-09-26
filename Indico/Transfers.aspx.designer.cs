@@ -31,6 +31,33 @@ namespace Indico {
         protected global::System.Web.UI.WebControls.Literal HearText;
         
         /// <summary>
+        /// FromDistributorDistributorDropDown control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList FromDistributorDistributorDropDown;
+        
+        /// <summary>
+        /// ToDistributorDistributorDropDown control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ToDistributorDistributorDropDown;
+        
+        /// <summary>
+        /// TransferDistributoButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button TransferDistributoButton;
+        
+        /// <summary>
         /// FromDistributorDropDown control.
         /// </summary>
         /// <remarks>
