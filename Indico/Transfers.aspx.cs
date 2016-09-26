@@ -46,6 +46,7 @@ namespace Indico
             ToDistributorDistributorDropDown.Items.Add(new ListItem("Select distributor", "0"));
             foreach (var dis in distributors)
                 ToDistributorDistributorDropDown.Items.Add(new ListItem(dis.Value, dis.Key.ToString()));
+
             ToDistributorDistributorDropDown.Enabled = true;
                      
         }
