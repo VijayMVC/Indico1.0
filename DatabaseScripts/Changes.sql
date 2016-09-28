@@ -12,26 +12,20 @@ CREATE PROCEDURE [dbo].[SPC_TransferDistributor]
 	@P_ToDistributor int
 AS
 	BEGIN
-		DECLARE @Distributor int 
-		DECLARE @ToDistributor int
-
-		SET @Distributor = (SELECT TOP 1 ID FROM [dbo].[Company] WHERE ID = @P_FromDistributor)
-		SET @ToDistributor = (SELECT TOP 1 ID FROM [dbo].[Company] WHERE ID = @P_ToDistributor)
-
-		IF (@Distributor > 0 AND @ToDistributor > 0)
+		IF (@P_FromDistributor > 0 AND @P_ToDistributor > 0)
 		BEGIN
 			DECLARE @Label int
 			SET @Label=(SELECT TOP 1 dl.Label 
-						FROM [dbo].[DistributorLabel] dl WHERE dl.Distributor = @ToDistributor)
+						FROM [dbo].[DistributorLabel] dl WHERE dl.Distributor = @P_ToDistributor)
 
 			UPDATE od SET Label = @Label
 			FROM [dbo].[Order] o
 				INNER JOIN [dbo].[OrderDetail] od
 					ON od.[Order] = o.ID
-			WHERE Distributor = @Distributor
+			WHERE Distributor = @P_FromDistributor
 
-			UPDATE [dbo].[Client] SET Distributor = @ToDistributor
-			WHERE Distributor = @Distributor
+			UPDATE [dbo].[Client] SET Distributor = @P_ToDistributor
+			WHERE Distributor = @P_FromDistributor
 		END
 	END
 
