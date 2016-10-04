@@ -2,10 +2,19 @@
     CodeBehind="AddEditVisualLayout.aspx.cs" Inherits="Indico.AddEditVisualLayout" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="iContentPlaceHolder" runat="server">
+    <style type="text/css">
+        .icon-remove {
+            color: red;
+            cursor: pointer;
+            cursor: hand;
+        }
+    </style>
+
     <asp:ScriptManager ID="ScriptManager1" runat="server">
     </asp:ScriptManager>
     <!-- Page -->
     <div class="page">
+        
         <!-- Page Header -->
         <div class="page-header">
             <h3>
@@ -32,6 +41,8 @@
                         </label>
                     </div>
                 </div>--%>
+                <input type="text" style="display: none;" runat="server" ID="serverImagePath"/>
+
                 <div class="control-group">
                     <div class="controls">
                         <label class="checkbox">
@@ -73,8 +84,7 @@
                         </asp:TextBox>
                         <asp:Button ID="btnCheckName" runat="server" Text="Check Name" CssClass="btn-info" OnClick="btnCheckName_Click" />
                         <asp:Label ID="lblCheckName" runat="server"></asp:Label>
-                        <%--<button  ID="checkImageOnServerButton" class="btn-info" title="Check if the image is available in the server!">Check Image</button>--%>
-                        <%-- <label id="imageCheckStatusLabel">label name</label>--%>
+                        <button style="display: none;"  ID="checkImageOnServerButton" class="btn-info" title="Check if the image is available in the server!">Check Image</button>
                         <asp:RequiredFieldValidator ID="rfvProductNumber" runat="server" ErrorMessage="Product number is required"
                             ControlToValidate="txtProductNumber" EnableClientScript="false" ValidationGroup="valGrpVL"
                             InitialValue="0">
@@ -440,7 +450,7 @@
                     </div>
                     <!-- / -->
                     <!-- VL Image Uploader -->
-                    <div class="control-group">
+                    <div class="control-group" id="uploadContainer">
                         <label class="control-label">
                         </label>
                         <div class="controls">
@@ -471,28 +481,43 @@
                         <label class="control-label">
                             Product Images
                         </label>
-                        <div class="controls">
-                            <div id="dropzone_1" multirow="true" class="fileupload preview">
-                                <input id="file_1" name="file_1" type="file" />
-                                <button id="btnup_1" type="submit">
-                                    Upload</button>
-                                <div id="divup_1">
-                                    Drag file here or click to upload
+
+                        <div class="controls" style="">
+                            <div id="serverImageContainer" style="display: none;">
+                                 <div class="form-inline">
+                                     
+                                    <img alt="" src="" runat="server" style="max-width: 400px" title="Image From the FTP server" id="serverImgaeHolder" />
+                                    <span class="icon icon-remove" id="removeServerImageIcon" title="Do not use server Image (upload new images)"></span>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="control-label ">
-                        </label>
-                        <p class="extra-helper">
-                            <span class="label label-info">Hint:</span> You can drag & drop files from your
+                            
+                                                    <div id="dropzone_1" multirow="true" class="fileupload preview">
+                            <input id="file_1" name="file_1" type="file" />
+                            <button id="btnup_1" type="submit">
+                                Upload</button>
+                            <div id="divup_1">
+                                Drag file here or click to upload
+                            </div>
+
+                            <div>
+                                <label class="control-label ">
+                                </label>
+                                <p class="extra-helper">
+                                    <span class="label label-info">Hint:</span> You can drag & drop files from your
                         desktop on this webpage with Google Chrome, Mozilla Firefox and Apple Safari.
                         <!--[if IE]>
                             <strong>Microsoft Explorer has currently no support for Drag & Drop or multiple file selection.</strong>
                             <![endif]-->
-                        </p>
+                                </p>
+                            </div>
+                        </div>
+                           
+                        </div>
+
+
+                        
                     </div>
+
                     <!-- / -->
                     <div class="control-group">
                         <label class="control-label">
@@ -841,7 +866,15 @@
                         <h4 class="modal-title">Image Found!</h4>
                     </div>
                     <div class="modal-body">
-                        <p>An Image Found for the given Product id from  the server . do you want to use it as  Product Image ?</p>
+                        <% if (QueryID > 0)
+                           { %>
+                               <p>An image found for this product in the blackchrome server. Do want to replace current product image with this one?</p>
+                           <% } %>
+                       
+                         <%  else%>
+                          <% {%>
+                               <p>An image found for this product in the blackchrome server. Do want to add this image for this product?</p> 
+                           <%} %>
                         <img src="#" id="imageFoundModalImage" style="margin: 30px; max-width: 500px; max-height: 500px" alt="" />
                     </div>
                     <div class="modal-footer">
@@ -951,6 +984,28 @@
             });*/
         });
 
+        $("#<%=txtProductNumber.ClientID%>").keyup(function () {
+            var button = $("#checkImageOnServerButton");
+            $(button).text("Check Image");
+            $(button).removeClass("btn-danger");
+            $(button).addClass("btn-info");
+            $(button).prop("disabled", false);
+        });
+
+        $("#removeServerImageIcon").click(function () {
+            $("#<%=serverImagePath.ClientID%>").val("");
+            $("#<%=serverImgaeHolder.ClientID%>").attr("src", "");
+            $("#uploadContainer").show();
+            $("#dropzone_1").show();
+            $("#serverImageContainer").hide();
+            <% if (QueryID > 0)
+               {%>
+                    $("#<%=dvVLImagePreview.ClientID%>").show();
+            <% }%>
+
+            
+        });
+
         function checkChanged(e) {
             $('.ivlImage input[type=checkbox]').each(function () {
                 $(this).prop("checked", false);
@@ -984,64 +1039,73 @@
             $('#addjobClient').modal('show');
         }
 
-        //function toggleImageCheckButton() {
-        //    var val = $("#iContentPlaceHolder_lblCheckName").text();
-        //    if (val === "Available.") {
-        //        var str = $("#iContentPlaceHolder_txtProductNumber").val();
-        //        var pattern = new RegExp("^[Vv][Ll]\\d{1,}$");
-        //        var result = pattern.test(str);
-        //        if (result)
-        //            $("#checkImageOnServerButton").show();
-        //        else {
-        //            $("#checkImageOnServerButton").hide();
-        //        }
-        //    }
-        //}
+        function toggleImageCheckButton() {
+            var val = $("#<%=lblCheckName.ClientID%>").text();
+            if (val === "Available.") {
+                var str = $("#<%=txtProductNumber.ClientID%>").val();
+                var pattern = new RegExp("[\\[Vv\\]\\[Ll\\]\\d{1,}.*]");
+                var result = pattern.test(str);
+                if (result)
+                    $("#checkImageOnServerButton").show();
+                else {
+                    $("#checkImageOnServerButton").hide();
+                }
+            }
+        }
 
-        //toggleImageCheckButton();
-        //function showImageFoundModal(imagepath) {
-        //    $("#imageFoundModalImage").attr("src",imagepath);
-        //    $('#imageFoundModal').modal('show');
-        //    // $("#imageFoundModal").modal().show();
-        //}
-        //$("#checkImageOnServerButton").click(function(e) {
-        //    e.preventDefault();
-        //    console.log("clicked");
-        //    var target = $("#iContentPlaceHolder_txtProductNumber");
-        //    var vl = target.attr("value");
-        //    console.log(vl);
-        //    $(e.target).text("Checking .. please wait");
-        //    $(e.target).prop("disabled", true);
-        //    $.ajax(
-        //    {
-        //        url: "AddEditVisualLayout.aspx/CheckImageAvailable",
-        //        type: "POST",
-        //        contentType: "application/json; charset=utf-8",
-        //        data: JSON.stringify({ vlname: vl }),
-        //        dataType: "json",
-        //        async: true,
-        //        success: function (v) {
-        //            console.log(v);
-        //            var data = v.d;
-        //            if (data === null) {
-        //                $(e.target).text("No Image Available");
-        //                $(e.target).removeClass("btn-info");
-        //                $(e.target).addClass("btn-danger");
-        //                setTimeout(function () {
-        //                    $(e.target).text("Check Image");
-        //                    $(e.target).removeClass("btn-danger");
-        //                    $(e.target).addClass("btn-info");
-        //                    $(e.target).prop("disabled", false);
-        //                }, 3000);
-        //            }
-        //            else {
-        //                $(e.target).text("Check Image");
-        //                $(e.target).prop("disabled", false);
-        //                showImageFoundModal(data);
-        //            }
-        //        }
-        //    });
-        //});
+        toggleImageCheckButton();
+
+        function showImageFoundModal(imagepath) {
+            $("#imageFoundModalImage").attr("src",imagepath);
+            $('#imageFoundModal').modal('show');
+            $("#imageFoundModalYesButton").click(function () {
+                $("#<%=serverImgaeHolder.ClientID%>").attr("src", imagepath);
+                $("#<%=serverImagePath.ClientID%>").val(imagepath);
+                console.log($("#<%=serverImagePath.ClientID%>"));
+                console.log($("#<%=serverImagePath.ClientID%>").val());
+                $("#dropzone_1").hide();
+                $("#uploadContainer").hide();
+                $("#serverImageContainer").show();
+                <% if (QueryID > 0)
+                    {%>
+                         $("#<%=dvVLImagePreview.ClientID%>").hide();
+                    <% }%>
+            });
+            
+        }
+
+        $("#checkImageOnServerButton").click(function(e) {
+            e.preventDefault();
+            console.log("clicked");
+            var target = $("#<%=txtProductNumber.ClientID%>");
+            var vl = target.attr("value");
+            console.log(vl);
+            $(e.target).text("Checking .. please wait");
+            $(e.target).prop("disabled", true);
+            $.ajax(
+            {
+                url: "AddEditVisualLayout.aspx/CheckImageAvailable",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ vlname: vl }),
+                dataType: "json",
+                async: true,
+                success: function (v) {
+                    console.log(v);
+                    var data = v.d;
+                    if (data === null) {
+                        $(e.target).text("No Image Available");
+                        $(e.target).removeClass("btn-info");
+                        $(e.target).addClass("btn-danger");
+                    }
+                    else {
+                        $(e.target).text("Check Image");
+                        $(e.target).prop("disabled", false);
+                        showImageFoundModal(data);
+                    }
+                }
+            });
+        });
     </script>
     <!-- / -->
 </asp:Content>

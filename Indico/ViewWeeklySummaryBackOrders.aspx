@@ -14,10 +14,10 @@
             <div class="row-fluid">
                  <div id="dvEmptyContent" runat="server" Visible="false" class="alert alert-info">
                     <h4>
-                        <a title="Weekly SMV Capacities.">Weekly SMV Capacities.</a>
+                        <a title="Weekly SMV Capacities.">Weekly Summaries (Backorder)</a>
                     </h4>
                     <p>
-                        There are no data for  Weekly SMV capacities
+                        There are no data for Backorder
                     </p>
                 </div> <!-- Empty COntent-->
                 <div id="dvNoSearchResult" runat="server"  class="message search" visible="false">
@@ -45,8 +45,7 @@
                   <div class="demo-container no-bg">
    
                    <telerik:RadGrid  ID="SummariesGrid" runat="server" AllowPaging="true" AllowFilteringByColumn="true"
-                        ShowGroupPanel="true" ShowFooter="True" OnPageSizeChanged="OnSummaryGridPageSizeChanged" 
-                        PageSize="50" OnPageIndexChanged="OnSummariesGridPageIndexChanged" EnableHeaderContextMenu="true" 
+                        ShowGroupPanel="true" ShowFooter="True" PageSize="50" EnableHeaderContextMenu="true" 
                         EnableHeaderContextFilterMenu="true" AutoGenerateColumns="false" OnItemDataBound="OnSummariesGridItemDataBound"
                         Skin="Metro" CssClass="RadGrid" AllowSorting="true" EnableEmbeddedSkins="true" >
                         <PagerStyle Mode="NextPrevNumericAndAdvanced"></PagerStyle>

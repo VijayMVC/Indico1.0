@@ -1,22 +1,21 @@
-﻿using Dapper;
-using Indico.BusinessObjects;
-using Indico.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Linq.Dynamic;
 using System.Text.RegularExpressions;
 using System.Transactions;
+using System.Web;
+using System.Web.Services;
+using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using CheckBox = System.Web.UI.WebControls.CheckBox;
-using Control = System.Web.UI.Control;
-using Label = System.Web.UI.WebControls.Label;
-using Path = System.IO.Path;
+using Dapper;
+using Indico.BusinessObjects;
+using Indico.Common;
+using Image = System.Drawing.Image;
 
 namespace Indico
 {
@@ -453,7 +452,7 @@ namespace Indico
 
                 try
                 {
-                    System.Drawing.Image VLOrigImage = System.Drawing.Image.FromFile(IndicoConfiguration.AppConfiguration.PathToProjectFolder + "\\" + VlImgLocation);
+                    Image VLOrigImage = Image.FromFile(IndicoConfiguration.AppConfiguration.PathToProjectFolder + "\\" + VlImgLocation);
                     SizeF origImageSize = VLOrigImage.PhysicalDimension;
                     VLOrigImage.Dispose();
 
@@ -1873,7 +1872,7 @@ namespace Indico
                 //objReturnInt = SettingsBO.ValidateField(itemID, "JobName", "Name", this.txtNewJobName.Text);
                 //args.IsValid = objReturnInt.RetVal == 1;
 
-                args.IsValid = IndicoPage.ValidateField2(itemID, "JobName", "Name", this.txtNewJobName.Text, "Client", clientID.ToString()) == 1;
+                args.IsValid = ValidateField2(itemID, "JobName", "Name", this.txtNewJobName.Text, "Client", clientID.ToString()) == 1;
             }
             catch (Exception ex)
             {
@@ -1892,7 +1891,7 @@ namespace Indico
                 //objReturnInt = SettingsBO.ValidateField(itemID, "Client", "Name", this.txtNewClient.Text);
                 //args.IsValid = objReturnInt.RetVal == 1;
 
-                args.IsValid = IndicoPage.ValidateField2(itemID, "Client", "Name", this.txtNewClient.Text, "Distributor", distributorID.ToString()) == 1;
+                args.IsValid = ValidateField2(itemID, "Client", "Name", this.txtNewClient.Text, "Distributor", distributorID.ToString()) == 1;
             }
             catch (Exception ex)
             {
@@ -2491,37 +2490,7 @@ namespace Indico
                         }
                         //objVisualLayout.IsCommonProduct = (this.checkIsCommonproduct.Checked == true) ? true : false;
 
-                        //VL Images
-                        if (this.hdnUploadFiles.Value != "0" || /*!string.IsNullOrEmpty(this.hdnPatternId.Value)*/ (int.Parse(this.ddlPattern.SelectedValue) > 0)) //New VL
-                        {
-                            int n = 0;
-                            foreach (string fileName in this.hdnUploadFiles.Value.Split('|').Select(o => o.Split(',')[0]))
-                            {
-                                if (fileName != string.Empty)
-                                {
-                                    n++;
-                                    ImageBO objImage = new ImageBO(this.ObjContext);
-                                    objImage.Filename = Path.GetFileNameWithoutExtension(fileName);
-                                    objImage.Extension = Path.GetExtension(fileName);
-                                    objImage.Size = (int)(new FileInfo(IndicoConfiguration.AppConfiguration.PathToDataFolder + "\\temp\\" + fileName)).Length;
-                                    if (this.QueryID == 0 || objVisualLayout.ImagesWhereThisIsVisualLayout.Count == 0)
-                                    {
-                                        objImage.IsHero = (n == 1) ? true : false;
-                                    }
-                                    if (QueryID == 0)
-                                    {
-                                        objVisualLayout.ImagesWhereThisIsVisualLayout.Add(objImage);
-                                    }
-                                    else
-                                    {
-                                        objImage.VisualLayout = QueryID;
-                                    }
-
-                                    // objImage.Add();
-                                    //this.ObjContext.SaveChanges();
-                                }
-                            }
-                        }
+                       
 
                         ViewState["visualLayoutNa"] = this.txtProductNumber.Text;
 
@@ -2560,6 +2529,7 @@ namespace Indico
 
                         visualLayout = objVisualLayout.ID;
                         #region Save multiple fabrics
+
 
                         /*    foreach (DataGridItem item in this.dgv.Items)
                             {
@@ -2613,28 +2583,84 @@ namespace Indico
 
                         #region Copy VL Image
 
+
                         string sourceFileLocation = string.Empty;
                         string destinationFolderPath = IndicoConfiguration.AppConfiguration.PathToDataFolder + "\\VisualLayout\\" + objVisualLayout.ID.ToString();
 
                         //Other VL Images
-                        foreach (string fileName in this.hdnUploadFiles.Value.Split('|').Select(o => o.Split(',')[0]))
+                        if (!string.IsNullOrWhiteSpace(serverImagePath.Value))
                         {
-                            sourceFileLocation = IndicoConfiguration.AppConfiguration.PathToDataFolder + "\\temp\\" + fileName;
-
-                            if (fileName != string.Empty)
+                            var filePath = HttpContext.Current.Server.MapPath(serverImagePath.Value);
+                            var fileName = new FileInfo(filePath).Name;
+                            if (!Directory.Exists(destinationFolderPath))
+                                Directory.CreateDirectory(destinationFolderPath);
+                            if(File.Exists(destinationFolderPath + "\\" + fileName))
+                                File.Delete(destinationFolderPath + "\\" + fileName);
+                            File.Copy(filePath, destinationFolderPath + "\\" + fileName);
+                            var objImage = new ImageBO(ObjContext)
                             {
-                                if (File.Exists(destinationFolderPath + "\\" + fileName))
+                                Filename = Path.GetFileNameWithoutExtension(filePath),
+                                Extension = Path.GetExtension(filePath),
+                                Size = Convert.ToInt32(new FileInfo(filePath).Length),
+                                IsHero = objVisualLayout.ImagesWhereThisIsVisualLayout.Count<1
+                            };
+                            foreach (var img in objVisualLayout.ImagesWhereThisIsVisualLayout)
+                            {
+                                img.Delete();
+                            }
+                            objVisualLayout.ImagesWhereThisIsVisualLayout.Add(objImage);
+                            ObjContext.SaveChanges();
+                        }
+                        else
+                        {
+
+                            //VL Images
+                            if (hdnUploadFiles.Value != "0" || (int.Parse(ddlPattern.SelectedValue) > 0))
+                            {
+                                var n = 0;
+                                foreach (var fileName in hdnUploadFiles.Value.Split('|').Select(o => o.Split(',')[0]).Where(fileName => fileName != string.Empty))
                                 {
-                                    File.Delete(destinationFolderPath + "\\" + fileName);
+                                    n++;
+                                    var objImage = new ImageBO(ObjContext)
+                                    {
+                                        Filename = Path.GetFileNameWithoutExtension(fileName),
+                                        Extension = Path.GetExtension(fileName), Size = (int) (new FileInfo(IndicoConfiguration.AppConfiguration.PathToDataFolder + "\\temp\\" + fileName)).Length
+                                    };
+                                    if (QueryID == 0 || objVisualLayout.ImagesWhereThisIsVisualLayout.Count == 0)
+                                    {
+                                        objImage.IsHero = (n == 1);
+                                    }
+                                    if (QueryID == 0)
+                                    {
+                                        objVisualLayout.ImagesWhereThisIsVisualLayout.Add(objImage);
+                                    }
+                                    else
+                                    {
+                                        objImage.VisualLayout = QueryID;
+                                    }
                                 }
-                                else
+                            }
+
+                            foreach (string fileName in this.hdnUploadFiles.Value.Split('|').Select(o => o.Split(',')[0]))
+                            {
+                                sourceFileLocation = IndicoConfiguration.AppConfiguration.PathToDataFolder + "\\temp\\" + fileName;
+
+                                if (fileName != string.Empty)
                                 {
-                                    if (!Directory.Exists(destinationFolderPath))
-                                        Directory.CreateDirectory(destinationFolderPath);
-                                    File.Copy(sourceFileLocation, destinationFolderPath + "\\" + fileName);
+                                    if (File.Exists(destinationFolderPath + "\\" + fileName))
+                                    {
+                                        File.Delete(destinationFolderPath + "\\" + fileName);
+                                    }
+                                    else
+                                    {
+                                        if (!Directory.Exists(destinationFolderPath))
+                                            Directory.CreateDirectory(destinationFolderPath);
+                                        File.Copy(sourceFileLocation, destinationFolderPath + "\\" + fileName);
+                                    }
                                 }
                             }
                         }
+                        
 
                         #endregion
 
@@ -2717,7 +2743,7 @@ namespace Indico
                             foreach (DataGridItem item in dgPatternAccessory.Items)
                             {
                                 Label lblAccessoryID = (Label)item.FindControl("lblAccessoryID");
-                                int id = int.Parse(((System.Web.UI.WebControls.WebControl)(lblAccessoryID)).Attributes["vlaid"].ToString());
+                                int id = int.Parse(((WebControl)(lblAccessoryID)).Attributes["vlaid"].ToString());
 
                                 if (id > 0)
                                 {
@@ -3279,13 +3305,14 @@ namespace Indico
 
         #endregion
 
-        //[WebMethod]
-        //public static string CheckImageAvailable(string vlname)
-        //{
-        //   
-        //    var imageService = new ImageService();
-        //    return @"\IndicoData\ImageServiceFiles\ImageFiles\VL48773 - little athletics sa - 574 - leisure shorts with pocket - unisex - youth(curves).png";
-        //    //return null;// imageService.GetVLImageFromServerIfAvailable(vlname);
-        //}
+        [WebMethod]
+        public static string CheckImageAvailable(string vlname)
+        {
+            using(var service= new ImageService())
+            {
+                var path= service.GetVlImageFromServerIfAvailable(vlname);
+                return path;
+            }
+        }
     }
 }

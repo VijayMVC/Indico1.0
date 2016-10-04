@@ -137,28 +137,6 @@ namespace Indico
             samplesCapacityLable.Text = string.Format("{0:N0}", dataItem.SampleCapacity);
         }
 
-
-        protected void OnSummariesGridItemCommand(object sender, GridCommandEventArgs e)
-        {
-
-        }
-
-        protected void OnSummariesGridCustomAggrigate(object sender, GridCustomAggregateEventArgs e)
-        {
-
-        }
-
-        protected void OnSummariesGridPageIndexChanged(object sender, GridPageChangedEventArgs e)
-        {
-
-        }
-
-        protected void OnSummaryGridPageSizeChanged(object sender, GridPageSizeChangedEventArgs e)
-        {
-
-
-        }
-
         #endregion
 
         #region Private Methods

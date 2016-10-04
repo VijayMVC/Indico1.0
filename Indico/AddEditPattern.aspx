@@ -1104,7 +1104,7 @@
         });
 
         $('#' + linkDeletePatternTemplateImage).click(function () {
-            $('#' + hdnGarmentImage).val($(this).attr('tempimgid'))
+            $('#' + hdnGarmentImage).val($(this).attr('tempimgid'));
             $('#dvDeleteGarmentmeasurementImage').modal('show');
         });
 
