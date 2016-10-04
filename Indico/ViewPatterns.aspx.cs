@@ -732,13 +732,13 @@ namespace Indico
         protected void ancDownloadPDF_click(object sender, EventArgs e)
         {
             int patternID = int.Parse(((WebControl)(sender)).Attributes["pid"]);
-            this.DownloadPdf(patternID);
+            this.DownloadPdf(patternID, false);
         }
 
         protected void btnPrintPDF_OnClick(object sender, EventArgs e)
         {
             int patternID = int.Parse(this.hdnPatternID.Value);
-            this.DownloadPdf(patternID);
+            this.DownloadPdf(patternID, true);
             ViewState["ShowSpec"] = true;
         }
 
@@ -1200,7 +1200,7 @@ namespace Indico
             return status;
         }
 
-        private void DownloadPdf(int PatternID)
+        private void DownloadPdf(int PatternID, bool isAllSizes)
         {
             string convertType = this.ddlConvert.SelectedValue;
             try
@@ -1210,7 +1210,7 @@ namespace Indico
                 objPattern.ID = PatternID;
                 objPattern.GetObject();
 
-                string filePath = objWebServicePattern.GeneratePDF(objPattern, false, convertType);
+                string filePath = objWebServicePattern.GeneratePDF(objPattern, false, convertType, string.Empty, isAllSizes);
 
                 //FileInfo fileInfo = new FileInfo(filePath);
                 //string outputName = System.Text.RegularExpressions.Regex.Replace(fileInfo.Name, @"\W+", "_");

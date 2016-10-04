@@ -115,12 +115,12 @@ namespace Indico.Common
 
         #region Methods
 
-        public string CreateHtml(PatternBO objPattern, string convertType)
+        public string CreateHtml(PatternBO objPattern, string convertType, bool isAllSizes)
         {
-            return this.CreateHtml(objPattern, convertType, false);
+            return this.CreateHtml(objPattern, convertType, false, isAllSizes);
         }
 
-        public string CreateHtml(PatternBO objPattern, string convertType, bool tbodyOnly)
+        public string CreateHtml(PatternBO objPattern, string convertType, bool tbodyOnly, bool isAllSizes)
         {
             string tbody = "<tr>" +
                            "    <td></td>" +
@@ -134,7 +134,12 @@ namespace Indico.Common
             //List<SizeChartBO> lstSizeCharts = objPattern.SizeChartsWhereThisIsPattern.Where(o => o.objMeasurementLocation.IsSend == true).ToList();
             SizeChartBO objSChart = new SizeChartBO();
             objSChart.Pattern = objPattern.ID;
-            List<SizeChartBO> lstSizeCharts = objSChart.SearchObjects().Where(o => o.objMeasurementLocation.IsSend == true && o.Val > 0).ToList();
+            List<SizeChartBO> lstSizeCharts = objSChart.SearchObjects().Where(o => o.Val > 0).ToList();
+
+            if (!isAllSizes)
+            {
+                lstSizeCharts = objSChart.SearchObjects().Where(o => o.objMeasurementLocation.IsSend == true).ToList();
+            }
 
             if (lstSizeCharts.Count > 0)
             {
@@ -609,7 +614,7 @@ namespace Indico.Common
             return newImageSource;
         }
 
-        public string GeneratePDF(PatternBO objPattern, bool isWebService, string convertType, string compressionImagePath = "")
+        public string GeneratePDF(PatternBO objPattern, bool isWebService, string convertType, string compressionImagePath = "", bool isAllSizes = false)
         {
             string createpdfPath = string.Empty;
             string imagepath = string.Empty;
@@ -720,7 +725,7 @@ namespace Indico.Common
                         heroImage.SetAbsolutePosition(((pageWidth - heroImage.ScaledWidth) / 2), (pageHeight - (pageMargin * 2) - lineHeight - marginBottom - heroImage.ScaledHeight));
                         document.Add(heroImage);
 
-                        var htmlText = CreateHtml(objPattern, convertType);
+                        var htmlText = CreateHtml(objPattern, convertType, isAllSizes);
                         var htmlWorker = new HTMLWorker(document);
                         htmlWorker.Parse(new StringReader(htmlText));
                     }
