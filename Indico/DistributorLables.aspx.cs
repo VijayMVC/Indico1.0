@@ -879,6 +879,9 @@ namespace Indico
             this.hdnEditLabel.Value = "0";
         }
 
-        #endregion
+        
     }
+
+        #endregion
+    
 }

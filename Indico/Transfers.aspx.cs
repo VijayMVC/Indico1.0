@@ -474,6 +474,7 @@ namespace Indico
             using(var connection = Connection)
             {
                 connection.Execute(string.Format("EXEC [dbo].[SPC_TransferDistributor] {0}, {1}", from, to));
+                connection.Execute(string.Format("EXEC [dbo].[SPC_TransferDistributorLabel] {0}, {1}", from, to));
             }
         }
 
