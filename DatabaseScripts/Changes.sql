@@ -255,7 +255,6 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SPC_T
       DROP PROCEDURE [dbo].[SPC_TransferJobName]
 GO
 
---**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
 
 CREATE PROC [dbo].[SPC_TransferJobName]
 	@P_JobName int,

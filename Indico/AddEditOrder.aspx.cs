@@ -1530,7 +1530,7 @@ namespace Indico
                 {
                     OrderBO objOrder = new OrderBO();
                     objOrder.ID = OrderID;
-                    objOrder.GetObject();
+                    objOrder.GetObject(false);
 
                     lblDistributorAddress.Visible = true;
 

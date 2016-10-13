@@ -131,7 +131,7 @@ namespace Indico
             {
                 TransferJobName(jobName, toDistributor);
             }
-            catch (Exception)
+            catch (Exception ee)
             {
                 IndicoLogging.log.ErrorFormat("Unable to transferJob Name to a distributor Job Name : {0}, Distributor : {1}", jobName, toDistributor);
             }
@@ -180,6 +180,15 @@ namespace Indico
             var selectedJobName = int.Parse(ToJobNameDropDown.SelectedValue);
             if (selected.Count < 1)
                 return;
+
+            if (int.Parse(FromDistributorVlDropDown.SelectedValue) != int.Parse(ToDistributorVlDropDown.SelectedValue))
+            {
+                using (var connection = Connection)
+                {
+                    connection.Execute(string.Format("EXEC [dbo].[SPC_TransferAddressesAndLabels] {0}, {1}", int.Parse(FromJobNameDropDown.SelectedValue), int.Parse(ToDistributorVlDropDown.SelectedValue)));
+                }
+            }
+
             foreach (var product in selected)
             {
                 try
@@ -443,6 +452,7 @@ namespace Indico
             using (var connection = Connection)
             {
                 connection.Open();
+                connection.Execute(string.Format("EXEC [dbo].[SPC_TransferAddressesAndLabels] {0}, {1}", jobName, distributor));
                 connection.Execute(string.Format("EXEC [dbo].[SPC_TransferJobName] {0}, {1}", jobName, distributor));
             }
         }
@@ -474,7 +484,6 @@ namespace Indico
             using(var connection = Connection)
             {
                 connection.Execute(string.Format("EXEC [dbo].[SPC_TransferDistributor] {0}, {1}", from, to));
-                connection.Execute(string.Format("EXEC [dbo].[SPC_TransferDistributorLabel] {0}, {1}", from, to));
             }
         }
 
