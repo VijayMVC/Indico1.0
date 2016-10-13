@@ -255,7 +255,6 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SPC_T
       DROP PROCEDURE [dbo].[SPC_TransferJobName]
 GO
 
---**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
 
 CREATE PROC [dbo].[SPC_TransferJobName]
 	@P_JobName int,
@@ -308,5 +307,14 @@ BEGIN
 
 	UPDATE [dbo].[JobName] SET Client = @Client WHERE ID = @P_JobName
 END
+
+GO
+
+--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
+
+ALTER TABLE [dbo].[Label]
+ADD IsActive bit
+
+ALTER TABLE [dbo].[Label] ADD CONSTRAINT DF_Label_IsActive DEFAULT  1 FOR IsActive
 
 GO
