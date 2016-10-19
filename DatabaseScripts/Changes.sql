@@ -126,15 +126,6 @@ GO
 
 --**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
 
-ALTER TABLE [dbo].[Label]
-ADD IsActive bit
-
-ALTER TABLE [dbo].[Label] ADD CONSTRAINT DF_Label_IsActive DEFAULT  1 FOR IsActive
-
-GO
-
---**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
-
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SPC_TransferJobName]') AND type in (N'P', N'PC'))
       DROP PROCEDURE [dbo].[SPC_TransferJobName]

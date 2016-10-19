@@ -2526,7 +2526,7 @@ namespace Indico
             {
                 CompanyBO objDistributor = new CompanyBO();
                 objDistributor.ID = distributor;
-                objDistributor.GetObject(false);
+                objDistributor.GetObject(true);
 
                 List<LabelBO> lstLabels = objDistributor.DistributorLabelsWhereThisIsDistributor;
 
@@ -2568,7 +2568,7 @@ namespace Indico
             {
                 OrderBO objOrder = new OrderBO();
                 objOrder.ID = (QueryID > 0) ? QueryID : OrderID;
-                objOrder.GetObject();
+                objOrder.GetObject(true);
 
                 objReservation.Distributor = objOrder.Distributor;
                 lstReservations = objReservation.SearchObjects();
@@ -2623,7 +2623,7 @@ namespace Indico
             {
                 ReservationBO objReservation = new ReservationBO();
                 objReservation.ID = reservationID;
-                objReservation.GetObject();
+                objReservation.GetObject(true);
 
                 litReservationDetail.Text = "RES - " + objReservation.ReservationNo.ToString("0000") + "    " + objReservation.objDistributor.Name;
             }
@@ -2645,7 +2645,7 @@ namespace Indico
 
             OrderDetailBO objOD = new OrderDetailBO();
             objOD.ID = orderdetail;
-            objOD.GetObject();
+            objOD.GetObject(true);
 
             if (objOD.Order > 0)
             {
