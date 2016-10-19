@@ -76,6 +76,15 @@ namespace Indico {
         protected global::System.Web.UI.WebControls.TextBox txtLabelName;
         
         /// <summary>
+        /// nameExists control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label nameExists;
+        
+        /// <summary>
         /// rfvLabelName control.
         /// </summary>
         /// <remarks>
@@ -317,5 +326,23 @@ namespace Indico {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlButton btnDelete;
+        
+        /// <summary>
+        /// btnInactivate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnInactivate;
+        
+        /// <summary>
+        /// BtnReactivate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton BtnReactivate;
     }
 }

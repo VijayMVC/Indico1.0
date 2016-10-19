@@ -11,7 +11,9 @@ using System.Web.UI.HtmlControls;
 
 using Indico.BusinessObjects;
 using Indico.Common;
-
+using System.Configuration;
+using System.Data.SqlClient;
+using Dapper;
 
 namespace Indico
 {
@@ -170,8 +172,30 @@ namespace Indico
                 linkDelete.Attributes.Add("qid", objLabel.ID.ToString());
                 linkDelete.Visible = objLabel.DistributorLabelsWhereThisIsLabel.Any() || objLabel.OrderDetailsWhereThisIsLabel.Any();
 
+                
                 LinkButton linkEdit = (LinkButton)item.FindControl("linkEdit");
                 linkEdit.Attributes.Add("qid", objLabel.ID.ToString());
+                var available = CheckLabelUsed((int)objLabel.ID);
+                if (available)
+                {
+                    var linkInactivate = (HyperLink)item.FindControl("linkInactivate");
+                    linkInactivate.Attributes.Add("qid", objLabel.ID.ToString());
+
+                    linkDelete.Visible = false;
+
+                    var labelActive = IsActiveLabel((int)objLabel.ID);
+                    if (labelActive)
+                    {
+                        linkInactivate.Visible = true;
+
+                    }
+                    else {
+                        var linkReactivate = (HyperLink)item.FindControl("linkReactivate");
+                        linkReactivate.Attributes.Add("qid", objLabel.ID.ToString());
+                        linkReactivate.Visible = true;
+                    }             
+
+                }
 
                 HiddenField hdnLabelID = (HiddenField)item.FindControl("hdnLabelID");
                 hdnLabelID.Value = objLabel.ID.ToString();
@@ -203,33 +227,27 @@ namespace Indico
 
         protected void btnAddLabel_Click(object sender, EventArgs e)
         {
-            if (this.IsNotRefresh)
+            if (IsNotRefresh)
             {
                 if (Page.IsValid)
                 {
-                    //this.rfvDistributor.Enabled = true;
-                    //this.rfvLabelName.Enabled = true;
-                    //this.cvLabel.Enabled = true;
-                    //this.rfvLabelName.Enabled = true;
-
-                    if (this.chbIsSample.Checked)
-                        this.rfvDistributor.Enabled = false;
+                    if (chbIsSample.Checked)
+                        rfvDistributor.Enabled = false;
                     else
-                        this.rfvDistributor.Enabled = true;
+                        rfvDistributor.Enabled = true;
 
-                    //Page.Validate();
-                    this.ProcessForm();
-                    this.PopulateLabels(0);
+                    ProcessForm();
+                    PopulateLabels(0);
                 }
                 else
                 {
-                    this.PopulateFileUploder(this.rptUploadFile, this.hdnUploadFiles);
+                    PopulateFileUploder(rptUploadFile, hdnUploadFiles);
                 }
                 Session["isRefresh"] = Server.UrlEncode(System.DateTime.Now.ToString());
             }
             else
             {
-                this.PopulateLabels(0);
+                PopulateLabels(0);
             }
         }
 
@@ -319,6 +337,89 @@ namespace Indico
 
             this.PopulateLabels(0);
         }
+
+        protected void btnInactivate_Click(object sender,EventArgs e)
+        {
+            try
+            {
+                var labelId = int.Parse(hdnSelectedId.Value);
+                if (labelId < 1)
+                    return;
+                using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                {
+                    var query = string.Format("UPDATE [dbo].[Label] SET IsActive = 0 WHERE ID = {0}", labelId);
+
+                    connection.Execute(query);
+                }
+                if (rptLabels.Items.Count > 0)
+                {
+                    foreach(RepeaterItem item in rptLabels.Items)
+                    {
+                        var idControl= (HiddenField)item.FindControl("hdnLabelID");
+                        if (idControl == null || Convert.ToInt32(idControl.Value) != labelId)
+                            continue;
+                        var inactivate =(HyperLink) item.FindControl("linkInactivate");
+                        if (inactivate == null)
+                            continue;
+                        var reactivate = (HyperLink)item.FindControl("linkReactivate");
+                        if (inactivate == null)
+                            continue;
+                        inactivate.Visible = false;
+                        reactivate.Visible = true; 
+                    }
+
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                IndicoLogging.log.Error("Unable to inactivate Label", ex);
+            }
+        }
+
+
+        protected void btnReactivate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var labelId = int.Parse(hdnSelectedId.Value);
+                if (labelId < 1)
+                    return;
+                using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+                {
+                    var query = string.Format("UPDATE [dbo].[Label] SET IsActive = 1 WHERE ID = {0}", labelId);
+
+                    connection.Execute(query);
+                }
+
+                if (rptLabels.Items.Count > 0)
+                {
+                    foreach (RepeaterItem item in rptLabels.Items)
+                    {
+                        var idControl = (HiddenField)item.FindControl("hdnLabelID");
+                        if (idControl == null || Convert.ToInt32(idControl.Value) != labelId)
+                            continue;
+                        var inactivate = (HyperLink)item.FindControl("linkInactivate");
+                        if (inactivate == null)
+                            continue;
+                        var reactivate = (HyperLink)item.FindControl("linkReactivate");
+                        if (inactivate == null)
+                            continue;
+                        inactivate.Visible = true;
+                        reactivate.Visible = false;
+                    }
+
+
+                }
+            }
+            catch (Exception ex)
+            {
+                IndicoLogging.log.Error("Unable to reactivate Label", ex);
+            }
+        }
+
+
 
         protected void lbHeaderPrevious_Click(object sender, EventArgs e)
         {
@@ -647,9 +748,17 @@ namespace Indico
                     else
                     {
                         int selectedDistributor = int.Parse(this.ddlDistributor.SelectedValue);
-
+                        
                         if (selectedDistributor > 0)
                         {
+                            var newLabelName = txtLabelName.Text.Trim();
+                            var available=CheckNameAvailable(selectedDistributor, newLabelName);
+                            if (!available)
+                            {
+                                nameExists.Visible = true;
+                                return;
+                            }
+
                             CompanyBO objDistributor = new CompanyBO(this.ObjContext);
                             objDistributor.ID = selectedDistributor;
                             objDistributor.GetObject();
@@ -879,7 +988,53 @@ namespace Indico
             this.hdnEditLabel.Value = "0";
         }
 
-        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="distributor"></param>
+        /// <param name="name"></param>
+        /// <returns>true if available</returns>
+        private bool CheckNameAvailable(int distributor,string name)
+        {
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+            {
+                var query = string.Format(@"SELECT TOP 1 dl.Label FROM [dbo].[DistributorLabel] dl
+                                                INNER JOIN[dbo].[Label] l
+                                                    ON dl.Label = l.ID
+                                                WHERE dl.Distributor = {0} AND l.Name = '{1}'", distributor, name);
+                return connection.Query(query).Count()<1;
+            }
+        }
+
+
+        private bool CheckLabelUsed(int id)
+        {
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+            {
+                var query = string.Format(@"SELECT TOP 1 od.Label FROM [dbo].[OrderDetail] od
+                                                INNER JOIN[dbo].[Label] l
+                                                    ON od.Label = l.ID
+                                                WHERE  l.ID = {0}",  id);
+                return connection.Query(query).Count() > 0;
+            }
+        }
+
+        private bool IsActiveLabel(int id)
+        {
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+            {
+                var query = string.Format(@"SELECT TOP 1 IsActive FROM [dbo].[Label] 
+                                               WHERE ID = {0}", id);
+                var result = connection.ExecuteScalar<bool>(query);
+                return result;
+                
+            }
+        }
+
+        //protected void btnInactivate_Click1(object sender, EventArgs e)
+        //{
+
+        //}
     }
 
         #endregion

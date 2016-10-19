@@ -48,16 +48,24 @@
                             </asp:RequiredFieldValidator>
                         </div>
                     </div>
+
                     <div class="control-group">
                         <label class="control-label required">
                             Label Name
                         </label>
                         <div class="controls">
                             <asp:TextBox ID="txtLabelName" runat="server"></asp:TextBox>
+                            <asp:Label CssClass="text-error" ID="nameExists" Visible="false" runat="server">Label Name Already exists</asp:Label>
+                        </div>                            
                             <asp:RequiredFieldValidator ID="rfvLabelName" runat="server" ErrorMessage="Label Name is required."
                                 ControlToValidate="txtLabelName" EnableClientScript="false" Display="Dynamic">
+                            
                                <img src="Content/img/icon_warning.png"  title="Label Name is required." alt="Label Name is required." />
                             </asp:RequiredFieldValidator>
+                            <%--<asp:RequiredFieldValidator ID="rfvLabeNotAvailable" runat="server" ErrorMessage="Label Name Already exists."
+                                ControlToValidate="txtLabelName" EnableClientScript="false" Display="Dynamic">
+                                <img src="Content/img/icon_warning.png"  title="Label Name Already exists." alt="Label Name Already exists." />
+                             </asp:RequiredFieldValidator>--%>
                         </div>
                     </div>
                     <div class="control-group">
@@ -141,6 +149,8 @@
                                                 <asp:Label ID="lblItemName" runat="server" /><h4>
                                                     <asp:LinkButton ID="linkEdit" runat="server" CssClass="btn-link" ToolTip="Edit Label" CausesValidation="false"><i class="icon-pencil"></i></asp:LinkButton>
                                                     <asp:HyperLink ID="linkDelete" runat="server" CssClass=" btn-link idelete" ToolTip="Delete Label"><i class="icon-trash"></i></asp:HyperLink>
+                                                    <asp:HyperLink ID="linkInactivate" Visible="false" runat="server" CssClass=" btn-link inactivate" ToolTip="Inactivate Label"><i class="icon-off"></i></asp:HyperLink>
+                                                    <asp:HyperLink ID="linkReactivate" Visible="false" runat="server" CssClass=" btn-link reactivate" ToolTip="Reactivate Label"><i class="icon-repeat"></i></asp:HyperLink>
                                                     <asp:HiddenField ID="hdnLabelID" runat="server" Value="0" />
                                         </div>
                                     </div>
@@ -197,6 +207,55 @@
             </button>
         </div>
     </div>
+
+     <!-- inactive Label -->
+    <div id="requestInactive" class="modal fade" role="dialog" aria-hidden="true"
+        keyboard="false" data-backdrop="static">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                ×</button>
+            <h3>inactive Label</h3>
+        </div>
+        <div class="modal-body">
+            Are you sure you wish to inactive this Label?
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">
+                No</button>
+            <button id="btnInactivate" runat="server" class="btn btn-primary" 
+                onserverclick="btnInactivate_Click">
+                Yes
+            </button>
+        </div>
+    </div>
+
+              <!-- reactive Label -->
+    <div id="requestReactive" class="modal fade" role="dialog" aria-hidden="true"
+        keyboard="false" data-backdrop="static">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                ×</button>
+            <h3>reactive Label</h3>
+        </div>
+        <div class="modal-body">
+            Are you sure you wish to reactivate this Label?
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">
+                No</button>
+            <button id="BtnReactivate" runat="server" class="btn btn-primary" 
+                onserverclick="btnReactivate_Click">
+                Yes
+            </button>
+        </div>
+    </div>
+
+
+
+
+
+1300 EPROMO LABEL
+
     <!-- / -->
     <!-- Page Scripts -->
     <script type="text/javascript">
@@ -205,6 +264,7 @@
         var ddlDistributor = "<%=ddlDistributor.ClientID %>";
     </script>
     <script type="text/javascript">
+        
         //ShowHideDistributor();
         $(document).ready(function () {
             $('.idelete').click(function () {
@@ -212,18 +272,42 @@
                 $('#requestDelete').modal('show');
             });
 
-            //        $('#' + chbIsSample).change(function () {
-            //            ShowHideDistributor();
-            //        });
+            $('.inactivate').click(function () {
+                console.log("inactivate modal");
+                $('#' + hdnSelectedId)[0].value = $(this).attr('qid');
+                console.log($(this).attr('qid'));
+                $('#requestInactive').modal('show');
+            });
 
-            //        function ShowHideDistributor() {
-            //            if ($('#' + chbIsSample).is(':checked')) {
-            //                $('#dvDistributor').hide();
-            //            }
-            //            else {
-            //                $('#dvDistributor').show();
-            //            }
-            //        }            
+            $('.reactivate').click(function () {
+                console.log("reactivate modal");
+                $('#' + hdnSelectedId)[0].value = $(this).attr('qid');
+                $('#requestReactive').modal('show');
+            });
+
+
+           
+
+           
+
+      
+
+            $('#<%=txtLabelName.ClientID%>').keyup(function () {
+                $('#<%=nameExists.ClientID%>').hide();
+            });
+
+                    //$('#' + chbissample).change(function () {
+                    //    showhidedistributor();
+                    //});
+
+                    //function showhidedistributor() {
+                    //    if ($('#' + chbissample).is(':checked')) {
+                    //        $('#dvdistributor').hide();
+                    //    }
+                    //    else {
+                    //        $('#dvdistributor').show();
+                    //    }
+                    //}            
             $('#' + ddlDistributor).select2();
         });
     </script>
