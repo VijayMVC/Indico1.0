@@ -270,7 +270,7 @@ namespace Indico
                         {
                             ancTemplateImage.Attributes.Add("class", "btn-link preview");
                             iimageView.Attributes.Add("class", "icon-eye-open");
-
+                            
                             System.Drawing.Image VLOrigImage = System.Drawing.Image.FromFile(Server.MapPath(imagePathHero));
                             SizeF origImageSize = VLOrigImage.PhysicalDimension;
                             VLOrigImage.Dispose();
@@ -306,11 +306,15 @@ namespace Indico
                             HtmlContainerControl previewTemplate = (HtmlContainerControl)item.FindControl("previewTemplate");
                             previewTemplate.InnerHtml = htmlPreview;
 
+                            HtmlAnchor ancFullImage = (HtmlAnchor)item.FindControl("ancFullImage");
+                            ancFullImage.HRef = imagePathHero;
+                            ancFullImage.Visible = true;
+
                             ancTemplateImage.HRef = "#" + previewTemplate.ClientID;
                             // ancTemplateImage.Title = "Pattern Images";
 
                             ancTemplateImage.Attributes.Add("target", "_blank");
-                            ancTemplateImage.Attributes.Add("onclick", "Javascript:populateDiv(this);return false;");
+                            ancTemplateImage.Attributes.Add("onclick", "Javascript:return false;");
                             ancTemplateImage.Attributes.Add("hero", imagePathHero);
                             ancTemplateImage.Attributes.Add("nohero_1", imagePath_1);
                             ancTemplateImage.Attributes.Add("nohero_2", imagePath_2);
