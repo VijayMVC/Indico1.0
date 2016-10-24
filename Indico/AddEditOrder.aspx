@@ -6,6 +6,7 @@
     </asp:ScriptManager>
     <!-- Page -->
     <div class="page">
+
         <!-- Page Header -->
         <div class="page-header">
             <div class="header-actions">
@@ -17,6 +18,7 @@
         <!-- / -->
         <!-- Page Content -->
         <div class="page-content">
+             
             <div id="dvPageContent" runat="server" class="row-fluid">
                 <asp:ValidationSummary ID="validationSummary" runat="server" CssClass="alert alert-danger"
                     ValidationGroup="valGrpOrderHeader" DisplayMode="BulletList" HeaderText="<strong>Errors were encountered while trying to process the form below</strong>"></asp:ValidationSummary>
@@ -422,7 +424,7 @@
                                     <asp:TextBox ID="txtDeliveryCharges" runat="server" Text="0" CssClass="input-medium" Style="text-align: right"></asp:TextBox>
                                     <asp:RegularExpressionValidator ID="RegularExpressionValidator2" ControlToValidate="txtDeliveryCharges" ValidationGroup="valGrpOrderHeader" EnableClientScript="false"
                                         runat="server" ErrorMessage="Decimal values only." Display="Dynamic" ValidationExpression="^[0-9]*(\.[0-9]{1,2})?$">
-                                        <img src="Content/img/icon_warning.png"  title="Decimal values only." alt="Decimal values only."" />
+                                        <img src="Content/img/icon_warning.png"  title="Decimal values only." alt="Decimal values only." />
                                     </asp:RegularExpressionValidator>
                                 </div>
                             </div>
@@ -433,7 +435,7 @@
                                     <asp:TextBox ID="txtArtworkCharges" runat="server" Text="0" CssClass="input-medium" Style="text-align: right"></asp:TextBox>
                                     <asp:RegularExpressionValidator ID="RegularExpressionValidator3" ControlToValidate="txtArtworkCharges" ValidationGroup="valGrpOrderHeader" EnableClientScript="false"
                                         runat="server" ErrorMessage="Decimal values only." Display="Dynamic" ValidationExpression="^[0-9]*(\.[0-9]{1,2})?$">
-                                         <img src="Content/img/icon_warning.png"  title="Decimal values only." alt="Decimal values only."" />
+                                         <img src="Content/img/icon_warning.png"  title="Decimal values only." alt="Decimal values only." />
                                     </asp:RegularExpressionValidator>
                                 </div>
                             </div>
@@ -444,7 +446,7 @@
                                     <asp:TextBox ID="txtOtherCharges" runat="server" Text="0" CssClass="input-medium" Style="text-align: right"></asp:TextBox>
                                     <asp:RegularExpressionValidator ID="RegularExpressionValidator4" ControlToValidate="txtOtherCharges" ValidationGroup="valGrpOrderHeader" EnableClientScript="false"
                                         runat="server" ErrorMessage="Decimal values only." Display="Dynamic" ValidationExpression="^[0-9]*(\.[0-9]{1,2})?$">
-                                         <img src="Content/img/icon_warning.png"  title="Decimal values only." alt="Decimal values only."" />
+                                         <img src="Content/img/icon_warning.png"  title="Decimal values only." alt="Decimal values only." />
                                     </asp:RegularExpressionValidator>
                                 </div>
                             </div>
@@ -545,7 +547,27 @@
                 <div class="col-sm-2"></div>
                 <div class="col-sm-9">
                     <div class="modal-body" id="dvScroll" onscroll="setScrollPosition(this.scrollTop);">
-
+                    
+                      
+                        <%--<div ID="sizeWarning" runat="server" class="signin-error" Visible="True">
+                            <div class=" alert alert-warning" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <strong>
+                                     You are selecting a size which is our normal size range and is essentially a bespoke garment.
+                                    <br/>
+                                    Please provide the specific key measurements;namely the chest width and centre back measurements.
+                                    <br/>
+                                    This will involve creating an appropriate template and accommodating the artwork in the new template.Artwork must be done again.
+                                    <br/>
+                                    The order is likely to be delayed.
+                                    <br/>
+                                    Please contact Melbourne coordinator to enquire is the new size can be accommodated for this pattern
+                                </strong>
+                                <br />
+                            </div>
+                        </div>--%>
 
                         <!-- Validation-->
                         <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="alert alert-danger"
@@ -667,6 +689,7 @@
                             </asp:UpdateProgress>
                             <asp:UpdatePanel ID="UpdateVlNumber" runat="server" style="display: inline-block;">
                                 <ContentTemplate>
+                                     
                                     <div class="control-group">
                                         <label class="control-label required">
                                             Label</label>
@@ -697,7 +720,21 @@
                                             <div class="search-control" style="display: inline-block; margin-bottom: 0;">
                                                 <asp:DropDownList ID="ddlSizes" CssClass="input-medium" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlSizes_SelectedIndexChanged"></asp:DropDownList>
                                             </div>
+                                           
                                         </div>
+
+                                          <div class="alert alert-danger" runat="server" ID="sizeWarningAlert" Visible="False" style="margin-top: 10px;">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                          You are selecting a size which is our normal size range and is essentially a bespoke garment.
+                                                <br/>
+                                                Please provide the specific key measurements;namely the chest width and centre back measurements.
+                                                <br/>
+                                                This will involve creating an appropriate template and accommodating the artwork in the new template.Artwork must be done again.
+                                                <br/>
+                                                The order is likely to be delayed.
+                                                <br/>
+                                                Please contact Melbourne coordinator to enquire is the new size can be accommodated for this pattern
+                                      </div>
                                     </div>
                                     <div class="control-group">
                                         <ol id="olSizeQuantities" class="ioderlist-table" style="display: block; margin-left: 100px; margin-top: 0; width: 620px;">
@@ -1430,6 +1467,8 @@
             </div>
         </div>
         <!--/-->
+        
+
         <!-- Page Scripts -->
         <script type="text/javascript">
             var PopulateDeleteOrdersMsg = ('<%=ViewState["PopulateDeleteOrdersMsg"]%>' == 'True') ? true : false;
@@ -1502,6 +1541,8 @@
             var ddlAdderssType = "<%=ddlAdderssType.ClientID %>";
             var ddlShipToCountry = "<%=ddlShipToCountry.ClientID %>";
             var ddlShipToPort = "<%=ddlShipToPort.ClientID %>";
+
+
         </script>
         <script type="text/javascript">
             $(document).ready(function () {

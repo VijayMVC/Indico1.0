@@ -846,9 +846,13 @@ namespace Indico
             {
                 /*rptSizeQty.DataSource = null;
                 rptSizeQty.DataBind();*/
-
+                sizeWarningAlert.Visible = true;
                 rptSizeQty.DataSource = PopulateSizeDetails(null, int.Parse(ddlSizes.SelectedValue), null);
                 rptSizeQty.DataBind();
+            }
+            else
+            {
+                sizeWarningAlert.Visible = false;
             }
         }
 
@@ -1118,16 +1122,16 @@ namespace Indico
                             }
                             else if (this.LoggedUserRoleName == UserRole.IndimanAdministrator) // && currentOrderStatus == OrderStatus.CoordinatorSubmitted)
                             {
-                                SettingsBO objSetting = new SettingsBO();
+                                var objSetting = new SettingsBO();
                                 objSetting.Key = CustomSettings.ISOTO.ToString();
                                 objSetting = objSetting.SearchObjects().SingleOrDefault();
                                 mailTo = objSetting.Value;
 
-                                objOrder.Status = this.GetOrderStatus(OrderStatus.IndimanSubmitted).ID;
-                                objOrder.Modifier = this.LoggedUser.ID;
+                                objOrder.Status = GetOrderStatus(OrderStatus.IndimanSubmitted).ID;
+                                objOrder.Modifier = LoggedUser.ID;
                                 objOrder.ModifiedDate = DateTime.Now;
 
-                                this.SendOrderSubmissionEmail(this.OrderID, mailTo, "Factory", true, null);
+                                SendOrderSubmissionEmail(OrderID, mailTo, "Factory", true, null);
                             }
 
                             this.ObjContext.SaveChanges();
@@ -1594,6 +1598,10 @@ namespace Indico
                     PopulateBillingDetails(totalPRice, objOrder);
 
                     btnSubmit.Visible = !(LoggedUserRoleName == UserRole.FactoryAdministrator || LoggedUserRoleName == UserRole.FactoryCoordinator);
+                    if (objOrder.objStatus.Name == "Indiman Submitted")
+                    {
+                        btnSubmit.Visible = false;
+                    }
                     //&& (!(lstOD.Where(m => !m.VisualLayout.HasValue || m.VisualLayout.Value == 0).Count() > 0));
                 }
                 //else if (QueryReservationID > 0)
@@ -1650,7 +1658,7 @@ namespace Indico
 
                     CompanyBO objDistributor = new CompanyBO();
                     objDistributor.ID = DistributorID;
-                    objDistributor.GetObject();
+                    objDistributor.GetObject(false);
 
                     lblDistributor.Text = objDistributor.Name + " - " + objDistributor.Number + "  " + objDistributor.Address1 + "  " + objDistributor.City + "  " + objDistributor.State + "  " + objDistributor.Postcode + "  " + objDistributor.objCountry.ShortName;
                     lblClientDistributor.Text = objDistributor.Name;
@@ -1679,6 +1687,7 @@ namespace Indico
                 //    ddlVlNumber.Items.FindByValue(VisualLayoutID.ToString()).Selected = true;
                 //    ddlVlNumber_SelectedIndexChange(this, EventArgs.Empty);
                 //}
+                //sizeWarningAlert.Visible = false;
             }
             catch (Exception ex)
             {
@@ -2128,7 +2137,7 @@ namespace Indico
             {
                 OrderBO objOrder = new OrderBO();
                 objOrder.ID = orderId;
-                objOrder.GetObject();
+                objOrder.GetObject(false);
 
                 ddlStatus.Items.FindByValue(objOrder.Status.ToString()).Selected = true;
             }

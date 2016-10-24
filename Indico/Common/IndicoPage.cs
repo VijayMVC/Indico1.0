@@ -1196,8 +1196,7 @@ namespace Indico.Common
                         .Append("<tr><td width=\"200\">Size/Quantity: </td><td width=\"300\">");
 
 
-                    var objQty = new OrderDetailQtyBO();
-                    objQty.OrderDetail = objOrdeDetail.ID;
+                    var objQty = new OrderDetailQtyBO {OrderDetail = objOrdeDetail.ID};
                     var lstOdQty = objQty.SearchObjects();
 
                     var sizeQty = lstOdQty.Where(objOdQty => objOdQty.Qty > 0).Aggregate(string.Empty, (current, objOdQty) => current + (objOdQty.objSize.SizeName + "/" + objOdQty.Qty.ToString() + ","));
@@ -1214,6 +1213,7 @@ namespace Indico.Common
                         .Append(((objOrdeDetail.objVisualLayout.PocketType.HasValue && objOrdeDetail.objVisualLayout.PocketType.Value > 0) ? objOrdeDetail.objVisualLayout.objPocketType.Name : string.Empty) + "</td></tr>")
                         .Append((string.IsNullOrEmpty(objOrdeDetail.VisualLayoutNotes)) ? string.Empty : string.Format("<tr><td width=\"200\">Notes : </td><td colspan=\"2\"><span style=\"color:red;\">{0}</span></td></tr>", objOrdeDetail.VisualLayoutNotes))
                         .Append((string.IsNullOrWhiteSpace(objOrdeDetail.EditedPriceRemarks)) ? "" : string.Format("<tr><td width=\"200\">Price comments: </td><td colspan=\"2\">{0}</td></tr>", objOrdeDetail.EditedPriceRemarks))
+                        .Append((string.IsNullOrWhiteSpace(objOrdeDetail.FactoryInstructions)) ? "" : string.Format("<tr><td width=\"200\">Factory Instructions: </td><td colspan=\"2\">{0}</td></tr>", objOrdeDetail.FactoryInstructions))
                         .Append("</table><br>");
 
                 }
