@@ -56,7 +56,7 @@ namespace Indico
                 //if (Request.QueryString["vln"] != null)
                 //{
                 //    urlVisualLayoutID = Convert.ToInt32(Request.QueryString["vln"].ToString());
-                //}
+                //} CloneOrder.aspx?id=1025
 
                 return urlQueryID;
             }

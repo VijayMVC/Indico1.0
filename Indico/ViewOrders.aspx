@@ -428,6 +428,7 @@
                                                     <li>
                                                         <asp:LinkButton ID="lbDownloadDistributorPOForOffice" runat="server" OnClick="lbDownloadDistributorPOForOffice_Click" ToolTip="Print Order Overview For Office Use"><i class="icon-print"></i> Print Office Overview</asp:LinkButton>
                                                     </li>
+
                                                     <li>
                                                         <asp:LinkButton ID="linkButttonEditFactoryStatus" runat="server" OnClick="linkButttonEditFactoryStatus_Click" ToolTip="Edit Factory Order Detail Status" Visible="false"><i class="icon-pencil"></i> Edit Factory Order Detail Status</asp:LinkButton>
                                                     </li>
@@ -463,6 +464,9 @@
                                                     </li>
                                                     <li>
                                                         <asp:HyperLink ID="linkCancelledOrderDetail" runat="server" CssClass="ilinkcancelled" ToolTip="Cancel Order Detail" Visible="false"><i class="icon-check"></i> Cancel Order Detail</asp:HyperLink>
+                                                    </li>
+                                                    <li>
+                                                        <asp:HyperLink ID="lbCreateNewFrom" runat="server"  ToolTip="Create new from this" Visible="false"><i class="icon-plus"></i> Create new from this</asp:HyperLink>
                                                     </li>
                                                 </ul>
                                             </div>

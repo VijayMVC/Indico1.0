@@ -19,7 +19,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -148,6 +148,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CloneOrder.aspx" />
     <Content Include="Content\css\chosen-sprite%402x.png" />
     <Content Include="Content\css\chosen-sprite.png" />
     <Content Include="Content\css\chosen.min.css" />
@@ -621,6 +622,13 @@
     <Content Include="Welcome.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CloneOrder.aspx.cs">
+      <DependentUpon>CloneOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CloneOrder.aspx.designer.cs">
+      <DependentUpon>CloneOrder.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Common\CustomModels.cs" />
     <Compile Include="Common\ImageService.cs" />
     <Compile Include="Common\MyobService.cs" />
@@ -1742,7 +1750,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>4798</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://local-indico.com</IISUrl>
+          <IISUrl>http://localhost:4798/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>http://local-indico.com/</CustomServerUrl>

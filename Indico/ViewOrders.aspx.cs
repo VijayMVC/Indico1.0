@@ -345,7 +345,7 @@ namespace Indico
                     string orderStatusClass = "\"label label-" + orderStatus.ToLower().Replace(" ", string.Empty).Trim();
                     //orderStatusClass = "\"btn-warning";                    
                     lblStatus.Text = " <span class=" + orderStatusClass + "\"> " + orderStatus + " </span>";
-
+                     
                     if (objOrderDetailsView.HasNotes)
                     {
                         e.Item.BackColor = Color.LightYellow;
@@ -353,6 +353,18 @@ namespace Indico
 
                     HyperLink linkEditView = (HyperLink)item.FindControl("linkEditView");
                     linkEditView.NavigateUrl = "AddEditOrder.aspx?id=" + objOrderDetailsView.Order.ToString();
+
+                    var lbCreateNewFrom = (HyperLink)item.FindControl("lbCreateNewFrom");
+                    if (isDirectSales || LoggedUserRoleName == UserRole.IndimanAdministrator || LoggedUserRoleName == UserRole.IndimanCoordinator)
+                    {
+                        lbCreateNewFrom.Visible = true;
+                        lbCreateNewFrom.Attributes.Add("oddid", objOrderDetailsView.Order.ToString());
+                    }
+                    else
+                    {
+                        lbCreateNewFrom.Visible = false;
+                    }
+                    lbCreateNewFrom.NavigateUrl = "CloneOrder.aspx?id=" + objOrderDetailsView.Order.ToString();
 
                     LinkButton lbDownloadDistributorPO = (LinkButton)item.FindControl("lbDownloadDistributorPO");
                     lbDownloadDistributorPO.Attributes.Add("oddid", objOrderDetailsView.Order.ToString());
@@ -6109,7 +6121,6 @@ namespace Indico
         }
 
         #endregion
-
 
     }
 }
