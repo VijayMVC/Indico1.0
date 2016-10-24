@@ -91,7 +91,7 @@
                     <!-- / -->
                     <!-- Data Table -->
                     <telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" Skin="Metro">
-                    </telerik:RadAjaxLoadingPanel>                   
+                    </telerik:RadAjaxLoadingPanel>
                     <telerik:RadGrid ID="RadGridPattern" runat="server" AllowPaging="true" AllowFilteringByColumn="true"
                         ShowGroupPanel="true" ShowFooter="false" OnPageSizeChanged="RadGridPattern_PageSizeChanged"
                         PageSize="20" OnPageIndexChanged="RadGridPattern_PageIndexChanged" EnableHeaderContextMenu="true"
@@ -191,10 +191,11 @@
                                 </telerik:GridTemplateColumn>
                                 <telerik:GridTemplateColumn HeaderText="Images" AllowFiltering="false" ItemStyle-HorizontalAlign="Center">
                                     <ItemTemplate>
-                                        <a id="ancTemplateImage" runat="server" target="_blank"><i id="iimageView"
+                                        <a id="ancTemplateImage" runat="server"><i id="iimageView"
                                             runat="server" class="icon-eye-open"></i></a>
-                                        <div id="previewTemplate" runat="server" style="display: none;">
+                                        <div id="previewTemplate" runat="server" style="display: none;">                                           
                                         </div>
+                                         <a id="ancFullImage" runat="server" target="_blank" visible="false">View</a>
                                     </ItemTemplate>
                                 </telerik:GridTemplateColumn>
                                 <telerik:GridTemplateColumn HeaderText="Post" AllowFiltering="false" UniqueName="Post">
@@ -242,7 +243,7 @@
                         <button id="btnSaveChanges" runat="server" class="btn btn-primary pull-right" text=""
                             data-loading-text="Saving..." onserverclick="btnSaveChanges_ServerClick" type="submit">
                             Save Changes</button>
-                    </div>                    
+                    </div>
                     <!-- / -->
                     <!-- No Search Result -->
                     <div id="dvNoSearchResult" runat="server" class="message search" visible="false">
@@ -284,7 +285,7 @@
                     <asp:Label ID="lblDescription" runat="server" CssClass="pull-left"></asp:Label>
                     <asp:Label ID="lblDate" runat="server" CssClass="pull-right"></asp:Label>
                 </div>
-                <div class="form-actions" ID="divPatternTemplateImageContainer" runat="server">
+                <div class="form-actions" id="divPatternTemplateImageContainer" runat="server">
                     <div class="igarment">
                         <asp:Image ID="imgPatternTemplateImage" runat="server" ImageUrl="" class="img-polaroid" />
                     </div>
@@ -292,63 +293,63 @@
                 <div class="igarment">
                     <asp:Image ID="imgPatternCompressionImage" runat="server" class="img-polaroid" />
                 </div>
-                <div ID="garmentSpecModalTableContainer" runat="server">
-                     <fieldset>
-                    <div class="control-group">
-                        <label class="control-label">
-                            Conversion</label>
-                        <div class="controls">
-                            <asp:DropDownList ID="ddlConvert" runat="server">
-                                <asp:ListItem Text="Centimeters" Value="0" Selected="True"></asp:ListItem>
-                                <asp:ListItem Text="Inches" Value="1"></asp:ListItem>
-                            </asp:DropDownList>
+                <div id="garmentSpecModalTableContainer" runat="server">
+                    <fieldset>
+                        <div class="control-group">
+                            <label class="control-label">
+                                Conversion</label>
+                            <div class="controls">
+                                <asp:DropDownList ID="ddlConvert" runat="server">
+                                    <asp:ListItem Text="Centimeters" Value="0" Selected="True"></asp:ListItem>
+                                    <asp:ListItem Text="Inches" Value="1"></asp:ListItem>
+                                </asp:DropDownList>
+                            </div>
                         </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <div class="control-group">
-                        <div class="controls">
-                            <ol id="olSpecGrd" class="ioderlist-table">
-                                <li class="idata-row">
-                                    <ul>
-                                        <li class="icell-header small">Key</li>
-                                        <li class="icell-header exlarge">Location</li>
-                                        <asp:Repeater ID="rptSpecSizeQtyHeader" runat="server" OnItemDataBound="rptSpecSizeQtyHeader_ItemDataBound">
-                                            <ItemTemplate>
-                                                <li class="icell-header">
-                                                    <asp:Literal ID="litCellHeader" runat="server"></asp:Literal>
-                                                </li>
-                                            </ItemTemplate>
-                                        </asp:Repeater>
-                                    </ul>
-                                </li>
-                                <asp:Repeater ID="rptSpecML" runat="server" OnItemDataBound="rptSpecML_ItemDataBound">
-                                    <ItemTemplate>
-                                        <li class="idata-row">
-                                            <ul>
-                                                <li class="icell-header small">
-                                                    <asp:Literal ID="litCellHeaderKey" runat="server"></asp:Literal>
-                                                </li>
-                                                <li class="icell-header exlarge">
-                                                    <asp:Literal ID="litCellHeaderML" runat="server"></asp:Literal>
-                                                </li>
-                                                <asp:Repeater ID="rptSpecSizeQty" runat="server" OnItemDataBound="rptSpecSizeQty_ItemDataBound">
-                                                    <ItemTemplate>
-                                                        <li class="icell-data">
-                                                            <asp:Label ID="lblQty" runat="server" CssClass="idouble"></asp:Label>
-                                                        </li>
-                                                    </ItemTemplate>
-                                                </asp:Repeater>
-                                            </ul>
-                                        </li>
-                                    </ItemTemplate>
-                                </asp:Repeater>
-                            </ol>
+                    </fieldset>
+                    <fieldset>
+                        <div class="control-group">
+                            <div class="controls">
+                                <ol id="olSpecGrd" class="ioderlist-table">
+                                    <li class="idata-row">
+                                        <ul>
+                                            <li class="icell-header small">Key</li>
+                                            <li class="icell-header exlarge">Location</li>
+                                            <asp:Repeater ID="rptSpecSizeQtyHeader" runat="server" OnItemDataBound="rptSpecSizeQtyHeader_ItemDataBound">
+                                                <ItemTemplate>
+                                                    <li class="icell-header">
+                                                        <asp:Literal ID="litCellHeader" runat="server"></asp:Literal>
+                                                    </li>
+                                                </ItemTemplate>
+                                            </asp:Repeater>
+                                        </ul>
+                                    </li>
+                                    <asp:Repeater ID="rptSpecML" runat="server" OnItemDataBound="rptSpecML_ItemDataBound">
+                                        <ItemTemplate>
+                                            <li class="idata-row">
+                                                <ul>
+                                                    <li class="icell-header small">
+                                                        <asp:Literal ID="litCellHeaderKey" runat="server"></asp:Literal>
+                                                    </li>
+                                                    <li class="icell-header exlarge">
+                                                        <asp:Literal ID="litCellHeaderML" runat="server"></asp:Literal>
+                                                    </li>
+                                                    <asp:Repeater ID="rptSpecSizeQty" runat="server" OnItemDataBound="rptSpecSizeQty_ItemDataBound">
+                                                        <ItemTemplate>
+                                                            <li class="icell-data">
+                                                                <asp:Label ID="lblQty" runat="server" CssClass="idouble"></asp:Label>
+                                                            </li>
+                                                        </ItemTemplate>
+                                                    </asp:Repeater>
+                                                </ul>
+                                            </li>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                </ol>
+                            </div>
                         </div>
-                    </div>
-                </fieldset>
+                    </fieldset>
                 </div>
-               
+
             </div>
         </div>
         <!-- / -->
@@ -434,25 +435,28 @@
         </div>
         <!-- / -->
     </div>
-    <div id="developmentHistoryModal" class="modal fade" data-backdrop="static" data-keyboard="false" >
+    <div id="developmentHistoryModal" class="modal fade" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 class="modal-title">Save Changes To The Selected</h4>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Save Changes To The Selected</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-message">One fine body&hellip;</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="closeButton" data-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" data-dismiss="modal" id="savechangesButton" type="button">Save changes</button>
+                </div>
             </div>
-            <div class="modal-body">
-            <p class="modal-message">One fine body&hellip;</p>
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" id="closeButton" data-dismiss="modal">Close</button>
-            <button class="btn btn-primary" data-dismiss="modal" id="savechangesButton" type="button">Save changes</button>
-            </div>
-        </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
     <!-- / -->
     <!-- Pattern Category Warning Message -->
     <div id="dvPatternOtherCategoryWarning" class="modal fade" role="dialog" aria-hidden="true"

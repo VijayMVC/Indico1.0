@@ -314,7 +314,7 @@
                         </script>
                     </ContentTemplate>
                     <Triggers>
-                        <asp:AsyncPostBackTrigger ControlID="ddlPattern" EventName="SelectedIndexChanged" />
+                        <asp:AsyncPostBackTrigger ControlID="ddlPattern"  EventName="SelectedIndexChanged" />
                     </Triggers>
                 </asp:UpdatePanel>
                 <div class="form-actions">
