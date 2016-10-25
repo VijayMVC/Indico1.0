@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -397,6 +398,17 @@ namespace Indico.Common
                 return rwl;
             }
         }
+
+        /// <summary>
+        /// SqlConnection to the databse using the connection string -> ConnectionStrings["DefaultConnection"]
+        /// </summary>
+        protected SqlConnection DatabaseConnection
+        {
+            get
+            {
+                return new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            }
+        } 
 
         #endregion
 
