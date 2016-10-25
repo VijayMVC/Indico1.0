@@ -2537,14 +2537,18 @@ namespace Indico
                 objDistributor.ID = distributor;
                 objDistributor.GetObject(true);
 
-                List<LabelBO> lstLabels = objDistributor.DistributorLabelsWhereThisIsDistributor;
-
-                foreach (LabelBO label in lstLabels)
+                using(var connection = DatabaseConnection)
                 {
-                    ListItem listItemLabel = new ListItem(label.Name, label.ID.ToString());
-                    ddlLabel.Items.Add(listItemLabel);
-                }
+                    var labels =connection.Query(string.Format("SELECT l.Name,l.ID FROM [dbo].[DistributorLabel] dl INNER JOIN [dbo].[Label] l ON l.ID = dl.Label WHERE dl.Distributor = {0} AND l.IsActive = 1", objDistributor.ID))
+                        .Select(s => new { s.Name, s.ID }).ToList();
+                    foreach (var label in labels)
+                    {
+                        ListItem listItemLabel = new ListItem(label.Name, label.ID.ToString());
+                        ddlLabel.Items.Add(listItemLabel);
+                    }
 
+                }
+               
                 if (ddlLabel.Items.FindByText("BLACKCHROME HEAT SEAL") != null)
                 {
                     ddlLabel.Items.FindByText("BLACKCHROME HEAT SEAL").Selected = true;

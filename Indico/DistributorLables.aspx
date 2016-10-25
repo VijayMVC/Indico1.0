@@ -15,7 +15,7 @@
         <div class="page-content">
             <div class="inner">
                 <!-- Page Validation -->
-                <asp:ValidationSummary ID="validationSummary" runat="server" CssClass="alert alert-danger"
+                <asp:ValidationSummary ID="validationSummary" runat="server" CssClass="alert alert-danger" ValidationGroup="labelValidation"
                     DisplayMode="BulletList" HeaderText="<strong>Errors were encountered while trying to process the form below</strong>"></asp:ValidationSummary>
                 <!-- / -->
                 <!-- Page Data -->
@@ -41,7 +41,7 @@
                         <div class="controls">
                             <asp:DropDownList ID="ddlDistributor" runat="server" AutoPostBack="true" CssClass="input-large" OnSelectedIndexChanged="ddlDistributor_SelectedIndexChanged">
                             </asp:DropDownList>
-                            <asp:RequiredFieldValidator ID="rfvDistributor" runat="server" ErrorMessage="Distributor is required."
+                            <asp:RequiredFieldValidator ID="rfvDistributor" runat="server" ErrorMessage="Distributor is required." ValidationGroup="labelValidation"
                                 ControlToValidate="ddlDistributor" InitialValue="0" EnableClientScript="false"
                                 Display="Dynamic">
                                <img src="Content/img/icon_warning.png"  title="Distributor is required." alt="Distributor is required." />
@@ -56,12 +56,13 @@
                         <div class="controls">
                             <asp:TextBox ID="txtLabelName" runat="server"></asp:TextBox>
                             <asp:Label CssClass="text-error" ID="nameExists" Visible="false" runat="server">Label Name Already exists</asp:Label>
-                        </div>                            
-                            <asp:RequiredFieldValidator ID="rfvLabelName" runat="server" ErrorMessage="Label Name is required."
+                            <asp:RequiredFieldValidator ID="rfvLabelName" runat="server" ErrorMessage="Label Name is required." ValidationGroup="labelValidation"
                                 ControlToValidate="txtLabelName" EnableClientScript="false" Display="Dynamic">
                             
                                <img src="Content/img/icon_warning.png"  title="Label Name is required." alt="Label Name is required." />
                             </asp:RequiredFieldValidator>
+                        </div>                            
+                            
                             <%--<asp:RequiredFieldValidator ID="rfvLabeNotAvailable" runat="server" ErrorMessage="Label Name Already exists."
                                 ControlToValidate="txtLabelName" EnableClientScript="false" Display="Dynamic">
                                 <img src="Content/img/icon_warning.png"  title="Label Name Already exists." alt="Label Name Already exists." />
@@ -112,7 +113,7 @@
                                     Drag file here or click to upload
                                 </div>
                             </div>
-                            <asp:CustomValidator ID="cvLabel" runat="server" ErrorMessage="Label is required."
+                            <asp:CustomValidator ID="cvLabel" runat="server" ErrorMessage="Label is required." ValidationGroup="labelValidation"
                                 EnableClientScript="false" Display="Dynamic" OnServerValidate="cvLabel_OnServerValidate">                            
                             <img src="Content/img/icon_warning.png"  title="Label Name is required." alt="Label Name is required." />
                             </asp:CustomValidator>
@@ -131,7 +132,7 @@
                     </div>
                 </fieldset>
                 <div class="form-actions">
-                    <button id="btnAddLabel" runat="server" class="btn btn-primary" onserverclick="btnAddLabel_Click"
+                    <button id="btnAddLabel" runat="server" class="btn btn-primary" onserverclick="btnAddLabel_Click" ValidationGroup="labelValidation"
                         data-loading-text="Adding..." type="submit">
                         Add Label</button>
                 </div>
