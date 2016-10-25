@@ -150,8 +150,7 @@ namespace Indico
                     success = result.First();
 
                     if(success==1)
-                        Response.Redirect("/ViewOrders.aspx");
-                    
+                        Response.Redirect("/ViewOrders.aspx");                  
 
                 }
                 catch (Exception ex)
