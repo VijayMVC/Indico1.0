@@ -3,7 +3,6 @@ GO
 
 --**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
 
-
 ALTER TABLE [dbo].[Label]
 ADD IsActive bit
 
@@ -608,10 +607,6 @@ INSERT INTO [dbo].[MenuItemRole] ([MenuItem],[Role])
 GO
 
 --**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
-
-
-USE [Indico]
-GO
 
 /* Object:  StoredProcedure [dbo].[SPC_CloneOrder]    Script Date: 10/24/2016 1:34:39 PM */
 DROP PROCEDURE [dbo].[SPC_CloneOrder]
