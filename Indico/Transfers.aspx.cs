@@ -181,25 +181,21 @@ namespace Indico
             if (selected.Count < 1)
                 return;
 
-            if (int.Parse(FromDistributorVlDropDown.SelectedValue) != int.Parse(ToDistributorVlDropDown.SelectedValue))
+            using (var connection = Connection)
             {
-                using (var connection = Connection)
+                foreach (var product in selected)
                 {
-                    connection.Execute(string.Format("EXEC [dbo].[SPC_TransferAddressesAndLabels] {0}, {1}", int.Parse(FromJobNameDropDown.SelectedValue), int.Parse(ToDistributorVlDropDown.SelectedValue)));
+                    try
+                    {
+                        connection.Execute(string.Format("EXEC [dbo].[SPC_TransferAddressesAndLabels] {0}, {1},{2}", int.Parse(FromJobNameDropDown.SelectedValue), int.Parse(ToDistributorVlDropDown.SelectedValue), product.Value));
+                        TransferProduct(int.Parse(product.Value), selectedJobName);
+                    }
+                    catch (Exception)
+                    {
+                        IndicoLogging.log.ErrorFormat("Unable to transfer Visual Layout to a Job Name.  visual layout : {0}, Distributor : {1}", product.Value, selectedJobName);
+                    }
                 }
-            }
-
-            foreach (var product in selected)
-            {
-                try
-                {
-                    TransferProduct(int.Parse(product.Value), selectedJobName);
-                }
-                catch (Exception)
-                {
-                    IndicoLogging.log.ErrorFormat("Unable to transfer Visual Layout to a Job Name.  visual layout : {0}, Distributor : {1}", product.Value, selectedJobName);
-                }
-
+               
             }
 
             FromJobNameDropDown.Items.Clear();
@@ -452,7 +448,7 @@ namespace Indico
             using (var connection = Connection)
             {
                 connection.Open();
-                connection.Execute(string.Format("EXEC [dbo].[SPC_TransferAddressesAndLabels] {0}, {1}", jobName, distributor));
+                connection.Execute(string.Format("EXEC [dbo].[SPC_TransferAddressesAndLabels] {0}, {1},{2}", jobName, distributor,0));
                 connection.Execute(string.Format("EXEC [dbo].[SPC_TransferJobName] {0}, {1}", jobName, distributor));
             }
         }

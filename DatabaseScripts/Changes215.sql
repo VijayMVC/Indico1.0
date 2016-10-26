@@ -3,25 +3,48 @@ GO
 
 --**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
 
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SPC_UpdateOrderStatusToShipped]') AND type in (N'P', N'PC'))
+      DROP PROCEDURE [dbo].[SPC_UpdateOrderStatusToShipped]
+GO
+
+CREATE PROC [dbo].[SPC_UpdateOrderStatusToShipped]
+	@P_OrderDetailIds nvarchar(max)
+AS
+BEGIN
+	DECLARE @ODs TABLE ( ID int )
+	INSERT INTO @ODs (ID) SELECT DATA FROM [dbo].Split(@P_OrderDetailIds,',')
+	
+	UPDATE od
+	SET od.[Status] = 16 --Shipped
+	FROM [dbo].[OrderDetail] od
+		INNER JOIN @ODs ods
+			ON ods.ID = od.ID
+
+END
+
+GO
+
+--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
+
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SPC_TransferAddressesAndLabels]') AND type in (N'P', N'PC'))
       DROP PROCEDURE [dbo].[SPC_TransferAddressesAndLabels]
 GO
 
+
 CREATE PROC [dbo].[SPC_TransferAddressesAndLabels]
 	@P_JobName int,
-	@P_Distributor int,
-	@P_VisualLayout int
+	@P_Distributor int
 AS
 BEGIN
+	BEGIN TRANSACTION [Transaction]
+
 
 	DECLARE @JobName int
 	DECLARE @Distributor int
-	DECLARE @VisualLayout int = 0
 	DECLARE @Client int 
 	DECLARE @ClientDistributor int 
 	SET @JobName = @P_JobName
 	SET @Distributor = @P_Distributor
-	SET @VisualLayout = @P_VisualLayout
 
 	SET @Client = (SELECT TOP 1 cl.ID FROM [dbo].[Client] cl
 						INNER JOIN [dbo].[JobName] jn
@@ -60,7 +83,7 @@ BEGIN
 				ON o.BillingAddress = dca.ID
 			LEFT OUTER JOIN [dbo].[DistributorClientAddress] dcac
 				ON dca.Suburb=dcac.Suburb AND dca.PostCode=dcac.PostCode AND dca.Country=dcac.Country AND dca.Distributor=@Distributor
-		WHERE (@VisualLayout =0 OR vl.ID = @VisualLayout) AND jn.ID = @JobName AND dcac.ID IS NOT NULL AND o.BillingAddress <> 105 
+		WHERE jn.ID = @JobName AND dcac.ID IS NOT NULL AND o.BillingAddress <> 105 
 
 	INSERT INTO #oldDespatchAddresses (ID,New) 
 		SELECT DISTINCT o.DespatchToAddress,dcac.ID
@@ -77,7 +100,7 @@ BEGIN
 				ON dca.Suburb=dcac.Suburb AND dca.PostCode=dcac.PostCode AND dca.Country=dcac.Country AND dca.Distributor=@Distributor
 			LEFT OUTER JOIN #oldBillingAddresses ba
 				ON ba.ID = dcac.ID
-		WHERE (@VisualLayout =0 OR vl.ID = @VisualLayout) AND jn.ID = @JobName AND ba.ID IS NULL AND dcac.ID IS NOT NULL AND o.DespatchToAddress <> 105
+		WHERE jn.ID = @JobName AND ba.ID IS NULL AND dcac.ID IS NOT NULL AND o.DespatchToAddress <> 105
 
 	INSERT INTO #oldcurAddresses (ID,New) 
 		SELECT DISTINCT od.DespatchTo,dcac.ID
@@ -94,7 +117,7 @@ BEGIN
 				ON ba.ID = dcac.ID
 			LEFT OUTER JOIN #oldDespatchAddresses da
 				ON da.ID = dcac.ID
-		WHERE (@VisualLayout =0 OR vl.ID = @VisualLayout) AND jn.ID = @JobName AND  ba.ID IS NULL AND da.ID IS NULL AND da.ID IS NULL AND dcac.ID IS NOT NULL AND od.DespatchTo <> 105 
+		WHERE jn.ID = @JobName AND  ba.ID IS NULL AND da.ID IS NULL AND da.ID IS NULL AND dcac.ID IS NOT NULL AND od.DespatchTo <> 105 
 	
 	INSERT INTO #billingAddresses (ID) 
 		SELECT DISTINCT o.BillingAddress
@@ -109,7 +132,7 @@ BEGIN
 				ON o.BillingAddress = dca.ID
 			LEFT OUTER JOIN [dbo].[DistributorClientAddress] dcac
 				ON dca.Suburb=dcac.Suburb AND dca.PostCode=dcac.PostCode AND dca.Country=dcac.Country AND dca.Distributor=@Distributor
-		WHERE (@VisualLayout =0 OR vl.ID = @VisualLayout) AND jn.ID = @JobName AND dcac.ID IS NULL AND o.BillingAddress <> 105 
+		WHERE jn.ID = @JobName AND dcac.ID IS NULL AND o.BillingAddress <> 105 
 
 
 	INSERT INTO #despatchAddresses (ID) 
@@ -127,7 +150,7 @@ BEGIN
 				ON dca.Suburb=dcac.Suburb AND dca.PostCode=dcac.PostCode AND dca.Country=dcac.Country AND dca.Distributor=@Distributor
 			LEFT OUTER JOIN #billingAddresses ba
 				ON ba.ID = o.DespatchToAddress
-		WHERE (@VisualLayout =0 OR vl.ID = @VisualLayout) AND jn.ID = @JobName AND ba.ID IS NULL AND dcac.ID IS NULL AND o.DespatchToAddress <> 105
+		WHERE jn.ID = @JobName AND ba.ID IS NULL AND dcac.ID IS NULL AND o.DespatchToAddress <> 105
 
 	INSERT INTO #curAddresses (ID) 
 		SELECT DISTINCT od.DespatchTo
@@ -144,7 +167,7 @@ BEGIN
 				ON ba.ID = od.DespatchTo
 			LEFT OUTER JOIN #despatchAddresses da
 				ON ba.ID = od.DespatchTo
-		WHERE (@VisualLayout =0 OR vl.ID = @VisualLayout) AND jn.ID = @JobName AND  ba.ID IS NULL AND da.ID IS NULL AND dcac.ID IS NULL AND od.DespatchTo <> 105 
+		WHERE jn.ID = @JobName AND  ba.ID IS NULL AND da.ID IS NULL AND dcac.ID IS NULL AND od.DespatchTo <> 105 
 
 
 	MERGE INTO [dbo].[DistributorClientAddress] AS t
@@ -189,7 +212,7 @@ BEGIN
 			ON vl.Client = jn.ID
 		INNER JOIN #newBillingAddresses nba
 			ON nba.ID = o.BillingAddress
-	WHERE (@VisualLayout =0 OR vl.ID = @VisualLayout) AND jn.ID = @JobName AND nba.New IS NOT NULL AND nba.ID IS NOT NULL
+	WHERE jn.ID = @JobName AND nba.New IS NOT NULL AND nba.ID IS NOT NULL
 
 	UPDATE o
 	SET o.DespatchToAddress = nda.New 
@@ -202,7 +225,7 @@ BEGIN
 			ON vl.Client = jn.ID
 		INNER JOIN #newDespatchAddresses nda
 			ON nda.ID = o.DespatchToAddress
-	WHERE (@VisualLayout =0 OR vl.ID = @VisualLayout) AND jn.ID = @JobName AND nda.New IS NOT NULL AND nda.ID IS NOT NULL
+	WHERE jn.ID = @JobName AND nda.New IS NOT NULL AND nda.ID IS NOT NULL
 
 	UPDATE od
 	SET od.DespatchTo = nca.New
@@ -213,7 +236,7 @@ BEGIN
 			ON vl.Client = jn.ID
 		INNER JOIN #newcurAddresses nca
 			ON nca.ID = od.DespatchTo
-	WHERE (@VisualLayout =0 OR vl.ID = @VisualLayout) AND jn.ID = @JobName AND nca.New IS NOT NULL AND nca.ID IS NOT NULL
+	WHERE jn.ID = @JobName AND nca.New IS NOT NULL AND nca.ID IS NOT NULL
 
 
 	UPDATE o
@@ -227,7 +250,7 @@ BEGIN
 			ON vl.Client = jn.ID
 		INNER JOIN #oldBillingAddresses nba
 			ON nba.ID = o.BillingAddress
-	WHERE (@VisualLayout =0 OR vl.ID = @VisualLayout) AND jn.ID = @JobName AND nba.New IS NOT NULL AND nba.ID IS NOT NULL
+	WHERE jn.ID = @JobName AND nba.New IS NOT NULL AND nba.ID IS NOT NULL
 
 	UPDATE o
 	SET o.DespatchToAddress = nda.New 
@@ -240,7 +263,7 @@ BEGIN
 			ON vl.Client = jn.ID
 		INNER JOIN #oldDespatchAddresses nda
 			ON nda.ID = o.DespatchToAddress
-	WHERE (@VisualLayout =0 OR vl.ID = @VisualLayout) AND jn.ID = @JobName AND nda.New IS NOT NULL AND nda.ID IS NOT NULL
+	WHERE jn.ID = @JobName AND nda.New IS NOT NULL AND nda.ID IS NOT NULL
 
 	UPDATE od
 	SET od.DespatchTo = nca.New
@@ -251,7 +274,7 @@ BEGIN
 			ON vl.Client = jn.ID
 		INNER JOIN #oldcurAddresses nca
 			ON nca.ID = od.DespatchTo
-	WHERE (@VisualLayout =0 OR vl.ID = @VisualLayout) AND jn.ID = @JobName AND nca.New IS NOT NULL AND nca.ID IS NOT NULL
+	WHERE jn.ID = @JobName AND nca.New IS NOT NULL AND nca.ID IS NOT NULL
 
 	DROP TABLE #billingAddresses
 	DROP TABLE #newBillingAddresses
@@ -271,8 +294,8 @@ BEGIN
 
 	--from all orderdetails
 
-	INSERT INTO #labelsold (ID,New)
-	SELECT l.ID,dll.ID AS Name FROM [dbo].[JobName] jn
+	INSERT INTO #labelsold
+	SELECT l.ID FROM [dbo].[JobName] jn
 		INNER JOIN  [dbo].[VisualLayout] vl
 			ON vl.Client = jn.ID
 		INNER JOIN [dbo].[OrderDetail] od
@@ -283,9 +306,9 @@ BEGIN
 			ON dl.Distributor = @Distributor
 		LEFT OUTER JOIN [dbo].[Label] dll
 			ON dl.Label = dll.ID AND l.Name = dll.Name
-	WHERE (@VisualLayout =0 OR vl.ID = @VisualLayout) AND jn.ID = @JobName AND dll.ID IS NOT  NULL
+	WHERE jn.ID = @JobName AND dll.ID IS NOT  NULL
 
-	INSERT INTO #labelstemp 
+	INSERT INTO #labelstemp
 		SELECT l.ID FROM [dbo].[JobName] jn
 			INNER JOIN  [dbo].[VisualLayout] vl
 				ON vl.Client = jn.ID
@@ -297,7 +320,7 @@ BEGIN
 				ON dl.Distributor = @Distributor
 			LEFT OUTER JOIN [dbo].[Label] dll
 				ON dl.Label = dll.ID AND l.Name = dll.Name
-		WHERE (@VisualLayout =0 OR vl.ID = @VisualLayout) AND jn.ID = @JobName AND dll.ID IS  NULL
+		WHERE jn.ID = @JobName AND dll.ID IS  NULL
 		
 	CREATE TABLE #labels(ID int)
 
@@ -334,7 +357,7 @@ BEGIN
 			ON vl.Client = jn.ID
  		INNER JOIN #newLabels nl
 			ON nl.ID = od.Label
-	WHERE (@VisualLayout =0 OR vl.ID = @VisualLayout) AND jn.ID = @JobName AND nl.New IS NOT NULL AND nl.ID IS NOT NULL
+	WHERE jn.ID = @JobName AND nl.New IS NOT NULL AND nl.ID IS NOT NULL
 
 	UPDATE od
 	SET od.Label = nl.New
@@ -347,14 +370,26 @@ BEGIN
 			ON vl.Client = jn.ID
  		INNER JOIN #labelsold nl
 			ON nl.ID = od.Label
-	WHERE (@VisualLayout =0 OR vl.ID = @VisualLayout) AND jn.ID = @JobName AND nl.New IS NOT NULL AND nl.ID IS NOT NULL
+	WHERE jn.ID = @JobName AND nl.New IS NOT NULL AND nl.ID IS NOT NULL
 
 	DROP TABLE #labels
 	DROP TABLE #labelstemp
 	DROP TABLE #labelsold
 	DROP TABLE #newLabels
 
+	COMMIT TRANSACTION [Transaction]
+
+
 END
+
+
+
+
+GO
+
+--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**-
+
+UPDATE [dbo].[Label] SET IsActive=1 WHERE IsActive IS NULL;
 
 GO
 
