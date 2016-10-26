@@ -1225,7 +1225,7 @@ namespace Indico.Common
                         .Append(((objOrdeDetail.objVisualLayout.PocketType.HasValue && objOrdeDetail.objVisualLayout.PocketType.Value > 0) ? objOrdeDetail.objVisualLayout.objPocketType.Name : string.Empty) + "</td></tr>")
                         .Append((string.IsNullOrEmpty(objOrdeDetail.VisualLayoutNotes)) ? string.Empty : string.Format("<tr><td width=\"200\">Notes : </td><td colspan=\"2\"><span style=\"color:red;\">{0}</span></td></tr>", objOrdeDetail.VisualLayoutNotes))
                         .Append((string.IsNullOrWhiteSpace(objOrdeDetail.EditedPriceRemarks)) ? "" : string.Format("<tr><td width=\"200\">Price comments: </td><td colspan=\"2\">{0}</td></tr>", objOrdeDetail.EditedPriceRemarks))
-                        .Append((string.IsNullOrWhiteSpace(objOrdeDetail.FactoryInstructions)) ? "" : string.Format("<tr><td width=\"200\">Factory Instructions: </td><td colspan=\"2\">{0}</td></tr>", objOrdeDetail.FactoryInstructions))
+                        .Append((string.IsNullOrWhiteSpace(objOrdeDetail.FactoryInstructions)) ? "" : string.Format("<tr><td width=\"200\">Factory Instructions: </td><td colspan=\"2\"><span style=\"color:red;\">{0}</span></td></tr>", objOrdeDetail.FactoryInstructions))
                         .Append("</table><br>");
 
                 }
@@ -1235,135 +1235,6 @@ namespace Indico.Common
 
                 IndicoEmail.SendMailOrderSubmission(receiverName, receiverEmail, mailCc, title, emailContenntBuilder.ToString());
 
-
-
-
-
-
-
-
-                ////if (Submit)
-                ////{
-                ////    title = "Order has been submitted for you in OPS";
-
-                //emailContent +=  //"<p>Dear " + receiverName + ",<br><br>" +
-                //                "Order has been submitted for your inspection on " + DateTime.Now.ToLongDateString() + "<br><br>";
-                ////+                                "By: " + creatorName + " <br>" +
-                ////"Distributor: " + objOrder.objDistributor.Name + " <br>" +
-                ////"Coordinator: " + coordinatorName + " <br>" +
-                ////"Client/ Job Name: " + objOrder.objClient.Name + " <br><br>";
-                ////}
-                ////else
-                ////{
-                //var title = "OPS Order Number " + objOrder.ID + " for " + objOrder.objClient.Name + ((objOrder.ShipmentDate.HasValue) ? " ETD " + objOrder.ShipmentDate.Value.ToShortDateString() : string.Empty);
-                ////"Order has been added or edited " + objOrder.ID.ToString();
-
-                ////emailContent += "<p>Dear Administrator,<br><br>" +
-                ////                "Orders have been added or edited on " + DateTime.Now.ToLongDateString() + " for the following Products: <br><br>" +
-                ////                "Distributor: " + objOrder.objDistributor.Name + " <br>" +
-                ////                "Coordinator: " + coordinatorName + " <br>" +
-                ////                "Client: " + objOrder.objClient.Name + "<br><br>";
-                //emailContent += "<table>";
-
-                //emailContent += "<tr><td width=\"200\">By : </td><td>" + creatorName + "</td></tr>" +
-                //                "<tr><td width=\"200\">Distributor : </td><td>" + objOrder.objDistributor.Name + "</td></tr>" +
-                //                "<tr><td width=\"200\">Client : </td><td>" + objOrder.objClient.objClient.Name + "</td></tr>" +
-                //                "<tr><td width=\"200\">Job Name : </td><td>" + objOrder.objClient.Name + "</td></tr>" +
-                //                "<tr><td width=\"200\">Coordinator : </td><td>" + coordinatorName + "</td></tr>"
-                //               ;
-
-                //if (!objOrder.IsDateNegotiable)
-                //{
-                //    emailContent += "<tr><td width=\"200\">Non-Negotiable : </td><td style=\"color:red;\">YES</td></tr>";
-                //}
-
-                //OrderDetailBO objOD = new OrderDetailBO();
-                //objOD.Order = objOrder.ID;
-                //List<OrderDetailBO> lstOD = objOD.SearchObjects();
-
-                //OrderDetailBO objODFirst = lstOD.First();
-
-                //if (objODFirst.IsWeeklyShipment ?? false)
-                //{
-                //    emailContent += "<tr><td width=\"200\">Ship To : </td><td>Adelaide Warehouse</td></tr>";
-                //}
-                //else if (objODFirst.IsCourierDelivery ?? false)
-                //{
-                //    emailContent += "<tr><td width=\"200\">Name : </td><td>" + objODFirst.objDespatchTo.ContactName + "</td></tr>" +
-                //                "<tr><td width=\"200\">Contact : </td><td>" + objODFirst.objDespatchTo.ContactPhone + "</td></tr>" +
-                //               "<tr><td width=\"200\">Ship To : </td><td>" + objODFirst.objDespatchTo.CompanyName + " " + objODFirst.objDespatchTo.Address + " " + objODFirst.objDespatchTo.Suburb + " " + objODFirst.objDespatchTo.State + " " + objODFirst.objDespatchTo.PostCode + " " + objODFirst.objDespatchTo.objCountry.ShortName + "</td></tr>";
-                //}
-
-                //emailContent += (string.IsNullOrEmpty(objOrder.Notes)) ? string.Empty : ("<tr><td width=\"160\">Special Instructions : </td><td>" + objOrder.Notes + "</td></tr>");
-
-                //emailContent += "</table><br>";
-
-                //int poSuffix = 0;
-
-                //foreach (OrderDetailBO objOrdeDetail in lstOD) // objOrder.OrderDetailsWhereThisIsOrder)
-                //{
-                //    string filepath = IndicoConfiguration.AppConfiguration.SiteHostAddress + "/" + IndicoPage.GetVLImagePath(objOrdeDetail.objVisualLayout.ID);
-                //    //string filepath = "http://gw.indiman.net/" + IndicoPage.GetVLImagePath(objOrdeDetail.objVisualLayout.ID);                    
-                //    string NNFilePath = GetNameNumberFilePath(objOrdeDetail.ID);
-                //    int rowspan = (objOrdeDetail.PhotoApprovalReq ?? false) ? 13 : 12;
-                //    string pattern = ((objOrdeDetail.VisualLayout ?? 0) > 0) ? (objOrdeDetail.objVisualLayout.objPattern.Number + "-" + objOrdeDetail.objVisualLayout.objPattern.NickName) : (objOrdeDetail.objPattern.Number + "-" + objOrdeDetail.objPattern.NickName);
-                //    string fabric = ((objOrdeDetail.VisualLayout ?? 0) > 0) ? (objOrdeDetail.objVisualLayout.objFabricCode.Code + "-" + objOrdeDetail.objVisualLayout.objFabricCode.Name) : (objOrdeDetail.objFabricCode.Code + "-" + objOrdeDetail.objFabricCode.Name);
-
-                //    string bySize = ((bool)objOrdeDetail.objVisualLayout.BySizeArtWork) ? "YES" : "NO";
-
-                //    emailContent += "<table border=\"1\" width=\"800\" height=\"250\">" +
-                //                    "<tr><td width=\"200\">PO Number : </td><td width=\"300\">" + objOrder.ID + " -" + (++poSuffix).ToString() + "</td>" +
-                //                                    "<td rowspan=\"" + rowspan + "\"><img height=\"200\" src=\"" + filepath + "\"></td></tr>" +
-                //                    "<tr><td width=\"200\">Order Type: </td><td width=\"300\">" + objOrdeDetail.objOrderType.Name + "</td></tr>" +
-                //                    "<tr><td width=\"200\">Product: </td><td width=\"300\">" + objOrdeDetail.objVisualLayout.NamePrefix + "</td></tr>" +
-                //                   "<tr><td width=\"200\">By Size: </td><td width=\"300\">" + bySize + "</td></tr>" +
-                //                    "<tr><td width=\"200\">Fabric: </td><td width=\"300\">" + fabric + "</td></tr>" +
-                //                    "<tr><td width=\"200\">Pattern: </td><td width=\"300\">" + pattern + "</td></tr>" +
-                //                    "<tr><td width=\"200\">ETD: </td><td width=\"300\">" + objOrdeDetail.ShipmentDate.ToShortDateString() + "</td></tr>" +
-                //                    "<tr><td width=\"200\">Label: </td><td width=\"300\">" + objOrdeDetail.objLabel.Name + "</td></tr>" +
-                //                    "<tr><td width=\"200\">Branding Kit: </td><td width=\"300\">" + (objOrdeDetail.IsBrandingKit ? "YES" : "NO") + "</td></tr>" +
-                //                    "<tr><td width=\"200\">Names & Numbers: </td><td width=\"300\">" + (File.Exists(NNFilePath) ? "YES" : "NO") + "</td></tr>" +
-                //                    "<tr><td width=\"200\">Size/Quantity: </td><td width=\"300\">";
-
-                //    OrderDetailQtyBO objQty = new OrderDetailQtyBO();
-                //    objQty.OrderDetail = objOrdeDetail.ID;
-                //    List<OrderDetailQtyBO> lstODQty = objQty.SearchObjects();
-
-                //    string sizeQty = string.Empty;
-
-                //    foreach (OrderDetailQtyBO objODQty in lstODQty)
-                //    {
-                //        if (objODQty.Qty > 0)
-                //        {
-                //            sizeQty += objODQty.objSize.SizeName + "/" + objODQty.Qty.ToString() + ",";
-                //        }
-                //    }
-
-                //    emailContent += sizeQty.Remove(sizeQty.Length - 1, 1);
-                //    emailContent += "</td></tr>";
-
-                //    emailContent += "<tr><td width=\"200\">Total : </td><td width=\"300\">" + lstODQty.Sum(m => m.Qty).ToString() + " pcs</td></tr>";
-
-                //    if (objOrdeDetail.PhotoApprovalReq ?? false)
-                //    {
-                //        emailContent += "<tr><td width=\"200\">Photo Request : </td><td style=\"color:red;\" width=\"300\">YES</td></tr>";
-                //    }
-
-                //    emailContent += "<tr><td width=\"200\">Pocket Request : </td><td width=\"300\">" +
-                //        ((objOrdeDetail.objVisualLayout.PocketType.HasValue && objOrdeDetail.objVisualLayout.PocketType.Value > 0) ? objOrdeDetail.objVisualLayout.objPocketType.Name : string.Empty) + "</td></tr>";
-                //    emailContent += (string.IsNullOrEmpty(objOrdeDetail.VisualLayoutNotes)) ? string.Empty : ("<tr><td width=\"200\">Notes : </td><td colspan=\"2\"><span style=\"color:red;\">" + objOrdeDetail.VisualLayoutNotes + "</span></td></tr>");
-
-                //    emailContent += "</table><br>";
-                //}
-                ////}
-
-                //emailContent += "<br><br>";
-                //emailContent += "Please click below link to review it.<br>" +
-                //                "http://" + IndicoConfiguration.AppConfiguration.SiteHostAddress + "/AddEditOrder.aspx?id=" + OrderID;
-                ////+ "Regards, <br>" + "OPS Team</p><br><br>";
-
-                //// IndicoEmail.SendMailFromSystem(receiverName, receiverEmail, mailCC, title, emailContent, true);
-                //IndicoEmail.SendMailOrderSubmission(receiverName, receiverEmail, mailCc, title, emailContent);
             }
             catch (Exception ex)
             {
