@@ -359,3 +359,25 @@ END
 GO
 
 --**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
+
+-- Error corrections for tranfers
+
+UPDATE [dbo].[Order] SET BillingAddress = '978' WHERE BillingAddress = '1087'
+GO
+
+UPDATE [dbo].[Order] SET DespatchToAddress = '978' WHERE DespatchToAddress = '1087'
+GO
+
+DELETE FROM [dbo].[DistributorClientAddress] WHERE ID = '1087'
+GO
+
+UPDATE [dbo].[Order] SET BillingAddress = '978', DespatchToAddress = '978' WHERE ID = '50819'
+GO
+
+DELETE FROM [dbo].[DistributorLabel] WHERE Distributor = '1438' AND Label = '648'
+GO
+
+UPDATE [dbo].[OrderDetail] SET Label = '566' WHERE ID = '52377'
+GO
+
+--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--

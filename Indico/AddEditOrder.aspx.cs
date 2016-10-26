@@ -3453,7 +3453,6 @@ namespace Indico
             }
         }
 
-
         public class ActiveVisualLayout
         {
             public int VlID { get; set; }
@@ -3462,9 +3461,7 @@ namespace Indico
             public string PatternNumber { get; set; }
             public string FabricCodeName { get; set; }
         }
-
-
-
+        
         #endregion
     }
 }
