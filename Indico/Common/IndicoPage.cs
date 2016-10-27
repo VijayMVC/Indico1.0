@@ -408,7 +408,7 @@ namespace Indico.Common
             {
                 return new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
             }
-        } 
+        }
 
         #endregion
 
@@ -1204,11 +1204,11 @@ namespace Indico.Common
                         .AppendFormat("<tr><td width=\"200\">ETD: </td><td width=\"300\">{0}</td></tr>", objOrdeDetail.ShipmentDate.ToShortDateString())
                         .AppendFormat("<tr><td width=\"200\">Label: </td><td width=\"300\">{0}</td></tr>", objOrdeDetail.objLabel.Name)
                         .AppendFormat("<tr><td width=\"200\">Branding Kit: </td><td width=\"300\">{0}</td></tr>", (objOrdeDetail.IsBrandingKit ? "YES" : "NO"))
-                        .AppendFormat("<tr><td width=\"200\">Names & Numbers: </td><td width=\"300\">{0}</td></tr>", (File.Exists(nnFilePath) ? "YES" : "NO"))
+                        .AppendFormat("<tr><td width=\"200\">Names & Numbers: </td><td width=\"300\">{0}</td></tr>", (File.Exists(nnFilePath) ? "YES" : string.Empty))
                         .Append("<tr><td width=\"200\">Size/Quantity: </td><td width=\"300\">");
 
 
-                    var objQty = new OrderDetailQtyBO {OrderDetail = objOrdeDetail.ID};
+                    var objQty = new OrderDetailQtyBO { OrderDetail = objOrdeDetail.ID };
                     var lstOdQty = objQty.SearchObjects();
 
                     var sizeQty = lstOdQty.Where(objOdQty => objOdQty.Qty > 0).Aggregate(string.Empty, (current, objOdQty) => current + (objOdQty.objSize.SizeName + "/" + objOdQty.Qty.ToString() + ","));
