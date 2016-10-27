@@ -8,7 +8,6 @@ namespace Indico.Common
     public class OrderDetailsView
     {
         public OrderDetailsView() { }
-
         public int OrderDetail { get; set; }
         public string OrderType { get; set; }
         public string VisualLayout { get; set; }
@@ -29,11 +28,9 @@ namespace Indico.Common
         public string EditedPriceRemarks { get; set; }
         public string FactoryInstructions { get; set; }
     }
-
     public class CostSheetDetailsView
     {
         public int CostSheet { get; set; }
-
         public decimal QuotedFOBCost { get; set; }
         public decimal QuotedCIF { get; set; }
         public decimal QuotedMP { get; set; }
@@ -74,7 +71,6 @@ namespace Indico.Common
         public int FabricID { get; set; }
 
     }
-
     public class OrdersView
     {
         public int OrderDetail { get; set; }
@@ -117,5 +113,25 @@ namespace Indico.Common
         public bool? IsAcceptedTermsAndConditions { get; set; }
         public bool FOCPenalty { get; set; }
         public string DespatchTo { get; set; }
+    }
+    public class JobNameDetailsView
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string ClientName { get; set; }
+        public string DistributorName { get; set; }
+        public string Address { get; set; }
+        public string NickName { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string PostalCode { get; set; }
+        public string Country { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+        public string Creator { get; set; }
+        public string CreatedDate { get; set; }
+        public string Modifier { get; set; }
+        public string ModifiedDate { get; set; }
+        public bool HasVisualLayouts { get; set; }
     }
 }
