@@ -7,6 +7,8 @@ using System.Configuration;
 using System.Linq;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using Telerik.Web.UI;
+using System.Web.UI;
 
 namespace Indico
 {
@@ -84,16 +86,22 @@ namespace Indico
         }
         protected void rptOrderDetails_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
-            RepeaterItem item = e.Item;
+          
+
+                RepeaterItem item = e.Item;
             if (item.ItemIndex > -1 && item.DataItem is OrderDetailBO)
             {
                 OrderDetailBO objOrderDetail = (OrderDetailBO)item.DataItem;
 
                 CheckBox chkOrderDetail = (CheckBox)item.FindControl("chkOrderDetail");
                 Label lblVisualLayout = (Label)item.FindControl("lblVisualLayout");
-                lblVisualLayout.Text = objOrderDetail.objVisualLayout.NamePrefix;
+                lblVisualLayout.Text = objOrderDetail.objVisualLayout.NamePrefix + " / " + objOrderDetail.objPattern.Number + " " + objOrderDetail.objPattern.NickName + " / " + objOrderDetail.objFabricCode.Code + " " + objOrderDetail.objFabricCode.Name;
+
+
                 HtmlAnchor ancVLImage = (HtmlAnchor)item.FindControl("ancVLImage");
                 HtmlGenericControl ivlimageView = (HtmlGenericControl)item.FindControl("ivlimageView");
+
+                ancVLImage.HRef = IndicoPage.GetVLImagePath((int)objOrderDetail.VisualLayout);
 
                 if (!string.IsNullOrEmpty(ancVLImage.HRef))
                 {
@@ -116,6 +124,7 @@ namespace Indico
                 HiddenField ODID = (HiddenField)item.FindControl("hdnODID");
                 ODID.Value = objOrderDetail.ID.ToString();
             }
+
         }
 
         protected void btnSaveChanges_Click(object sender, EventArgs e)

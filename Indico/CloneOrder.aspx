@@ -19,78 +19,74 @@
                 <label class="control-label">
                     Distributor</label>
                 <div class="controls">
-                    <asp:Label ID="lblDistributor" runat="server"></asp:Label>
+                    <asp:Label ID="lblDistributor" runat="server" style="margin-top: 2px !important;"></asp:Label>
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label">
                     Client</label>
                 <div class="controls">
-                    <asp:Label ID="lblClient" runat="server"></asp:Label>
+                    <asp:Label ID="lblClient" runat="server" style="margin-top: 2px !important;"></asp:Label>
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label">
                     Job Name</label>
                 <div class="controls">
-                    <asp:Label ID="lblJobName" runat="server"></asp:Label>
+                    <asp:Label ID="lblJobName" runat="server" style="margin-top: 2px !important;"></asp:Label>
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label">
                     Billing Address</label>
                 <div class="controls">
-                    <asp:Label ID="lblBillingAddress" runat="server"></asp:Label>
+                    <asp:Label ID="lblBillingAddress" runat="server" style="margin-top: 2px !important;"></asp:Label>
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label">
                     Despatch Address</label>
                 <div class="controls">
-                    <asp:Label ID="lblDespatchAddress" runat="server"></asp:Label>
+                    <asp:Label ID="lblDespatchAddress" runat="server" style="margin-top: 2px !important;"></asp:Label>
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label">
                     Date Required in Customers Hand</label>
                 <div class="controls">
-                    <asp:Label ID="lblDateRequiredinCustomersHand" runat="server"></asp:Label>
+                    <asp:Label ID="lblDateRequiredinCustomersHand" runat="server" style="margin-top: 2px !important;"></asp:Label>
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label">
                     Shipment Date</label>
                 <div class="controls">
-                    <asp:Label ID="lblShipmentDate" runat="server"></asp:Label>
+                    <asp:Label ID="lblShipmentDate" runat="server" style="margin-top: 2px !important;"></asp:Label>
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label">
                     Shipment Term</label>
                 <div class="controls">
-                    <asp:Label ID="lblShipmentTerm" runat="server"></asp:Label>
+                    <asp:Label ID="lblShipmentTerm" runat="server" style="margin-top: 2px !important;"></asp:Label>
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label">
                     Shipment Mode</label>
                 <div class="controls">
-                    <asp:Label ID="lblShipmentMode" runat="server"></asp:Label>
+                    <asp:Label ID="lblShipmentMode" runat="server" style="margin-top: 2px !important;"></asp:Label>
                 </div>
             </div>
         </div>
         <div class="page-content">
             <asp:Repeater ID="rptOrderDetails" runat="server" OnItemDataBound="rptOrderDetails_ItemDataBound" EnableViewState="true">
                 <ItemTemplate>
-                    <div class="controls">
-                        <asp:CheckBox ID="chkOrderDetail" runat="server"></asp:CheckBox>
+                    <div class="control-group">
+                        <asp:CheckBox ID="chkOrderDetail" runat="server" style="margin-left: 10px; margin-top: 1px;"></asp:CheckBox>
                         <asp:HiddenField ID="hdnODID" runat="server" Value="0" />
-                    </div>
-                    <div class="controls">
-                        <asp:Label ID="lblVisualLayout" runat="server"></asp:Label>
-                    </div>
-                    <div class="controls">
-                        <a id="ancVLImage" runat="server"><i id="ivlimageView" runat="server" class="icon-eye-open"></i></a>
+                        <asp:Label ID="lblVisualLayout" runat="server" style="margin-left: 10px;"></asp:Label>
+                        <a id="ancVLImage" runat="server" style="margin-left: 10px;"><i id="ivlimageView" runat="server" class="icon-eye-open"></i></a>
                     </div>
                 </ItemTemplate>
             </asp:Repeater>
