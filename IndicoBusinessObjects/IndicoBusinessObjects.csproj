@@ -194,7 +194,6 @@
     <Compile Include="Base\ResolutionProfileBO.cs" />
     <Compile Include="Base\ReturnBackOrdersViewBO.cs" />
     <Compile Include="Base\ReturnCartonsDetailsViewBO.cs" />
-    <Compile Include="Base\ReturnClientsDetailsViewBO.cs" />
     <Compile Include="Base\ReturnDetailReportByClientBO.cs" />
     <Compile Include="Base\ReturnDetailReportByDistributorBO.cs" />
     <Compile Include="Base\ReturnDetailReportContentBO.cs" />
@@ -393,7 +392,6 @@
     <Compile Include="Constructors\ResolutionProfileBO.cs" />
     <Compile Include="Constructors\ReturnBackOrdersViewBO.cs" />
     <Compile Include="Constructors\ReturnCartonsDetailsViewBO.cs" />
-    <Compile Include="Constructors\ReturnClientsDetailsViewBO.cs" />
     <Compile Include="Constructors\ReturnDetailReportByClientBO.cs" />
     <Compile Include="Constructors\ReturnDetailReportByDistributorBO.cs" />
     <Compile Include="Constructors\ReturnDetailReportContentBO.cs" />
@@ -583,7 +581,6 @@
     <Compile Include="Extensions\ResolutionProfileBO.cs" />
     <Compile Include="Extensions\ReturnBackOrdersViewBO.cs" />
     <Compile Include="Extensions\ReturnCartonsDetailsViewBO.cs" />
-    <Compile Include="Extensions\ReturnClientsDetailsViewBO.cs" />
     <Compile Include="Extensions\ReturnDetailReportByClientBO.cs" />
     <Compile Include="Extensions\ReturnDetailReportByDistributorBO.cs" />
     <Compile Include="Extensions\ReturnDetailReportContentBO.cs" />

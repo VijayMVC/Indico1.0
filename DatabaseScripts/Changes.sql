@@ -3,6 +3,18 @@ GO
 
 --**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
 
+/****** Object:  View [dbo].[ReturnClientsDetailsView]    Script Date: 10/27/2016 1:02:55 PM ******/
+DROP VIEW [dbo].[ReturnClientsDetailsView]
+GO
+
+--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
+
+/****** Object:  StoredProcedure [dbo].[SPC_ViewClientsDetails]    Script Date: 10/27/2016 1:02:27 PM ******/
+DROP PROCEDURE [dbo].[SPC_ViewClientsDetails]
+GO
+
+--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
+
 /****** Object:  StoredProcedure [dbo].[SPC_JobNameDetails]    Script Date: 10/27/2016 12:35:02 PM ******/
 DROP PROCEDURE [dbo].[SPC_JobNameDetails]
 GO
