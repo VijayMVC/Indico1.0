@@ -7,6 +7,7 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SPC_T
       DROP PROCEDURE [dbo].[SPC_TransferAddressesAndLabels]
 GO
 
+
 CREATE PROC [dbo].[SPC_TransferAddressesAndLabels]
 	@P_JobName int,
 	@P_Distributor int,
@@ -357,5 +358,6 @@ END
 
 
 GO
+
 
 --**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--

@@ -52,15 +52,6 @@
                     <telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" Skin="Metro"
                         EnableEmbeddedSkins="true">
                     </telerik:RadAjaxLoadingPanel>
-                    <%--   <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" DefaultLoadingPanelID="RadAjaxLoadingPanel1">
-                        <AjaxSettings>
-                            <telerik:AjaxSetting AjaxControlID="RadGridClients">
-                                <UpdatedControls>
-                                    <telerik:AjaxUpdatedControl ControlID="RadGridClients"></telerik:AjaxUpdatedControl>
-                                </UpdatedControls>
-                            </telerik:AjaxSetting>
-                        </AjaxSettings>
-                    </telerik:RadAjaxManager>--%>
                     <telerik:RadGrid ID="RadGridClients" runat="server" AllowPaging="true" AllowFilteringByColumn="true" ShowGroupPanel="true" OnPageSizeChanged="RadGridClients_PageSizeChanged"
                         PageSize="20" OnPageIndexChanged="RadGridClients_PageIndexChanged" ShowFooter="false" EnableHeaderContextMenu="true" EnableHeaderContextFilterMenu="true"
                         AutoGenerateColumns="false" OnItemDataBound="RadGridClients_ItemDataBound"
@@ -75,9 +66,13 @@
                                 <telerik:GridBoundColumn UniqueName="Name" SortExpression="Name" HeaderText="Name" CurrentFilterFunction="Contains" AutoPostBackOnFilter="false"
                                     FilterControlWidth="100px" DataField="Name">
                                 </telerik:GridBoundColumn>
-                                <telerik:GridBoundColumn UniqueName="Client" SortExpression="Client" HeaderText="Client" CurrentFilterFunction="Contains"
+                                <telerik:GridBoundColumn UniqueName="ClientName" SortExpression="ClientName" HeaderText="Client" CurrentFilterFunction="Contains"
                                     FilterControlWidth="100px" AutoPostBackOnFilter="true"
-                                    DataField="Distributor">
+                                    DataField="ClientName">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn UniqueName="DistributorName" SortExpression="DistributorName" HeaderText="Distributor" CurrentFilterFunction="Contains"
+                                    FilterControlWidth="100px" AutoPostBackOnFilter="true"
+                                    DataField="DistributorName">
                                 </telerik:GridBoundColumn>
                                 <telerik:GridBoundColumn UniqueName="Country" SortExpression="Country" HeaderText="Country" CurrentFilterFunction="Contains"
                                     FilterControlWidth="100px" AutoPostBackOnFilter="true"
@@ -106,7 +101,6 @@
                                                 </li>
                                                 <li>
                                                     <asp:HyperLink ID="lnkDelete" runat="server" CssClass="btn-link idelete" ToolTip="Delete Client"><i class="icon-trash"></i>Delete</asp:HyperLink>
-
                                                 </li>
                                             </ul>
                                         </div>
@@ -118,84 +112,6 @@
                         </ClientSettings>
                         <GroupingSettings ShowUnGroupButton="true" />
                     </telerik:RadGrid>
-                    <%--<asp:DataGrid ID="dataGridClient" runat="server" CssClass="table" AllowCustomPaging="False"
-                        AllowPaging="True" AllowSorting="true" AutoGenerateColumns="false" GridLines="None"
-                        PageSize="20" OnItemDataBound="dataGridClient_ItemDataBound" OnPageIndexChanged="dataGridClient_PageIndexChanged"
-                        OnSortCommand="dataGridClient_SortCommand">
-                        <HeaderStyle CssClass="header" />
-                        <PagerStyle CssClass="idata-pager" Mode="NumericPages" />
-                        <Columns>
-                            <asp:BoundColumn DataField="Client" HeaderText="ID" Visible="false" HeaderStyle-CssClass="hide"
-                                ItemStyle-CssClass="hide"></asp:BoundColumn>
-                            <asp:TemplateColumn HeaderText="Name" SortExpression="Name">
-                                <ItemTemplate>
-                                    <asp:Literal ID="lblName" runat="server" Text=""></asp:Literal>
-                                </ItemTemplate>
-                            </asp:TemplateColumn>
-                            <asp:TemplateColumn HeaderText="Distributor" SortExpression="Distributor">
-                                <ItemTemplate>
-                                    <asp:Literal ID="lblCompany" runat="server" Text=""></asp:Literal>
-                                </ItemTemplate>
-                            </asp:TemplateColumn>
-                            <asp:TemplateColumn HeaderText="Country" SortExpression="Country">
-                                <ItemTemplate>
-                                    <asp:Literal ID="lblCountry" runat="server" Text=""></asp:Literal>
-                                </ItemTemplate>
-                            </asp:TemplateColumn>
-                            <asp:TemplateColumn HeaderText="City" SortExpression="City">
-                                <ItemTemplate>
-                                    <asp:Literal ID="lblCity" runat="server" Text=""></asp:Literal>
-                                </ItemTemplate>
-                            </asp:TemplateColumn>
-                            <asp:TemplateColumn HeaderText="Email" SortExpression="Email">
-                                <ItemTemplate>
-                                    <asp:Literal ID="lblEmail" runat="server" Text=""></asp:Literal>
-                                </ItemTemplate>
-                            </asp:TemplateColumn>
-                            <asp:TemplateColumn HeaderText="Phone No." SortExpression="Phone">
-                                <ItemTemplate>
-                                    <asp:Literal ID="lblPhone" runat="server" Text=""></asp:Literal>
-                                </ItemTemplate>
-                            </asp:TemplateColumn>
-                            <asp:TemplateColumn HeaderText="">
-                                <ItemTemplate>
-                                    <div class="btn-group pull-right">
-                                        <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
-                                            <i class="icon-cog"></i><span class="caret"></span></a>
-                                        <ul class="dropdown-menu pull-right">
-                                            <li>
-                                                <asp:HyperLink ID="linkEdit" runat="server" CssClass="btn-link iedit" ToolTip="Edit Client"
-                                                    Text="Edit" CommandName="Edit"><i class="icon-pencil"></i>Edit</asp:HyperLink>
-                                            </li>
-                                            <li>
-                                                <asp:HyperLink ID="lnkDelete" runat="server" CssClass="btn-link idelete" ToolTip="Delete Client"><i class="icon-trash"></i>Delete</asp:HyperLink></li>
-                                        </ul>
-                                    </div>
-                                </ItemTemplate>
-                            </asp:TemplateColumn>
-                        </Columns>
-                    </asp:DataGrid>--%>
-                    <div id="dvPagingFooter" visible="false" class="paginator" runat="server">
-                        <div class="paginatorRight">
-                            <!--<span class="displaying-num">Displaying 1-10 of <span id="spFooterTotal" runat="server">
-                            </span></span>-->
-                            <asp:LinkButton ID="lbFooterPrevious" runat="server" class="paginatorPreviousButton"
-                                OnClick="lbHeaderPrevious_Click"></asp:LinkButton>
-                            <asp:LinkButton ID="lbFooterPreviousDots" runat="server" class="" OnClick="lbHeaderPreviousDots_Click">...</asp:LinkButton>
-                            <asp:LinkButton ID="lbFooter1" CssClass="paginatorLink current" runat="server" OnClick="lbHeader1_Click">1</asp:LinkButton>
-                            <asp:LinkButton ID="lbFooter2" CssClass="paginatorLink" runat="server" OnClick="lbHeader1_Click">2</asp:LinkButton>
-                            <asp:LinkButton ID="lbFooter3" CssClass="paginatorLink" runat="server" OnClick="lbHeader1_Click">3</asp:LinkButton>
-                            <asp:LinkButton ID="lbFooter4" CssClass="paginatorLink" runat="server" OnClick="lbHeader1_Click">4</asp:LinkButton>
-                            <asp:LinkButton ID="lbFooter5" CssClass="paginatorLink" runat="server" OnClick="lbHeader1_Click">5</asp:LinkButton>
-                            <asp:LinkButton ID="lbFooter6" CssClass="paginatorLink" runat="server" OnClick="lbHeader1_Click">6</asp:LinkButton>
-                            <asp:LinkButton ID="lbFooter7" CssClass="paginatorLink" runat="server" OnClick="lbHeader1_Click">7</asp:LinkButton>
-                            <asp:LinkButton ID="lbFooter8" CssClass="paginatorLink" runat="server" OnClick="lbHeader1_Click">8</asp:LinkButton>
-                            <asp:LinkButton ID="lbFooter9" CssClass="paginatorLink" runat="server" OnClick="lbHeader1_Click">9</asp:LinkButton>
-                            <asp:LinkButton ID="lbFooter10" CssClass="paginatorLink" runat="server" OnClick="lbHeader1_Click">10</asp:LinkButton>
-                            <asp:LinkButton ID="lbFooterNextDots" runat="server" class="dots" OnClick="lbHeaderNextDots_Click">...</asp:LinkButton>
-                            <asp:LinkButton ID="lbFooterNext" runat="server" class="paginatorNextButton" OnClick="lbHeaderNext_Click"></asp:LinkButton>
-                        </div>
-                    </div>
                     <!-- No Search Result -->
                     <div id="dvNoSearchResult" runat="server" class="message search" visible="false">
                         <h4>Your search - <strong>

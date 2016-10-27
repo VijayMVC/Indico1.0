@@ -283,6 +283,10 @@ namespace Indico
                             HtmlContainerControl previewTemplate = (HtmlContainerControl)item.FindControl("previewTemplate");
                             previewTemplate.InnerHtml = htmlPreview;
 
+                            HtmlAnchor ancFullImage = (HtmlAnchor)item.FindControl("ancFullImage");
+                            ancFullImage.HRef = imagePathHero;
+                            ancFullImage.Visible = true;
+
                             ancTemplateImage.HRef = "#" + previewTemplate.ClientID;
                             // ancTemplateImage.Title = "Pattern Images";
 
