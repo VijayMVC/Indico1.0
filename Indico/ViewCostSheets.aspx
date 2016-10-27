@@ -295,6 +295,7 @@
                                             runat="server" class="icon-eye-open"></i></a>
                                         <div id="previewTemplate" runat="server" style="display: none;">
                                         </div>
+                                        <a id="ancFullImage" runat="server" target="_blank" visible="false">View</a>
                                     </ItemTemplate>
                                 </telerik:GridTemplateColumn>
                                 <telerik:GridTemplateColumn HeaderText="" AllowFiltering="false">
