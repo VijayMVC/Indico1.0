@@ -143,8 +143,9 @@ BEGIN
 			LEFT OUTER JOIN #billingAddresses ba
 				ON ba.ID = od.DespatchTo
 			LEFT OUTER JOIN #despatchAddresses da
-				ON da.ID = od.DespatchTo
+				ON ba.ID = od.DespatchTo
 		WHERE (@VisualLayout =0 OR vl.ID = @VisualLayout) AND jn.ID = @JobName AND  ba.ID IS NULL AND da.ID IS NULL AND dcac.ID IS NULL AND od.DespatchTo <> 105 
+
 
 	MERGE INTO [dbo].[DistributorClientAddress] AS t
 	USING (SELECT dca.ID,[Address],Suburb,PostCode,Country,ContactName,ContactPhone,CompanyName,[State],Port,EmailAddress,AddressType,Client,IsAdelaideWarehouse,Distributor 
@@ -285,7 +286,7 @@ BEGIN
 	WHERE (@VisualLayout =0 OR vl.ID = @VisualLayout) AND jn.ID = @JobName AND dll.ID IS NOT  NULL
 
 	INSERT INTO #labelstemp 
-		SELECT DISTINCT l.ID FROM [dbo].[JobName] jn
+		SELECT l.ID FROM [dbo].[JobName] jn
 			INNER JOIN  [dbo].[VisualLayout] vl
 				ON vl.Client = jn.ID
 			INNER JOIN [dbo].[OrderDetail] od
@@ -301,7 +302,7 @@ BEGIN
 	CREATE TABLE #labels(ID int)
 
 	INSERT INTO #labels (ID)
-		SELECT DISTINCT lt.ID FROM #labelstemp lt
+		SELECT lt.ID FROM #labelstemp lt
 				LEFT OUTER JOIN [dbo].[DistributorLabel] dl
 					ON lt.ID = dl.Label and DL.Distributor = @Distributor
 		WHERE dl.Label IS NULL
@@ -355,7 +356,28 @@ BEGIN
 
 END
 
+GO
 
+--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
+
+-- Error corrections for tranfers
+
+UPDATE [dbo].[Order] SET BillingAddress = '978' WHERE BillingAddress = '1087'
+GO
+
+UPDATE [dbo].[Order] SET DespatchToAddress = '978' WHERE DespatchToAddress = '1087'
+GO
+
+DELETE FROM [dbo].[DistributorClientAddress] WHERE ID = '1087'
+GO
+
+UPDATE [dbo].[Order] SET BillingAddress = '978', DespatchToAddress = '978' WHERE ID = '50819'
+GO
+
+DELETE FROM [dbo].[DistributorLabel] WHERE Distributor = '1438' AND Label = '648'
+GO
+
+UPDATE [dbo].[OrderDetail] SET Label = '566' WHERE ID = '52377'
 GO
 
 --**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
