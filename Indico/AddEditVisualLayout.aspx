@@ -734,7 +734,7 @@
                 <button class="btn" data-dismiss="modal" aria-hidden="true">
                     Close</button>
                 <button id="btnSaveClientorJob" runat="server" class="btn btn-primary" type="submit"
-                    validationgroup="cliorjob" data-loading-text="Saving..." onserverclick="btnSaveClientorJob_ServerClick">
+                    validationgroup="cliorjob" data-loading-text="Saving..." onserverclick="btnSaveClient_ServerClick">
                     Save</button>
             </div>
         </div>
@@ -780,71 +780,7 @@
                              <img src="Content/img/icon_warning.png"  title="Name is already in use" alt="Name is already in use" />
                                     </asp:CustomValidator>
                                 </div>
-                            </div>
-                            <%-- <div class="control-group">
-                                <label class="control-label">
-                                    Address
-                                </label>
-                                <div class="controls">
-                                    <asp:TextBox ID="txtAddress1" runat="server"></asp:TextBox>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label">
-                                    City</label>
-                                <div class="controls">
-                                    <asp:TextBox ID="txtCity" runat="server"></asp:TextBox>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label">
-                                    State</label>
-                                <div class="controls">
-                                    <asp:TextBox ID="txtState" runat="server"></asp:TextBox>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label">
-                                    Postal Code</label>
-                                <div class="controls">
-                                    <asp:TextBox ID="txtPostalCode" runat="server" CssClass="iintiger"></asp:TextBox>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label">
-                                    Country</label>
-                                <div class="controls">
-                                    <asp:DropDownList ID="ddlCountry" runat="server">
-                                    </asp:DropDownList>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label">
-                                    Phone</label>
-                                <div class="controls">
-                                    <asp:TextBox ID="txtPhoneNo1" runat="server"></asp:TextBox>
-                                </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label">
-                                    Email</label>
-                                <div class="controls">
-                                    <div class="input-prepend">
-                                        <span class="add-on"><i class="icon-envelope"></i></span>
-                                        <asp:TextBox ID="txtEmailAddress" runat="server"></asp:TextBox>
-                                    </div>
-                                    <%--  <asp:CustomValidator ID="cfvEmailAddress" runat="server" ErrorMessage="This Email Address is already being used"
-                            OnServerValidate="cfvEmailAddress_Validate" ControlToValidate="txtEmailAddress"
-                            ValidateEmptyText="true">
-                        <img src="Content/img/icon_warning.png"  title="This Email Address Is already being used" alt="This Email Address is already being used" />
-                        </asp:CustomValidator>-- %>
-                                    <asp:RegularExpressionValidator ID="revEmailAddress" runat="server" ErrorMessage="Invalid Email format"
-                                        ValidationExpression="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ControlToValidate="txtEmailAddress"
-                                        EnableClientScript="false">
-                                 <img src="Content/img/icon_warning.png"  title="Invalid Email format" alt="Invalid Email format" />
-                                    </asp:RegularExpressionValidator>
-                                </div>
-                            </div>--%>
+                            </div>                       
                         </fieldset>
                     </div>
                 </ContentTemplate>

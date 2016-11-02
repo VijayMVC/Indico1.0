@@ -1543,7 +1543,7 @@ namespace Indico
             //}
         }
 
-        protected void btnSaveClientorJob_ServerClick(object sender, EventArgs e)
+        protected void btnSaveClient_ServerClick(object sender, EventArgs e)
         {
             ResetViewStateValues();
 
@@ -1552,12 +1552,12 @@ namespace Indico
             {
                 try
                 {
+                    int id = int.Parse(hdnClientID.Value);
                     int newClient = 0;
+
                     using (TransactionScope ts = new TransactionScope())
                     {
                         ClientBO objClient = new ClientBO(this.ObjContext);
-
-                        int id = int.Parse(hdnClientID.Value);
 
                         if (id > 0)
                         {
@@ -1583,6 +1583,8 @@ namespace Indico
                         ddlDistributor_SelectedIndexChange(null, null);
                         ddlClient.ClearSelection();
                         ddlClient.Items.FindByValue(newClient.ToString()).Selected = true;
+
+                        hdnEditJobNameID.Value = ddlJobName.SelectedValue;
                         ddlClient_SelectedIndexChanged(null, null);
                     }
                 }
@@ -2046,6 +2048,7 @@ namespace Indico
                 this.litClient.Text = objVisualLayout.objClient.objClient.Name;
                 this.ancEditClient.Visible = true;
 
+                this.ddlJobName.ClearSelection();
                 this.ddlJobName.Items.FindByValue(objVisualLayout.Client.ToString()).Selected = true;
 
                 JobNameBO objJobName = objVisualLayout.objClient;
@@ -2389,6 +2392,19 @@ namespace Indico
                 }
 
                 this.litClient.Text = objJobName.objClient.Name;
+
+                if (this.ddlJobName.SelectedValue == "0")
+                {
+                    if (this.QueryID > 0)
+                    {
+                        VisualLayoutBO objVisualLayout = new VisualLayoutBO();
+                        objVisualLayout.ID = this.QueryID;
+                        objVisualLayout.GetObject();
+
+                        this.ddlJobName.ClearSelection();
+                        this.ddlJobName.Items.FindByValue(objVisualLayout.Client.ToString()).Selected = true;
+                    }
+                }
             }
         }
 
@@ -2490,7 +2506,7 @@ namespace Indico
                         }
                         //objVisualLayout.IsCommonProduct = (this.checkIsCommonproduct.Checked == true) ? true : false;
 
-                       
+
 
                         ViewState["visualLayoutNa"] = this.txtProductNumber.Text;
 
@@ -2594,7 +2610,7 @@ namespace Indico
                             var fileName = new FileInfo(filePath).Name;
                             if (!Directory.Exists(destinationFolderPath))
                                 Directory.CreateDirectory(destinationFolderPath);
-                            if(File.Exists(destinationFolderPath + "\\" + fileName))
+                            if (File.Exists(destinationFolderPath + "\\" + fileName))
                                 File.Delete(destinationFolderPath + "\\" + fileName);
                             File.Copy(filePath, destinationFolderPath + "\\" + fileName);
                             var objImage = new ImageBO(ObjContext)
@@ -2602,7 +2618,7 @@ namespace Indico
                                 Filename = Path.GetFileNameWithoutExtension(filePath),
                                 Extension = Path.GetExtension(filePath),
                                 Size = Convert.ToInt32(new FileInfo(filePath).Length),
-                                IsHero = objVisualLayout.ImagesWhereThisIsVisualLayout.Count<1
+                                IsHero = objVisualLayout.ImagesWhereThisIsVisualLayout.Count < 1
                             };
                             foreach (var img in objVisualLayout.ImagesWhereThisIsVisualLayout)
                             {
@@ -2624,7 +2640,8 @@ namespace Indico
                                     var objImage = new ImageBO(ObjContext)
                                     {
                                         Filename = Path.GetFileNameWithoutExtension(fileName),
-                                        Extension = Path.GetExtension(fileName), Size = (int) (new FileInfo(IndicoConfiguration.AppConfiguration.PathToDataFolder + "\\temp\\" + fileName)).Length
+                                        Extension = Path.GetExtension(fileName),
+                                        Size = (int)(new FileInfo(IndicoConfiguration.AppConfiguration.PathToDataFolder + "\\temp\\" + fileName)).Length
                                     };
                                     if (QueryID == 0 || objVisualLayout.ImagesWhereThisIsVisualLayout.Count == 0)
                                     {
@@ -2660,7 +2677,7 @@ namespace Indico
                                 }
                             }
                         }
-                        
+
 
                         #endregion
 
@@ -3301,16 +3318,15 @@ namespace Indico
             ViewState["PopulateClientOrJob"] = false;
             ViewState["PopulateJobName"] = false;
         }
-
-
+        
         #endregion
 
         [WebMethod]
         public static string CheckImageAvailable(string vlname)
         {
-            using(var service= new ImageService())
+            using (var service = new ImageService())
             {
-                var path= service.GetVlImageFromServerIfAvailable(vlname);
+                var path = service.GetVlImageFromServerIfAvailable(vlname);
                 return path;
             }
         }
