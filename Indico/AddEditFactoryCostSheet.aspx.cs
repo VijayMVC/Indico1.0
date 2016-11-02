@@ -271,6 +271,8 @@ namespace Indico
         protected void ddlFabric_SelectedIndexChanged(object sender, EventArgs e)
         {
             int fabric = int.Parse(this.ddlFabric.SelectedValue);
+            int pattern = int.Parse(this.ddlPattern.SelectedValue);
+
             CustomValidator cv = null;
 
             if (fabric > 0)
@@ -279,71 +281,68 @@ namespace Indico
 
                 if (lstFabrics != null)
                 {
-                    lstFabrics = lstFabrics.Where(o => o.ID == fabric).ToList();
-
-                    // check if pattern was selected before select the main fabic
-                    if (int.Parse(this.ddlPattern.SelectedValue) > 0)
+                    if (pattern > 0)
                     {
                         CostSheetBO objCostSheet = new CostSheetBO();
                         objCostSheet.Pattern = int.Parse(this.ddlPattern.SelectedValue);
                         objCostSheet.Fabric = fabric;
-                        List<CostSheetBO> lstCostSheet = objCostSheet.SearchObjects();
+                        List<int> lstCostSheet = objCostSheet.SearchObjects().Select(m => m.ID).ToList();
 
                         // Check if this pattern and fabric use in another cost sheet
-                        if (lstCostSheet.Count == 0)
+                        if (lstCostSheet.Any())
                         {
-                            // check  if new cost sheet or edited cost sheet
-                            if (this.QueryID > 0)
+                            if (this.QueryID == 0)
                             {
-                                // check if this fabric already in the system
-                                if (lstFabrics.Count == 0)
-                                {
-                                    // change the main fabric. Exist fabric remove from the system 
-                                    //this.DeleteMainFabric();
-
-                                    /* if (ViewState["MainFabric"] != null && int.Parse(ViewState["MainFabric"].ToString()) > 0)
-                                     {
-                                         this.PopulateFabricDataGrid(int.Parse(ViewState["MainFabric"].ToString()), true);
-                                     }
-                                     else if (ViewState["XFabric"] != null && int.Parse(ViewState["XFabric"].ToString()) > 0)
-                                     {
-                                         this.PopulateFabricDataGrid(int.Parse(ViewState["XFabric"].ToString()), true);
-                                     }*/
-
-                                    this.PopulateFabricDataGrid(fabric);
-                                    ViewState["MainFabric"] = null;
-                                }
-                                else
-                                {
-                                    cv = new CustomValidator();
-                                    cv.IsValid = false;
-                                    cv.ValidationGroup = "validateCostsheet";
-                                    cv.ErrorMessage = "Cost Sheet for this Fabric exist in the system.";
-                                    Page.Validators.Add(cv);
-                                    //  this.ddlFabric.Items.FindByValue(ViewState["MainFabric"].ToString()).Selected = true;
-                                }
+                                cv = new CustomValidator();
+                                cv.IsValid = false;
+                                cv.ValidationGroup = "validateCostsheet";
+                                cv.ErrorMessage = "<p>Cost Sheet exists for this pattern and main Fabric in the System.</p>     <p><a href=\"AddEditFactoryCostSheet.aspx?id=" + lstCostSheet[0] + "\" class=\"btn\">View Cost Sheet</a><p>";
+                                Page.Validators.Add(cv);
                             }
-                            else
+                            else if (lstCostSheet.Contains(this.QueryID))
                             {
-                                // check if this fabric already in the system
-                                if (lstFabrics.Count == 0)
-                                {
-                                    /*if (ViewState["XFabric"] != null && int.Parse(ViewState["XFabric"].ToString()) > 0)
-                                    {
-                                        this.PopulateFabricDataGrid(int.Parse(ViewState["XFabric"].ToString()), true);
-                                    }*/
-                                    this.PopulateFabricDataGrid(int.Parse(this.ddlFabric.SelectedValue));
-                                }
+                                this.PopulateFabricDataGrid(fabric);
                             }
                         }
                         else
                         {
-                            cv = new CustomValidator();
-                            cv.IsValid = false;
-                            cv.ValidationGroup = "validateCostsheet";
-                            cv.ErrorMessage = "<p>Cost Sheet exists for this pattern and main Fabric in the System.</p>     <p><a href=\"AddEditFactoryCostSheet.aspx?id=" + lstCostSheet[0].ID + "\" class=\"btn\">View Cost Sheet</a><p>";
-                            Page.Validators.Add(cv);
+                            this.PopulateFabricDataGrid(fabric);
                         }
+
+                        //if (lstCostSheet.Count == 0)
+                        //{
+                        //    if (this.QueryID > 0)
+                        //    {
+                        //        if (lstFabrics.Count == 0)
+                        //        {
+                        //            this.PopulateFabricDataGrid(fabric);
+                        //        }
+                        //        else
+                        //        {
+                        //            cv = new CustomValidator();
+                        //            cv.IsValid = false;
+                        //            cv.ValidationGroup = "validateCostsheet";
+                        //            cv.ErrorMessage = "Cost Sheet for this Fabric exist in the system.";
+                        //            Page.Validators.Add(cv);
+                        //        }
+                        //    }
+                        //    else
+                        //    {
+                        //        // check if this fabric already in the system
+                        //        if (lstFabrics.Count == 0)
+                        //        {
+                        //            this.PopulateFabricDataGrid(int.Parse(this.ddlFabric.SelectedValue));
+                        //        }
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    cv = new CustomValidator();
+                        //    cv.IsValid = false;
+                        //    cv.ValidationGroup = "validateCostsheet";
+                        //    cv.ErrorMessage = "<p>Cost Sheet exists for this pattern and main Fabric in the System.</p>     <p><a href=\"AddEditFactoryCostSheet.aspx?id=" + lstCostSheet[0].ID + "\" class=\"btn\">View Cost Sheet</a><p>";
+                        //    Page.Validators.Add(cv);
+                        //}
                     }
                     else
                     {
@@ -357,7 +356,6 @@ namespace Indico
 
                     this.PopulateAccessoriesDataGrid();
                 }
-                ViewState["XFabric"] = fabric.ToString();
             }
         }
 
@@ -1504,69 +1502,7 @@ namespace Indico
                 this.ddlFabric.Items.FindByValue(objCostSheet.Fabric.ToString()).Selected = true;
 
                 PopulateCostValues(objCostSheet, false);
-
-                //this.txtsmv.Text = Convert.ToDecimal((objCostSheet.objPattern.SMV != null) ? objCostSheet.objPattern.SMV.ToString() : "0.00").ToString("0.00");
-                //this.txtsmvrate.Text = Convert.ToDecimal((objCostSheet.SMVRate != null) ? objCostSheet.SMVRate.ToString() : "0").ToString("0.000");
-                //this.txtcalccm.Text = Convert.ToDecimal((objCostSheet.CalculateCM != null) ? objCostSheet.CalculateCM.ToString() : "0").ToString("0.00");
-                //this.txttotalFabricCost.Text = Convert.ToDecimal((objCostSheet.TotalFabricCost != null) ? objCostSheet.TotalFabricCost.ToString() : "0").ToString("0.00");
-                //this.txtAccessoriesCost.Text = Convert.ToDecimal((objCostSheet.TotalAccessoriesCost != null) ? objCostSheet.TotalAccessoriesCost.ToString() : "0").ToString("0.00");
-                //this.txtHeatPressOverhead.Text = Convert.ToDecimal((objCostSheet.HPCost != null) ? objCostSheet.HPCost.ToString() : "0").ToString("0.00");
-                //this.txtLabelCost.Text = Convert.ToDecimal((objCostSheet.LabelCost != null) ? objCostSheet.LabelCost.ToString() : "0").ToString("0.00");
-                //this.txtPacking.Text = Convert.ToDecimal((objCostSheet.Other != null) ? objCostSheet.Other.ToString() : "0").ToString("0.00");
-                //this.txtWastage.Text = Convert.ToDecimal((objCostSheet.Wastage != null) ? objCostSheet.Wastage.ToString() : "0").ToString("0.00");
-                //this.txtFinance.Text = Convert.ToDecimal((objCostSheet.Finance != null) ? objCostSheet.Finance.ToString() : "0").ToString("0.00");
-                //this.txtCM.Text = Convert.ToDecimal((objCostSheet.CM != null) ? objCostSheet.CM.ToString() : "0").ToString("0.00");
-                //this.txtFobCost.Text = Convert.ToDecimal((objCostSheet.JKFOBCost != null) ? objCostSheet.JKFOBCost.ToString() : "0").ToString("0.00");
-                //this.txtJKFobQuoted.Text = Convert.ToDecimal((objCostSheet.QuotedFOBCost != null && objCostSheet.QuotedFOBCost != decimal.Parse("0")) ? objCostSheet.QuotedFOBCost.ToString() : (objCostSheet.JKFOBCost != null) ? objCostSheet.JKFOBCost.ToString() : "0").ToString("0.00");
-                //this.txtRoundUp.Text = Convert.ToDecimal((objCostSheet.Roundup != null) ? objCostSheet.Roundup.ToString() : "0").ToString("0.00");
-                //this.txtSubWastage.Text = Convert.ToDecimal((objCostSheet.SubWastage != null) ? objCostSheet.SubWastage.ToString() : "0").ToString("0.00");
-                //this.txtSubFinance.Text = Convert.ToDecimal((objCostSheet.SubFinance != null) ? objCostSheet.SubFinance.ToString() : "0").ToString("0.00");
-
-                //this.txtModifer.Text = (objCostSheet.Modifier != null && objCostSheet.Modifier > 0) ? objCostSheet.objModifier.GivenName + " " + objCostSheet.objModifier.FamilyName : string.Empty;
-                //this.txtModifiedDate.Text = (objCostSheet.ModifiedDate != null) ? Convert.ToDateTime(objCostSheet.ModifiedDate.ToString()).ToString("dd MMMM yyyy") : string.Empty;//objCostSheet.ModifiedDate.ToString("dd MMMM yyyy");
-                //this.txtIndimanModifier.Text = (objCostSheet.IndimanModifier != null && objCostSheet.IndimanModifier > 0) ? objCostSheet.objIndimanModifier.GivenName + " " + objCostSheet.objIndimanModifier.FamilyName : string.Empty;
-                //this.txtIndimanModifiedDate.Text = (objCostSheet.IndimanModifiedDate != null) ? Convert.ToDateTime(objCostSheet.IndimanModifiedDate.ToString()).ToString("dd MMMM yyyy") : string.Empty;//objCostSheet.ModifiedDate.ToString("dd MMMM yyyy");
-
-                ////Indiman
-                //this.txtMarginRate.Text = (objCostSheet.MarginRate != null) ? Convert.ToDecimal(objCostSheet.MarginRate.ToString()).ToString("0.00") : "0.00";
-                //this.txtSublimationConsumption.Text = (objCostSheet.SubCons != null) ? Convert.ToDecimal(objCostSheet.SubCons.ToString()).ToString("0.00") : "0.00";
-                //this.txtDutyRate.Text = (objCostSheet.DutyRate != null) ? Convert.ToDecimal(objCostSheet.DutyRate.ToString()).ToString("0.00") : "0.00";
-                //this.txtCF1.Text = objCostSheet.CF1;
-                //this.txtCF2.Text = objCostSheet.CF2;
-                //this.txtCF3.Text = objCostSheet.CF3;
-                //this.txtCONS1.Text = (objCostSheet.CONS1 != null) ? Convert.ToDecimal(objCostSheet.CONS1.ToString()).ToString("0.00") : "0.00";
-                //this.txtCONS2.Text = (objCostSheet.CONS2 != null) ? Convert.ToDecimal(objCostSheet.CONS2.ToString()).ToString("0.00") : "0.00";
-                //this.txtCONS3.Text = (objCostSheet.CONS3 != null) ? Convert.ToDecimal(objCostSheet.CONS3.ToString()).ToString("0.00") : "0.00";
-                //this.txtRate1.Text = (objCostSheet.Rate1 != null) ? Convert.ToDecimal(objCostSheet.Rate1.ToString()).ToString("0.00") : "0.00";
-                //this.txtRate2.Text = (objCostSheet.Rate2 != null) ? Convert.ToDecimal(objCostSheet.Rate2.ToString()).ToString("0.00") : "0.00";
-                //this.txtRate3.Text = (objCostSheet.Rate3 != null) ? Convert.ToDecimal(objCostSheet.Rate3.ToString()).ToString("0.00") : "0.00";
-                //this.txtInk.Text = (objCostSheet.InkCons != null) ? Convert.ToDecimal(objCostSheet.InkCons.ToString()).ToString("0.000") : "0.000";
-                //this.txtInkRate.Text = (objCostSheet.InkRate != null) ? Convert.ToDecimal(objCostSheet.InkRate.ToString()).ToString("0.00") : "0.00";
-                //this.txtInkCost.Text = (objCostSheet.InkCost != null) ? Convert.ToDecimal(objCostSheet.InkCost.ToString()).ToString("0.000") : "0.000";
-                //this.txtPaper.Text = (objCostSheet.PaperCons != null) ? Convert.ToDecimal(objCostSheet.PaperCons.ToString()).ToString("0.00") : "0.00";
-                //this.txtPaperRate.Text = (objCostSheet.PaperRate != null) ? Convert.ToDecimal(objCostSheet.PaperRate.ToString()).ToString("0.00") : "0.00";
-                //this.txtPaperCost.Text = (objCostSheet.PaperCost != null) ? Convert.ToDecimal(objCostSheet.PaperCost.ToString()).ToString("0.00") : "0.00";
-                //this.txtExchangeRate.Text = (objCostSheet.ExchangeRate != null) ? Convert.ToDecimal(objCostSheet.ExchangeRate.ToString()).ToString("0.00") : "0.00";
-                //this.txtFOB.Text = (objCostSheet.FOBAUD != null) ? Convert.ToDecimal(objCostSheet.FOBAUD.ToString()).ToString("0.00") : "0.00";
-                //this.txtDuty.Text = (objCostSheet.Duty != null) ? Convert.ToDecimal(objCostSheet.Duty.ToString()).ToString("0.00") : "0.00";
-                //this.txtCost1.Text = (objCostSheet.Cost1 != null) ? Convert.ToDecimal(objCostSheet.Cost1.ToString()).ToString("0.00") : "0.00";
-                //this.txtCost2.Text = (objCostSheet.Cost2 != null) ? Convert.ToDecimal(objCostSheet.Cost2.ToString()).ToString("0.00") : "0.00";
-                //this.txtCost3.Text = (objCostSheet.Cost3 != null) ? Convert.ToDecimal(objCostSheet.Cost3.ToString()).ToString("0.00") : "0.00";
-                //this.txtAirFreight.Text = (objCostSheet.AirFregiht != null) ? Convert.ToDecimal(objCostSheet.AirFregiht.ToString()).ToString("0.00") : "0.00";
-                //this.txtImpCharges.Text = (objCostSheet.ImpCharges != null) ? Convert.ToDecimal(objCostSheet.ImpCharges.ToString()).ToString("0.00") : "0.00";
-                //this.txtMgtOH.Text = (objCostSheet.MGTOH != null) ? Convert.ToDecimal(objCostSheet.MGTOH.ToString()).ToString("0.00") : "0.00";
-                //this.txtIndicoOH.Text = (objCostSheet.IndicoOH != null) ? Convert.ToDecimal(objCostSheet.IndicoOH.ToString()).ToString("0.00") : "0.00";
-                //this.txtDepar.Text = (objCostSheet.Depr != null) ? Convert.ToDecimal(objCostSheet.Depr.ToString()).ToString("0.00") : "0.00";
-                //this.txtLanded.Text = (objCostSheet.Landed != null) ? Convert.ToDecimal(objCostSheet.Landed.ToString()).ToString("0.00") : "0.00";
-                //this.txtCIF.Text = (objCostSheet.IndimanCIF != null) ? Convert.ToDecimal(objCostSheet.IndimanCIF.ToString()).ToString("0.00") : "0.00";
-                //this.txtCalMgn.Text = (objCostSheet.CalMGN != null) ? Convert.ToDecimal(objCostSheet.CalMGN.ToString()).ToString("0.00") : "0.00";
-                //this.txtMp.Text = (objCostSheet.MP != null) ? Convert.ToDecimal(objCostSheet.MP.ToString()).ToString("0.00") : "0.00";
-                //this.txtQuotedCif.Text = (objCostSheet.QuotedCIF != null && objCostSheet.QuotedCIF != int.Parse("0")) ? Convert.ToDecimal(objCostSheet.QuotedCIF.ToString()).ToString("0.00") : (objCostSheet.IndimanCIF != null) ? Convert.ToDecimal(objCostSheet.IndimanCIF.ToString()).ToString("0.00") : "0.00";
-                //this.txtActMgn.Text = (objCostSheet.ActMgn != null) ? Convert.ToDecimal(objCostSheet.ActMgn.ToString()).ToString("0.00") : "0.00";
-                //this.txtQuotedMp.Text = (objCostSheet.QuotedMP != null) ? Convert.ToDecimal(objCostSheet.QuotedMP.ToString()).ToString("0.00") : "0.00";
-                //this.txtFobFactor.Text = (objCostSheet.FobFactor != null) ? Convert.ToDecimal(objCostSheet.FobFactor.ToString()).ToString("0.00") : "0.00";
-                //this.txtQuotedFOB.Text = (objCostSheet.IndimanFOB != null) ? Convert.ToDecimal(objCostSheet.IndimanFOB.ToString()).ToString("0.00") : "0.00";
-
+                                
                 ViewState["MainFabric"] = objCostSheet.Fabric.ToString();
                 OldFabric = objCostSheet.Fabric;
 
@@ -1651,8 +1587,12 @@ namespace Indico
                 }
 
 
+                VisualLayoutBO objVL = new VisualLayoutBO();
+                objVL.Pattern = objCostSheet.Pattern;
+                objVL.FabricCode = objCostSheet.Fabric;
+
                 this.ddlPattern.Enabled = (this.QueryID > 0) ? false : true;
-                //this.ddlFabric.Enabled = (this.QueryID > 0) ? false : true;
+                this.ddlFabric.Enabled = objVL.SearchObjects().Any() ? false : true;
 
                 if (!isPopulate)
                 {
@@ -1805,25 +1745,7 @@ namespace Indico
         private void ValidDataGrids()
         {
             CustomValidator cv = null;
-
-            /*if (int.Parse(this.ddlPattern.SelectedValue) == 0)
-            {
-                cv = new CustomValidator();
-                cv.IsValid = false;
-                cv.ValidationGroup = "validateCostsheet";
-                cv.ErrorMessage = "Pattern is required";
-                Page.Validators.Add(cv);
-            }
-
-            if (int.Parse(this.ddlFabric.SelectedValue) == 0)
-            {
-                cv = new CustomValidator();
-                cv.IsValid = false;
-                cv.ValidationGroup = "validateCostsheet";
-                cv.ErrorMessage = "Fabric is required";
-                Page.Validators.Add(cv);
-            }*/
-
+            
             foreach (DataGridItem item in dgAddEditFabrics.Items)
             {
                 //PatternSupportFabricBO objPatternSupportFabric = new PatternSupportFabricBO(this.ObjContext);
@@ -1881,50 +1803,66 @@ namespace Indico
                         // Check if this pattern and fabric use in another cost sheet
                         if (lstCostSheet.Count == 0)
                         {
-                            // check  if new cost sheet or edited cost sheet
-                            if (this.QueryID > 0)
+                            if (lstCostSheet.Any())
                             {
-                                // check if this fabric already in the system
-                                if (lstFabrics.Count == 0)
-                                {
-                                    // change the main fabric. Exist fabric remove from the system 
-                                    //this.DeleteMainFabric();
-
-                                    /* if (ViewState["MainFabric"] != null && int.Parse(ViewState["MainFabric"].ToString()) > 0)
-                                     {
-                                         this.PopulateFabricDataGrid(int.Parse(ViewState["MainFabric"].ToString()), true);
-                                     }
-                                     else if (ViewState["XFabric"] != null && int.Parse(ViewState["XFabric"].ToString()) > 0)
-                                     {
-                                         this.PopulateFabricDataGrid(int.Parse(ViewState["XFabric"].ToString()), true);
-                                     }*/
-
-                                    //this.PopulateFabricDataGrid(fabric);
-                                    ViewState["MainFabric"] = null;
-                                }
-                                else
+                                if (this.QueryID == 0)
                                 {
                                     cv = new CustomValidator();
                                     cv.IsValid = false;
                                     cv.ValidationGroup = "validateCostsheet";
-                                    cv.ErrorMessage = "Cost Sheet for this Fabric exists in the system.";
+                                    cv.ErrorMessage = "<p>Cost Sheet exists for this pattern and main Fabric in the System.</p>     <p><a href=\"AddEditFactoryCostSheet.aspx?id=" + lstCostSheet[0] + "\" class=\"btn\">View Cost Sheet</a><p>";
                                     Page.Validators.Add(cv);
-                                    //  this.ddlFabric.Items.FindByValue(ViewState["MainFabric"].ToString()).Selected = true;
-                                }
+                                }                                
                             }
                             else
                             {
-                                // check if this fabric already in the system
-                                if (lstFabrics.Count == 0)
-                                {
-                                    /*if (ViewState["XFabric"] != null && int.Parse(ViewState["XFabric"].ToString()) > 0)
-                                    {
-                                        this.PopulateFabricDataGrid(int.Parse(ViewState["XFabric"].ToString()), true);
-                                    }*/
-
-                                    //this.PopulateFabricDataGrid(int.Parse(this.ddlFabric.SelectedValue));
-                                }
+                                this.PopulateFabricDataGrid(fabric);
                             }
+
+                            //// check  if new cost sheet or edited cost sheet
+                            //if (this.QueryID > 0)
+                            //{
+                            //    // check if this fabric already in the system
+                            //    if (lstFabrics.Count == 0)
+                            //    {
+                            //        // change the main fabric. Exist fabric remove from the system 
+                            //        //this.DeleteMainFabric();
+
+                            //        /* if (ViewState["MainFabric"] != null && int.Parse(ViewState["MainFabric"].ToString()) > 0)
+                            //         {
+                            //             this.PopulateFabricDataGrid(int.Parse(ViewState["MainFabric"].ToString()), true);
+                            //         }
+                            //         else if (ViewState["XFabric"] != null && int.Parse(ViewState["XFabric"].ToString()) > 0)
+                            //         {
+                            //             this.PopulateFabricDataGrid(int.Parse(ViewState["XFabric"].ToString()), true);
+                            //         }*/
+
+                            //        //this.PopulateFabricDataGrid(fabric);
+                            //        ViewState["MainFabric"] = null;
+                            //    }
+                            //    else
+                            //    {
+                            //        cv = new CustomValidator();
+                            //        cv.IsValid = false;
+                            //        cv.ValidationGroup = "validateCostsheet";
+                            //        cv.ErrorMessage = "Cost Sheet for this Fabric exists in the system.";
+                            //        Page.Validators.Add(cv);
+                            //        //  this.ddlFabric.Items.FindByValue(ViewState["MainFabric"].ToString()).Selected = true;
+                            //    }
+                            //}
+                            //else
+                            //{
+                            //    // check if this fabric already in the system
+                            //    if (lstFabrics.Count == 0)
+                            //    {
+                            //        /*if (ViewState["XFabric"] != null && int.Parse(ViewState["XFabric"].ToString()) > 0)
+                            //        {
+                            //            this.PopulateFabricDataGrid(int.Parse(ViewState["XFabric"].ToString()), true);
+                            //        }*/
+
+                            //        //this.PopulateFabricDataGrid(int.Parse(this.ddlFabric.SelectedValue));
+                            //    }
+                            //}
                         }
                         else
                         {
