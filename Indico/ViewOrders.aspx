@@ -299,7 +299,7 @@
                                     </telerik:GridTemplateColumn>
                                     <telerik:GridTemplateColumn HeaderText="ODS" AllowFiltering="false" Groupable="false" Display="false" UniqueName="PrintODS">
                                         <ItemTemplate>
-                                            <asp:LinkButton ID="btnPrintODS" runat="server" OnClick="btnPrintODS_Click" ODSID="" ToolTip="Order Detail Sheet"><i class="icon-printpdf"></i></asp:LinkButton>
+                                            <asp:LinkButton ID="btnPrintODS" runat="server" OnClick="btnPrintODS_Click" target="_blank" ODSID="" ToolTip="Order Detail Sheet"><i class="icon-printpdf"></i></asp:LinkButton>
                                         </ItemTemplate>
                                     </telerik:GridTemplateColumn>
                                     <telerik:GridTemplateColumn HeaderText="N&N" AllowFiltering="false" Groupable="false" Display="true" UniqueName="N&N">
