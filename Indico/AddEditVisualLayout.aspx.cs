@@ -30,7 +30,6 @@ namespace Indico
         private int rptPageSize = 10;
         private string sort = string.Empty;
 
-
         #endregion
 
         #region Properties
@@ -3320,7 +3319,7 @@ namespace Indico
             ViewState["PopulateClientOrJob"] = false;
             ViewState["PopulateJobName"] = false;
         }
-        
+
         #endregion
 
         [WebMethod]

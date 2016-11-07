@@ -1318,6 +1318,13 @@ namespace Indico
             ViewState["PopulateOrderDetail"] = true;
         }
 
+        protected void btnRefreshVL_Click(object sender, EventArgs e)
+        {
+            int selJobName = int.Parse(hdnJobNameID.Value);
+            if (selJobName > 0)
+                PopulateVisualLayouts(selJobName);
+        }
+
         #region validations
 
         protected void cvDate_OnServerValidate(object sender, ServerValidateEventArgs e)
@@ -1418,6 +1425,9 @@ namespace Indico
                 ResetViewStateValues();
                 ResetHiddenFields();
 
+                this.hlNewVisualLayout.Visible = !this.LoggedUser.IsDirectSalesPerson;
+                this.btnRefreshVL.Visible = !this.LoggedUser.IsDirectSalesPerson;
+
                 if (OrderID == 0)
                 {
                     liOrderNumber.Visible = false;
@@ -1513,11 +1523,11 @@ namespace Indico
                 List<OrderTypeBO> lstOrderTypes = new OrderTypeBO().SearchObjects();
                 if (LoggedUserRoleName == UserRole.DistributorAdministrator || LoggedUserRoleName == UserRole.DistributorCoordinator)
                 {
-                    lstOrderTypes =lstOrderTypes.Where(o => o.ID != 3 && o.ID != 4).ToList();
+                    lstOrderTypes = lstOrderTypes.Where(o => o.ID != 3 && o.ID != 4).ToList();
                 }
                 else if (LoggedUser.IsDirectSalesPerson)
                 {
-                    lstOrderTypes = lstOrderTypes.Where(o => o.Name == "ORDER" || 
+                    lstOrderTypes = lstOrderTypes.Where(o => o.Name == "ORDER" ||
                         o.Name == "SAMPLE" ||
                         o.Name == "REPLACEMENT AT SAMPLE PRICE" ||
                         o.Name == "REPLACEMENT FREE OF COST" ||
@@ -2398,7 +2408,6 @@ namespace Indico
         {
             if (jobName > 0)
             {
-
                 ddlVlNumber.Items.Clear();
                 ddlVlNumber.Items.Add(new ListItem("Select Visual Layout Number", "0"));
                 using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
@@ -2537,9 +2546,9 @@ namespace Indico
                 objDistributor.ID = distributor;
                 objDistributor.GetObject(true);
 
-                using(var connection = DatabaseConnection)
+                using (var connection = DatabaseConnection)
                 {
-                    var labels =connection.Query(string.Format("SELECT l.Name,l.ID FROM [dbo].[DistributorLabel] dl INNER JOIN [dbo].[Label] l ON l.ID = dl.Label WHERE dl.Distributor = {0} AND l.IsActive = 1", objDistributor.ID))
+                    var labels = connection.Query(string.Format("SELECT l.Name,l.ID FROM [dbo].[DistributorLabel] dl INNER JOIN [dbo].[Label] l ON l.ID = dl.Label WHERE dl.Distributor = {0} AND l.IsActive = 1", objDistributor.ID))
                         .Select(s => new { s.Name, s.ID }).ToList();
                     foreach (var label in labels)
                     {
@@ -2548,7 +2557,7 @@ namespace Indico
                     }
 
                 }
-               
+
                 if (ddlLabel.Items.FindByText("BLACKCHROME HEAT SEAL") != null)
                 {
                     ddlLabel.Items.FindByText("BLACKCHROME HEAT SEAL").Selected = true;
@@ -3461,7 +3470,7 @@ namespace Indico
             public string PatternNumber { get; set; }
             public string FabricCodeName { get; set; }
         }
-        
+
         #endregion
     }
 }
