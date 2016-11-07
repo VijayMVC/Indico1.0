@@ -24,6 +24,8 @@ namespace Indico
         #region Fields
 
         private int urlQueryID = -1;
+        private int urlQueryJobNameID = -1;
+
         private int urlOrderID = -1;
         private int urlDisributorID = -1;
         private int urlClientID = -1;
@@ -68,12 +70,12 @@ namespace Indico
         {
             get
             {
-                urlQueryID = 0;
+                urlQueryJobNameID = 0;
 
                 if (Request.QueryString["jobnameid"] != null)
-                    urlQueryID = Convert.ToInt32(Request.QueryString["jobnameid"].ToString());
+                    urlQueryJobNameID = Convert.ToInt32(Request.QueryString["jobnameid"].ToString());
 
-                return urlQueryID;
+                return urlQueryJobNameID;
             }
         }
 
@@ -1828,17 +1830,15 @@ namespace Indico
 
                 //var myobService = new MyobService();
                 //myobService.SaveVisualLayout(visualLayoutID);
-                Response.Redirect("/AddEditVisualLayout.aspx?jobnameid=?" + int.Parse(ddlJobName.SelectedValue));
-                              
+                Response.Redirect("/AddEditVisualLayout.aspx?jobnameid=" + int.Parse(ddlJobName.SelectedValue));
 
-                }
+
             }
         }
 
         #endregion
 
         #region Methods
-
         private void ValidateForm()
         {
             CustomValidator cv = null;
@@ -2111,7 +2111,30 @@ namespace Indico
             }
             else if (this.QueryJobNameID > 0)
             {
+                JobNameBO objJobName = new JobNameBO();
+                objJobName.ID = QueryJobNameID;
+                objJobName.GetObject();
 
+                this.ddlDistributor.SelectedValue = objJobName.objClient.Distributor.ToString();
+                this.ddlDistributor_SelectedIndexChange(null, null);
+
+                this.PopulateJobNames(objJobName.Client ?? 0);
+
+                this.ddlClient.Items.FindByValue(objJobName.Client.ToString()).Selected = true;
+                this.litClient.Text = objJobName.objClient.Name;
+                this.ancEditClient.Visible = true;
+
+                this.ddlJobName.ClearSelection();
+                this.ddlJobName.Items.FindByValue(objJobName.ID.ToString()).Selected = true;
+                
+                this.litJobName.Text = objJobName.Name +
+                  (string.IsNullOrEmpty(objJobName.Address) ? string.Empty : (" " + objJobName.Address)) +
+                  (string.IsNullOrEmpty(objJobName.City) ? string.Empty : (" " + objJobName.City)) +
+                  (string.IsNullOrEmpty(objJobName.State) ? string.Empty : (" " + objJobName.State)) +
+                  (string.IsNullOrEmpty(objJobName.PostalCode) ? string.Empty : (" " + objJobName.PostalCode)) +
+                  (string.IsNullOrEmpty(objJobName.Country) ? string.Empty : (" " + objJobName.Country))
+                   ;
+                this.btnEditJobName.Visible = true;
             }
 
             if (this.QueryID == 0)
@@ -2382,7 +2405,7 @@ namespace Indico
                         var item = ddlJobName.Items.FindByValue(objVisualLayout.Client.ToString());
                         if (item != null)
                             item.Selected = true;
-                    }
+                    }                    
                 }
             }
         }
