@@ -75,7 +75,7 @@
                                 <telerik:GridBoundColumn UniqueName="ItemID" SortExpression="ItemID" HeaderText="ItemID" AllowSorting="false" AllowFiltering="false"
                                     AutoPostBackOnFilter="true" DataField="ItemID">
                                 </telerik:GridBoundColumn>
-                                <telerik:GridBoundColumn UniqueName="Item" SortExpression="Item" HeaderText="Item" AllowSorting="true"
+                                <telerik:GridBoundColumn UniqueName="Item" SortExpression="Item" HeaderText="Item" AllowSorting="true" AutoPostBackOnFilter="true"
                                     FilterControlWidth="150px" DataField="Item">
                                 </telerik:GridBoundColumn>
                                 <telerik:GridTemplateColumn HeaderText="" AllowFiltering="false">
