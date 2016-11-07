@@ -649,6 +649,10 @@
                         </Triggers>
                     </asp:UpdatePanel>
                     <div class="form-actions">
+                        <button id="btnSaveAndCreateNew" runat="server" class="btn btn-primary" type="submit"
+                            data-loading-text="Saving..." onserverclick="btnSaveAndCreateNew_Click" validationgroup="valGrpVL">
+                            Save And Create New
+                        </button>
                         <button id="btnSaveChanges" runat="server" class="btn btn-primary" type="submit"
                             data-loading-text="Saving..." onserverclick="btnSaveChanges_Click" validationgroup="valGrpVL">
                             Save Changes</button>

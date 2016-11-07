@@ -65,6 +65,19 @@ namespace Indico
             }
         }
 
+        protected int QueryJobNameID
+        {
+            get
+            {
+                urlQueryID = 0;
+
+                if (Request.QueryString["jobnameid"] != null)
+                    urlQueryID = Convert.ToInt32(Request.QueryString["jobnameid"].ToString());
+
+                return urlQueryID;
+            }
+        }
+
         protected int OrderID
         {
             get
@@ -270,114 +283,17 @@ namespace Indico
 
         protected void btnSaveChanges_Click(object sender, EventArgs e)
         {
-            //this.cvLayoutImage.Enabled = true;
-            //Page.Validate();
-
-            //ViewState["PopulatePatern"] = false;
-
             ResetViewStateValues();
-
-            CustomValidator cv = null;
-
-            //if (this.checkIsCommonproduct.Checked == false)
-            //{
-            if (string.IsNullOrEmpty(this.txtProductNumber.Text))
-            {
-                cv = new CustomValidator();
-                cv.IsValid = false;
-                cv.ValidationGroup = "valGrpVL";
-                cv.ErrorMessage = "Product No. is required";
-                Page.Validators.Add(cv);
-            }
-
-            cvProductNumber_OnServerValidate(null, null);
-
-            if (int.Parse(this.ddlDistributor.SelectedValue) == 0)
-            {
-                cv = new CustomValidator();
-                cv.IsValid = false;
-                cv.ValidationGroup = "valGrpVL";
-                cv.ErrorMessage = "Distributor is required";
-                Page.Validators.Add(cv);
-            }
-
-            if (string.IsNullOrEmpty(this.ddlJobName.SelectedValue) || int.Parse(this.ddlJobName.SelectedValue) == 0)
-            {
-                cv = new CustomValidator();
-                cv.IsValid = false;
-                cv.ValidationGroup = "valGrpVL";
-                cv.ErrorMessage = "JobName is required";
-                Page.Validators.Add(cv);
-            }
-
-            /*if (int.Parse(this.ddlFabric.SelectedValue) == 0)
-            {
-                cv = new CustomValidator();
-                cv.IsValid = false;
-                cv.ValidationGroup = "valGrpVL";
-                cv.ErrorMessage = "Fabric is required";
-                Page.Validators.Add(cv);
-            }*/
-
-            if (int.Parse(this.ddlPattern.SelectedValue) == 0)
-            {
-                cv = new CustomValidator();
-                cv.IsValid = false;
-                cv.ValidationGroup = "valGrpVL";
-                cv.ErrorMessage = "Pattern is required";
-                Page.Validators.Add(cv);
-            }
-            //}
-
-            if (int.Parse(this.ddlBySizeArtwork.SelectedValue) == 0)
-            {
-                cv = new CustomValidator();
-                cv.IsValid = false;
-                cv.ValidationGroup = "valGrpVL";
-                cv.ErrorMessage = "By-Size Artwork is required";
-                Page.Validators.Add(cv);
-            }
-
-            if (this.hdnUploadFiles.Value != "0") // || /*!string.IsNullOrEmpty(this.hdnPatternId.Value)*/ (int.Parse(this.ddlPattern.SelectedValue) > 0)) //New VL
-            {
-                int n = 0;
-                foreach (string fileName in this.hdnUploadFiles.Value.Split('|').Select(o => o.Split(',')[0]))
-                {
-                    if (fileName != string.Empty)
-                    {
-                        n++;
-
-                        string fileExtension = Path.GetExtension(fileName).ToLower();
-
-                        if (!(fileExtension == ".jpeg" || fileExtension == ".jpg" || fileExtension == ".png"))
-                        {
-                            cv = new CustomValidator();
-                            cv.IsValid = false;
-                            cv.ValidationGroup = "valGrpVL";
-                            cv.ErrorMessage = "Invalid Image file.";
-                            Page.Validators.Add(cv);
-
-                            break;
-                        }
-                    }
-                }
-            }
+            ValidateForm();
 
             if (Page.IsValid)
             {
                 var visualLayout = ProcessForm();
                 SaveAccessories();
 
-                //if (this.OrderID > -1)
-                //{
-                //    Response.Redirect("/AddEditOrder.aspx?id=" + this.OrderID + "&vln=" + visualLayout);
-                //}
-                //else
-                //{
                 var myobService = new MyobService();
                 myobService.SaveVisualLayout(visualLayoutID);
                 Response.Redirect("/ViewVisualLayouts.aspx");
-                //}
             }
         }
 
@@ -1901,13 +1817,109 @@ namespace Indico
             }
         }
 
+        protected void btnSaveAndCreateNew_Click(object sender, EventArgs e)
+        {
+            ResetViewStateValues();
+            ValidateForm();
+
+            if (Page.IsValid)
+            {
+                var visualLayout = ProcessForm();
+                SaveAccessories();
+
+                //var myobService = new MyobService();
+                //myobService.SaveVisualLayout(visualLayoutID);
+                Response.Redirect("/AddEditVisualLayout.aspx?jobnameid=?" + int.Parse(ddlJobName.SelectedValue));
+                              
+
+                }
+            }
+        }
+
         #endregion
 
         #region Methods
 
+        private void ValidateForm()
+        {
+            CustomValidator cv = null;
+
+            if (string.IsNullOrEmpty(this.txtProductNumber.Text))
+            {
+                cv = new CustomValidator();
+                cv.IsValid = false;
+                cv.ValidationGroup = "valGrpVL";
+                cv.ErrorMessage = "Product No. is required";
+                Page.Validators.Add(cv);
+            }
+
+            cvProductNumber_OnServerValidate(null, null);
+
+            if (int.Parse(this.ddlDistributor.SelectedValue) == 0)
+            {
+                cv = new CustomValidator();
+                cv.IsValid = false;
+                cv.ValidationGroup = "valGrpVL";
+                cv.ErrorMessage = "Distributor is required";
+                Page.Validators.Add(cv);
+            }
+
+            if (string.IsNullOrEmpty(this.ddlJobName.SelectedValue) || int.Parse(this.ddlJobName.SelectedValue) == 0)
+            {
+                cv = new CustomValidator();
+                cv.IsValid = false;
+                cv.ValidationGroup = "valGrpVL";
+                cv.ErrorMessage = "JobName is required";
+                Page.Validators.Add(cv);
+            }
+
+            if (int.Parse(this.ddlPattern.SelectedValue) == 0)
+            {
+                cv = new CustomValidator();
+                cv.IsValid = false;
+                cv.ValidationGroup = "valGrpVL";
+                cv.ErrorMessage = "Pattern is required";
+                Page.Validators.Add(cv);
+            }
+
+            if (int.Parse(this.ddlBySizeArtwork.SelectedValue) == 0)
+            {
+                cv = new CustomValidator();
+                cv.IsValid = false;
+                cv.ValidationGroup = "valGrpVL";
+                cv.ErrorMessage = "By-Size Artwork is required";
+                Page.Validators.Add(cv);
+            }
+
+            if (this.hdnUploadFiles.Value != "0")
+            {
+                int n = 0;
+                foreach (string fileName in this.hdnUploadFiles.Value.Split('|').Select(o => o.Split(',')[0]))
+                {
+                    if (fileName != string.Empty)
+                    {
+                        n++;
+
+                        string fileExtension = Path.GetExtension(fileName).ToLower();
+
+                        if (!(fileExtension == ".jpeg" || fileExtension == ".jpg" || fileExtension == ".png"))
+                        {
+                            cv = new CustomValidator();
+                            cv.IsValid = false;
+                            cv.ValidationGroup = "valGrpVL";
+                            cv.ErrorMessage = "Invalid Image file.";
+                            Page.Validators.Add(cv);
+
+                            break;
+                        }
+                    }
+                }
+            }
+
+        }
+
         private void PopulateControls()
         {
-            //this.cvLayoutImage.Enabled = false;
             this.litHeaderText.Text = (this.QueryID > 0) ? "Edit Product" : "New Product";
             this.dvVLImagePreview.Visible = false;
             this.dvEmptyContentVLImages.Visible = false;
@@ -1917,9 +1929,6 @@ namespace Indico
 
             Session["VisualLayoutFabrics"] = new List<KeyValuePair<int, KeyValuePair<int, string>>>();
 
-            //ViewState["PopulatePatern"] = false;
-
-            //populate Resolution Profile
             this.ddlResolutionProfile.Items.Clear();
             this.ddlResolutionProfile.Items.Add(new ListItem("Select Resolution Profile", "0"));
             List<ResolutionProfileBO> lstResolutionProfile = (new ResolutionProfileBO()).GetAllObject().ToList();
@@ -1927,15 +1936,6 @@ namespace Indico
             {
                 this.ddlResolutionProfile.Items.Add(new ListItem(res.Name, res.ID.ToString()));
             }
-
-            //Fabric Types
-            //ddlFabricCodeType.Items.Clear();
-            //ddlFabricCodeType.Items.Add(new ListItem("Select a Type", "-1"));
-            //int fabricCodeType = 0;
-            //foreach (FabricType type in Enum.GetValues(typeof(FabricType)))
-            //{
-            //    ddlFabricCodeType.Items.Add(new ListItem(type.ToString(), fabricCodeType++.ToString()));
-            //}
 
             if (this.QueryID < 1)
             {
@@ -1945,8 +1945,6 @@ namespace Indico
             // populate Distributor
             this.PopulateDistributors();
             this.PopulatePatterns();
-            //this.PopulateFabrics();
-            //this.PopulateFilteredFabrics(false);
 
             // Populate Pocket Type
             this.ddlPocketType.Items.Add(new ListItem("Select Pocket Type", "0"));
@@ -1969,15 +1967,6 @@ namespace Indico
                 this.ddlPrinterType.Items.Add(new ListItem(pt.Name, pt.ID.ToString()));
             }
 
-            // Populate CountryBO
-            //this.ddlCountry.Items.Add(new ListItem("Select Your Country"));
-            //List<CountryBO> lstCountry = (new CountryBO()).GetAllObject().AsQueryable().OrderBy("ShortName").ToList();
-            //foreach (CountryBO country in lstCountry)
-            //{
-            //    this.ddlCountry.Items.Add(new ListItem(country.ShortName, country.ID.ToString()));
-            //}
-            //  this.ddlCountry.Items.FindByValue("14").Selected = true;
-
             if (this.QueryID > 0)
             {
                 this.PopulateVLImages(0);
@@ -1990,10 +1979,6 @@ namespace Indico
 
                 // If editing a product then select the correct By-Size Artwork
                 this.ddlBySizeArtwork.SelectedIndex = (objVisualLayout.BySizeArtWork) ? 1 : 2;
-
-                //List<FabricCodeBO> lstFabrics = (new FabricCodeBO()).SearchObjects().AsQueryable().OrderBy(SortExpression).ToList();
-
-                //this.PopulateFabricDataGrid(0, 0);
 
                 if (objVisualLayout.IsGenerated == true)
                 {
@@ -2125,17 +2110,10 @@ namespace Indico
                 }
 
             }
-            //else if (this.Distributor.ID > 0)
-            //{
-            //    this.ddlDistributor.SelectedValue = this.Distributor.ID.ToString();
-            //    this.ddlDistributor_SelectedIndexChange(null, null);
+            else if (this.QueryJobNameID > 0)
+            {
 
-            //    this.ddlClient.SelectedValue = this.ClientID.ToString();
-            //}
-            //else if (this.Distributor.ID == -1 && this.ClientID > 0)
-            //{
-            //    this.PopulateVisualLayout();
-            //}
+            }
 
             if (this.QueryID == 0)
             {
@@ -3318,7 +3296,7 @@ namespace Indico
             ViewState["PopulateClientOrJob"] = false;
             ViewState["PopulateJobName"] = false;
         }
-        
+
         #endregion
 
         [WebMethod]
