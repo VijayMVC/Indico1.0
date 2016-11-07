@@ -1701,7 +1701,7 @@
                 resetFieldsDefault('dvShipmentAddress');
 
                 $(".tbaReplace").val("TBA");
-                $('#' + txtCompanyName).val($("#" + ddlDistributor + " option:selected").text());
+                $('#' + txtCompanyName).val("TBA"); //$("#" + ddlDistributor + " option:selected").text());
                 $("#" + ddlAdderssType).val("0");
                 $("#" + ddlShipToCountry).val("14");
                 $("#" + ddlShipToPort).val("3");
