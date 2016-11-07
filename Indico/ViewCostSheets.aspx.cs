@@ -350,6 +350,7 @@ namespace Indico
                     objCostSheet.ID = costSheet;
                     objCostSheet.GetObject();
 
+                    objCostSheet.ModifiedDate = DateTime.Now;
                     objCostSheet.ExchangeRate = exchangeRate;
                     objCostSheet.QuotedCIF = quotedCIF;
                     objCostSheet.QuotedFOBCost = fobCost;

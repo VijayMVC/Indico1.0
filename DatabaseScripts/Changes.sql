@@ -487,4 +487,145 @@ GO
 
 --**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
 
+UPDATE dca
+SET dca.CompanyName = 'TBA'
+FROM [dbo].[DistributorClientAddress] dca
+	WHERE dca.CompanyName = 'TO BE ADVISED'
+GO
 
+SELECT d.ID INTO #TempDistributors
+FROM [dbo].[Company] d
+	LEFT OUTER JOIN [dbo].[DistributorClientAddress] dca
+		ON dca.Distributor = d.ID AND dca.CompanyName = 'tba'
+WHERE dca.ID IS NULL
+
+INSERT INTO [dbo].[DistributorClientAddress] ([Address]
+      ,[Suburb]
+      ,[PostCode]
+      ,[Country]
+      ,[ContactName]
+      ,[ContactPhone]
+      ,[CompanyName]
+      ,[State]
+      ,[Port]
+      ,[EmailAddress]
+      ,[AddressType]
+      ,[Client]
+      ,[IsAdelaideWarehouse]
+      ,[Distributor])
+	SELECT 'TBA','TBA','TBA',14,'TBA','TBA','TBA','TBA',NULL,'TBA',0,NULL,0,td.ID 
+	FROM #TempDistributors td
+DROP TABLE #TempDistributors
+
+GO
+
+--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
+
+
+UPDATE o
+SET o.BillingAddress = dca.ID
+FROM [dbo].[Order] o
+	INNER JOIN [dbo].[OrderDetail] od
+		ON od.[Order] = o.ID
+	INNER JOIN [dbo].[VisualLayout] vl
+		ON od.VisualLayout = vl.ID
+	INNER JOIN [dbo].[JobName] jn
+		ON vl.Client = jn.ID
+	INNER JOIN [dbo].[Client] c
+		ON jn.Client = c.ID
+	INNER JOIN [dbo].[Company] d
+		ON c.Distributor = d.ID
+	INNER JOIN [dbo].[DistributorClientAddress] dca
+		ON dca.Distributor = d.ID
+WHERE o.BillingAddress IS NULL AND dca.CompanyName = 'TBA'
+GO
+
+UPDATE o
+SET o.DespatchToAddress = dca.ID
+FROM [dbo].[Order] o
+	INNER JOIN [dbo].[OrderDetail] od
+		ON od.[Order] = o.ID
+	INNER JOIN [dbo].[VisualLayout] vl
+		ON od.VisualLayout = vl.ID
+	INNER JOIN [dbo].[JobName] jn
+		ON vl.Client = jn.ID
+	INNER JOIN [dbo].[Client] c
+		ON jn.Client = c.ID
+	INNER JOIN [dbo].[Company] d
+		ON c.Distributor = d.ID
+	INNER JOIN [dbo].[DistributorClientAddress] dca
+		ON dca.Distributor = d.ID
+WHERE o.DespatchToAddress IS NULL AND dca.CompanyName = 'TBA'
+GO
+
+UPDATE o
+SET o.BillingAddress = dca.ID
+FROM [dbo].[Order] o
+	INNER JOIN [dbo].[OrderDetail] od
+		ON od.[Order] = o.ID
+	INNER JOIN [dbo].[VisualLayout] vl
+		ON od.VisualLayout = vl.ID
+	INNER JOIN [dbo].[JobName] jn
+		ON vl.Client = jn.ID
+	INNER JOIN [dbo].[Client] c
+		ON jn.Client = c.ID
+	INNER JOIN [dbo].[Company] d
+		ON c.Distributor = d.ID
+	INNER JOIN [dbo].[DistributorClientAddress] dca
+		ON dca.Distributor = d.ID
+WHERE o.BillingAddress = 105 AND dca.CompanyName = 'TBA'
+GO
+
+
+UPDATE o
+SET o.DespatchToAddress = dca.ID
+FROM [dbo].[Order] o
+	INNER JOIN [dbo].[OrderDetail] od
+		ON od.[Order] = o.ID
+	INNER JOIN [dbo].[VisualLayout] vl
+		ON od.VisualLayout = vl.ID
+	INNER JOIN [dbo].[JobName] jn
+		ON vl.Client = jn.ID
+	INNER JOIN [dbo].[Client] c
+		ON jn.Client = c.ID
+	INNER JOIN [dbo].[Company] d
+		ON c.Distributor = d.ID
+	INNER JOIN [dbo].[DistributorClientAddress] dca
+		ON dca.Distributor = d.ID
+WHERE o.DespatchToAddress = 105 AND dca.CompanyName = 'TBA'
+
+
+GO
+
+--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
+
+
+UPDATE o
+SET o.DespatchToAddress = 1487
+FROM [dbo].[Order] o
+WHERE o.DespatchToAddress = 416
+GO
+
+
+UPDATE o
+SET o.BillingAddress = 1487
+FROM [dbo].[Order] o
+WHERE o.BillingAddress = 416
+GO
+
+
+UPDATE o
+SET o.DespatchToAddress = 1487
+FROM [dbo].[Order] o
+WHERE o.DespatchToAddress = 254
+GO
+
+
+UPDATE o
+SET o.BillingAddress = 1487
+FROM [dbo].[Order] o
+WHERE o.BillingAddress = 254
+
+GO
+
+--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--

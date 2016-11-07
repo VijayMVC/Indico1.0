@@ -295,9 +295,31 @@ namespace Indico
                     objDistributor.IsBackOrder = this.chkBackOrder.Checked;
                     objDistributor.IsActive = this.chkIsActive.Checked;
 
-                    this.ObjContext.SaveChanges();
+       
 
-                    distributor = objDistributor.ID;
+                    ObjContext.SaveChanges();
+
+                    //distributor = objDistributor.ID;
+
+                    //var objDca = new DistributorClientAddressBO()
+                    //{
+                    //    CompanyName = "TBA",
+                    //    Address = "TBA",
+                    //    Suburb = "TBA",
+                    //    PostCode = "TBA",
+                    //    Country = 14,
+                    //    ContactName = "TBA",
+                    //    ContactPhone = "TBA",
+                    //    State = "TBA",
+                    //    EmailAddress = "TBA",
+                    //    AddressType = 0,
+                    //    Distributor = objDistributor.ID,
+                    //    IsAdelaideWarehouse = false
+                    //};
+
+                    //objDca.Add();
+
+                    //ObjContext.SaveChanges();
 
                     //UserBO objUser = null;
                     //if (this.QueryID == 0)

@@ -1246,13 +1246,22 @@ namespace Indico {
         protected global::System.Web.UI.WebControls.DropDownList ddlVlNumber;
         
         /// <summary>
-        /// litMeassage control.
+        /// hlNewVisualLayout control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litMeassage;
+        protected global::System.Web.UI.WebControls.HyperLink hlNewVisualLayout;
+        
+        /// <summary>
+        /// btnRefreshVL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRefreshVL;
         
         /// <summary>
         /// ddlSizes control.

@@ -18,7 +18,7 @@
         <!-- / -->
         <!-- Page Content -->
         <div class="page-content">
-             
+
             <div id="dvPageContent" runat="server" class="row-fluid">
                 <asp:ValidationSummary ID="validationSummary" runat="server" CssClass="alert alert-danger"
                     ValidationGroup="valGrpOrderHeader" DisplayMode="BulletList" HeaderText="<strong>Errors were encountered while trying to process the form below</strong>"></asp:ValidationSummary>
@@ -275,7 +275,7 @@
                                 OnItemDataBound="dgOrderItems_ItemDataBound">
                                 <HeaderStyle CssClass="header" />
                                 <PagerStyle CssClass="idata-pager" Mode="NumericPages" />
-                                <Columns>                                    
+                                <Columns>
                                     <asp:TemplateColumn HeaderText="Number">
                                         <ItemTemplate>
                                             <asp:Literal ID="lblIndex" runat="server" Text=""></asp:Literal>
@@ -535,7 +535,7 @@
         <asp:HiddenField ID="hdnVisualLayoutID" runat="server" Value="0" />
 
         <!-- Job Name-->
-        <div id="dvAddEditOrderDetail" class="modal fade"  role="dialog" aria-hidden="true" keyboard="false">
+        <div id="dvAddEditOrderDetail" class="modal fade" role="dialog" aria-hidden="true" keyboard="false">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     ×</button>
@@ -547,8 +547,8 @@
                 <div class="col-sm-2"></div>
                 <div class="col-sm-9">
                     <div class="modal-body" id="dvScroll" onscroll="setScrollPosition(this.scrollTop);">
-                    
-                      
+
+
                         <%--<div ID="sizeWarning" runat="server" class="signin-error" Visible="True">
                             <div class=" alert alert-warning" role="alert">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -689,7 +689,6 @@
                             </asp:UpdateProgress>
                             <asp:UpdatePanel ID="UpdateVlNumber" runat="server" style="display: inline-block;">
                                 <ContentTemplate>
-                                     
                                     <div class="control-group">
                                         <label class="control-label required">
                                             Label</label>
@@ -709,10 +708,9 @@
                                         <div class="controls">
                                             <asp:DropDownList ID="ddlVlNumber" CssClass="input-xlarge" runat="server" AutoPostBack="true"
                                                 OnSelectedIndexChanged="ddlVlNumber_SelectedIndexChange" Url="/AddEditOrder.aspx">
-                                            </asp:DropDownList>
-                                            <span class="text-error">
-                                                <asp:Literal ID="litMeassage" runat="server"></asp:Literal>
-                                            </span>
+                                            </asp:DropDownList>                                            
+                                                    <asp:HyperLink ID="hlNewVisualLayout" CssClass="btn" runat="server" Target="_blank" Text="New Visual Layout" NavigateUrl="~/AddEditVisualLayout.aspx"></asp:HyperLink>                                                
+                                                    <asp:Button ID="btnRefreshVL" runat="server" CssClass="btn" Text="Refresh" OnClick="btnRefreshVL_Click" />                                                                                            
                                         </div>
                                     </div>
                                     <div class="control-group">
@@ -889,6 +887,9 @@
                                         </div>
                                     </div>
                                 </ContentTemplate>
+                                <Triggers >
+                                    <asp:AsyncPostBackTrigger ControlID="btnRefreshVL" EventName="Click" />
+                                </Triggers>
                             </asp:UpdatePanel>
                             <script type="text/javascript">
 
@@ -1467,7 +1468,7 @@
             </div>
         </div>
         <!--/-->
-        
+
 
         <!-- Page Scripts -->
         <script type="text/javascript">
@@ -1505,7 +1506,7 @@
             var txtOdNotes = "<%=txtOdNotes.ClientID %>";
             var ddlShipmentMode = "<%=ddlShipmentMode.ClientID %>";
             var hdnEditType = "<%=hdnEditType.ClientID %>";
-                        
+
             var billingDetails = "<%=dvBillingDetails.ClientID %>";
             var hdnAddressID = "<%=hdnAddressID.ClientID %>";
             var txtNewJobName = "<%=txtNewJobName.ClientID %>";
@@ -1640,7 +1641,7 @@
                         },
                         'margin-right': function () { //Horizontal centering
                             return -($(this).width() / 1.5)
-                        }                       
+                        }
                     });
 
                     //rescale();
@@ -1658,7 +1659,7 @@
 
                 function BindPopupEvents() {
                     SetDespatchDiv();
-                   
+
                     $('.datepicker').datepicker({ format: 'dd MM yyyy' });
 
                     $('#' + ddlClient).select2();
@@ -1700,7 +1701,7 @@
                 resetFieldsDefault('dvShipmentAddress');
 
                 $(".tbaReplace").val("TBA");
-                $('#' + txtCompanyName).val($("#" + ddlDistributor + " option:selected").text());
+                $('#' + txtCompanyName).val("TBA"); //$("#" + ddlDistributor + " option:selected").text());
                 $("#" + ddlAdderssType).val("0");
                 $("#" + ddlShipToCountry).val("14");
                 $("#" + ddlShipToPort).val("3");
@@ -1738,7 +1739,7 @@
 
             function maintainScrollPosition() {
                 $("#dvScroll").scrollTop($('#<%=hfScrollPosition.ClientID%>').val());
-                        }
+            }
         </script>
         <script type="text/javascript">
             $(document).ready(function () {

@@ -240,7 +240,8 @@ namespace Indico
                     linkVL.Text = objOrderDetailsView.VisualLayout;
 
                     HyperLink lnkPONumber = (HyperLink)item.FindControl("lnkPONumber");
-                    lnkPONumber.NavigateUrl = "AddEditOrder.aspx?id=" + objOrderDetailsView.Order;
+                    int index = objOrderDetailsView.Order.IndexOf("-");
+                    lnkPONumber.NavigateUrl = "AddEditOrder.aspx?id=" + objOrderDetailsView.Order.Substring(0, index);
                     lnkPONumber.Text = objOrderDetailsView.Order.ToString();
 
                     CheckBox chkIsAcceptedTC = (CheckBox)item.FindControl("chkIsAcceptedTC");
@@ -345,7 +346,7 @@ namespace Indico
                     string orderStatusClass = "\"label label-" + orderStatus.ToLower().Replace(" ", string.Empty).Trim();
                     //orderStatusClass = "\"btn-warning";                    
                     lblStatus.Text = " <span class=" + orderStatusClass + "\"> " + orderStatus + " </span>";
-                     
+
                     if (objOrderDetailsView.HasNotes)
                     {
                         e.Item.BackColor = Color.LightYellow;
@@ -5730,6 +5731,19 @@ namespace Indico
                 lstOrderDetails.ForEach(m => m.EditedPrice = m.EditedPrice * m.Quantity); //(m.EditedPrice ?? 0) * (1 + (decimal)m.Surcharge / (decimal)100) * (m.Quantity ?? 0));
                 Session["OrderDetailsView"] = lstOrderDetails;
 
+                var orders = lstOrderDetails.GroupBy(i => i.Order);
+                foreach (var o in orders)
+                {
+                    var i = 1;
+                    var vls = o.OrderBy(t => t.Order).ToList();
+                    foreach (var vl in vls)
+                    {
+                        vl.Order = vl.Order + "-" + i;
+                        i++;
+                    }
+                }
+                lstOrderDetails = lstOrderDetails.OrderBy(d => d.Order).ToList();
+
                 this.RadGridOrders.DataSource = lstOrderDetails;
                 this.RadGridOrders.DataBind();
 
@@ -6121,6 +6135,5 @@ namespace Indico
         }
 
         #endregion
-
     }
 }

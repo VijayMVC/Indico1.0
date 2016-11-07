@@ -172,7 +172,6 @@ namespace Indico
         #endregion
 
         #region Event
-
         protected override void OnPreRender(EventArgs e)
         {
             //Page Refresh
@@ -936,65 +935,14 @@ namespace Indico
                     // Factory
                     objCostSheet.Pattern = int.Parse(this.ddlPattern.SelectedValue);
                     objCostSheet.Fabric = int.Parse(this.ddlFabric.SelectedValue);
-                    //objCostSheet.TotalFabricCost = Convert.ToDecimal(string.IsNullOrEmpty(this.txttotalFabricCost.Text) ? "0.00" : this.txttotalFabricCost.Text);
-                    //objCostSheet.TotalAccessoriesCost = Convert.ToDecimal(string.IsNullOrEmpty(this.txttotalFabricCost.Text) ? "0.00" : this.txtAccessoriesCost.Text);
-                    //objCostSheet.HPCost = Convert.ToDecimal(string.IsNullOrEmpty(this.txtHeatPressOverhead.Text) ? "0.00" : this.txtHeatPressOverhead.Text);
-                    //objCostSheet.LabelCost = Convert.ToDecimal(string.IsNullOrEmpty(this.txtLabelCost.Text) ? "0.00" : this.txtLabelCost.Text);
-                    //objCostSheet.Other = Convert.ToDecimal(string.IsNullOrEmpty(this.txtPacking.Text) ? "0.00" : this.txtPacking.Text);
-                    //objCostSheet.Finance = Convert.ToDecimal(string.IsNullOrEmpty(this.txtFinance.Text) ? "0.00" : this.txtFinance.Text.Replace("%", ""));
-                    //objCostSheet.SubFinance = Convert.ToDecimal(string.IsNullOrEmpty(this.txtSubFinance.Text) ? "0.00" : this.txtSubFinance.Text);
-                    //objCostSheet.Wastage = Convert.ToDecimal(string.IsNullOrEmpty(this.txtWastage.Text) ? "0.00" : this.txtWastage.Text.Replace("%", ""));
-                    //objCostSheet.SubWastage = Convert.ToDecimal(string.IsNullOrEmpty(this.txtSubWastage.Text) ? "0.00" : this.txtSubWastage.Text);
-                    //objCostSheet.CM = Convert.ToDecimal(string.IsNullOrEmpty(this.txtCM.Text) ? "0.00" : this.txtCM.Text);
-                    //objCostSheet.JKFOBCost = Convert.ToDecimal(string.IsNullOrEmpty(this.txtFobCost.Text) ? "0.00" : this.txtFobCost.Text);
-                    //objCostSheet.QuotedFOBCost = Convert.ToDecimal(string.IsNullOrEmpty(this.txtJKFobQuoted.Text) ? "0.00" : this.txtJKFobQuoted.Text);
-                    //objCostSheet.Roundup = Convert.ToDecimal(string.IsNullOrEmpty(this.txtRoundUp.Text) ? "0.00" : this.txtRoundUp.Text);
-                    //// objCostSheet.SMV = Convert.ToDecimal(string.IsNullOrEmpty(this.txtsmv.Text) ? "0.00" : this.txtsmv.Text);
-                    //objCostSheet.SMVRate = Convert.ToDecimal(string.IsNullOrEmpty(this.txtsmvrate.Text) ? "0.000" : this.txtsmvrate.Text);
-                    //objCostSheet.CalculateCM = Convert.ToDecimal(string.IsNullOrEmpty(this.txtcalccm.Text) ? "0.00" : this.txtcalccm.Text);
-
-                    //// Indiman
-                    //objCostSheet.SubCons = Convert.ToDecimal(string.IsNullOrEmpty(this.txtSublimationConsumption.Text) ? "0.00" : this.txtSublimationConsumption.Text);
-                    //objCostSheet.DutyRate = Convert.ToDecimal(string.IsNullOrEmpty(this.txtDutyRate.Text) ? "0.00" : this.txtDutyRate.Text.Replace("%", ""));
-                    //objCostSheet.CF1 = this.txtCF1.Text;
-                    //objCostSheet.CF2 = this.txtCF2.Text;
-                    //objCostSheet.CF3 = this.txtCF3.Text;
-                    //objCostSheet.CONS1 = Convert.ToDecimal(string.IsNullOrEmpty(this.txtCONS1.Text) ? "0.00" : this.txtCONS1.Text);
-                    //objCostSheet.CONS2 = Convert.ToDecimal(string.IsNullOrEmpty(this.txtCONS2.Text) ? "0.00" : this.txtCONS2.Text);
-                    //objCostSheet.CONS3 = Convert.ToDecimal(string.IsNullOrEmpty(this.txtCONS3.Text) ? "0.00" : this.txtCONS3.Text);
-                    //objCostSheet.Rate1 = Convert.ToDecimal(string.IsNullOrEmpty(this.txtRate1.Text) ? "0.00" : this.txtRate1.Text);
-                    //objCostSheet.Rate2 = Convert.ToDecimal(string.IsNullOrEmpty(this.txtRate2.Text) ? "0.00" : this.txtRate2.Text);
-                    //objCostSheet.Rate3 = Convert.ToDecimal(string.IsNullOrEmpty(this.txtRate3.Text) ? "0.00" : this.txtRate3.Text);
-                    //objCostSheet.InkCons = Convert.ToDecimal(string.IsNullOrEmpty(this.txtInk.Text) ? "0.000" : this.txtInk.Text);
-                    //objCostSheet.InkRate = Convert.ToDecimal(string.IsNullOrEmpty(this.txtInkRate.Text) ? "0.00" : this.txtInkRate.Text);
-                    //objCostSheet.InkCost = Convert.ToDecimal(string.IsNullOrEmpty(this.txtInkCost.Text) ? "0.000" : this.txtInkCost.Text);
-                    //objCostSheet.PaperCons = Convert.ToDecimal(string.IsNullOrEmpty(this.txtPaper.Text) ? "0.00" : this.txtPaper.Text);
-                    //objCostSheet.PaperRate = Convert.ToDecimal(string.IsNullOrEmpty(this.txtPaperRate.Text) ? "0.00" : this.txtPaperRate.Text);
-                    //objCostSheet.PaperCost = Convert.ToDecimal(string.IsNullOrEmpty(this.txtPaperCost.Text) ? "0.00" : this.txtPaperCost.Text);
-                    //objCostSheet.ExchangeRate = Convert.ToDecimal(string.IsNullOrEmpty(this.txtExchangeRate.Text) ? "0.00" : this.txtExchangeRate.Text);
-                    //objCostSheet.FOBAUD = Convert.ToDecimal(string.IsNullOrEmpty(this.txtFOB.Text) ? "0.00" : this.txtFOB.Text);
-                    //objCostSheet.Duty = Convert.ToDecimal(string.IsNullOrEmpty(this.txtDuty.Text) ? "0.00" : this.txtDuty.Text);
-                    //objCostSheet.Cost1 = Convert.ToDecimal(string.IsNullOrEmpty(this.txtCost1.Text) ? "0.00" : this.txtCost1.Text);
-                    //objCostSheet.Cost2 = Convert.ToDecimal(string.IsNullOrEmpty(this.txtCost2.Text) ? "0.00" : this.txtCost2.Text);
-                    //objCostSheet.Cost3 = Convert.ToDecimal(string.IsNullOrEmpty(this.txtCost3.Text) ? "0.00" : this.txtCost3.Text);
-                    //objCostSheet.AirFregiht = Convert.ToDecimal(string.IsNullOrEmpty(this.txtAirFreight.Text) ? "0.00" : this.txtAirFreight.Text);
-                    //objCostSheet.ImpCharges = Convert.ToDecimal(string.IsNullOrEmpty(this.txtImpCharges.Text) ? "0.00" : this.txtImpCharges.Text);
-                    //objCostSheet.MGTOH = Convert.ToDecimal(string.IsNullOrEmpty(this.txtMgtOH.Text) ? "0.00" : this.txtMgtOH.Text);
-                    //objCostSheet.IndicoOH = Convert.ToDecimal(string.IsNullOrEmpty(this.txtIndicoOH.Text) ? "0.00" : this.txtIndicoOH.Text);
-                    //objCostSheet.Depr = Convert.ToDecimal(string.IsNullOrEmpty(this.txtDepar.Text) ? "0.00" : this.txtDepar.Text);
-                    //objCostSheet.Landed = Convert.ToDecimal(string.IsNullOrEmpty(this.txtLanded.Text) ? "0.00" : this.txtLanded.Text);
-
+                                    
                     this.SetCostValues(objCostSheet);
 
-                    objCostSheet.MarginRate = Convert.ToDecimal(string.IsNullOrEmpty(this.txtMarginRate.Text) ? "0.00" : this.txtMarginRate.Text.Replace("%", ""));
-                    //objCostSheet.IndimanCIF = Convert.ToDecimal(string.IsNullOrEmpty(this.txtCIF.Text) ? "0.00" : this.txtCIF.Text);
+                    objCostSheet.MarginRate = Convert.ToDecimal(string.IsNullOrEmpty(this.txtMarginRate.Text) ? "0.00" : this.txtMarginRate.Text.Replace("%", ""));                   
                     objCostSheet.CalMGN = Convert.ToDecimal(string.IsNullOrEmpty(this.txtCalMgn.Text) ? "0.00" : this.txtCalMgn.Text);
                     objCostSheet.MP = Convert.ToDecimal(string.IsNullOrEmpty(this.txtMp.Text) ? "0.00" : this.txtMp.Text);
-                    objCostSheet.QuotedCIF = Convert.ToDecimal(string.IsNullOrEmpty(this.txtQuotedCif.Text) ? "0.00" : this.txtQuotedCif.Text);
-                    //objCostSheet.ActMgn = Convert.ToDecimal(string.IsNullOrEmpty(this.txtActMgn.Text) ? "0.00" : this.txtActMgn.Text);
-                    //objCostSheet.QuotedMP = Convert.ToDecimal(string.IsNullOrEmpty(this.txtQuotedMp.Text) ? "0.00" : this.txtQuotedMp.Text);
-                    objCostSheet.FobFactor = Convert.ToDecimal(string.IsNullOrEmpty(this.txtFobFactor.Text) ? "0.00" : this.txtFobFactor.Text);
-                    //objCostSheet.IndimanFOB = Convert.ToDecimal(string.IsNullOrEmpty(this.txtQuotedFOB.Text) ? "0.00" : this.txtQuotedFOB.Text);
+                    objCostSheet.QuotedCIF = Convert.ToDecimal(string.IsNullOrEmpty(this.txtQuotedCif.Text) ? "0.00" : this.txtQuotedCif.Text);                                        
+                    objCostSheet.FobFactor = Convert.ToDecimal(string.IsNullOrEmpty(this.txtFobFactor.Text) ? "0.00" : this.txtFobFactor.Text);                    
 
                     #region Change SMV
 
@@ -1038,16 +986,15 @@ namespace Indico
 
                             this.ObjContext.SaveChanges();
                         }
-                        else
-                        {
-                            CustomValidator cv = new CustomValidator();
-                            cv.IsValid = false;
-                            cv.ValidationGroup = "validateCostsheet";
-                            cv.ErrorMessage = "Fabric consumption is required";
-                            Page.Validators.Add(cv);
-                            return;
-                        }
-
+                        //else
+                        //{
+                        //    CustomValidator cv = new CustomValidator();
+                        //    cv.IsValid = false;
+                        //    cv.ValidationGroup = "validateCostsheet";
+                        //    cv.ErrorMessage = "Fabric consumption is required";
+                        //    Page.Validators.Add(cv);
+                        //    return;
+                        //}
                     }
 
                     #endregion
@@ -1065,13 +1012,7 @@ namespace Indico
                         if (!string.IsNullOrEmpty(txtcons.Text))
                         {
                             int id = int.Parse(((System.Web.UI.WebControls.WebControl)(litAccessoryPrice)).Attributes["paid"].ToString());
-
-                            //if (id > 0)
-                            //{
-                            //    objPatternSupportAccessory.ID = id;
-                            //    objPatternSupportAccessory.GetObject();
-                            //}
-
+                            
                             objPatternSupportAccessory.Accessory = int.Parse(((System.Web.UI.WebControls.WebControl)(litAccessoryPrice)).Attributes["id"].ToString());
                             objPatternSupportAccessory.AccConstant = Convert.ToDecimal(txtcons.Text);
                             objPatternSupportAccessory.Pattern = int.Parse(this.ddlPattern.SelectedValue);
@@ -1079,17 +1020,15 @@ namespace Indico
 
                             this.ObjContext.SaveChanges();
                         }
-                        else
-                        {
-                            CustomValidator cv = new CustomValidator();
-                            cv.IsValid = false;
-                            cv.ValidationGroup = "validateCostsheet";
-                            cv.ErrorMessage = "Accessory consumption is required";
-                            Page.Validators.Add(cv);
-                            return;
-                        }
-
-
+                        //else
+                        //{
+                        //    CustomValidator cv = new CustomValidator();
+                        //    cv.IsValid = false;
+                        //    cv.ValidationGroup = "validateCostsheet";
+                        //    cv.ErrorMessage = "Accessory consumption is required";
+                        //    Page.Validators.Add(cv);
+                        //    return;
+                        //}
                     }
 
                     #endregion
@@ -1128,9 +1067,7 @@ namespace Indico
                     #endregion
 
                     #region Save Price Values
-
-                    //int fabric = (OldFabric > 0) ? OldFabric : int.Parse(this.ddlFabric.SelectedValue);
-
+                                      
                     List<PriceBO> lstPrices = (from o in (new PriceBO()).SearchObjects()
                                                where o.Pattern == int.Parse(this.ddlPattern.SelectedValue) &&
                                                      o.FabricCode == ((OldFabric > 0) ? OldFabric : int.Parse(this.ddlFabric.SelectedValue))
@@ -1502,7 +1439,7 @@ namespace Indico
                 this.ddlFabric.Items.FindByValue(objCostSheet.Fabric.ToString()).Selected = true;
 
                 PopulateCostValues(objCostSheet, false);
-                                
+
                 ViewState["MainFabric"] = objCostSheet.Fabric.ToString();
                 OldFabric = objCostSheet.Fabric;
 
@@ -1745,7 +1682,7 @@ namespace Indico
         private void ValidDataGrids()
         {
             CustomValidator cv = null;
-            
+
             foreach (DataGridItem item in dgAddEditFabrics.Items)
             {
                 //PatternSupportFabricBO objPatternSupportFabric = new PatternSupportFabricBO(this.ObjContext);
@@ -1781,8 +1718,7 @@ namespace Indico
                     Page.Validators.Add(cv);
                 }
             }
-
-
+            
             int fabric = int.Parse(this.ddlFabric.SelectedValue);
             if (fabric > 0)
             {
@@ -1812,11 +1748,11 @@ namespace Indico
                                     cv.ValidationGroup = "validateCostsheet";
                                     cv.ErrorMessage = "<p>Cost Sheet exists for this pattern and main Fabric in the System.</p>     <p><a href=\"AddEditFactoryCostSheet.aspx?id=" + lstCostSheet[0] + "\" class=\"btn\">View Cost Sheet</a><p>";
                                     Page.Validators.Add(cv);
-                                }                                
+                                }
                             }
                             else
                             {
-                                this.PopulateFabricDataGrid(fabric);
+                              //  this.PopulateFabricDataGrid(fabric);
                             }
 
                             //// check  if new cost sheet or edited cost sheet

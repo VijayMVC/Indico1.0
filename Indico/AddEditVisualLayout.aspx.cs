@@ -30,7 +30,6 @@ namespace Indico
         private int rptPageSize = 10;
         private string sort = string.Empty;
 
-
         #endregion
 
         #region Properties
@@ -2380,7 +2379,9 @@ namespace Indico
                         objVisualLayout.GetObject();
 
                         this.ddlJobName.ClearSelection();
-                        this.ddlJobName.Items.FindByValue(objVisualLayout.Client.ToString()).Selected = true;
+                        var item = ddlJobName.Items.FindByValue(objVisualLayout.Client.ToString());
+                        if (item != null)
+                            item.Selected = true;
                     }
                 }
             }
