@@ -86,7 +86,7 @@
                         <asp:CheckBox ID="chkOrderDetail" runat="server" style="margin-left: 10px; margin-top: 1px;"></asp:CheckBox>
                         <asp:HiddenField ID="hdnODID" runat="server" Value="0" />
                         <asp:Label ID="lblVisualLayout" runat="server" style="margin-left: 10px;"></asp:Label>
-                        <a id="ancVLImage" runat="server" style="margin-left: 10px;"><i id="ivlimageView" runat="server" class="icon-eye-open"></i></a>
+                        <a id="ancVLImage" runat="server" style="margin-left: 10px;" target="_blank"><i id="ivlimageView" runat="server" class="icon-eye-open"></i></a>
                     </div>
                 </ItemTemplate>
             </asp:Repeater>

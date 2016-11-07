@@ -42,7 +42,7 @@
                                            <asp:HyperLink target="_blank" ID="ProductLink" runat="server"></asp:HyperLink>
                                         </ItemTemplate>
                                     </telerik:GridTemplateColumn>
-                                    <telerik:GridTemplateColumn DataField="Pattern" FilterControlWidth="50px" AllowFiltering="True" HeaderText="Pattern" UniqueName="Pattern" SortExpression="Pattern" Groupable="false">
+                                    <telerik:GridTemplateColumn DataField="Pattern" ItemStyle-Width="100px" FilterControlWidth="50px" AllowFiltering="True" HeaderText="Pattern" UniqueName="Pattern" SortExpression="Pattern" Groupable="false">
                                          <ItemTemplate>
                                            <asp:HyperLink target="_blank" ID="patternLink" runat="server"></asp:HyperLink>
                                         </ItemTemplate>

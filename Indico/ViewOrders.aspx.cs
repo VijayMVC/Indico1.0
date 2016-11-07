@@ -6121,6 +6121,5 @@ namespace Indico
         }
 
         #endregion
-
     }
 }
