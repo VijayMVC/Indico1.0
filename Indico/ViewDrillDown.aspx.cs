@@ -345,7 +345,7 @@ namespace Indico
         {
             const string alternateText = "ExcelML";
             OrderGrid.ExportSettings.Excel.Format = (GridExcelExportFormat)Enum.Parse(typeof(GridExcelExportFormat), alternateText);
-            OrderGrid.ExportSettings.IgnorePaging = false;
+            OrderGrid.ExportSettings.IgnorePaging = true;
             OrderGrid.ExportSettings.ExportOnlyData = true;
             OrderGrid.ExportSettings.OpenInNewWindow = true;
             OrderGrid.ExportSettings.FileName = string.Format("{0}-{1}-{2}", TypeToNormalString(_type), _year + "/" + _weekNumber, string.Format("{0}_{1}_{2}_{3}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Hour, DateTime.Now.Minute));

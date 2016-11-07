@@ -90,7 +90,7 @@
                         PageSize="20" OnPageIndexChanged="RadGridCostSheet_PageIndexChanged" ShowFooter="false" EnableHeaderContextMenu="true" EnableHeaderContextFilterMenu="true"
                         AutoGenerateColumns="false" OnItemDataBound="RadGridCostSheet_ItemDataBound"
                         Skin="Metro" CssClass="RadGrid" AllowSorting="true" EnableEmbeddedSkins="true"
-                        OnGroupsChanging="RadGridCostSheet_GroupsChanging" OnItemCommand="RadGridCostSheet_ItemCommand"
+                        OnItemCommand="RadGridCostSheet_ItemCommand"
                         OnSortCommand="RadGridCostSheet_SortCommand" EnableLinqExpressions="false">
                         <HeaderContextMenu OnItemClick="HeaderContextMenu_ItemCLick"></HeaderContextMenu>
                         <GroupingSettings CaseSensitive="false" />
