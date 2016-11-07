@@ -538,6 +538,7 @@ FROM [dbo].[Order] o
 	INNER JOIN [dbo].[DistributorClientAddress] dca
 		ON dca.Distributor = d.ID
 WHERE o.BillingAddress IS NULL AND dca.CompanyName = 'TBA'
+GO
 
 UPDATE o
 SET o.DespatchToAddress = dca.ID
@@ -555,6 +556,7 @@ FROM [dbo].[Order] o
 	INNER JOIN [dbo].[DistributorClientAddress] dca
 		ON dca.Distributor = d.ID
 WHERE o.DespatchToAddress IS NULL AND dca.CompanyName = 'TBA'
+GO
 
 UPDATE o
 SET o.BillingAddress = dca.ID
@@ -572,6 +574,8 @@ FROM [dbo].[Order] o
 	INNER JOIN [dbo].[DistributorClientAddress] dca
 		ON dca.Distributor = d.ID
 WHERE o.BillingAddress = 105 AND dca.CompanyName = 'TBA'
+GO
+
 
 UPDATE o
 SET o.DespatchToAddress = dca.ID
@@ -600,49 +604,27 @@ UPDATE o
 SET o.DespatchToAddress = 1487
 FROM [dbo].[Order] o
 WHERE o.DespatchToAddress = 416
+GO
 
 
 UPDATE o
 SET o.BillingAddress = 1487
 FROM [dbo].[Order] o
 WHERE o.BillingAddress = 416
+GO
 
 
 UPDATE o
 SET o.DespatchToAddress = 1487
 FROM [dbo].[Order] o
 WHERE o.DespatchToAddress = 254
+GO
+
 
 UPDATE o
 SET o.BillingAddress = 1487
 FROM [dbo].[Order] o
 WHERE o.BillingAddress = 254
-
--- IDM Sports 
-UPDATE o
-SET o.DespatchToAddress = 905
-FROM [dbo].[Order] o
-WHERE o.DespatchToAddress = 1069
-
-
-UPDATE o
-SET o.BillingAddress = 905
-FROM [dbo].[Order] o
-WHERE o.BillingAddress = 1069
-
-
-UPDATE o
-SET o.DespatchToAddress = 905
-FROM [dbo].[Order] o
-WHERE o.DespatchToAddress = 1506
-
-UPDATE o
-SET o.BillingAddress = 905
-FROM [dbo].[Order] o
-WHERE o.BillingAddress = 1506
-
-
-DELETE [dbo].[DistributorClientAddress] WHERE ID IN(1069,1506)
 
 GO
 
