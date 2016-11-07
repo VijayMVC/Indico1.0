@@ -2402,7 +2402,9 @@ namespace Indico
                         objVisualLayout.GetObject();
 
                         this.ddlJobName.ClearSelection();
-                        this.ddlJobName.Items.FindByValue(objVisualLayout.Client.ToString()).Selected = true;
+                        var item = ddlJobName.Items.FindByValue(objVisualLayout.Client.ToString());
+                        if (item != null)
+                            item.Selected = true;
                     }
                 }
             }
