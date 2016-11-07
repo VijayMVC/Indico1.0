@@ -187,7 +187,7 @@ namespace Indico
                 {
                     try
                     {
-                        connection.Execute(string.Format("EXEC [dbo].[SPC_TransferAddressesAndLabels] {0}, {1},{2}", int.Parse(FromJobNameDropDown.SelectedValue), int.Parse(ToDistributorVlDropDown.SelectedValue), product.Value));
+                        //connection.Execute(string.Format("EXEC [dbo].[SPC_TransferAddressesAndLabels] {0}, {1},{2}", int.Parse(FromJobNameDropDown.SelectedValue), int.Parse(ToDistributorVlDropDown.SelectedValue), product.Value));
                         TransferProduct(int.Parse(product.Value), selectedJobName);
                     }
                     catch (Exception)
@@ -448,8 +448,7 @@ namespace Indico
             using (var connection = Connection)
             {
                 connection.Open();
-                connection.Execute(string.Format("EXEC [dbo].[SPC_TransferAddressesAndLabels] {0}, {1},{2}", jobName, distributor,0));
-                connection.Execute(string.Format("EXEC [dbo].[SPC_TransferJobName] {0}, {1}", jobName, distributor));
+                connection.Execute(string.Format("EXEC [dbo].[SPC_TransferProductOrJobName] {0}, {1},{2},{3}",0, jobName, distributor,0));
             }
         }
 
@@ -463,7 +462,7 @@ namespace Indico
             using (var connection = Connection)
             {
                 connection.Open();
-                connection.Execute(string.Format("EXEC [dbo].[SPC_TransferVisualLayout] {0}, {1}", product, jobName));
+                connection.Execute(string.Format("EXEC [dbo].[SPC_TransferProductOrJobName] {0}, {1},{2},{3}", product, 0, 0,jobName));
             }
         }
 
