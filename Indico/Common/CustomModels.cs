@@ -83,7 +83,7 @@ namespace Indico.Common
         public int FabricID { get; set; }
         public string Fabric { get; set; }
         public bool HasNotes { get; set; }
-        public int Order { get; set; }
+        public string Order { get; set; }
         public string OrderDetailStatus { get; set; }
         public int OrderDetailStatusID { get; set; }
         public DateTime? ShipmentDate { get; set; }

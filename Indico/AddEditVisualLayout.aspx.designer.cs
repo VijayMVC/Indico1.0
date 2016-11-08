@@ -814,6 +814,15 @@ namespace Indico {
         protected global::System.Web.UI.HtmlControls.HtmlButton btnSaveChanges;
         
         /// <summary>
+        /// btnSaveAndCreateNew control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnSaveAndCreateNew;
+        
+        /// <summary>
         /// btnClose control.
         /// </summary>
         /// <remarks>
