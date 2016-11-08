@@ -174,6 +174,7 @@
                         </ContentTemplate>
                         <Triggers>
                             <asp:PostBackTrigger ControlID="btnEditJobName" />
+                            <asp:PostBackTrigger ControlID="btnEditJobName" />
                         </Triggers>
                     </asp:UpdatePanel>
                 </div>

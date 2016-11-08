@@ -1485,11 +1485,6 @@ namespace Indico
                         objClient.Distributor = int.Parse(ddlClientDistributor.SelectedValue);
                         objClient.Name = txtNewClient.Text;
 
-                        //objJobName.Creator = this.LoggedUser.ID;
-                        //objJobName.CreatedDate = DateTime.Now;
-                        //objJobName.Modifier = this.LoggedUser.ID;
-                        //objJobName.ModifiedDate = DateTime.Now;
-
                         ObjContext.SaveChanges();
                         newClient = objClient.ID;
                         ts.Complete();
@@ -1503,7 +1498,8 @@ namespace Indico
 
                         hdnEditJobNameID.Value = ddlJobName.SelectedValue;
                         ddlClient_SelectedIndexChanged(null, null);
-                    }
+                        ddlJobName_SelectedIndexChanged(null, null);
+                    }                   
                 }
                 catch (Exception ex)
                 {
@@ -1711,15 +1707,6 @@ namespace Indico
 
                         objJobName.Client = int.Parse(ddlJobNameClient.SelectedValue);
                         objJobName.Name = txtNewJobName.Text;
-                        //objJobName.Address = this.txtAddress1.Text;
-                        //objJobName.City = this.txtCity.Text;
-                        //objJobName.State = this.txtState.Text;
-                        //objJobName.PostalCode = this.txtPostalCode.Text;
-
-                        //if (ddlCountry.SelectedIndex > 0)
-                        //    objJobName.Country = this.ddlCountry.SelectedItem.Text;  //int.Parse(this.ddlCountry.SelectedValue);
-                        //objJobName.Phone = this.txtPhoneNo1.Text;
-                        //objJobName.Email = this.txtEmailAddress.Text;
                         objJobName.Modifier = this.LoggedUser.ID;
                         objJobName.ModifiedDate = DateTime.Now;
 
@@ -2126,7 +2113,7 @@ namespace Indico
 
                 this.ddlJobName.ClearSelection();
                 this.ddlJobName.Items.FindByValue(objJobName.ID.ToString()).Selected = true;
-                
+
                 this.litJobName.Text = objJobName.Name +
                   (string.IsNullOrEmpty(objJobName.Address) ? string.Empty : (" " + objJobName.Address)) +
                   (string.IsNullOrEmpty(objJobName.City) ? string.Empty : (" " + objJobName.City)) +
@@ -2405,7 +2392,7 @@ namespace Indico
                         var item = ddlJobName.Items.FindByValue(objVisualLayout.Client.ToString());
                         if (item != null)
                             item.Selected = true;
-                    }                    
+                    }
                 }
             }
         }
