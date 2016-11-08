@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI.WebControls;
 using Indico.Common;
@@ -172,14 +173,14 @@ namespace Indico
                 switch (_type)
                 {
                     case ViewDrillDownType.Reservations:
-                        OrderGrid.Columns[2].Visible = false;
-                        OrderGrid.Columns[4].Visible = false;
-                        OrderGrid.Columns[15].Visible = false;
-                        OrderGrid.Columns[16].Visible = false;
+                        OrderGrid.Columns[2].Display = false;
+                        OrderGrid.Columns[4].Display = false;
+                        OrderGrid.Columns[15].Display = false;
+                        OrderGrid.Columns[16].Display = false;
                         OrderGrid.Columns[17].Visible = false;
-                        OrderGrid.Columns[19].Visible = false;
-                        OrderGrid.Columns[20].Visible = false;
-                        OrderGrid.Columns[21].Visible = false;
+                        OrderGrid.Columns[19].Display = false;
+                        OrderGrid.Columns[20].Display = false;
+                        OrderGrid.Columns[21].Display = false;
                         break;
                     case ViewDrillDownType.Shipments:
                         OrderGrid.Columns[0].Visible = false;
@@ -209,17 +210,21 @@ namespace Indico
                         OrderGrid.Columns[24].Visible = false;
                         OrderGrid.Columns[25].Visible = false;
                         OrderGrid.Columns[26].Visible = true;
+                        OrderGrid.Columns[27].Visible = false;
+                        OrderGrid.Columns[28].Visible = false;
+                        OrderGrid.Columns[29].Visible = false;
                         break;
                     default:
                         if(_type != ViewDrillDownType.AllPieces)
                         {
-                            OrderGrid.Columns[14].Visible = false;
-                            OrderGrid.Columns[13].Visible = false;
-                            OrderGrid.Columns[12].Visible = false;
+                            OrderGrid.Columns[14].Display = false;
+                            OrderGrid.Columns[13].Display = false;
+                            OrderGrid.Columns[12].Display = false;
                         }
                         break;
                 }
 
+                Session["DrilldownView"] = data;
                 OrderGrid.DataSource = data;
                 OrderGrid.DataBind();
                 dvDataContent.Visible = true;
@@ -351,5 +356,40 @@ namespace Indico
             OrderGrid.ExportSettings.FileName = string.Format("{0}-{1}-{2}", TypeToNormalString(_type), _year + "/" + _weekNumber, string.Format("{0}_{1}_{2}_{3}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Hour, DateTime.Now.Minute));
             OrderGrid.MasterTableView.ExportToExcel();
         }
+
+
+        protected void OrderGrid_OnPageSizeChanged(object sender, GridPageSizeChangedEventArgs e)
+        {
+            ReBindGrid();
+        }
+
+        protected void OrderGrid_OnPageIndexChanged(object sender, GridPageChangedEventArgs e)
+        {
+            ReBindGrid();
+        }
+
+        protected void OrderGrid_OnSortCommand(object sender, GridSortCommandEventArgs e)
+        {
+            ReBindGrid();
+        }
+        protected void OnItemClick(object sender, RadMenuEventArgs e)
+        {
+            ReBindGrid();
+        }
+
+        protected void OrderGrid_OnGroupsChanging(object sender, GridGroupsChangingEventArgs e)
+        {
+            ReBindGrid();
+        }
+
+        private void ReBindGrid()
+        {
+            if (Session["DrilldownView"] == null) return;
+            OrderGrid.DataSource = (List<DrillDownModel>)Session["DrilldownView"];
+            OrderGrid.DataBind();
+        }
+
+
+
     }
 }
