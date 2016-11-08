@@ -37,5 +37,8 @@ namespace Indico.Models
         public string Terms { get; set; }
         public string JobName { get; set; }
         public DateTime ProductCreatedDate { get; set; }
+        public string IsBrandingKit { get; set; }
+        public string PhotoApproval { get; set; }
+        public string DetailStatus { get; set; }
     }
 }
