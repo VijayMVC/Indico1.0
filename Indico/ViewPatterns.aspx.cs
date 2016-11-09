@@ -1206,15 +1206,14 @@ namespace Indico
 
         private void DownloadPdf(int PatternID, bool isAllSizes)
         {
-            string convertType = this.ddlConvert.SelectedValue;
+            var convertType = ddlConvert.SelectedValue;
             try
             {
-                WebServicePattern objWebServicePattern = new WebServicePattern();
-                PatternBO objPattern = new PatternBO();
-                objPattern.ID = PatternID;
+                var objWebServicePattern = new WebServicePattern();
+                var objPattern = new PatternBO {ID = PatternID};
                 objPattern.GetObject();
 
-                string filePath = objWebServicePattern.GeneratePDF(objPattern, false, convertType, string.Empty, isAllSizes);
+                var filePath = objWebServicePattern.GeneratePDF(objPattern, false, convertType, string.Empty, isAllSizes);
 
                 //FileInfo fileInfo = new FileInfo(filePath);
                 //string outputName = System.Text.RegularExpressions.Regex.Replace(fileInfo.Name, @"\W+", "_");
