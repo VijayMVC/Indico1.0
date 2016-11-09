@@ -953,36 +953,6 @@ namespace Indico
                     cv.ErrorMessage = "VisualLayout is required";
                     Page.Validators.Add(cv);
                 }
-                //}
-                //else if (rbPatternFabric.Checked)
-                //{
-                //    if (ddlPattern.SelectedIndex < 1)
-                //    {
-                //        cv = new CustomValidator();
-                //        cv.IsValid = false;
-                //        cv.ValidationGroup = "vgOrderDetail";
-                //        cv.ErrorMessage = "Pattern is required";
-                //        Page.Validators.Add(cv);
-                //    }
-
-                //    if (ddlFabric.SelectedIndex < 1)
-                //    {
-                //        cv = new CustomValidator();
-                //        cv.IsValid = false;
-                //        cv.ValidationGroup = "vgOrderDetail";
-                //        cv.ErrorMessage = "Fabric is required";
-                //        Page.Validators.Add(cv);
-                //    }
-                //}
-
-                //if (string.IsNullOrEmpty(ddlLabel.SelectedValue) || ddlLabel.SelectedValue == "0")
-                //{
-                //    cv = new CustomValidator();
-                //    cv.IsValid = false;
-                //    cv.ValidationGroup = "valGrpOrderHeader";
-                //    cv.ErrorMessage = "Label is required";
-                //    Page.Validators.Add(cv);
-                //}
 
                 if (hdnTotalQuantity.Value == "0")
                 {
@@ -2075,11 +2045,11 @@ namespace Indico
                     objTempOrderDetail.ListQtys.Add(objOrderDetailQty);
                 }
 
-                //NN Files
-                string NNFileName = hdnUploadFiles.Value.Split(',')[0]; // asd_345.txt,ASD.txt
+                //NN Files                
                 objTempOrderDetail.IsNamesAndNumbers = rbNaNuYes.Checked;
+                string NNFileName = hdnUploadFiles.Value.Split(',')[0]; // asd_345.txt,ASD.txt
 
-                if (!string.IsNullOrEmpty(NNFileName))
+                if (objTempOrderDetail.IsNamesAndNumbers && !string.IsNullOrEmpty(NNFileName))
                 {
                     objTempOrderDetail.NameAndNumbersFileName = NNFileName;
 
@@ -3107,8 +3077,6 @@ namespace Indico
                 txtDistributorSurcharge.Text = string.Empty;
                 txtDistributorSurcharge.Text = string.Empty;
                 txtDistributorFinalPrice.Text = string.Empty;
-                // txtMarginWithSurcharge.Text = string.Empty;
-                //txtTotalValueSurcharge.Text = string.Empty;
 
                 litFabric.Text = string.Empty;
                 litPattern.Text = string.Empty;
@@ -3125,6 +3093,7 @@ namespace Indico
                 uploadImage.ImageUrl = "\\IndicoData\\NameAndNumbersFiles\\no_files_found.jpg";
                 lifileUploder.Visible = true;
                 hdnDeleteFile.Value = "0";
+                hdnUploadFiles.Value = string.Empty;
                 dvNotification.Visible = true;
                 linkDelete.Visible = false;
                 rbNaNuNo.Checked = true;
