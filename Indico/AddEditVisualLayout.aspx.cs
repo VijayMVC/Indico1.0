@@ -1499,7 +1499,7 @@ namespace Indico
                         hdnEditJobNameID.Value = ddlJobName.SelectedValue;
                         ddlClient_SelectedIndexChanged(null, null);
                         ddlJobName_SelectedIndexChanged(null, null);
-                    }                   
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -1520,158 +1520,7 @@ namespace Indico
             this.PopulateFabrics(Pattern);
             this.PopulateAccessories(Pattern);
         }
-
-        //protected void ddlAddFabrics_SelectedIndexChange(object sender, EventArgs e)
-        //{
-        //    int fabric = int.Parse(((System.Web.UI.WebControls.ListControl)(sender)).SelectedValue);
-        //    int fabricType = int.Parse(ddlFabricCodeType.SelectedValue);
-
-        //    CustomValidator cv = null;
-
-        //    if (ddlFabricCodeType.SelectedIndex < 1)
-        //    {
-        //        cv = new CustomValidator();
-        //        cv.IsValid = false;
-        //        cv.ValidationGroup = "valGrpVL";
-        //        cv.ErrorMessage = "Fabric Type is required.";
-        //        Page.Validators.Add(cv);
-        //    }
-        //    else if (fabric > 0)
-        //    {
-        //        List<KeyValuePair<int, KeyValuePair<int, string>>> lstFabrics = (List<KeyValuePair<int, KeyValuePair<int, string>>>)Session["VisualLayoutFabrics"];
-        //        //List<KeyValuePair<Tuple<int, int>, int>> lstFabrics = (List<KeyValuePair<Tuple<int, int>, int>>)Session["VisualLayoutFabrics"];
-
-        //        if (fabricType == 0 && lstFabrics.Where(o => o.Key == 0).Any())
-        //        {
-        //            cv = new CustomValidator();
-        //            cv.IsValid = false;
-        //            cv.ValidationGroup = "valGrpVL";
-        //            cv.ErrorMessage = "Main Fabric alredy exists in the list.";
-        //            Page.Validators.Add(cv);
-        //        }
-        //        else if (lstFabrics.Where(o => o.Value.Key == fabric).Any())
-        //        {
-        //            cv = new CustomValidator();
-        //            cv.IsValid = false;
-        //            cv.ValidationGroup = "valGrpVL";
-        //            cv.ErrorMessage = "This Fabric alredy exists in the list.";
-        //            Page.Validators.Add(cv);
-        //        }
-        //        else
-        //        {
-        //            this.PopulateFabricDataGrid(fabric, fabricType);
-        //        }
-        //    }
-        //    this.ddlAddFabrics.SelectedIndex = 0;
-        //    ViewState["deleteFabric"] = false;
-        //}
-
-        //protected void dgvAddEditFabrics_ItemDataBound(object sender, DataGridItemEventArgs e)
-        //{
-        //    DataGridItem item = e.Item;
-
-        //    if (item.ItemIndex > -1 && item.DataItem is KeyValuePair<int, KeyValuePair<int, string>>) // KeyValuePair<Tuple<int, int>, int>)
-        //    {
-        //        //KeyValuePair<Tuple<int, int>, int> kv = (KeyValuePair<Tuple<int, int>, int>)item.DataItem;
-        //        KeyValuePair<int, KeyValuePair<int, string>> kv = (KeyValuePair<int, KeyValuePair<int, string>>)item.DataItem;
-
-        //        //Literal litVFID = (Literal)item.FindControl("litVFID");
-        //        Literal litID = (Literal)item.FindControl("litID");
-        //        Literal litFabricTypeID = (Literal)item.FindControl("litFabricTypeID");
-        //        Literal litFabricType = (Literal)item.FindControl("litFabricType");
-        //        Literal litCode = (Literal)item.FindControl("litCode");
-        //        Literal litFabricNickName = (Literal)item.FindControl("litFabricNickName");
-        //        Literal litFabricSupplier = (Literal)item.FindControl("litFabricSupplier");
-        //        TextBox txtWhere = (TextBox)item.FindControl("txtWhere");
-
-        //        litFabricTypeID.Text = kv.Key.ToString();
-
-        //        int value = kv.Key;
-        //        FabricType type = (FabricType)value;
-        //        litFabricType.Text = type.ToString();
-
-        //        //populate FabricCodeType dropdown
-        //        //DropDownList ddlfabricCodeType = (DropDownList)item.FindControl("ddlfabricCodeType");
-        //        //ddlfabricCodeType.Items.Add(new ListItem("Select Fabric Type", "0"));
-        //        //foreach (FabricCodeTypeBO fabCodeType in (new FabricCodeTypeBO()).SearchObjects())
-        //        //{
-        //        //    ListItem listItemcolor = new ListItem(fabCodeType.Name, fabCodeType.ID.ToString());
-        //        //    ddlfabricCodeType.Items.Add(listItemcolor);
-        //        //}
-
-        //        //if (kv.Key.Item1 > 0)
-        //        //{
-        //        //    VisualLayoutFabricBO objVLF = new VisualLayoutFabricBO();
-        //        //    objVLF.ID = kv.Key.Item1;
-        //        //    objVLF.GetObject();
-
-        //        //    litVFID.Text = objVLF.ID.ToString();
-        //        //    litID.Text = objVLF.Fabric.ToString();
-        //        //    litCode.Text = objVLF.objFabric.Code;
-        //        //    litFabricNickName.Text = objVLF.objFabric.NickName;
-        //        //    litFabricSupplier.Text = objVLF.objFabric.objSupplier.Name;
-        //        //    ddlfabricCodeType.Items.FindByValue(kv.Key.Item2.ToString()).Selected = true;
-        //        //}
-        //        //else
-        //        //{
-        //        FabricCodeBO objFC = new FabricCodeBO();
-        //        objFC.ID = kv.Value.Key;
-        //        objFC.GetObject();
-
-        //        txtWhere.Text = kv.Value.Value;
-
-        //        //litVFID.Text = "0";
-        //        litID.Text = objFC.ID.ToString();
-        //        litCode.Text = objFC.Code;
-        //        litFabricNickName.Text = objFC.NickName;
-        //        litFabricSupplier.Text = (objFC.Supplier.HasValue && objFC.Supplier.Value > 0) ? objFC.objSupplier.Name : string.Empty;
-        //        //    ddlfabricCodeType.Items.FindByValue(kv.Key.Item2.ToString()).Selected = true;
-        //        //}
-        //    }
-        //}
-
-        //protected void dgvAddEditFabrics_onItemCommand(object sender, DataGridCommandEventArgs e)
-        //{
-        //    ResetViewStateValues();
-
-        //    string commandName = e.CommandName;
-
-        //    switch (commandName)
-        //    {
-        //        case "Delete":
-        //            Literal litID = (Literal)e.Item.FindControl("litID");
-        //            int fabric = int.Parse(litID.Text.ToString());
-
-        //            //Literal litVFID = (Literal)e.Item.FindControl("litVFID");
-        //            //int vlFabric = int.Parse(litVFID.Text);
-
-        //            Literal litFabricTypeID = (Literal)e.Item.FindControl("litFabricTypeID");
-        //            int fabricType = int.Parse(litFabricTypeID.Text);
-
-        //            this.PopulateFabricDataGrid(fabric, fabricType, true);
-        //            ViewState["deleteFabric"] = true;
-        //            ViewState["deleteAccessory"] = false;
-
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
-
-        //protected void ddlFabricCodeType_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    int type = int.Parse(((System.Web.UI.WebControls.ListControl)(sender)).SelectedValue);
-
-        //    if (type == (int)FabricType.Lining)
-        //    {
-        //        PopulateFilteredFabrics(true);
-        //    }
-        //    else
-        //    {
-        //        PopulateFilteredFabrics(false);
-        //    }
-        //}
-
+               
         protected void btnCheckName_Click(object sender, EventArgs e)
         {
             ResetViewStateValues();
@@ -1742,18 +1591,9 @@ namespace Indico
             objJobName.ID = int.Parse(ddlJobName.SelectedValue);
             objJobName.GetObject();
 
+            this.ddlJobNameClient.ClearSelection();
             this.ddlJobNameClient.Items.FindByValue(objJobName.Client.ToString()).Selected = true;
-            this.txtNewJobName.Text = objJobName.Name;
-            //this.txtAddress1.Text = objJobName.Address;
-            //this.txtCity.Text = objJobName.City;
-            //this.txtState.Text = objJobName.State;
-            //this.txtPostalCode.Text = objJobName.PostalCode;
-
-            //this.ddlCountry.ClearSelection();
-            //if (!string.IsNullOrEmpty((objJobName.Country)) && this.ddlCountry.Items.FindByText(objJobName.Country) != null)
-            //    this.ddlCountry.Items.FindByText(objJobName.Country).Selected = true;
-            //this.txtPhoneNo1.Text = objJobName.Phone;
-            //this.txtEmailAddress.Text = objJobName.Email;
+            this.txtNewJobName.Text = objJobName.Name;            
 
             hdnEditJobNameID.Value = objJobName.ID.ToString();
             ViewState["PopulateJobName"] = true;
@@ -1762,6 +1602,7 @@ namespace Indico
         protected void ddlFabric_SelectedIndexChanged(object sender, EventArgs e)
         {
             lblFabricDescription.Text = string.Empty;
+            hlCostSheet.Text = string.Empty;
             int fabricID = int.Parse(ddlFabric.SelectedValue);
 
             PopulateFabricDescription(fabricID);
@@ -1814,12 +1655,8 @@ namespace Indico
             {
                 var visualLayout = ProcessForm();
                 SaveAccessories();
-
-                //var myobService = new MyobService();
-                //myobService.SaveVisualLayout(visualLayoutID);
+                
                 Response.Redirect("/AddEditVisualLayout.aspx?jobnameid=" + int.Parse(ddlJobName.SelectedValue));
-
-
             }
         }
 
@@ -2015,6 +1852,7 @@ namespace Indico
                     this.dvHideColums.Visible = false;
                 }
 
+                this.ddlClient.ClearSelection();
                 this.ddlClient.Items.FindByValue(objVisualLayout.objClient.Client.ToString()).Selected = true;
                 this.litClient.Text = objVisualLayout.objClient.objClient.Name;
                 this.ancEditClient.Visible = true;
@@ -2032,14 +1870,8 @@ namespace Indico
                   (string.IsNullOrEmpty(objJobName.Country) ? string.Empty : (" " + objJobName.Country))
                    ;
                 this.btnEditJobName.Visible = true;
-
+                
                 this.PopulateFabrics(objVisualLayout.Pattern);
-
-                if (this.ddlFabric.Items.FindByValue(objVisualLayout.FabricCode.ToString()) != null)
-                {
-                    this.ddlFabric.Items.FindByValue(objVisualLayout.FabricCode.ToString()).Selected = true;
-                    PopulateFabricDescription(objVisualLayout.FabricCode ?? 0);
-                }
 
                 PatternBO objPattern = new PatternBO();
                 objPattern.ID = objVisualLayout.Pattern;
@@ -2047,6 +1879,7 @@ namespace Indico
 
                 if (objPattern.IsActive)
                 {
+                    this.ddlPattern.ClearSelection();
                     this.ddlPattern.Items.FindByValue(objVisualLayout.Pattern.ToString()).Selected = true;
                 }
                 else
@@ -2055,6 +1888,12 @@ namespace Indico
                     this.litPatternError.Text = "Associated Pattern ( <strong>" + objPattern.Number + " - " + objPattern.NickName + "</strong> ) for this Product is inactive. Please activate the pattern or select diffrent pattern";
                 }
 
+                if (this.ddlFabric.Items.FindByValue(objVisualLayout.FabricCode.ToString()) != null)
+                {
+                    this.ddlFabric.Items.FindByValue(objVisualLayout.FabricCode.ToString()).Selected = true;
+                    PopulateFabricDescription(objVisualLayout.FabricCode ?? 0);
+                }
+                
                 this.txtNotes.Text = objVisualLayout.Description;
 
                 bool canEdit = false;
@@ -2107,6 +1946,7 @@ namespace Indico
 
                 this.PopulateJobNames(objJobName.Client ?? 0);
 
+                this.ddlClient.ClearSelection();
                 this.ddlClient.Items.FindByValue(objJobName.Client.ToString()).Selected = true;
                 this.litClient.Text = objJobName.objClient.Name;
                 this.ancEditClient.Visible = true;
@@ -2283,6 +2123,20 @@ namespace Indico
                     lblFabricDescription.Text = string.IsNullOrEmpty(mainFabName) ? string.Empty : ("Main: " + mainFabName);
                     lblFabricDescription.Text += string.IsNullOrEmpty(secondaryFabName) ? string.Empty : (", Secondary: " + secondaryFabName.Remove(0, 1));
                     lblFabricDescription.Text += string.IsNullOrEmpty(liningFabName) ? string.Empty : (", Lining: " + liningFabName.Remove(0, 1));
+
+                    //Populate cost sheet
+                    CostSheetBO objCS = new CostSheetBO();
+                    objCS.Pattern = int.Parse(ddlPattern.SelectedValue);
+                    objCS.Fabric = fabricID;
+
+                    List<CostSheetBO> lstCostSheets = objCS.SearchObjects().ToList();
+
+                    if (lstCostSheets.Any())
+                    {
+                        objCS = lstCostSheets.FirstOrDefault();
+                        hlCostSheet.Text = " Cost Sheet: "+ objCS.ID.ToString();
+                        hlCostSheet.NavigateUrl = "/AddEditFactoryCostSheet.aspx?id=" + objCS.ID;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -2343,13 +2197,6 @@ namespace Indico
             {
                 objClient.Distributor = LoggedCompany.ID;
             }
-
-            //List<ClientBO> lstClient = (from o in objClient.SearchObjects().OrderBy(m => m.Name).AsQueryable().ToList<ClientBO>()
-            //                            select o).ToList();
-            //foreach (ClientBO client in lstClient)
-            //{
-            //    this.ddlClientDistributor.Items.Add(new ListItem(client.Name, client.ID.ToString()));
-            //}
         }
 
         private void PopulateJobNames(int client)
@@ -2981,17 +2828,16 @@ namespace Indico
                 this.txtProductNumber.Enabled = true;
             }
 
+            this.ddlDistributor.ClearSelection();
             this.ddlDistributor.Items.FindByValue(objPopulateVisualLayout.vlDistributor.ToString()).Selected = true;
-            this.ddlDistributor.Items.FindByValue("0").Selected = false;
-
             this.ddlDistributor_SelectedIndexChange(null, null);
 
-            this.ddlClient.Items.FindByValue("0").Selected = false;
-            this.ddlClient.SelectedValue = this.ClientID.ToString();
+            this.ddlClient.ClearSelection();
+            this.ddlClient.Items.FindByValue(this.ClientID.ToString()).Selected = true;
 
-            this.ddlPrinterType.Items.FindByValue("0").Selected = false;
-            this.ddlFabric.Items.FindByValue("0").Selected = false;
-            this.ddlPattern.Items.FindByValue("0").Selected = false;
+            this.ddlPrinterType.ClearSelection();
+            this.ddlFabric.ClearSelection();
+            this.ddlPattern.ClearSelection();
 
             this.ddlPrinterType.Items.FindByValue(objPopulateVisualLayout.printerType.ToString()).Selected = true;
             this.ddlFabric.Items.FindByValue(objPopulateVisualLayout.Fabric.ToString()).Selected = true;
@@ -3058,250 +2904,7 @@ namespace Indico
                 }
             }
         }
-
-        //private List<KeyValuePair<Tuple<int, int>, int>> GetFilteredFabricData(int fabricID, int vlFabricID, bool isDeleted)
-        //{
-        //    List<KeyValuePair<Tuple<int, int>, int>> lst = new List<KeyValuePair<Tuple<int, int>, int>>();
-
-        //    foreach (DataGridItem item in this.dgvAddEditFabrics.Items)
-        //    {
-        //        Literal litID = (Literal)item.FindControl("litID");
-        //        Literal litVFID = (Literal)item.FindControl("litVFID");
-        //        DropDownList ddlfabricCodeType = (DropDownList)item.FindControl("ddlfabricCodeType");
-
-        //        lst.Add(new KeyValuePair<Tuple<int, int>, int>(new Tuple<int, int>(int.Parse(litVFID.Text), int.Parse(ddlfabricCodeType.SelectedValue.ToString())), int.Parse(litID.Text)));
-        //    }
-
-        //    if (fabricID > 0) // Add, Delete
-        //    {
-        //        if (isDeleted)
-        //        {
-        //            lst.Remove(new KeyValuePair<Tuple<int, int>, int>(new Tuple<int, int>(vlFabricID, 0), fabricID));
-        //        }
-        //        else
-        //        {
-        //            lst.Add(new KeyValuePair<Tuple<int, int>, int>(new Tuple<int, int>(vlFabricID, 0), fabricID));
-        //        }
-        //    }
-        //    else // Page edit mode to load all data 
-        //    {
-        //        if (this.QueryID > 0)
-        //        {
-        //            VisualLayoutFabricBO objVLF = new VisualLayoutFabricBO();
-        //            objVLF.VisualLayout = this.QueryID;
-
-        //            lst.AddRange(objVLF.SearchObjects().Select(m => new KeyValuePair<Tuple<int, int>, int>(new Tuple<int, int>(m.ID, m.FabricCodeType ?? 0), m.Fabric)).ToList());
-        //        }
-        //    }
-
-        //    Session["VisualLayoutFabrics"] = lst;
-        //    return lst;
-        //}
-
-        //private List<KeyValuePair<int, KeyValuePair<int, string>>> GetFilteredFabricData(int fabricID, int typeID, bool isDeleted)
-        //{
-        //    //List<KeyValuePair<Tuple<int, int>, int>> lst = new List<KeyValuePair<Tuple<int, int>, int>>();
-        //    List<KeyValuePair<int, KeyValuePair<int, string>>> lst = new List<KeyValuePair<int, KeyValuePair<int, string>>>();
-
-        //    foreach (DataGridItem item in this.dgvAddEditFabrics.Items)
-        //    {
-        //        Literal litID = (Literal)item.FindControl("litID");
-        //        //Literal litVFID = (Literal)item.FindControl("litVFID");
-        //        Literal litFabricTypeID = (Literal)item.FindControl("litFabricTypeID");
-        //        Literal litFabricType = (Literal)item.FindControl("litFabricType");
-        //        TextBox txtWhere = (TextBox)item.FindControl("txtWhere");
-
-        //        //lst.Add(new KeyValuePair<Tuple<int, int>, int>(new Tuple<int, int>(int.Parse(litVFID.Text), int.Parse(ddlfabricCodeType.SelectedValue.ToString())), int.Parse(litID.Text)));
-        //        lst.Add(new KeyValuePair<int, KeyValuePair<int, string>>(int.Parse(litFabricTypeID.Text), new KeyValuePair<int, string>(int.Parse(litID.Text), txtWhere.Text)));
-        //    }
-
-        //    if (fabricID > 0) // Add, Delete
-        //    {
-        //        if (isDeleted)
-        //        {
-        //            //lst.Remove(new KeyValuePair<Tuple<int, int>, int>(new Tuple<int, int>(typeID, 0), fabricID));
-        //            //lst.Remove(new KeyValuePair<int, KeyValuePair<int, string>>(typeID, fabricID));
-        //            KeyValuePair<int, KeyValuePair<int, string>> removeFabric = lst.Where(m => m.Key == typeID && m.Value.Key == fabricID).SingleOrDefault();
-        //            lst.Remove(removeFabric);
-        //        }
-        //        else
-        //        {
-        //            //lst.Add(new KeyValuePair<Tuple<int, int>, int>(new Tuple<int, int>(typeID, 0), fabricID));
-        //            lst.Add(new KeyValuePair<int, KeyValuePair<int, string>>(typeID, new KeyValuePair<int, string>(fabricID, "")));
-        //        }
-        //    }
-        //    else // Page edit mode to load all data 
-        //    {
-        //        if (this.QueryID > 0)
-        //        {
-        //            VisualLayoutBO objVL = new VisualLayoutBO();
-        //            objVL.ID = QueryID;
-        //            objVL.GetObject();
-
-        //            FabricCodeBO objFabric = new FabricCodeBO();
-        //            objFabric.ID = objVL.FabricCode ?? 0;
-        //            objFabric.GetObject();
-
-        //            try
-        //            {
-        //                string[] codes = objFabric.Code.Split('+');
-        //                string[] wheres = string.IsNullOrEmpty(objVL.Where) ? new string[0] : objVL.Where.Split(',');
-
-        //                List<KeyValuePair<int, string>> lstWheres = new List<KeyValuePair<int, string>>();
-
-        //                foreach (string whereText in wheres)
-        //                {
-        //                    lstWheres.Add(new KeyValuePair<int, string>(int.Parse(whereText.Split('-')[0]), whereText.Split('-')[1]));
-        //                }
-
-        //                List<FabricCodeBO> lstFabricCodes = (List<FabricCodeBO>)Session["ListFabricCodes"];
-
-        //                int fabricPosition = 0;
-
-        //                foreach (string code in codes)
-        //                {
-        //                    FabricCodeBO objFabCode = lstFabricCodes.Where(m => m.Code == code).Single();
-        //                    string whereText = lstWheres.Where(m => m.Key == objFabCode.ID).SingleOrDefault().Value;
-
-        //                    if (++fabricPosition == 1)
-        //                    {
-        //                        lst.Add(new KeyValuePair<int, KeyValuePair<int, string>>((int)FabricType.Main, new KeyValuePair<int, string>(objFabCode.ID, whereText)));
-        //                    }
-        //                    else if (objFabCode.IsLiningFabric)
-        //                    {
-        //                        lst.Add(new KeyValuePair<int, KeyValuePair<int, string>>((int)FabricType.Lining, new KeyValuePair<int, string>(objFabCode.ID, whereText)));
-        //                    }
-        //                    else
-        //                    {
-        //                        lst.Add(new KeyValuePair<int, KeyValuePair<int, string>>((int)FabricType.Secondary, new KeyValuePair<int, string>(objFabCode.ID, whereText)));
-        //                    }
-        //                }
-        //            }
-        //            catch (Exception ex)
-        //            {
-
-        //            }
-
-        //            //lst.AddRange(objVLF.SearchObjects().Select(m => new KeyValuePair<Tuple<int, int>, int>(new Tuple<int, int>(m.ID, m.FabricCodeType ?? 0), m.Fabric)).ToList());
-        //        }
-        //    }
-
-        //    Session["VisualLayoutFabrics"] = lst;
-        //    return lst;
-        //}
-
-        //private List<KeyValuePair<int, int>> GetFilteredFabricData(int fabricID, int vlFabricID, bool isDeleted)
-        //{
-        //    List<KeyValuePair<int, int>> lst = (List<KeyValuePair<int, int>>)Session["VisualLayoutFabrics"];
-        //    lst = (lst == null) ? new List<KeyValuePair<int, int>>() : lst;
-
-        //    if (fabricID > 0) // Add, Delete
-        //    {
-        //        if (isDeleted)
-        //        {
-        //            lst.Remove(new KeyValuePair<int, int>(vlFabricID, fabricID));
-        //        }
-        //        else
-        //        {
-        //            lst.Add(new KeyValuePair<int, int>(vlFabricID, fabricID));
-        //        }
-        //    }
-        //    else // Page edit mode to load all data 
-        //    {
-        //        if (this.QueryID > 0)
-        //        {
-        //            VisualLayoutFabricBO objVLF = new VisualLayoutFabricBO();
-        //            objVLF.VisualLayout = this.QueryID;
-
-        //            lst.AddRange(objVLF.SearchObjects().Select(m => new KeyValuePair<int, int>(m.ID, m.Fabric)).ToList());
-        //        }
-        //    }
-
-        //    Session["VisualLayoutFabrics"] = lst;
-        //    return lst;
-        //}
-
-        //private void PopulateFabricDataGrid(int fabricID = 0, int vlFabricID = 0, bool isDeleted = false)
-        //{
-        //    List<KeyValuePair<int, FabricCodeBO>> lstFCodes = new List<KeyValuePair<int, FabricCodeBO>>();
-        //    List<KeyValuePair<Tuple<int, int>, int>> fcIds = this.GetFilteredFabricData(fabricID, vlFabricID, isDeleted);
-
-        //    this.dgvAddEditFabrics.DataSource = fcIds;
-        //    this.dgvAddEditFabrics.DataBind();
-
-        //    this.dgvAddEditFabrics.Visible = (this.dgvAddEditFabrics.Items.Count > 0);
-        //    this.dvEmptyFabrics.Visible = !this.dgvAddEditFabrics.Visible;
-
-        //}
-
-        //private void PopulateFabricDataGrid(int fabricID, int typeID, bool isDeleted = false)
-        //{
-        //    //List<KeyValuePair<Tuple<int, int>, int>>  = this.GetFilteredFabricData(fabricID, typeID, isDeleted);
-        //    List<KeyValuePair<int, KeyValuePair<int, string>>> fcIds = this.GetFilteredFabricData(fabricID, typeID, isDeleted);
-
-        //    this.dgvAddEditFabrics.DataSource = fcIds;
-        //    this.dgvAddEditFabrics.DataBind();
-
-        //    this.dgvAddEditFabrics.Visible = (this.dgvAddEditFabrics.Items.Count > 0);
-        //    this.dvEmptyFabrics.Visible = !this.dgvAddEditFabrics.Visible;
-
-        //    PopulateFabricName();
-        //}
-
-        //private void PopulateFabricName()
-        //{
-        //    string mainFabName = string.Empty;
-        //    string secondaryFabName = string.Empty;
-        //    string liningFabName = string.Empty;
-
-        //    foreach (DataGridItem item in this.dgvAddEditFabrics.Items)
-        //    {
-        //        Literal litID = (Literal)item.FindControl("litID");
-        //        Literal litFabricTypeID = (Literal)item.FindControl("litFabricTypeID");
-
-        //        FabricCodeBO objFab = new FabricCodeBO();
-        //        objFab.ID = int.Parse(litID.Text);
-        //        objFab.GetObject();
-
-        //        if (int.Parse(litFabricTypeID.Text) == 0)
-        //        {
-        //            mainFabName = objFab.Code;
-        //        }
-        //        else if (objFab.IsLiningFabric)
-        //        {
-        //            liningFabName += objFab.Code + "+";
-        //        }
-        //        else
-        //        {
-        //            secondaryFabName += objFab.Code + "+";
-        //        }
-        //    }
-
-        //    liningFabName = string.IsNullOrEmpty(liningFabName) ? "" : "+" + liningFabName.Remove(liningFabName.Length - 1, 1);
-        //    secondaryFabName = string.IsNullOrEmpty(secondaryFabName) ? "" : "+" + secondaryFabName.Remove(secondaryFabName.Length - 1, 1);
-
-        //    string selectedFabric = mainFabName + secondaryFabName + liningFabName;
-        //    this.ddlFabric.Enabled = false;
-        //    //litVLFabricName.Text = selectedFabric;
-
-        //    List<FabricCodeBO> lstFabricCodes = (List<FabricCodeBO>)Session["ListFabricCodes"];
-        //    this.ddlFabric.ClearSelection();
-
-        //    if (!string.IsNullOrEmpty(selectedFabric) && lstFabricCodes != null)
-        //    {
-        //        try
-        //        {
-        //            FabricCodeBO objFabric = lstFabricCodes.Where(m => m.Code == selectedFabric).Single();
-        //            this.ddlFabric.Items.FindByValue(objFabric.ID.ToString()).Selected = true;
-        //            lblVLFabricErrorText.Text = string.Empty;
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            lblVLFabricErrorText.Text = "The fabric combination selected, does not exist in Indiman Price List.  Please contact Indiman administrator to include in fabric combination list.";
-        //        }
-        //    }
-        //}
-
+        
         private void ResetViewStateValues()
         {
             ViewState["PopulateClientOrJob"] = false;

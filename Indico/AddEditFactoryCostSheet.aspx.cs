@@ -131,40 +131,6 @@ namespace Indico
             }
         }
 
-        /* protected List<FabricDetails> FabricCodes
-         {
-             get
-             {
-                 if (Session["Fabrics"] != null)
-                 {
-                     _activePatternFabrics = (List<FabricDetails>)Session["Fabrics"];
-                 }
-                 else
-                 {
-                     _activePatternFabrics = new List<FabricDetails>();
-                     Session["Fabrics"] = _activePatternFabrics;
-                 }
-                 return _activePatternFabrics;
-             }
-         }*/
-
-        /*protected List<AccessoryDetails> Accessories
-        {
-            get
-            {
-                if (Session["Accessories"] != null)
-                {
-                    _activeAccessories = (List<AccessoryDetails>)Session["Accessories"];
-                }
-                else
-                {
-                    _activeAccessories = new List<AccessoryDetails>();
-                    Session["Accessories"] = _activeAccessories;
-                }
-                return _activeAccessories;
-            }
-        }*/
-
         #endregion
 
         #region Constructors
@@ -913,6 +879,7 @@ namespace Indico
             try
             {
                 int costsheetid = 0;
+                int oldFabric = 0;
                 using (TransactionScope ts = new TransactionScope())
                 {
                     CostSheetBO objCostSheet = new CostSheetBO(this.ObjContext);
@@ -921,6 +888,8 @@ namespace Indico
                     {
                         objCostSheet.ID = this.QueryID;
                         objCostSheet.GetObject();
+
+                        oldFabric = objCostSheet.Fabric;
                     }
                     else
                     {
@@ -935,14 +904,14 @@ namespace Indico
                     // Factory
                     objCostSheet.Pattern = int.Parse(this.ddlPattern.SelectedValue);
                     objCostSheet.Fabric = int.Parse(this.ddlFabric.SelectedValue);
-                                    
+
                     this.SetCostValues(objCostSheet);
 
-                    objCostSheet.MarginRate = Convert.ToDecimal(string.IsNullOrEmpty(this.txtMarginRate.Text) ? "0.00" : this.txtMarginRate.Text.Replace("%", ""));                   
+                    objCostSheet.MarginRate = Convert.ToDecimal(string.IsNullOrEmpty(this.txtMarginRate.Text) ? "0.00" : this.txtMarginRate.Text.Replace("%", ""));
                     objCostSheet.CalMGN = Convert.ToDecimal(string.IsNullOrEmpty(this.txtCalMgn.Text) ? "0.00" : this.txtCalMgn.Text);
                     objCostSheet.MP = Convert.ToDecimal(string.IsNullOrEmpty(this.txtMp.Text) ? "0.00" : this.txtMp.Text);
-                    objCostSheet.QuotedCIF = Convert.ToDecimal(string.IsNullOrEmpty(this.txtQuotedCif.Text) ? "0.00" : this.txtQuotedCif.Text);                                        
-                    objCostSheet.FobFactor = Convert.ToDecimal(string.IsNullOrEmpty(this.txtFobFactor.Text) ? "0.00" : this.txtFobFactor.Text);                    
+                    objCostSheet.QuotedCIF = Convert.ToDecimal(string.IsNullOrEmpty(this.txtQuotedCif.Text) ? "0.00" : this.txtQuotedCif.Text);
+                    objCostSheet.FobFactor = Convert.ToDecimal(string.IsNullOrEmpty(this.txtFobFactor.Text) ? "0.00" : this.txtFobFactor.Text);
 
                     #region Change SMV
 
@@ -1012,7 +981,7 @@ namespace Indico
                         if (!string.IsNullOrEmpty(txtcons.Text))
                         {
                             int id = int.Parse(((System.Web.UI.WebControls.WebControl)(litAccessoryPrice)).Attributes["paid"].ToString());
-                            
+
                             objPatternSupportAccessory.Accessory = int.Parse(((System.Web.UI.WebControls.WebControl)(litAccessoryPrice)).Attributes["id"].ToString());
                             objPatternSupportAccessory.AccConstant = Convert.ToDecimal(txtcons.Text);
                             objPatternSupportAccessory.Pattern = int.Parse(this.ddlPattern.SelectedValue);
@@ -1067,7 +1036,7 @@ namespace Indico
                     #endregion
 
                     #region Save Price Values
-                                      
+
                     List<PriceBO> lstPrices = (from o in (new PriceBO()).SearchObjects()
                                                where o.Pattern == int.Parse(this.ddlPattern.SelectedValue) &&
                                                      o.FabricCode == ((OldFabric > 0) ? OldFabric : int.Parse(this.ddlFabric.SelectedValue))
@@ -1109,7 +1078,6 @@ namespace Indico
                             objPriceLevelCost.ModifiedDate = DateTime.Now;
                             objPriceLevelCost.PriceLevel = priceLevel;
                             objPrice.PriceLevelCostsWhereThisIsPrice.Add(objPriceLevelCost);
-                            this.ObjContext.SaveChanges();
                         }
                     }
                     else
@@ -1127,16 +1095,33 @@ namespace Indico
                             objPriceLevelCost.Modifier = this.LoggedUser.ID;
                             objPriceLevelCost.ModifiedDate = DateTime.Now;
                         }
-
-                        this.ObjContext.SaveChanges();
                     }
-                    //this.ObjContext.SaveChanges();
+
                     #endregion
+
+                    //Update VL fabrics
+                    if (this.QueryID > 0)
+                    {
+                        VisualLayoutBO objVL = new VisualLayoutBO();
+                        objVL.Pattern = objCostSheet.Pattern;
+                        objVL.FabricCode = oldFabric;
+                        List<VisualLayoutBO> lstVLs = objVL.SearchObjects();
+
+                        foreach (int id in lstVLs.Select(m => m.ID))
+                        {
+                            VisualLayoutBO objVLUpdate = new VisualLayoutBO(this.ObjContext);
+                            objVLUpdate.ID = id;
+                            objVLUpdate.GetObject();
+
+                            objVLUpdate.FabricCode = objCostSheet.Fabric;
+                        }
+                    }
+
+                    this.ObjContext.SaveChanges();
 
                     Session["costsheetid"] = objCostSheet.ID;
 
                     ts.Complete();
-
                 }
 
                 #region CostSheet Images
@@ -1488,7 +1473,6 @@ namespace Indico
                 }
 
                 // populate Factory Remarks 
-
                 List<CostSheetRemarksBO> lstCostSheetRemarks = (new CostSheetRemarksBO()).SearchObjects().Where(o => o.CostSheet == this.QueryID).ToList();
 
                 if (lstCostSheetRemarks.Count > 0)
@@ -1505,8 +1489,6 @@ namespace Indico
                 }
 
                 this.dvIndimanRemarks.Visible = (this.LoggedUserRoleName == UserRole.IndimanAdministrator) ? true : false;
-
-                ////////////
 
                 // Populate Indiman Remarks
                 List<IndimanCostSheetRemarksBO> lstIndimanCostSheetRemarks = (new IndimanCostSheetRemarksBO()).SearchObjects().Where(o => o.CostSheet == this.QueryID).ToList();
@@ -1527,9 +1509,15 @@ namespace Indico
                 VisualLayoutBO objVL = new VisualLayoutBO();
                 objVL.Pattern = objCostSheet.Pattern;
                 objVL.FabricCode = objCostSheet.Fabric;
+                List<VisualLayoutBO> lst = objVL.SearchObjects();
 
                 this.ddlPattern.Enabled = (this.QueryID > 0) ? false : true;
-                this.ddlFabric.Enabled = objVL.SearchObjects().Any() ? false : true;
+                //  this.ddlFabric.Enabled = objVL.SearchObjects().Any() ? false : true;
+
+                if (lst.Any())
+                {
+                    this.lblVLCount.Text = "This Cost Sheet has " + lst.Count + " Visual Layouts added. Changing of Fabric will update them too.";
+                }
 
                 if (!isPopulate)
                 {
@@ -1718,7 +1706,7 @@ namespace Indico
                     Page.Validators.Add(cv);
                 }
             }
-            
+
             int fabric = int.Parse(this.ddlFabric.SelectedValue);
             if (fabric > 0)
             {
@@ -1752,7 +1740,7 @@ namespace Indico
                             }
                             else
                             {
-                              //  this.PopulateFabricDataGrid(fabric);
+                                //  this.PopulateFabricDataGrid(fabric);
                             }
 
                             //// check  if new cost sheet or edited cost sheet

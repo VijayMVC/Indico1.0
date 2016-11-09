@@ -36,11 +36,7 @@ namespace Indico.Common
         private static ReaderWriterLock rwl;
 
         #endregion
-
-
-
-
-
+        
         #region Properties
 
         /// <summary>

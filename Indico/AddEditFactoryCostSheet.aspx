@@ -55,6 +55,13 @@
                                 </asp:RequiredFieldValidator>
                             </div>
                         </div>
+                        <div class="control-group">
+                            <label class="control-label">
+                            </label>
+                            <div class="controls">
+                                <asp:Label ID="lblVLCount" runat="server" ForeColor="Red"></asp:Label>
+                            </div>
+                        </div>
                     </div>
                     <div class="span4">
                         <legend>Pattern Details </legend>
@@ -830,7 +837,7 @@
                             <div class="controls">
                                 <asp:DropDownList ID="ddlShowToIndico" runat="server" Width="70px"></asp:DropDownList>
                             </div>
-                        </div>                     
+                        </div>
                     </div>
                     <div id="dvIndiman5" runat="server" class="span4">
                         <div class="control-group">
@@ -1099,7 +1106,7 @@
                         <button id="btnClone" runat="server" class="btn btn-default" onserverclick="btnClone_ServerClick"
                             validationgroup="validateCostsheet" type="submit" data-loading-text="Cloning...">
                             Clone Cost Sheet</button>
-                        <asp:Button ID="btnShowHide" runat="server" Text="Show to Indico" Width="172px" CssClass="btn btn-default" OnClick="btnShowHide_Click"/>
+                        <asp:Button ID="btnShowHide" runat="server" Text="Show to Indico" Width="172px" CssClass="btn btn-default" OnClick="btnShowHide_Click" />
                     </div>
                 </div>
                 <!-- / -->
@@ -1300,7 +1307,7 @@
                     var fabCost = (Math.round(price * cons * 100) / 100);
                     $(this).closest('tr').find('.ifcost')[0].innerHTML = fabCost;
                     $(this).closest('tr').find('.txifcost').val(fabCost);
-                    $(this).removeAttr('style');                    
+                    $(this).removeAttr('style');
                 }
                 else {
                     $(this).attr('style', 'border-color:#FF0000');
@@ -1330,7 +1337,7 @@
                     var accCost = (Math.round(price * cons * 100) / 100);
                     $(this).closest('tr').find('.iacost')[0].innerHTML = accCost;
                     $(this).closest('tr').find('.txtiacost').val(accCost);
-                    $(this).removeAttr('style');                    
+                    $(this).removeAttr('style');
                 }
                 else {
                     $(this).attr('style', 'border-color:#FF0000');

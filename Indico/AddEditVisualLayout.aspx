@@ -31,16 +31,7 @@
                     ValidationGroup="valGrpVL"></asp:ValidationSummary>
                 <!-- / -->
                 <!-- Page Data -->
-                <legend>Details</legend>
-                <%-- <div class="control-group">
-                    <div class="controls">
-                        <label class="checkbox inline">
-                            <asp:CheckBox ID="checkIsCommonproduct" runat="server" OnCheckedChanged="IsCommonProduct_Changed"
-                                AutoPostBack="true" />
-                            Is Common Product?
-                        </label>
-                    </div>
-                </div>--%>
+                <legend>Details</legend>               
                 <input type="text" style="display: none;" runat="server" ID="serverImagePath"/>
 
                 <div class="control-group">
@@ -173,8 +164,7 @@
                             </div>
                         </ContentTemplate>
                         <Triggers>
-                            <asp:PostBackTrigger ControlID="btnEditJobName" />
-                            <asp:PostBackTrigger ControlID="btnEditJobName" />
+                            <asp:PostBackTrigger ControlID="btnEditJobName" />                            
                         </Triggers>
                     </asp:UpdatePanel>
                 </div>
@@ -210,6 +200,7 @@
                                 <asp:DropDownList ID="ddlFabric" CssClass="input-xlarge" runat="server" Enabled="true" OnSelectedIndexChanged="ddlFabric_SelectedIndexChanged" AutoPostBack="true">
                                 </asp:DropDownList>
                                 <asp:Label ID="lblFabricDescription" runat="server"></asp:Label>
+                                <asp:HyperLink ID="hlCostSheet" runat="server" Text="" Target="_blank"></asp:HyperLink>
                                 <asp:RequiredFieldValidator ID="rfvFabric" runat="server" ErrorMessage="Fabric is required."
                                     ControlToValidate="ddlFabric" InitialValue="0" EnableClientScript="false"
                                     Display="Dynamic" ValidationGroup="valGrpVL">

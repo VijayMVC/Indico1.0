@@ -229,9 +229,16 @@ namespace Indico
                 {
                     OrdersView objOrderDetailsView = (OrdersView)item.DataItem;
 
+                    HyperLink lnkPONumber = (HyperLink)item.FindControl("lnkPONumber");
+                    lnkPONumber.Text = objOrderDetailsView.Order;
+
+                    int index = objOrderDetailsView.Order.IndexOf("-");
+                    string orderID = objOrderDetailsView.Order.Substring(0, index);                    
+                    lnkPONumber.NavigateUrl = "AddEditOrder.aspx?id=" + orderID;
+
                     CheckBox chkGenerateLabel = (CheckBox)item.FindControl("chkGenerateLabel");
                     //chkGenerateLabel.Enabled = (objOrderDetailsView.OrderDetailStatusID == (int)OrderDetailStatusBO.ODStatus.PreShipped || objOrderDetailsView.OrderDetailStatusID == (int)OrderDetailStatusBO.ODStatus.ODSPrinted || objOrderDetailsView.OrderDetailStatusID == (int)OrderDetailStatusBO.ODStatus.OnHold) ? true : false;
-                    chkGenerateLabel.Attributes.Add("order", objOrderDetailsView.Order.ToString());
+                    chkGenerateLabel.Attributes.Add("order", orderID);
                     chkGenerateLabel.Attributes.Add("status", objOrderDetailsView.OrderStatusID.ToString());
                     chkGenerateLabel.Attributes.Add("class", "iCheck");
 
@@ -239,14 +246,9 @@ namespace Indico
                     linkVL.NavigateUrl = "AddEditVisualLayout.aspx?id=" + objOrderDetailsView.VisualLayoutID;
                     linkVL.Text = objOrderDetailsView.VisualLayout;
 
-                    HyperLink lnkPONumber = (HyperLink)item.FindControl("lnkPONumber");
-                    int index = objOrderDetailsView.Order.IndexOf("-");
-                    lnkPONumber.NavigateUrl = "AddEditOrder.aspx?id=" + objOrderDetailsView.Order.Substring(0, index);
-                    lnkPONumber.Text = objOrderDetailsView.Order.ToString();
-
                     CheckBox chkIsAcceptedTC = (CheckBox)item.FindControl("chkIsAcceptedTC");
                     chkIsAcceptedTC.Checked = objOrderDetailsView.IsAcceptedTermsAndConditions ?? false;
-                    chkIsAcceptedTC.Attributes.Add("qid", objOrderDetailsView.Order.ToString());
+                    chkIsAcceptedTC.Attributes.Add("qid", orderID);
 
                     TextBox txtScheduleDate = (TextBox)item.FindControl("txtScheduleDate");
                     txtScheduleDate.Text = (objOrderDetailsView.ShipmentDate != null) ? Convert.ToDateTime(objOrderDetailsView.ShipmentDate).ToString("MMM dd, yyyy") : DateTime.Now.ToString("MMM dd, yyyy");
@@ -307,12 +309,6 @@ namespace Indico
                     string orderStatus = string.Empty;
 
                     if (isDistributor
-                        //&& (this.GetOrderStatus((int)objOrderDetailsView.OrderStatusID) == OrderStatus.IndicoHold ||
-                        //this.GetOrderStatus((int)objOrderDetailsView.OrderStatusID) == OrderStatus.IndimanHold ||
-                        //this.GetOrderStatus((int)objOrderDetailsView.OrderStatusID) == OrderStatus.IndicoSubmitted ||
-                        //this.GetOrderStatus((int)objOrderDetailsView.OrderStatusID) == OrderStatus.IndimanSubmitted ||
-                        //this.GetOrderStatus((int)objOrderDetailsView.OrderStatusID) == OrderStatus.FactoryHold ||
-                        //this.GetOrderStatus((int)objOrderDetailsView.OrderStatusID) == OrderStatus.Cancelled)
                         && (objOrderDetailsView.OrderStatusID > 22)
                         && (objOrderDetailsView.OrderStatusID < 31)
                         )
@@ -353,42 +349,42 @@ namespace Indico
                     }
 
                     HyperLink linkEditView = (HyperLink)item.FindControl("linkEditView");
-                    linkEditView.NavigateUrl = "AddEditOrder.aspx?id=" + objOrderDetailsView.Order.ToString();
+                    linkEditView.NavigateUrl = "AddEditOrder.aspx?id=" + orderID;
 
                     var lbCreateNewFrom = (HyperLink)item.FindControl("lbCreateNewFrom");
                     if (isDirectSales || LoggedUserRoleName == UserRole.IndimanAdministrator || LoggedUserRoleName == UserRole.IndimanCoordinator)
                     {
                         lbCreateNewFrom.Visible = true;
-                        lbCreateNewFrom.Attributes.Add("oddid", objOrderDetailsView.Order.ToString());
+                        lbCreateNewFrom.Attributes.Add("oddid", orderID);
                     }
                     else
                     {
                         lbCreateNewFrom.Visible = false;
                     }
-                    lbCreateNewFrom.NavigateUrl = "CloneOrder.aspx?id=" + objOrderDetailsView.Order.ToString();
+                    lbCreateNewFrom.NavigateUrl = "CloneOrder.aspx?id=" + orderID;
 
                     LinkButton lbDownloadDistributorPO = (LinkButton)item.FindControl("lbDownloadDistributorPO");
-                    lbDownloadDistributorPO.Attributes.Add("oddid", objOrderDetailsView.Order.ToString());
+                    lbDownloadDistributorPO.Attributes.Add("oddid", orderID);
 
                     var lbDownloadDistributorPofOrOffice = (LinkButton)item.FindControl("lbDownloadDistributorPOForOffice");
-                    lbDownloadDistributorPofOrOffice.Attributes.Add("oddid", objOrderDetailsView.Order.ToString());
+                    lbDownloadDistributorPofOrOffice.Attributes.Add("oddid", orderID);
 
                     LinkButton btnGenerateBatchLabel = (LinkButton)item.FindControl("btnGenerateBatchLabel");
-                    btnGenerateBatchLabel.Attributes.Add("qid", objOrderDetailsView.Order.ToString());
+                    btnGenerateBatchLabel.Attributes.Add("qid", orderID);
                     btnGenerateBatchLabel.Visible = (this.LoggedUserRoleName == UserRole.FactoryAdministrator || this.LoggedUserRoleName == UserRole.FactoryCoordinator);
 
                     HyperLink lbSubmitOrder = (HyperLink)item.FindControl("lbSubmitOrder");
-                    lbSubmitOrder.Attributes.Add("order", objOrderDetailsView.Order.ToString());
+                    lbSubmitOrder.Attributes.Add("order", orderID);
                     lbSubmitOrder.Attributes.Add("status", objOrderDetailsView.OrderStatusID.ToString());
 
                     LinkButton btnSaveOrder = (LinkButton)item.FindControl("btnSaveOrder");
-                    btnSaveOrder.Attributes.Add("qid", objOrderDetailsView.Order.ToString());
+                    btnSaveOrder.Attributes.Add("qid", orderID);
 
                     LinkButton btnChangeStatus = (LinkButton)item.FindControl("btnChangeStatus");
                     btnChangeStatus.Attributes.Add("odid", objOrderDetailsView.OrderDetail.ToString());
 
                     HyperLink linkDelete = (HyperLink)item.FindControl("linkDelete");
-                    linkDelete.Attributes.Add("qid", objOrderDetailsView.Order.ToString());
+                    linkDelete.Attributes.Add("qid", orderID);
 
                     HyperLink linkCancelledOrderDetail = (HyperLink)item.FindControl("linkCancelledOrderDetail");
                     linkCancelledOrderDetail.Attributes.Add("oddid", objOrderDetailsView.OrderDetail.ToString());
