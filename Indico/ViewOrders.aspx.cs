@@ -5731,7 +5731,7 @@ namespace Indico
                 foreach (var o in orders)
                 {
                     var i = 1;
-                    var vls = o.OrderBy(t => t.Order).ToList();
+                    var vls = o.OrderByDescending(t => t.Order).ToList();
                     foreach (var vl in vls)
                     {
                         vl.Order = vl.Order + "-" + i;

@@ -76,16 +76,7 @@
                     <!-- Data Table -->
                     <telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" Skin="Metro"
                         EnableEmbeddedSkins="true">
-                    </telerik:RadAjaxLoadingPanel>
-                    <%--  <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" DefaultLoadingPanelID="RadAjaxLoadingPanel1">
-                        <AjaxSettings>
-                            <telerik:AjaxSetting AjaxControlID="RadGridCostSheet">
-                                <UpdatedControls>
-                                    <telerik:AjaxUpdatedControl ControlID="RadGridCostSheet"></telerik:AjaxUpdatedControl>
-                                </UpdatedControls>
-                            </telerik:AjaxSetting>
-                        </AjaxSettings>
-                    </telerik:RadAjaxManager>--%>
+                    </telerik:RadAjaxLoadingPanel>                  
                     <telerik:RadGrid ID="RadGridCostSheet" runat="server" AllowPaging="true" AllowFilteringByColumn="true" ShowGroupPanel="true" OnPageSizeChanged="RadGridCostSheet_PageSizeChanged"
                         PageSize="20" OnPageIndexChanged="RadGridCostSheet_PageIndexChanged" ShowFooter="false" EnableHeaderContextMenu="true" EnableHeaderContextFilterMenu="true"
                         AutoGenerateColumns="false" OnItemDataBound="RadGridCostSheet_ItemDataBound"
@@ -103,20 +94,13 @@
                                     </ItemTemplate>
                                 </telerik:GridTemplateColumn>
                                 <telerik:GridBoundColumn UniqueName="Category" SortExpression="Category" HeaderText="Category" CurrentFilterFunction="Contains" AutoPostBackOnFilter="false" FilterControlWidth="75px" DataField="Category">
-                                    <%--<ItemTemplate>
-                                        <asp:Label ID="lblCategory" runat="server"></asp:Label>
-                                    </ItemTemplate>--%>
-                                </telerik:GridBoundColumn>
+                                 </telerik:GridBoundColumn>
                                 <telerik:GridBoundColumn UniqueName="PatternNumber" SortExpression="PatternNumber" HeaderText="Pattern Number" CurrentFilterFunction="Contains" FilterControlWidth="50px" AutoPostBackOnFilter="false" DataField="PatternNumber">
                                 </telerik:GridBoundColumn>
                                 <telerik:GridBoundColumn UniqueName="Pattern" SortExpression="Pattern" HeaderText="Pattern Description" CurrentFilterFunction="Contains" FilterControlWidth="100px" AutoPostBackOnFilter="false" DataField="Pattern">
                                 </telerik:GridBoundColumn>
                                 <telerik:GridBoundColumn UniqueName="Fabric" SortExpression="Fabric" HeaderText="Fabric" FilterControlWidth="100px" AutoPostBackOnFilter="false" DataField="Fabric">
                                 </telerik:GridBoundColumn>
-                                <%-- <telerik:GridNumericColumn UniqueName="QuotedFOBCost" SortExpression="QuotedFOBCost" HeaderText="FOB Cost" DataFormatString="{0:0.00} " CurrentFilterFunction="EqualTo" DataType="System.Decimal" Aggregate="Sum" FooterText="FOB Cost:"
-                                    FilterControlWidth="50px" AutoPostBackOnFilter="false"
-                                    DataField="QuotedFOBCost">
-                                </telerik:GridNumericColumn>--%>
                                 <telerik:GridTemplateColumn UniqueName="QuostedFOBCost" ItemStyle-HorizontalAlign="Right" Groupable="false" SortExpression="QuotedFOBCost" HeaderText="FOB Cost" CurrentFilterFunction="EqualTo"
                                     DataType="System.Decimal" Aggregate="Sum" FooterText="FOB Cost:"
                                     FilterControlWidth="50px" AutoPostBackOnFilter="false"
@@ -138,10 +122,6 @@
                                         <asp:TextBox ID="txtExchangeRate" CssClass="alignright" runat="server" Width="60px"></asp:TextBox>
                                     </ItemTemplate>
                                 </telerik:GridTemplateColumn>
-                                <%-- <telerik:GridNumericColumn UniqueName="QuotedCIF" SortExpression="QuotedCIF" HeaderText="Quoted CIF" DataFormatString="{0:0.00} " CurrentFilterFunction="EqualTo" DataType="System.Decimal" Aggregate="Sum"
-                                    FilterControlWidth="50px" AutoPostBackOnFilter="false"
-                                    DataField="QuotedCIF">
-                                </telerik:GridNumericColumn>--%>
                                 <telerik:GridTemplateColumn UniqueName="QuotedCIF" AllowFiltering="true" Groupable="false" SortExpression="QuotedCIF" CurrentFilterFunction="EqualTo"
                                     HeaderText="" FilterControlWidth="50px" AutoPostBackOnFilter="false" DataField="QuotedCIF" ItemStyle-HorizontalAlign="Right">
                                     <HeaderTemplate>
@@ -155,10 +135,6 @@
                                         <asp:TextBox ID="txtQuotedCIF" runat="server" Width="60px" CssClass="alignright"></asp:TextBox>
                                     </ItemTemplate>
                                 </telerik:GridTemplateColumn>
-                                <%-- <telerik:GridNumericColumn UniqueName="DutyRate" SortExpression="DutyRate" HeaderText="Duty Rate" DataFormatString="{0:0.00} " CurrentFilterFunction="EqualTo" DataType="System.Decimal" Aggregate="Sum"
-                                    FilterControlWidth="50px" AutoPostBackOnFilter="false"
-                                    DataField="DutyRate">
-                                </telerik:GridNumericColumn>--%>
                                 <telerik:GridTemplateColumn UniqueName="DutyRate" AllowFiltering="true" Groupable="false" SortExpression="DutyRate" CurrentFilterFunction="EqualTo"
                                     HeaderText="" FilterControlWidth="50px" AutoPostBackOnFilter="false" DataField="DutyRate" ItemStyle-HorizontalAlign="Right">
                                     <HeaderTemplate>
@@ -172,10 +148,6 @@
                                         <asp:TextBox ID="txtDutyRate" runat="server" Width="60px" CssClass="alignright"></asp:TextBox>
                                     </ItemTemplate>
                                 </telerik:GridTemplateColumn>
-                                <%--<telerik:GridNumericColumn UniqueName="SMVRate" SortExpression="SMVRate" HeaderText="SMV Rate" DataFormatString="{0:0.00} " CurrentFilterFunction="EqualTo" DataType="System.Decimal" Aggregate="Sum"
-                                    FilterControlWidth="50px" AutoPostBackOnFilter="false"
-                                    DataField="SMVRate">
-                                </telerik:GridNumericColumn>--%>
                                 <telerik:GridTemplateColumn UniqueName="SMVRate" AllowFiltering="true" Groupable="false" SortExpression="SMVRate" CurrentFilterFunction="EqualTo"
                                     HeaderText="" FilterControlWidth="50px" AutoPostBackOnFilter="false" DataField="SMVRate" ItemStyle-HorizontalAlign="Right">
                                     <HeaderTemplate>
@@ -196,11 +168,7 @@
                                 <telerik:GridNumericColumn UniqueName="SMV" SortExpression="SMV" HeaderText="SMV" DataFormatString="{0:0.00} " CurrentFilterFunction="EqualTo" DataType="System.Decimal" Aggregate="Sum"
                                     FilterControlWidth="50px" AutoPostBackOnFilter="false"
                                     DataField="SMV" ItemStyle-HorizontalAlign="Right">
-                                </telerik:GridNumericColumn>
-                                <%--<telerik:GridNumericColumn UniqueName="SMVRate" SortExpression="SMVRate" HeaderText="SMV Rate" DataFormatString="{0:0.00} " CurrentFilterFunction="EqualTo" DataType="System.Decimal" Aggregate="Sum"
-                                    FilterControlWidth="50px" AutoPostBackOnFilter="false"
-                                    DataField="SMVRate">
-                                </telerik:GridNumericColumn>--%>
+                                </telerik:GridNumericColumn>                                
                                 <telerik:GridNumericColumn UniqueName="TotalFabricCost" SortExpression="TotalFabricCost" HeaderText="Fabric Cost" DataFormatString="{0:0.00} " CurrentFilterFunction="EqualTo" DataType="System.Decimal" Aggregate="Sum"
                                     FilterControlWidth="50px" AutoPostBackOnFilter="false"
                                     DataField="TotalFabricCost" ItemStyle-HorizontalAlign="Right">
@@ -208,11 +176,7 @@
                                 <telerik:GridNumericColumn UniqueName="TotalAccessoriesCost" SortExpression="TotalAccessoriesCost" HeaderText="Accessories Cost" DataFormatString="{0:0.00} " CurrentFilterFunction="EqualTo" DataType="System.Decimal" Aggregate="Sum"
                                     FilterControlWidth="50px" AutoPostBackOnFilter="false"
                                     DataField="TotalAccessoriesCost" ItemStyle-HorizontalAlign="Right">
-                                </telerik:GridNumericColumn>
-                                <%-- <telerik:GridNumericColumn UniqueName="ShowToIndico" Visible="false" SortExpression="ShowToIndico" HeaderText="Show to Indico" DataFormatString="" CurrentFilterFunction="EqualTo" DataType="System.Boolean" Aggregate="None"
-                                    FilterControlWidth="50px" AutoPostBackOnFilter="false"
-                                    DataField="ShowToIndico">
-                                </telerik:GridNumericColumn>--%>
+                                </telerik:GridNumericColumn>                                
                                 <telerik:GridTemplateColumn UniqueName="ShowToIndico" AutoPostBackOnFilter="True" Visible="true" HeaderText="Show To Indico"
                                     DataType="System.Boolean" CurrentFilterFunction="NoFilter" DataField="ShowToIndico" ItemStyle-HorizontalAlign="Center">
                                     <ItemTemplate>
@@ -333,72 +297,7 @@
                         <ClientSettings AllowDragToGroup="True">
                         </ClientSettings>
                         <GroupingSettings ShowUnGroupButton="true" />
-                    </telerik:RadGrid>
-                    <%--<asp:DataGrid ID="dgCostSheet" runat="server" CssClass="table" AllowCustomPaging="False"
-                        AllowPaging="True" AllowSorting="true" AutoGenerateColumns="false" GridLines="None"
-                        PageSize="20" OnItemDataBound="dgCostSheet_ItemDataBound" OnPageIndexChanged="dgCostSheet_PageIndexChanged"
-                        OnSortCommand="dgCostSheet_SortCommand">
-                        <HeaderStyle CssClass="header" />
-                        <PagerStyle CssClass="idata-pager" Mode="NumericPages" />
-                        <Columns>
-                            <asp:TemplateColumn HeaderText="Item Category">
-                                <ItemTemplate>
-                                    <asp:Literal ID="litItemCategory" runat="server"></asp:Literal>
-                                </ItemTemplate>
-                            </asp:TemplateColumn>
-                            <asp:TemplateColumn HeaderText="Pattern" SortExpression="Pattern">
-                                <ItemTemplate>
-                                    <asp:Literal ID="litPattern" runat="server"></asp:Literal>
-                                </ItemTemplate>
-                            </asp:TemplateColumn>
-                            <asp:TemplateColumn HeaderText="Fabric" SortExpression="Fabric">
-                                <ItemTemplate>
-                                    <asp:Literal ID="litFabric" runat="server"></asp:Literal>
-                                </ItemTemplate>
-                            </asp:TemplateColumn>
-                            <asp:TemplateColumn HeaderText="FOB Cost">
-                                <ItemTemplate>
-                                    <asp:Literal ID="litJkFob" runat="server"></asp:Literal>
-                                </ItemTemplate>
-                            </asp:TemplateColumn>
-                            <asp:TemplateColumn HeaderText="Exchange Rate">
-                                <ItemTemplate>
-                                    <asp:Literal ID="litExchange" runat="server"></asp:Literal>
-                                </ItemTemplate>
-                            </asp:TemplateColumn>
-                            <asp:TemplateColumn HeaderText="Quoted CIF">
-                                <ItemTemplate>
-                                    <asp:Literal ID="litQuotedCif" runat="server"></asp:Literal>
-                                </ItemTemplate>
-                            </asp:TemplateColumn>
-                            <asp:TemplateColumn HeaderText="Quoted MP">
-                                <ItemTemplate>
-                                    <asp:Literal ID="litQuotedMp" runat="server"></asp:Literal>
-                                </ItemTemplate>
-                            </asp:TemplateColumn>
-                            <asp:TemplateColumn HeaderText="">
-                                <ItemTemplate>
-                                    <div class="btn-group pull-right">
-                                        <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
-                                            <i class="icon-cog"></i><span class="caret"></span></a>
-                                        <ul class="dropdown-menu pull-right">
-                                            <li>
-                                                <asp:HyperLink ID="linkEdit" runat="server" CssClass="btn-link iedit" ToolTip="Edit Cost Sheet"><i class="icon-pencil"></i>Edit</asp:HyperLink></li>
-                                            <li>
-                                                <asp:HyperLink ID="linkDelete" runat="server" CssClass="btn-link idelete" ToolTip="Delete CostSheet"><i class="icon-trash"></i>Delete</asp:HyperLink></li>
-                                            <li>
-                                                <asp:LinkButton ID="btnPrintJkCostSheet" runat="server" CssClass="btn-link"
-                                                    OnClick="btnPrintJkCostSheet_Click" ToolTip="Print Factory Cost Sheet"><i class="icon-print"></i>Print Factory Cost Sheet</asp:LinkButton></li>
-                                            <li>
-                                                <asp:LinkButton ID="btnIndimanCostSheet" runat="server" CssClass="btn-link"
-                                                    OnClick="btnIndimanCostSheet_Click" ToolTip="Print Indiman Cost Sheet"><i class="icon-print"></i>Print Indiman Cost Sheet</asp:LinkButton></li>
-
-                                        </ul>
-                                    </div>
-                                </ItemTemplate>
-                            </asp:TemplateColumn>
-                        </Columns>
-                    </asp:DataGrid>--%>
+                    </telerik:RadGrid>                   
                     <!-- / -->
                     <!-- No Search Result -->
                     <div id="dvNoSearchResult" runat="server" class="message search" visible="false">

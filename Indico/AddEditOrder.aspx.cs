@@ -943,8 +943,6 @@ namespace Indico
             {
                 CustomValidator cv = null;
 
-                //if (rbVisualLayout.Checked && ddlVlNumber.SelectedIndex < 1)
-                //{
                 if (ddlVlNumber.SelectedIndex < 1)
                 {
                     cv = new CustomValidator();
@@ -998,8 +996,6 @@ namespace Indico
                 if (Page.IsValid)
                 {
                     ProcessOrderDetailForm();
-
-                    //Response.Redirect("/AddEditOrder.aspx?id=" + OrderID);
                 }
                 else
                 {
@@ -3098,6 +3094,8 @@ namespace Indico
                 linkDelete.Visible = false;
                 rbNaNuNo.Checked = true;
                 rbNaNuYes_CheckedChanged(null, null);
+
+                hlNewVisualLayout.NavigateUrl = "/AddEditVisualLayout.aspx?jobnameid=" + hdnJobNameID.Value;
 
                 btnAddOrder.InnerHtml = "Add Order Detail";
                 btnAddOrder.Attributes.Add("data-loading-text", "Saving...");

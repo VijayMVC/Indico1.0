@@ -547,28 +547,6 @@
                 <div class="col-sm-2"></div>
                 <div class="col-sm-9">
                     <div class="modal-body" id="dvScroll" onscroll="setScrollPosition(this.scrollTop);">
-
-
-                        <%--<div ID="sizeWarning" runat="server" class="signin-error" Visible="True">
-                            <div class=" alert alert-warning" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <strong>
-                                     You are selecting a size which is our normal size range and is essentially a bespoke garment.
-                                    <br/>
-                                    Please provide the specific key measurements;namely the chest width and centre back measurements.
-                                    <br/>
-                                    This will involve creating an appropriate template and accommodating the artwork in the new template.Artwork must be done again.
-                                    <br/>
-                                    The order is likely to be delayed.
-                                    <br/>
-                                    Please contact Melbourne coordinator to enquire is the new size can be accommodated for this pattern
-                                </strong>
-                                <br />
-                            </div>
-                        </div>--%>
-
                         <!-- Validation-->
                         <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="alert alert-danger"
                             ValidationGroup="vgOrderDetail" DisplayMode="BulletList" HeaderText="<strong>Errors were encountered while trying to process the form below</strong>"></asp:ValidationSummary>

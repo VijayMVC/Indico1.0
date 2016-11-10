@@ -350,7 +350,17 @@ namespace Indico
                     objCostSheet.ID = costSheet;
                     objCostSheet.GetObject();
 
-                    objCostSheet.ModifiedDate = DateTime.Now;
+                    if (this.LoggedUserRoleName == UserRole.IndimanAdministrator)
+                    {
+                        objCostSheet.IndimanModifier = this.LoggedUser.ID;
+                        objCostSheet.IndimanModifiedDate = DateTime.Now;
+                    }
+                    else if (this.LoggedUserRoleName == UserRole.FactoryAdministrator)
+                    {
+                        objCostSheet.Modifier = this.LoggedUser.ID;
+                        objCostSheet.ModifiedDate = DateTime.Now;
+                    }
+
                     objCostSheet.ExchangeRate = exchangeRate;
                     objCostSheet.QuotedCIF = quotedCIF;
                     objCostSheet.QuotedFOBCost = fobCost;
