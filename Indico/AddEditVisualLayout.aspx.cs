@@ -441,84 +441,7 @@ namespace Indico
                 lblCellData.Text = objSizeChart.Val.ToString();
             }
         }
-
-        /*protected void cvLabel_OnServerValidate(object sender, ServerValidateEventArgs e)
-        {
-            if (this.QueryID == 0)
-            {
-                if (this.hdnUploadFiles.Value == "0" || string.IsNullOrEmpty(this.hdnUploadFiles.Value))
-                    e.IsValid = false;
-                else
-                    e.IsValid = true;
-            }
-        }
-
-        protected void rptVisualLayouts_ItemDataBound(object sender, RepeaterItemEventArgs e)
-        {
-            RepeaterItem item = e.Item;
-            if (item.ItemIndex > -1 && item.DataItem is ImageBO)
-            {
-                string VlImgLocation = string.Empty;
-                ImageBO objImage = (ImageBO)item.DataItem;
-
-                if (objImage != null)
-                {
-                    VlImgLocation = IndicoConfiguration.AppConfiguration.DataFolderName + "/VisualLayout/" + this.QueryID.ToString() + "/" + objImage.Filename + objImage.Extension;
-
-                    if (!File.Exists(IndicoConfiguration.AppConfiguration.PathToProjectFolder + "/" + VlImgLocation))
-                        VlImgLocation = IndicoConfiguration.AppConfiguration.DataFolderName + "/noimage-png-350px-350px.png";
-                }
-                else
-                {
-                    VlImgLocation = IndicoConfiguration.AppConfiguration.DataFolderName + "/noimage-png-350px-350px.png";
-                }
-
-                System.Drawing.Image VLOrigImage = System.Drawing.Image.FromFile(IndicoConfiguration.AppConfiguration.PathToProjectFolder + "\\" + VlImgLocation);
-                SizeF origImageSize = VLOrigImage.PhysicalDimension;
-                VLOrigImage.Dispose();
-
-                List<float> lstImgDimensions = (new ImageProcess()).GetResizedImageDimension(Convert.ToInt32(Math.Abs(origImageSize.Width)), Convert.ToInt32(Math.Abs(origImageSize.Height)), 250, 140);
-
-                System.Web.UI.WebControls.Image imgVisualLayout = (System.Web.UI.WebControls.Image)item.FindControl("imgVisualLayout");
-                imgVisualLayout.ImageUrl = VlImgLocation;
-                imgVisualLayout.Width = int.Parse(lstImgDimensions[1].ToString());
-                imgVisualLayout.Height = int.Parse(lstImgDimensions[0].ToString());
-
-                CheckBox chkHeroImage = (CheckBox)item.FindControl("chkHeroImage");
-                chkHeroImage.Checked = objImage.IsHero;
-                chkHeroImage.Attributes.Add("imgid", objImage.ID.ToString());
-
-                HyperLink linkDelete = (HyperLink)item.FindControl("linkDelete");
-                linkDelete.Attributes.Add("imgid", objImage.ID.ToString());
-            }
-        }*/
-
-        /*  protected void ddlCoordinator_SelectedIndexChange(object sender, EventArgs e)
-          {
-              if (int.Parse(this.ddlCoordinator.SelectedValue) == 0)
-              {
-                  this.ddlDistributor.Enabled = false;
-              }
-              else
-              {
-                  this.ddlDistributor.Enabled = true;
-                  UserBO objUser = new UserBO();
-                  objUser.ID = int.Parse(this.ddlCoordinator.SelectedValue);
-                  objUser.GetObject();
-
-                  //Populate Distributor
-                  this.ddlDistributor.Items.Clear();
-                  this.ddlDistributor.Items.Add(new ListItem("Select Distributor", "0"));
-                  List<CompanyBO> lstDistributors = objUser.CompanysWhereThisIsCoordinator;
-                  foreach (CompanyBO company in lstDistributors)
-                  {
-                      this.ddlDistributor.Items.Add(new ListItem(company.Name, company.ID.ToString()));
-                  }
-              }
-
-              this.PopulateFileUploder(this.rptUploadFile, this.hdnUploadFiles);
-          }*/
-
+        
         protected void ddlDistributor_SelectedIndexChange(object sender, EventArgs e)
         {
             ddlClient.Items.Clear();
@@ -548,7 +471,9 @@ namespace Indico
                 this.ddlClient.Items.Add(new ListItem("Select Client", "0"));
                 this.ddlJobNameClient.Items.Add(new ListItem("Select Client", "0"));
 
-                List<ClientBO> lstClients = objCompany.ClientsWhereThisIsDistributor.OrderBy(o => o.Name).ToList();
+                ClientBO objClient = new ClientBO();
+                objClient.Distributor = objCompany.ID;
+                List<ClientBO> lstClients = objClient.SearchObjects().OrderBy(o => o.Name).ToList(); // objCompany.ClientsWhereThisIsDistributor.OrderBy(o => o.Name).ToList();
 
                 foreach (ClientBO client in lstClients)
                 {
@@ -557,8 +482,7 @@ namespace Indico
                 }
 
                 ddlClientDistributor.ClearSelection();
-                ddlClientDistributor.Items.FindByValue(this.ddlDistributor.SelectedValue).Selected = true;
-                //lblclient.Text = this.ddlDistributor.SelectedItem.Text;
+                ddlClientDistributor.Items.FindByValue(this.ddlDistributor.SelectedValue).Selected = true;                
 
                 this.lblPrimaryCoordinator.Text = (objCompany.Coordinator != null && objCompany.Coordinator > 0) ? objCompany.objCoordinator.GivenName + " " + objCompany.objCoordinator.FamilyName : "None";
                 this.lblSecondaryCoordinator.Text = (objCompany.SecondaryCoordinator != null && objCompany.SecondaryCoordinator > 0) ? objCompany.objSecondaryCoordinator.GivenName + " " + objCompany.objSecondaryCoordinator.FamilyName : "None";
@@ -1351,19 +1275,7 @@ namespace Indico
             this.IsGeneratedProduct();
             this.PopulateFileUploder(this.rptUploadFile, this.hdnUploadFiles);
         }
-
-        //protected void IsCommonProduct_Changed(object sender, EventArgs e)
-        //{
-        //    if (this.checkIsCommonproduct.Checked == true)
-        //    {
-        //        this.dvHideColums.Visible = false;
-        //    }
-        //    else
-        //    {
-        //        this.dvHideColums.Visible = true;
-        //    }
-        //}
-
+               
         protected void linkViewPattern_Click(object sender, EventArgs e)
         {
             ResetViewStateValues();
@@ -2144,29 +2056,7 @@ namespace Indico
                 }
             }
         }
-
-        //private void PopulateFilteredFabrics(bool isLining)
-        //{
-        //    FabricCodeBO objFabric = new FabricCodeBO();
-        //    objFabric.IsActive = true;
-        //    objFabric.IsPure = true;
-        //    objFabric.IsLiningFabric = isLining;
-
-        //    Dictionary<int, string> filteredfabrics = objFabric.SearchObjects().AsQueryable().OrderBy(o => o.Name).ToList().Select(o => new { Key = o.ID, Value = (o.Code + " - " + o.NickName) }).ToDictionary(o => o.Key, o => o.Value);
-        //    Dictionary<int, string> fdicFabrics = new Dictionary<int, string>();
-
-        //    fdicFabrics.Add(0, "Please select or type...");
-        //    foreach (KeyValuePair<int, string> item in filteredfabrics)
-        //    {
-        //        fdicFabrics.Add(item.Key, item.Value);
-        //    }
-
-        //    this.ddlAddFabrics.DataSource = fdicFabrics;
-        //    this.ddlAddFabrics.DataTextField = "Value";
-        //    this.ddlAddFabrics.DataValueField = "Key";
-        //    this.ddlAddFabrics.DataBind();
-        //}
-
+              
         private void PopulateDistributors()
         {
             this.ddlDistributor.Items.Clear();
