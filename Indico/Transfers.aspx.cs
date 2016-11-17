@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Objects;
 using System.Web.UI.WebControls;
 using Indico.Common;
 using System.Data.SqlClient;
@@ -448,6 +449,7 @@ namespace Indico
             using (var connection = Connection)
             {
                 connection.Open();
+
                 connection.Execute(string.Format("EXEC [dbo].[SPC_TransferProductOrJobName] {0}, {1},{2},{3}",0, jobName, distributor,0));
             }
         }

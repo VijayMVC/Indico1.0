@@ -431,7 +431,7 @@ namespace Indico.Common
 
         public string CreateImages(PatternBO objPattern, string image)
         {
-            ImageProcess objImageProcess = new ImageProcess();
+            var objImageProcess = new ImageProcess();
             string imageSource = string.Empty;
             string newImageSource = string.Empty;
             string folderPath = string.Empty;

@@ -1,220 +1,6 @@
 USE Indico
 GO
 
-
-
---**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
-
-UPDATE od
-SET od.Label = 652
-FROM [dbo].[OrderDetail] od
-WHERE od.Label = 647
-
-DELETE DistributorLabel WHERE Label = 647
-DELETE Label where ID = 647
-GO
-
---**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
-
-UPDATE o
-SET o.BillingAddress = 834
-FROM [dbo].[Order] o
-WHERE o.BillingAddress = 1086
-
-
-UPDATE o
-SET o.DespatchToAddress = 834
-FROM [dbo].[Order] o
-WHERE o.DespatchToAddress = 1086
-
-
-DELETE [dbo].[DistributorClientAddress] WHERE ID = 1086
-GO
---**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
-
-
-UPDATE o
-SET o.BillingAddress = 161
-FROM [dbo].[Order] o
-WHERE o.BillingAddress = 162
-
-
-UPDATE o
-SET o.DespatchToAddress = 161
-FROM [dbo].[Order] o
-WHERE o.DespatchToAddress = 162
-
-
-DELETE [dbo].[DistributorClientAddress] WHERE ID = 162
-GO
-
---**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
-
-
-UPDATE o
-SET o.BillingAddress = 411
-FROM [dbo].[Order] o
-WHERE o.BillingAddress = 845
-
-
-UPDATE o
-SET o.DespatchToAddress = 411
-FROM [dbo].[Order] o
-WHERE o.DespatchToAddress = 845
-
-
-DELETE [dbo].[DistributorClientAddress] WHERE ID = 845
-GO
-
---**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
-
-
-UPDATE o
-SET o.BillingAddress = 981
-FROM [dbo].[Order] o
-WHERE o.BillingAddress = 994
-
-
-UPDATE o
-SET o.DespatchToAddress = 981
-FROM [dbo].[Order] o
-WHERE o.DespatchToAddress = 994
-
-
-DELETE [dbo].[DistributorClientAddress] WHERE ID = 994
-
-GO
-
---**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
-
-
-UPDATE o
-SET o.BillingAddress = 984
-FROM [dbo].[Order] o
-WHERE o.BillingAddress = 1526
-
-
-UPDATE o
-SET o.DespatchToAddress = 984
-FROM [dbo].[Order] o
-WHERE o.DespatchToAddress = 1526
-
-
-DELETE [dbo].[DistributorClientAddress] WHERE ID = 1526
-
-GO
-
---**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
-
-
-UPDATE o
-SET o.BillingAddress = 915
-FROM [dbo].[Order] o
-WHERE o.BillingAddress = 1042
-
-
-UPDATE o
-SET o.DespatchToAddress = 915
-FROM [dbo].[Order] o
-WHERE o.DespatchToAddress = 1042
-
-
-DELETE [dbo].[DistributorClientAddress] WHERE ID = 1042
-
-GO
-
---**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
-
-
-UPDATE o
-SET o.BillingAddress = 1103
-FROM [dbo].[Order] o
-WHERE o.BillingAddress = 1285
-
-
-UPDATE o
-SET o.DespatchToAddress = 1103
-FROM [dbo].[Order] o
-WHERE o.DespatchToAddress = 1285
-
-
-DELETE [dbo].[DistributorClientAddress] WHERE ID = 1285
-
-GO
-
---**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
-
-
-
-SELECT o.ID,dca.ID AS Addr INTO #TempOrders from [dbo].[Order] o
-	INNER JOIN [dbo].[OrderDetail] od
-		ON o.ID = od.[Order]
-	INNER JOIN [dbo].[VisualLayout] vl
-		ON vl.ID = od.VisualLayout
-	INNER JOIN [dbo].[JobName] jn
-		ON vl.Client = jn.ID
-	INNER JOIN [dbo].[Client] c
-		ON jn.Client = c.ID
-	INNER JOIN [dbo].[Company] d
-		ON c.Distributor = d.ID
-	INNER JOIN [dbo].[DistributorClientAddress] ad
-		ON o.BillingAddress = ad.ID
-	INNER JOIN [dbo].[DistributorClientAddress] dca
-		ON dca.Distributor = d.ID AND dca.CompanyName = 'TBA'
-WHERE ad.Distributor != d.ID 
-
-UPDATE o
-SET o.BillingAddress = tp.Addr
-FROM #TempOrders tp
-	INNER JOIN [dbo].[Order] o
-		ON tp.ID  = o.ID
-
-DROP TABLE #TempOrders
-GO
---**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
-
-
-IF EXISTS(SELECT [name] FROM tempdb.sys.tables WHERE [name] like '#TempOrders') BEGIN
-   DROP TABLE #TempOrders
-END
-
-SELECT  DISTINCT o.ID,dca.ID AS Addr INTO #TempOrders from [dbo].[Order] o
-	INNER JOIN [dbo].[OrderDetail] od
-		ON o.ID = od.[Order]
-	INNER JOIN [dbo].[VisualLayout] vl
-		ON vl.ID = od.VisualLayout
-	INNER JOIN [dbo].[JobName] jn
-		ON vl.Client = jn.ID
-	INNER JOIN [dbo].[Client] c
-		ON jn.Client = c.ID
-	INNER JOIN [dbo].[Company] d
-		ON c.Distributor = d.ID
-	INNER JOIN [dbo].[DistributorClientAddress] ad
-		ON o.DespatchToAddress = ad.ID
-	INNER JOIN [dbo].[DistributorClientAddress] dca
-		ON dca.Distributor = d.ID AND dca.CompanyName = 'TBA'
-WHERE ad.Distributor != d.ID 
-
-
-UPDATE o
-SET o.DespatchToAddress = tp.Addr
-FROM #TempOrders tp
-	INNER JOIN [dbo].[Order] o
-		ON tp.ID  = o.ID
-
-
-DROP TABLE #TempOrders
-GO
-
---**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
-
-UPDATE od
-SET od.DespatchTo =  105
-FROM [dbo].[OrderDetail] od
-WHERE od.DespatchTo IS NULL
-
-GO
-
 --**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SPC_TransferProductOrJobName]') AND type in (N'P', N'PC'))
@@ -522,15 +308,25 @@ BEGIN
 
 	IF @P_VisualLayout > 0 AND @P_ToJobName > 0
 	BEGIN
+		DECLARE @JobName int;
+		SET @JobName = (SELECT TOP 1 jn.ID FROM [dbo].[JobName] jn -- Get the JobName of the VL
+				INNER JOIN [dbo].[VisualLayout] vl ON vl.Client = jn.ID)
 		UPDATE vl
-		SET vl.Client = @P_ToJobName
+
+		SET vl.Client = @P_ToJobName -- Update the VL
 		FROM [dbo].[VisualLayout] vl
 			WHERE ID = @P_VisualLayout
+
+		IF NOT EXISTS (SELECT ID FROM [dbo].[VisualLayout] vl WHERE Client = @JobName) -- Delete JobName if no VLs related 
+		BEGIN
+			DELETE [dbo].[JobName] WHERE ID = @JobName
+		END
+
 	END
-
-
 END
+
+
 
 GO
 
---**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
+
