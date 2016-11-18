@@ -652,7 +652,7 @@ namespace Indico
                 {
                     if (currentWeeks.Count > 1)
                     {
-                        var lastWeek = currentWeeks.Last().WeekendDate;
+                        var lastWeek = currentWeeks.OrderBy(w=>w.WeekendDate).Last().WeekendDate;
                         currentYear = lastWeek.Year == currentWeeks[currentWeeks.Count() - 2].WeekendDate.Year ?
                                                                                                     lastWeek.AddYears(1).Year : lastWeek.Year;
                     }

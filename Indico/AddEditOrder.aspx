@@ -701,7 +701,7 @@
 
                                           <div class="alert alert-danger" runat="server" ID="sizeWarningAlert" Visible="False" style="margin-top: 10px;">
                                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                          You are selecting a size which is our normal size range and is essentially a bespoke garment.
+                                          You are selecting a size which is out of our normal size range and is essentially a bespoke garment.
                                                 <br/>
                                                 Please provide the specific key measurements;namely the chest width and centre back measurements.
                                                 <br/>
@@ -709,7 +709,7 @@
                                                 <br/>
                                                 The order is likely to be delayed.
                                                 <br/>
-                                                Please contact Melbourne coordinator to enquire is the new size can be accommodated for this pattern
+                                                Please contact Melbourne coordinator to enquire if the new size can be accommodated for this pattern
                                       </div>
                                     </div>
                                     <div class="control-group">

@@ -157,7 +157,8 @@ namespace Indico
             using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
             {
                 if (!string.IsNullOrWhiteSpace(endDate) && !string.IsNullOrWhiteSpace(startDate))
-                    data = connection.Query<WeeklyBackordersSummaryModel>(string.Format("EXEC [dbo].[SPC_GetBackOrdersWeeklySummary] '{0}', '{1}'", startDate, endDate)).ToList();
+                    data = connection.Query<WeeklyBackordersSummaryModel>(string.Format("EXEC [dbo].[SPC_GetBackOrdersWeeklySummary" +
+                                                                                        "] '{0}', '{1}'", startDate, endDate)).ToList();
                 else if (!string.IsNullOrWhiteSpace(startDate))
                     data = connection.Query<WeeklyBackordersSummaryModel>(string.Format("EXEC [dbo].[SPC_GetBackOrdersWeeklySummary] '{0}'", startDate)).ToList();
                 else
