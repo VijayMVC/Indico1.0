@@ -468,3 +468,117 @@ END
 GO
 
 --**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
+
+IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[GetOrderDetaildForGivenWeekView]'))  --changed notes
+	DROP VIEW [dbo].[GetOrderDetaildForGivenWeekView]
+GO
+
+CREATE VIEW [dbo].[GetOrderDetaildForGivenWeekView]
+AS
+SELECT			o.ID AS OrderId,
+				od.ID AS OrderDetailId,
+				o.ShipmentDate AS OrderShipmentDate,
+				od.ShipmentDate AS OrderDetailShipmentDate,
+				ot.[Name] AS OrderType,
+				dis.[Name] AS Distributor,
+				CASE 
+					WHEN dis.IncludeAsMYOBInvoice = 1
+						THEN ISNULL(dis.JobName, '')
+						ELSE 'Wholesale'
+				END AS JobName,
+				c.[Name] AS Client,
+				'PO-' + CAST(o.ID AS nvarchar(47)) AS PurchaseOrder,
+				vl.[NamePrefix],
+				p.[Number] + ' - ' + p.[NickName] AS Pattern,
+				fc.[Code] + ' - ' + fc.[NickName] AS Fabric,
+				fc.[Filaments] AS Material,
+				g.Name AS Gender,
+				ag.Name AS AgeGroup,
+				'' AS SleeveShape,
+				'' AS SleeveLength,
+				COALESCE(i.[Name], '') AS ItemSubGroup,
+				s.SizeName,
+				odq.Qty AS Quentity,
+				os.Name AS [Status],
+				0 AS PrintedCount,
+				COALESCE(
+					(SELECT TOP 1 
+						'http://gw.indiman.net/IndicoData/PatternTemplates/' + CAST(pti.Pattern AS nvarchar(8)) + '/' + pti.[Filename] + pti.Extension
+					FROM [dbo].[PatternTemplateImage] pti WHERE p.ID = pti.Pattern AND pti.IsHero = 1
+					), '' 
+				) AS PatternImagePath,
+				COALESCE(
+					(SELECT TOP 1 
+						'http://gw.indiman.net/IndicoData/VisualLayout/' + CAST(vl.ID AS nvarchar(8)) + '/' + im.[Filename] + im.Extension
+					FROM [dbo].[Image] im WHERE vl.ID = im.VisualLayout AND im.IsHero = 1
+					), '' 
+				) AS VLImagePath,
+				p.[Number],
+				0.0 AS OtherCharges,
+				od.EditedPriceRemarks AS Notes,
+				p.PatternNotes AS PatternInvoiceNotes,
+				od.VisualLayoutNotes AS ProductNotes,
+				COALESCE(cs.QuotedFOBCost, 0.0) AS JKFOBCostSheetPrice,
+				COALESCE(cs.QuotedCIF, 0.0) AS IndimanCIFCostSheetPrice,
+				ISNULL(CAST((SELECT CASE
+									WHEN (p.[SubItem] IS NULL)
+										THEN  	('')
+									ELSE (CAST((SELECT TOP 1 hsc.[Code] FROM [dbo].[HSCode] hsc WHERE hsc.[ItemSubCategory] = p.[SubItem] AND hsc.[Gender] = p.[Gender]) AS nvarchar(64)))
+							END) AS nvarchar (64)), '') AS HSCode,
+				ISNULL(CAST((SELECT CASE
+									WHEN (p.[SubItem] IS NULL)
+										THEN  	('')
+									ELSE (CAST((SELECT it.[Name] FROM [dbo].[Item] it WHERE it.[ID] = i.[Parent]) AS nvarchar(64)))
+							END) AS nvarchar (64)), '') AS ItemName,
+				o.PurchaseOrderNo,
+				dca.ID AS DistributorClientAddressID, --new
+				dca.CompanyName AS DistributorClientAddressName,
+				COALESCE(dp.Name, '') AS DestinationPort,
+			    COALESCE(sm.Name, '') AS ShipmentMode,
+			    COALESCE(pm.Name,'') AS PaymentMethod 
+	FROM [dbo].[OrderDetail] od
+		INNER JOIN [dbo].[Order] o
+			ON od.[Order] = o.ID
+		INNER JOIN [dbo].[OrderStatus] os
+			ON o.[Status] = os.ID
+		INNER JOIN [dbo].[Company] dis
+			ON dis.[ID] = o.[Distributor]		
+		INNER JOIN [dbo].[OrderType] ot
+			ON od.[OrderType] = ot.[ID]
+		INNER JOIN [dbo].[VisualLayout] vl
+			ON od.[VisualLayout] = vl.ID	
+		INNER JOIN [dbo].[Pattern] p
+			ON od.Pattern = p.ID
+		INNER JOIN [dbo].[SizeSet] ss
+			ON p.SizeSet = ss.ID
+		INNER JOIN [dbo].[Size] s
+			ON s.SizeSet = ss.ID
+		INNER JOIN [dbo].[FabricCode] fc
+			ON od.FabricCode = fc.ID
+		LEFT OUTER JOIN [dbo].[Gender] g
+			ON p.Gender = g.ID
+		LEFT OUTER JOIN [dbo].[AgeGroup] ag
+			ON p.AgeGroup = ag.ID
+		LEFT OUTER JOIN [dbo].[Item] i
+			ON p.[SubItem] = i.ID
+		INNER JOIN [dbo].[JobName] c
+			ON o.Client = c.ID	
+		LEFT OUTER JOIN [dbo].[CostSheet] cs	
+			ON p.ID = cs.Pattern
+				AND fc.ID = cs.Fabric
+		INNER JOIN [dbo].[OrderDetailQty] odq
+			ON od.ID = odq.OrderDetail
+				AND odq.Size = s.ID
+		INNER JOIN [dbo].[DistributorClientAddress] dca
+			ON od.[DespatchTo] = dca.[ID]
+		LEFT OUTER JOIN [dbo].[DestinationPort] dp
+			ON dca.[Port] = dp.[ID]
+		LEFT OUTER JOIN [dbo].[ShipmentMode] sm
+			ON od.[ShipmentMode] = sm.[ID] 
+		LEFT OUTER JOIN [dbo].[PaymentMethod] pm
+			ON od.[PaymentMethod] = pm.[ID]
+WHERE odq.Qty != 0 AND os.ID NOT IN (18,22,23,24,28,31)--o.[Status] != 28 AND o.[Status] != 18
+
+GO
+
+--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
