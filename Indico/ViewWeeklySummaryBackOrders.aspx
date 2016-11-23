@@ -46,7 +46,7 @@
    
                    <telerik:RadGrid  ID="SummariesGrid" runat="server" AllowPaging="true" AllowFilteringByColumn="true"
                         ShowGroupPanel="true" ShowFooter="True" PageSize="50" EnableHeaderContextMenu="true" 
-                        EnableHeaderContextFilterMenu="true" AutoGenerateColumns="false" OnItemDataBound="OnSummariesGridItemDataBound"
+                        EnableHeaderContextFilterMenu="true" AutoGenerateColumns="false" OnItemDataBound="OnSummariesGridItemDataBound" OnPageSizeChanged="SummariesGrid_OnPageSizeChanged"
                         Skin="Metro" CssClass="RadGrid" AllowSorting="true" EnableEmbeddedSkins="true" >
                         <PagerStyle Mode="NextPrevNumericAndAdvanced"></PagerStyle>
                         <GroupingSettings CaseSensitive="false" />

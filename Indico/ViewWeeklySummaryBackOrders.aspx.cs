@@ -175,9 +175,23 @@ namespace Indico
                 dvDataContent.Visible = true;
                 SummariesGrid.DataSource = data;
                 SummariesGrid.DataBind();
+                Session["WeeklySummaryBackOrders"] = data;
             }
         }
 
         #endregion
+
+        private void RebindGrid()
+        {
+            if (Session["WeeklySummaryBackOrders"] == null)
+                return;
+            SummariesGrid.DataSource = (List<WeeklyBackordersSummaryModel>)Session["PatternDetailsView"];
+            SummariesGrid.DataBind();
+        }
+
+        protected void SummariesGrid_OnPageSizeChanged(object sender, GridPageSizeChangedEventArgs e)
+        {
+            RebindGrid();
+        }
     }
 }

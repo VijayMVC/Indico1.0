@@ -1673,12 +1673,12 @@ namespace Indico
 
         private void ProcessForm()
         {
-            string testString = string.Empty;
-            string orderstring = string.Empty;
+            var testString = string.Empty;
+            var orderstring = string.Empty;
 
             try
             {
-                using (TransactionScope ts = new TransactionScope())
+                using (var ts = new TransactionScope())
                 {
                     //string NNFileName = hdnUploadFiles.Value.Split(',')[0];
 
@@ -1939,9 +1939,9 @@ namespace Indico
 
                     #endregion
 
-                    string NNFileTempDirectory = IndicoConfiguration.AppConfiguration.PathToDataFolder + "\\Temp\\" + objOrder.ID.ToString();
-                    if (Directory.Exists(NNFileTempDirectory))
-                        Directory.Delete(NNFileTempDirectory, true);
+                    var nnFileTempDirectory = IndicoConfiguration.AppConfiguration.PathToDataFolder + "\\Temp\\" + objOrder.ID.ToString();
+                    if (Directory.Exists(nnFileTempDirectory))
+                        Directory.Delete(nnFileTempDirectory, true);
                     ts.Complete();
                 }
 
