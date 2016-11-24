@@ -1480,7 +1480,7 @@
             var hdnUploadFiles = "<%=hdnUploadFiles.ClientID %>";
             var lblTotalQty = "<%=txtTotalQty.ClientID %>";
             var ancNewPaymentMethod = "<%=ancNewPaymentMethod.ClientID %>";
-            var ddlDistributor = "<%=ddlDistributor.ClientID %>";
+            
             var txtOdNotes = "<%=txtOdNotes.ClientID %>";
             var ddlShipmentMode = "<%=ddlShipmentMode.ClientID %>";
             var hdnEditType = "<%=hdnEditType.ClientID %>";
