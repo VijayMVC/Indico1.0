@@ -395,7 +395,7 @@ namespace Indico
                     OrderStatus currentStatus = this.GetOrderStatus(int.Parse(objOrderDetailsView.OrderStatusID.ToString()));
 
                     bool isEditEnable = (isDirectSales && currentStatus == OrderStatus.New) ||
-                                           (!isDirectSales && isIndico && currentStatus == OrderStatus.DistributorSubmitted) ||
+                                           (!isDirectSales && isIndico && ((currentStatus == OrderStatus.New && objOrderDetailsView.CreatorID == LoggedUser.ID ) || currentStatus == OrderStatus.DistributorSubmitted)) ||
                                           (!isDirectSales && isIndiman && (currentStatus == OrderStatus.New || currentStatus == OrderStatus.DistributorSubmitted || currentStatus == OrderStatus.CoordinatorSubmitted)) ||
                                           (isFactory && currentStatus != OrderStatus.Completed);
 
@@ -3896,8 +3896,6 @@ namespace Indico
                 lblEditDeptTotal.Text = "0" + "(" + objOrderDetailQty.Qty.ToString() + ") ";
                 lblEditDeptTotal.Attributes.Add("tqty", objOrderDetailQty.Qty.ToString());
                 lblEditDeptTotal.Attributes.Add("tqty", "0");
-
-
             }
             else if (item.ItemIndex > -1 && item.DataItem is FactoryOrderDetialBO)
             {
@@ -4524,7 +4522,7 @@ namespace Indico
                             this.SendOrderSubmissionEmail(order, this.Distributor.objCoordinator.EmailAddress,
                                 this.Distributor.objCoordinator.GivenName + " " + this.Distributor.objCoordinator.FamilyName, true, CustomSettings.DSOCC);
                         }
-                        else if (this.LoggedUserRoleName == UserRole.IndicoCoordinator && currentOrderStatus == OrderStatus.DistributorSubmitted)
+                        else if (this.LoggedUserRoleName == UserRole.IndicoCoordinator && (currentOrderStatus == OrderStatus.DistributorSubmitted || currentOrderStatus == OrderStatus.New))
                         {
                             SettingsBO objSetting = new SettingsBO();
                             objSetting.Key = CustomSettings.CSOTO.ToString();

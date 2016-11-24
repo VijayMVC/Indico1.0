@@ -1424,7 +1424,24 @@ namespace Indico
                 //Populate Distributors
                 ddlDistributor.Items.Clear();
                 ddlDistributor.Items.Add(new ListItem("Select Distributor", "0"));
-                List<CompanyBO> lstDistributors = (new CompanyBO()).GetAllObject().Where(o => o.IsDistributor == true && o.IsActive == true && o.IsDelete == false).OrderBy(o => o.Name).ToList(); ;
+
+                UserRole loggedUserRole = this.LoggedUserRoleName;
+                bool isDirectSales = this.LoggedUser.IsDirectSalesPerson;
+                bool isDistributor = loggedUserRole == UserRole.DistributorAdministrator || loggedUserRole == UserRole.DistributorCoordinator;
+                bool isIndico = loggedUserRole == UserRole.IndicoAdministrator || loggedUserRole == UserRole.IndicoCoordinator;
+                bool isIndiman = loggedUserRole == UserRole.IndimanAdministrator || loggedUserRole == UserRole.IndimanCoordinator;
+
+                CompanyBO objDis = new CompanyBO();
+                objDis.IsActive = true;
+                objDis.IsDelete = false;
+                objDis.IsDistributor = true;
+
+                if (isIndico)
+                {
+                    objDis.Coordinator = LoggedUser.ID;
+                }
+
+                List<CompanyBO> lstDistributors = objDis.SearchObjects().OrderBy(m => m.Name).ToList(); // (new CompanyBO()).GetAllObject().Where(o => o.IsDistributor == true && o.IsActive == true && o.IsDelete == false).OrderBy(o => o.Name).ToList(); ;
                 foreach (CompanyBO distributor in lstDistributors)
                 {
                     ddlDistributor.Items.Add(new ListItem(distributor.Name, distributor.ID.ToString()));
