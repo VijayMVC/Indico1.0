@@ -477,22 +477,23 @@ namespace Indico
                 WebServicePattern objWebServicePattern = new WebServicePattern();
                 try
                 {
-                    using (TransactionScope ts = new TransactionScope())
-                    {
-                        PatternBO objPattern = new PatternBO(this.ObjContext);
-                        objPattern.ID = patternId;
-                        objPattern.GetObject();
+                    var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                    connection.Execute("EXEC [dbo].[SPC_DeletePattern] " + patternId);
+                    //using (TransactionScope ts = new TransactionScope())
+                    //{
+                    //    var objPattern = new PatternBO(ObjContext) {ID = patternId};
+                    //    objPattern.GetObject();
+                        
+                    //    //objPattern.IsActive = false;
+                    //    //objPattern.IsActiveWS = false;
+                    //    //objWebServicePattern.DeletePatternNumber = objPattern.Number;
+                    //    //objWebServicePattern.GUID = IndicoConfiguration.AppConfiguration.HttpPostGuid;
+                    //    //objWebServicePattern.DeleteDirectoriesGivenPattern(objPattern);
+                    //    //objWebServicePattern.Post(true);
 
-                        objPattern.IsActive = false;
-                        objPattern.IsActiveWS = false;
-                        objWebServicePattern.DeletePatternNumber = objPattern.Number;
-                        objWebServicePattern.GUID = IndicoConfiguration.AppConfiguration.HttpPostGuid;
-                        objWebServicePattern.DeleteDirectoriesGivenPattern(objPattern);
-                        objWebServicePattern.Post(true);
-
-                        this.ObjContext.SaveChanges();
-                        ts.Complete();
-                    }
+                    //    ObjContext.SaveChanges();
+                    //    ts.Complete();
+                    //}
                 }
                 catch (Exception ex)
                 {

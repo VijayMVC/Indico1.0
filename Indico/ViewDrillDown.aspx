@@ -26,33 +26,33 @@
                    <telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" Skin="Metro">
                    </telerik:RadAjaxLoadingPanel>
                    <telerik:RadGrid ID="OrderGrid"  AllowPaging="True" GroupingEnabled="True" AutoGenerateColumns="False" AllowFilteringByColumn="True" AllowSorting="True" ShowGroupPanel="True"
-                            ShowFooter="True" runat="server"   EnableLinqExpressions="True" PageSize="25" OnItemDataBound="OnOrderGridItemDataBound" OnPageSizeChanged="OrderGrid_OnPageSizeChanged" OnPageIndexChanged="OrderGrid_OnPageIndexChanged"
-                            EnableHeaderContextMenu="True" EnableHeaderContextFilterMenu="True" CssClass="RadGrid" OnSortCommand="OrderGrid_OnSortCommand" OnGroupsChanging="OrderGrid_OnGroupsChanging" G
+                            ShowFooter="True" runat="server"   EnableLinqExpressions="True" PageSize="25" OnItemDataBound="OnOrderGridItemDataBound" OnPageIndexChanged="OrderGrid_OnPageIndexChanged"
+                            EnableHeaderContextMenu="True" EnableHeaderContextFilterMenu="True" CssClass="RadGrid" OnSortCommand="OrderGrid_OnSortCommand" OnGroupsChanging="OrderGrid_OnGroupsChanging" OnPageSizeChanged="OrderGrid_OnPageSizeChanged"
                             Skin="Metro" EnableEmbeddedSkins="true" >
-                             <GroupingSettings CaseSensitive="false" />
-                             <HeaderContextMenu OnItemClick="OnItemClick"></HeaderContextMenu>
+                                <GroupingSettings CaseSensitive="false" />
+                                <HeaderContextMenu OnItemClick="OnItemClick"></HeaderContextMenu>
                             <PagerStyle Mode="NextPrevNumericAndAdvanced"></PagerStyle>
-                            <MasterTableView ShowGroupFooter="true" AllowMultiColumnSorting="true">
-                                 <Columns>
+                            <MasterTableView ShowGroupFooter="true" AllowMultiColumnSorting="true" >
+                                    <Columns>
                                     <telerik:GridBoundColumn AutoPostBackOnFilter="true" DataField="Week" FilterControlWidth="50px" AllowFiltering="True"  HeaderText="Week" UniqueName="Week" SortExpression="Week" GroupByExpression="Week"  CurrentFilterFunction="Contains" Groupable="True"></telerik:GridBoundColumn>
                                     <telerik:GridTemplateColumn AutoPostBackOnFilter="true" DataField="PurchaseOrderNumber" CurrentFilterFunction="Contains" FilterControlWidth="50px" AllowFiltering="True" HeaderText="P.O No" UniqueName="PurchaseOrderNumber" SortExpression="PurchaseOrderNumber" Groupable="True">
                                         <ItemTemplate>
-                                           <asp:HyperLink target="_blank" ID="PONumberLink" runat="server"></asp:HyperLink>
+                                            <asp:HyperLink target="_blank" ID="PONumberLink" runat="server"></asp:HyperLink>
                                         </ItemTemplate>
                                     </telerik:GridTemplateColumn>
                                     <telerik:GridTemplateColumn AutoPostBackOnFilter="true" DataField="Product"   FilterControlWidth="50px" AllowFiltering="True" HeaderText="Product" UniqueName="Product" SortExpression="Product" Groupable="True">
-                                         <ItemTemplate>
-                                           <asp:HyperLink target="_blank" ID="ProductLink" runat="server"></asp:HyperLink>
+                                            <ItemTemplate>
+                                            <asp:HyperLink target="_blank" ID="ProductLink" runat="server"></asp:HyperLink>
                                         </ItemTemplate>
                                     </telerik:GridTemplateColumn>
                                     <telerik:GridTemplateColumn AutoPostBackOnFilter="true" DataField="Pattern" FilterControlWidth="50px" AllowFiltering="True" HeaderText="Pattern" UniqueName="Pattern" SortExpression="Pattern" Groupable="True">
-                                         <ItemTemplate>
-                                           <asp:HyperLink target="_blank" ID="patternLink" runat="server"></asp:HyperLink>
+                                            <ItemTemplate>
+                                            <asp:HyperLink target="_blank" ID="patternLink" runat="server"></asp:HyperLink>
                                         </ItemTemplate>
                                     </telerik:GridTemplateColumn>
                                     <telerik:GridTemplateColumn AutoPostBackOnFilter="true" DataField="Fabric" FilterControlWidth="50px" AllowFiltering="True" HeaderText="Fabric" UniqueName="Fabric" SortExpression="Fabric" Groupable="True">
-                                         <ItemTemplate>
-                                           <asp:HyperLink target="_blank" ID="fabricLink" runat="server"></asp:HyperLink>
+                                            <ItemTemplate>
+                                            <asp:HyperLink target="_blank" ID="fabricLink" runat="server"></asp:HyperLink>
                                         </ItemTemplate>
                                     </telerik:GridTemplateColumn>
                                     <telerik:GridDateTimeColumn AutoPostBackOnFilter="true" DataField="OrderDate" FilterControlWidth="100px" AllowFiltering="True" PickerType="DatePicker" EnableTimeIndependentFiltering="true" DataFormatString="{0:dddd, dd MMMM  yyyy}" HeaderText="Order Date" UniqueName="OrderDate" SortExpression="OrderDate" Groupable="True"></telerik:GridDateTimeColumn>
@@ -81,10 +81,10 @@
                                     <telerik:GridBoundColumn AutoPostBackOnFilter="true" DataField="TotalSMV" DataFormatString="{0:n}" FilterControlWidth="50px" AllowFiltering="True" HeaderText="Total SMV" UniqueName="TotalSMV" SortExpression="TotalSMV" ItemStyle-HorizontalAlign="Right" Groupable="True" Aggregate="Sum" FooterStyle-ForeColor="Green" FooterStyle-HorizontalAlign="Right"  FooterAggregateFormatString="{0:N0}" ></telerik:GridBoundColumn>
                                     <telerik:GridBoundColumn AutoPostBackOnFilter="true" DataField="ShipQty" DataFormatString="{0:n}" FilterControlWidth="50px" AllowFiltering="True" HeaderText="Ship Qty" UniqueName="ShipQty" SortExpression="ShipQty" ItemStyle-HorizontalAlign="Right" Groupable="True" Aggregate="Sum" FooterStyle-ForeColor="Green" FooterStyle-HorizontalAlign="Right" Display="False"  FooterAggregateFormatString="{0:N0}" ></telerik:GridBoundColumn>
                                     <telerik:GridBoundColumn AutoPostBackOnFilter="true" DataField="Terms" FilterControlWidth="50px" Display="False" AllowFiltering="True" HeaderText="Terms" UniqueName="Terms" SortExpression="Terms" Groupable="True"></telerik:GridBoundColumn>
-                                     <telerik:GridBoundColumn AutoPostBackOnFilter="true" DataField="IsBrandingKit" FilterControlWidth="50px"  Display="False" AllowFiltering="True" HeaderText="Is Branding Kit" UniqueName="IsBrandingKit" SortExpression="IsBrandingKit" GroupByExpression="IsBrandingKit" Groupable="True"></telerik:GridBoundColumn>
-                                     <telerik:GridBoundColumn AutoPostBackOnFilter="true" DataField="PhotoApproval" FilterControlWidth="50px"  Display="False" AllowFiltering="True" HeaderText="Photo Approval" UniqueName="PhotoApproval" SortExpression="PhotoApproval" GroupByExpression="PhotoApproval" Groupable="True"></telerik:GridBoundColumn>
-                                     <telerik:GridBoundColumn AutoPostBackOnFilter="true" DataField="DetailStatus" FilterControlWidth="50px"  Display="True" AllowFiltering="True" HeaderText="Detail Status" UniqueName="DetailStatus" SortExpression="DetailStatus" GroupByExpression="DetailStatus" Groupable="True"></telerik:GridBoundColumn>
-                                 </Columns> 
+                                        <telerik:GridBoundColumn AutoPostBackOnFilter="true" DataField="IsBrandingKit" FilterControlWidth="50px"  Display="False" AllowFiltering="True" HeaderText="Is Branding Kit" UniqueName="IsBrandingKit" SortExpression="IsBrandingKit" GroupByExpression="IsBrandingKit" Groupable="True"></telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn AutoPostBackOnFilter="true" DataField="PhotoApproval" FilterControlWidth="50px"  Display="False" AllowFiltering="True" HeaderText="Photo Approval" UniqueName="PhotoApproval" SortExpression="PhotoApproval" GroupByExpression="PhotoApproval" Groupable="True"></telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn AutoPostBackOnFilter="true" DataField="DetailStatus" FilterControlWidth="50px"  Display="True" AllowFiltering="True" HeaderText="Detail Status" UniqueName="DetailStatus" SortExpression="DetailStatus" GroupByExpression="DetailStatus" Groupable="True"></telerik:GridBoundColumn>
+                                    </Columns> 
                             </MasterTableView>
                    </telerik:RadGrid> <!--End Of WeeklyPiecesSummaryRedGrid-->
                  </div> <!--End Of Data Context -->
