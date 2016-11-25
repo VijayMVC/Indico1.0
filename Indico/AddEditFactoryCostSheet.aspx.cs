@@ -2450,7 +2450,7 @@ namespace Indico
             this.finance = objCostSheet.Finance;
             this.subFinance = (totalFabricCost + totalAccCost + heatpress + labelCost + packing) * (finance / 100);
             this.FOBCost = calculatedCM + totalFabricCost + totalAccCost + heatpress + labelCost + packing + subWastage + subFinance;
-            this.quotedFOB = ((objCostSheet.QuotedFOBCost ?? 0) > 0) ? (objCostSheet.QuotedFOBCost ?? 0) : FOBCost;
+            this.quotedFOB = (objCostSheet.QuotedCIF.GetValueOrDefault()) - (objCostSheet.FobFactor.GetValueOrDefault());
             this.roundUp = quotedFOB - FOBCost;
             this.dutyRate = objCostSheet.DutyRate ?? 0;
 

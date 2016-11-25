@@ -474,7 +474,6 @@ namespace Indico
 
             if (patternId > 0)
             {
-                WebServicePattern objWebServicePattern = new WebServicePattern();
                 try
                 {
                     var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
@@ -499,7 +498,7 @@ namespace Indico
                 {
                     IndicoLogging.log.Error("Error occured while deleting pattern From the View Patterns Page", ex);
                 }
-                this.PopulateDataGrid();
+                PopulateDataGrid();
             }
         }
 

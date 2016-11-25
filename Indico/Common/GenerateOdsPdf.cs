@@ -2561,7 +2561,7 @@ namespace Indico.Common
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$smvrate$>", objCostValues.smvRate.ToString("0.00"));//(objCostSheet.SMVRate != null) ? Convert.ToDecimal(objCostSheet.SMVRate.ToString()).ToString("0.00") : string.Empty);
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cm$>", objCostValues.calculatedCM.ToString("0.00"));//(objCostSheet.CM != null) ? Convert.ToDecimal(objCostSheet.CM.ToString()).ToString("0.00") : string.Empty);
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$fobcost$>", Convert.ToDecimal(objCostValues.FOBCost).ToString("0.00"));
-            IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$quotedFOB$>", objCostValues.quotedFOB.ToString("0.00")); //Convert.ToDecimal((objCostSheet.QuotedFOBCost != null && objCostSheet.QuotedFOBCost != decimal.Parse("0")) ? objCostSheet.QuotedFOBCost.ToString() : (objCostSheet.JKFOBCost != null) ? objCostSheet.JKFOBCost.ToString() : "0").ToString("0.00"));
+            IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$quotedfob$>", objCostValues.quotedFOB.ToString("0.00")); //Convert.ToDecimal((objCostSheet.QuotedFOBCost != null && objCostSheet.QuotedFOBCost != decimal.Parse("0")) ? objCostSheet.QuotedFOBCost.ToString() : (objCostSheet.JKFOBCost != null) ? objCostSheet.JKFOBCost.ToString() : "0").ToString("0.00"));
 
             // indiman cost
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$subconsumption$>", Convert.ToDecimal(objCostSheet.SubCons).ToString("0.00"));
