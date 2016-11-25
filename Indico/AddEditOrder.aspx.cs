@@ -1436,7 +1436,7 @@ namespace Indico
                 objDis.IsDelete = false;
                 objDis.IsDistributor = true;
 
-                if (isIndico)
+                if (isIndico && !isDirectSales)
                 {
                     objDis.Coordinator = LoggedUser.ID;
                 }

@@ -157,15 +157,6 @@ namespace Indico {
         protected global::System.Web.UI.WebControls.DropDownList ddlBySizeArtwork;
         
         /// <summary>
-        /// upDistributor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdateProgress upDistributor;
-        
-        /// <summary>
         /// dvHideColums control.
         /// </summary>
         /// <remarks>
@@ -175,13 +166,13 @@ namespace Indico {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvHideColums;
         
         /// <summary>
-        /// updatePnlDistributor control.
+        /// liDistributor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel updatePnlDistributor;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liDistributor;
         
         /// <summary>
         /// ddlDistributor control.
@@ -193,6 +184,24 @@ namespace Indico {
         protected global::System.Web.UI.WebControls.DropDownList ddlDistributor;
         
         /// <summary>
+        /// rfvDistributor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDistributor;
+        
+        /// <summary>
+        /// lblDistributorAddress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDistributorAddress;
+        
+        /// <summary>
         /// lblPrimaryCoordinator control.
         /// </summary>
         /// <remarks>
@@ -200,6 +209,15 @@ namespace Indico {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblPrimaryCoordinator;
+        
+        /// <summary>
+        /// liClient control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl liClient;
         
         /// <summary>
         /// ddlClient control.
@@ -211,40 +229,22 @@ namespace Indico {
         protected global::System.Web.UI.WebControls.DropDownList ddlClient;
         
         /// <summary>
-        /// ancNewClient control.
+        /// aAddClient control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor ancNewClient;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor aAddClient;
         
         /// <summary>
-        /// litClient control.
+        /// btnEditClient control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litClient;
-        
-        /// <summary>
-        /// ancEditClient control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor ancEditClient;
-        
-        /// <summary>
-        /// rfvClient control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvClient;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor btnEditClient;
         
         /// <summary>
         /// ddlJobName control.
@@ -265,22 +265,13 @@ namespace Indico {
         protected global::System.Web.UI.HtmlControls.HtmlAnchor ancNewJobName;
         
         /// <summary>
-        /// litJobName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litJobName;
-        
-        /// <summary>
         /// btnEditJobName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnEditJobName;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor btnEditJobName;
         
         /// <summary>
         /// rfvClientOrJobName control.
@@ -850,13 +841,13 @@ namespace Indico {
         protected global::System.Web.UI.WebControls.HiddenField hdnSelectedID;
         
         /// <summary>
-        /// hdnEditJobNameID control.
+        /// hdnDistributorID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnEditJobNameID;
+        protected global::System.Web.UI.WebControls.HiddenField hdnDistributorID;
         
         /// <summary>
         /// hdnClientID control.
@@ -866,6 +857,15 @@ namespace Indico {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnClientID;
+        
+        /// <summary>
+        /// hdnJobNameID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnJobNameID;
         
         /// <summary>
         /// btnDeleteVLImage control.
@@ -893,15 +893,6 @@ namespace Indico {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ValidationSummary ValidationSummary1;
-        
-        /// <summary>
-        /// ddlClientDistributor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlClientDistributor;
         
         /// <summary>
         /// txtNewClient control.
@@ -956,24 +947,6 @@ namespace Indico {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ValidationSummary vsNewJobName;
-        
-        /// <summary>
-        /// ddlJobNameClient control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlJobNameClient;
-        
-        /// <summary>
-        /// rfvJobNameClient control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvJobNameClient;
         
         /// <summary>
         /// txtNewJobName control.
