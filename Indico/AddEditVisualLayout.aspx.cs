@@ -1440,12 +1440,16 @@ namespace Indico
             int Pattern = int.Parse(this.ddlPattern.SelectedValue);
             this.PopulateFabrics(Pattern);
             this.PopulateAccessories(Pattern);
+
+            ViewState["PopulateDropDown"] = true;
         }
 
         protected void btnCheckName_Click(object sender, EventArgs e)
         {
             ResetViewStateValues();
             cvProductNumber_OnServerValidate(null, null);
+
+            ViewState["PopulateDropDown"] = true;
         }
 
         protected void btnSaveJobName_ServerClick(object sender, EventArgs e)
@@ -1531,6 +1535,8 @@ namespace Indico
             int fabricID = int.Parse(ddlFabric.SelectedValue);
 
             PopulateFabricDescription(fabricID);
+
+            ViewState["PopulateDropDown"] = true;
         }
 
         protected void cfvJobName_ServerValidate(object source, ServerValidateEventArgs args)

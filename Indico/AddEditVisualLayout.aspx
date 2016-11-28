@@ -1052,8 +1052,7 @@
                 $(this).select();
             });
 
-            PopulateClients($("#" + hdnDistributorID).val());
-            PopulateJobNames($("#" + hdnClientID).val());
+            PopulateClients($("#" + hdnDistributorID).val());            
         }
 
         function PopulateClients(id) {
@@ -1083,6 +1082,8 @@
                         else {
                             $("#" + btnEditClient).hide();
                         }
+
+                        PopulateJobNames($("#" + hdnClientID).val());
                     }
                     else {
                         $("#" + hdnClientID).val("0");
