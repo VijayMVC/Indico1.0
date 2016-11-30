@@ -233,7 +233,7 @@ namespace Indico
                     lnkPONumber.Text = objOrderDetailsView.Order;
 
                     int index = objOrderDetailsView.Order.IndexOf("-");
-                    string orderID = objOrderDetailsView.Order.Substring(0, index);                    
+                    string orderID = objOrderDetailsView.Order.Substring(0, index);
                     lnkPONumber.NavigateUrl = "AddEditOrder.aspx?id=" + orderID;
 
                     CheckBox chkGenerateLabel = (CheckBox)item.FindControl("chkGenerateLabel");
@@ -395,7 +395,7 @@ namespace Indico
                     OrderStatus currentStatus = this.GetOrderStatus(int.Parse(objOrderDetailsView.OrderStatusID.ToString()));
 
                     bool isEditEnable = (isDirectSales && currentStatus == OrderStatus.New) ||
-                                           (!isDirectSales && isIndico && ((currentStatus == OrderStatus.New && objOrderDetailsView.CreatorID == LoggedUser.ID ) || currentStatus == OrderStatus.DistributorSubmitted)) ||
+                                           (!isDirectSales && isIndico && ((currentStatus == OrderStatus.New && objOrderDetailsView.CreatorID == LoggedUser.ID) || currentStatus == OrderStatus.DistributorSubmitted)) ||
                                           (!isDirectSales && isIndiman && (currentStatus == OrderStatus.New || currentStatus == OrderStatus.DistributorSubmitted || currentStatus == OrderStatus.CoordinatorSubmitted)) ||
                                           (isFactory && currentStatus != OrderStatus.Completed);
 
@@ -5728,11 +5728,12 @@ namespace Indico
                 var orders = lstOrderDetails.GroupBy(i => i.Order);
                 foreach (var o in orders)
                 {
-                    var i = 1;
+                    int i = 1;
                     var vls = o.OrderByDescending(t => t.Order).ToList();
                     foreach (var vl in vls)
                     {
-                        vl.Order = vl.Order + "-" + i;
+                        string index = (i < 10) ? ("0" + i) : i.ToString();
+                        vl.Order = vl.Order + "-" + index;
                         i++;
                     }
                 }
