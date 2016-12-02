@@ -289,7 +289,8 @@ namespace Indico
                 lblOrderType.Text = objOrderDetail.OrderTypeName;
 
                 Literal lblIndex = (Literal)item.FindControl("lblIndex");
-                lblIndex.Text = (objOrderDetail.Index + 1).ToString();
+                string index = ((objOrderDetail.Index + 1) < 10) ? ("0" + (objOrderDetail.Index + 1)) : (objOrderDetail.Index + 1).ToString();
+                lblIndex.Text = index; // (objOrderDetail.Index + 1).ToString();
 
 
                 Literal lblVLNumber = (Literal)item.FindControl("lblVLNumber");
