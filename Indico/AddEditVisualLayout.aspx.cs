@@ -446,82 +446,6 @@ namespace Indico
             }
         }
 
-        //protected void ddlDistributor_SelectedIndexChange(object sender, EventArgs e)
-        //{
-        //    ddlClient.Items.Clear();
-        //    //ddlJobNameClient.Items.Clear();
-        //    ddlJobName.Items.Clear();
-        //    //this.litClient.Text = string.Empty;            
-        //    //this.ancEditClient.Visible = false;
-        //    this.litJobName.Text = string.Empty;
-        //    this.btnEditJobName.Visible = false;
-
-        //    if (int.Parse(this.ddlDistributor.SelectedValue) == 0)
-        //    {
-        //        this.ddlClient.Enabled = false;
-        //        this.lblPrimaryCoordinator.Text = "None";
-        //        this.lblSecondaryCoordinator.Text = "None";
-        //        //this.ancNewClient.Visible = false;
-        //    }
-        //    else
-        //    {
-        //        this.ddlClient.Enabled = true;
-        //        //this.ancNewClient.Visible = true;
-
-        //        CompanyBO objCompany = new CompanyBO();
-        //        objCompany.ID = int.Parse(this.ddlDistributor.SelectedValue);
-        //        objCompany.GetObject();
-
-        //        this.ddlClient.Items.Add(new ListItem("Select Client", "0"));
-        //        //this.ddlJobNameClient.Items.Add(new ListItem("Select Client", "0"));
-
-        //        ClientBO objClient = new ClientBO();
-        //        objClient.Distributor = objCompany.ID;
-        //        List<ClientBO> lstClients = objClient.SearchObjects().OrderBy(o => o.Name).ToList(); // objCompany.ClientsWhereThisIsDistributor.OrderBy(o => o.Name).ToList();
-
-        //        foreach (ClientBO client in lstClients)
-        //        {
-        //            this.ddlClient.Items.Add(new ListItem(client.Name, client.ID.ToString()));
-        //            //this.ddlJobNameClient.Items.Add(new ListItem(client.Name, client.ID.ToString()));
-        //        }
-
-        //        //ddlClientDistributor.ClearSelection();
-        //        //ddlClientDistributor.Items.FindByValue(this.ddlDistributor.SelectedValue).Selected = true;
-
-        //        this.lblPrimaryCoordinator.Text = (objCompany.Coordinator != null && objCompany.Coordinator > 0) ? objCompany.objCoordinator.GivenName + " " + objCompany.objCoordinator.FamilyName : "None";
-        //        this.lblSecondaryCoordinator.Text = (objCompany.SecondaryCoordinator != null && objCompany.SecondaryCoordinator > 0) ? objCompany.objSecondaryCoordinator.GivenName + " " + objCompany.objSecondaryCoordinator.FamilyName : "None";
-        //    }
-        //}
-
-        //protected void ddlClient_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    PopulateJobNames(int.Parse(ddlClient.SelectedValue));
-        //}
-
-        //protected void ddlJobName_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    if (ddlJobName.SelectedIndex > 0)
-        //    {
-        //        JobNameBO objJobName = new JobNameBO();
-        //        objJobName.ID = int.Parse(ddlJobName.SelectedValue);
-        //        objJobName.GetObject();
-
-        //        this.litJobName.Text = objJobName.Name +
-        //           (string.IsNullOrEmpty(objJobName.Address) ? string.Empty : (" " + objJobName.Address)) +
-        //           (string.IsNullOrEmpty(objJobName.City) ? string.Empty : (" " + objJobName.City)) +
-        //           (string.IsNullOrEmpty(objJobName.State) ? string.Empty : (" " + objJobName.State)) +
-        //           (string.IsNullOrEmpty(objJobName.PostalCode) ? string.Empty : (" " + objJobName.PostalCode)) +
-        //           (string.IsNullOrEmpty(objJobName.Country) ? string.Empty : (" " + objJobName.Country))
-        //            ;
-        //        this.btnEditJobName.Visible = true;
-        //    }
-        //    else
-        //    {
-        //        this.litJobName.Text = string.Empty;
-        //        this.btnEditJobName.Visible = false;
-        //    }
-        //}
-
         protected void btnDeleteVLImage_Click(object sender, EventArgs e)
         {
             ResetViewStateValues();
@@ -1440,12 +1364,16 @@ namespace Indico
             int Pattern = int.Parse(this.ddlPattern.SelectedValue);
             this.PopulateFabrics(Pattern);
             this.PopulateAccessories(Pattern);
+
+            ViewState["PopulateDropDown"] = true;
         }
 
         protected void btnCheckName_Click(object sender, EventArgs e)
         {
             ResetViewStateValues();
             cvProductNumber_OnServerValidate(null, null);
+
+            ViewState["PopulateDropDown"] = true;
         }
 
         protected void btnSaveJobName_ServerClick(object sender, EventArgs e)
@@ -1508,22 +1436,6 @@ namespace Indico
             }
         }
 
-        //protected void btnEditJobName_Click(object sender, EventArgs e)
-        //{
-        //    ResetViewStateValues();
-
-        //    JobNameBO objJobName = new JobNameBO();
-        //    objJobName.ID = int.Parse(ddlJobName.SelectedValue);
-        //    objJobName.GetObject();
-
-        //    //this.ddlJobNameClient.ClearSelection();
-        //    //this.ddlJobNameClient.Items.FindByValue(objJobName.Client.ToString()).Selected = true;
-        //    this.txtNewJobName.Text = objJobName.Name;
-
-        //    hdnEditJobNameID.Value = objJobName.ID.ToString();
-        //    ViewState["PopulateJobName"] = true;
-        //}
-
         protected void ddlFabric_SelectedIndexChanged(object sender, EventArgs e)
         {
             lblFabricDescription.Text = string.Empty;
@@ -1531,6 +1443,8 @@ namespace Indico
             int fabricID = int.Parse(ddlFabric.SelectedValue);
 
             PopulateFabricDescription(fabricID);
+
+            ViewState["PopulateDropDown"] = true;
         }
 
         protected void cfvJobName_ServerValidate(object source, ServerValidateEventArgs args)
@@ -1785,13 +1699,6 @@ namespace Indico
                     this.dvHideColums.Visible = false;
                 }
 
-                //this.ddlClient.ClearSelection();
-                //this.ddlClient.Items.FindByValue(objVisualLayout.objClient.Client.ToString()).Selected = true;
-                //this.litClient.Text = objVisualLayout.objClient.objClient.Name;
-                //this.ancEditClient.Visible = true;
-                //this.ddlJobName.ClearSelection();
-                //this.ddlJobName.Items.FindByValue(objVisualLayout.Client.ToString()).Selected = true;
-
                 ddlDistributor.Items.FindByValue(objVisualLayout.objClient.objClient.Distributor.ToString()).Selected = true;
                 hdnDistributorID.Value = (objVisualLayout.Client ?? 0) > 0 ? objVisualLayout.objClient.objClient.Distributor.ToString() : "0";
                 hdnClientID.Value = (objVisualLayout.Client ?? 0) > 0 ? objVisualLayout.objClient.Client.ToString() : "0";
@@ -1799,16 +1706,6 @@ namespace Indico
 
                 this.lblPrimaryCoordinator.Text = (objVisualLayout.objClient.objClient.objDistributor.Coordinator ?? 0) > 0 ? objVisualLayout.objClient.objClient.objDistributor.objCoordinator.GivenName + " " + objVisualLayout.objClient.objClient.objDistributor.objCoordinator.FamilyName : "None";
                 this.lblSecondaryCoordinator.Text = (objVisualLayout.objClient.objClient.objDistributor.SecondaryCoordinator ?? 0) > 0 ? objVisualLayout.objClient.objClient.objDistributor.objSecondaryCoordinator.GivenName + " " + objVisualLayout.objClient.objClient.objDistributor.objSecondaryCoordinator.FamilyName : "None";
-
-                //JobNameBO objJobName = objVisualLayout.objClient;
-                //this.litJobName.Text = objJobName.Name +
-                //  (string.IsNullOrEmpty(objJobName.Address) ? string.Empty : (" " + objJobName.Address)) +
-                //  (string.IsNullOrEmpty(objJobName.City) ? string.Empty : (" " + objJobName.City)) +
-                //  (string.IsNullOrEmpty(objJobName.State) ? string.Empty : (" " + objJobName.State)) +
-                //  (string.IsNullOrEmpty(objJobName.PostalCode) ? string.Empty : (" " + objJobName.PostalCode)) +
-                //  (string.IsNullOrEmpty(objJobName.Country) ? string.Empty : (" " + objJobName.Country))
-                //   ;
-                //this.btnEditJobName.Visible = true;
 
                 this.PopulateFabrics(objVisualLayout.Pattern);
 
@@ -1882,27 +1779,27 @@ namespace Indico
                 objJobName.ID = QueryJobNameID;
                 objJobName.GetObject();
 
-                //this.ddlDistributor.SelectedValue = objJobName.objClient.Distributor.ToString();
-                //this.ddlDistributor_SelectedIndexChange(null, null);
+                bool canEdit = false;
 
-                //this.PopulateJobNames(objJobName.Client ?? 0);
+                try
+                {
+                    ReturnIntViewBO objReturnInt = new ReturnIntViewBO();
+                    objReturnInt = SettingsBO.ValidateField(0, "OrderDetail", "VisualLayout", this.QueryID.ToString());
+                    canEdit = objReturnInt.RetVal == 1;
+                }
+                catch (Exception ex)
+                {
+                    IndicoLogging.log.Error("Error occured while cvTxtName_ServerValidate on AddEditPattern.aspx", ex);
+                }
 
-                //this.ddlClient.ClearSelection();
-                //this.ddlClient.Items.FindByValue(objJobName.Client.ToString()).Selected = true;
-                ////this.litClient.Text = objJobName.objClient.Name;
-                ////this.ancEditClient.Visible = true;
+                this.ddlDistributor.Enabled = canEdit;
+                this.ddlClient.Enabled = canEdit;
+                this.ddlJobName.Enabled = canEdit;
 
-                //this.ddlJobName.ClearSelection();
-                //this.ddlJobName.Items.FindByValue(objJobName.ID.ToString()).Selected = true;
-
-                //this.litJobName.Text = objJobName.Name +
-                //  (string.IsNullOrEmpty(objJobName.Address) ? string.Empty : (" " + objJobName.Address)) +
-                //  (string.IsNullOrEmpty(objJobName.City) ? string.Empty : (" " + objJobName.City)) +
-                //  (string.IsNullOrEmpty(objJobName.State) ? string.Empty : (" " + objJobName.State)) +
-                //  (string.IsNullOrEmpty(objJobName.PostalCode) ? string.Empty : (" " + objJobName.PostalCode)) +
-                //  (string.IsNullOrEmpty(objJobName.Country) ? string.Empty : (" " + objJobName.Country))
-                //   ;
-                //this.btnEditJobName.Visible = true;
+                aAddClient.Visible = canEdit;
+                ancNewJobName.Visible = canEdit;
+                btnEditJobName.Visible = canEdit;
+                btnEditClient.Visible = canEdit;
 
                 ddlDistributor.Items.FindByValue(objJobName.objClient.Distributor.ToString()).Selected = true;
                 hdnDistributorID.Value = objJobName.objClient.Distributor.ToString();
@@ -1911,7 +1808,6 @@ namespace Indico
 
                 this.lblPrimaryCoordinator.Text = (objJobName.objClient.objDistributor.Coordinator ?? 0) > 0 ? objJobName.objClient.objDistributor.objCoordinator.GivenName + " " + objJobName.objClient.objDistributor.objCoordinator.FamilyName : "None";
                 this.lblSecondaryCoordinator.Text = (objJobName.objClient.objDistributor.SecondaryCoordinator ?? 0) > 0 ? objJobName.objClient.objDistributor.objSecondaryCoordinator.GivenName + " " + objJobName.objClient.objDistributor.objSecondaryCoordinator.FamilyName : "None";
-
             }
 
             ViewState["PopulateDropDown"] = true;
@@ -2128,51 +2024,6 @@ namespace Indico
                 objClient.Distributor = LoggedCompany.ID;
             }
         }
-
-        //private void PopulateJobNames(int client)
-        //{
-        //    //this.litClient.Text = string.Empty;
-        //    this.litJobName.Text = string.Empty;
-        //    this.btnEditJobName.Visible = false;
-        //    this.ddlJobName.Items.Clear();
-        //    this.ddlJobName.Items.Add(new ListItem("Select Job Name", "0"));
-
-        //    this.ancNewJobName.Visible = client > 0;
-        //    //this.ddlJobNameClient.ClearSelection();
-        //    //this.ddlJobNameClient.Items.FindByValue(client.ToString()).Selected = true;
-
-        //    //this.ancEditClient.Visible = client > 0;
-
-        //    if (client > 0)
-        //    {
-        //        JobNameBO objJobName = new JobNameBO();
-        //        objJobName.Client = client;
-
-        //        List<JobNameBO> lstJobNames = objJobName.SearchObjects().OrderBy(o => o.Name).ToList();
-
-        //        foreach (JobNameBO jobName in lstJobNames)
-        //        {
-        //            this.ddlJobName.Items.Add(new ListItem(jobName.Name, jobName.ID.ToString()));
-        //        }
-
-        //        //this.litClient.Text = objJobName.objClient.Name;
-
-        //        if (this.ddlJobName.SelectedValue == "0")
-        //        {
-        //            if (this.QueryID > 0)
-        //            {
-        //                VisualLayoutBO objVisualLayout = new VisualLayoutBO();
-        //                objVisualLayout.ID = this.QueryID;
-        //                objVisualLayout.GetObject();
-
-        //                this.ddlJobName.ClearSelection();
-        //                var item = ddlJobName.Items.FindByValue(objVisualLayout.Client.ToString());
-        //                if (item != null)
-        //                    item.Selected = true;
-        //            }
-        //        }
-        //    }
-        //}
 
         private int ProcessForm()
         {

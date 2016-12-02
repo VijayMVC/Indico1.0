@@ -880,9 +880,11 @@ namespace Indico
             {
                 int costsheetid = 0;
                 int oldFabric = 0;
+                CostSheetBO objCostSheet;
+
                 using (TransactionScope ts = new TransactionScope())
                 {
-                    CostSheetBO objCostSheet = new CostSheetBO(this.ObjContext);
+                    objCostSheet = new CostSheetBO(this.ObjContext);
 
                     if (this.QueryID > 0)
                     {
@@ -952,8 +954,6 @@ namespace Indico
                             objPatternSupportFabric.Fabric = int.Parse(((System.Web.UI.WebControls.WebControl)(litFabricPrice)).Attributes["id"].ToString());
                             objPatternSupportFabric.FabConstant = Convert.ToDecimal(txtCons.Text);
                             objPatternSupportFabric.CostSheet = costsheetid;
-
-                            this.ObjContext.SaveChanges();
                         }
                         //else
                         //{
@@ -986,8 +986,6 @@ namespace Indico
                             objPatternSupportAccessory.AccConstant = Convert.ToDecimal(txtcons.Text);
                             objPatternSupportAccessory.Pattern = int.Parse(this.ddlPattern.SelectedValue);
                             objPatternSupportAccessory.CostSheet = costsheetid;
-
-                            this.ObjContext.SaveChanges();
                         }
                         //else
                         //{
@@ -1012,10 +1010,7 @@ namespace Indico
                             objCostSheetRemarks.CostSheet = costsheetid;
                             objCostSheetRemarks.Remarks = this.txtRemarks.Text;
                             objCostSheetRemarks.Modifier = LoggedUser.ID;
-                            objCostSheetRemarks.ModifiedDate = DateTime.Now;
-
-                            this.ObjContext.SaveChanges();
-
+                            objCostSheetRemarks.ModifiedDate = DateTime.Now;                            
                         }
                     }
                     else if (this.LoggedUserRoleName == UserRole.IndimanAdministrator || this.LoggedUserRoleName == UserRole.IndimanCoordinator)
@@ -1026,10 +1021,7 @@ namespace Indico
                             objIndimanCostSheetRemarks.CostSheet = costsheetid;
                             objIndimanCostSheetRemarks.Remarks = this.txtRemarks.Text;
                             objIndimanCostSheetRemarks.Modifier = LoggedUser.ID;
-                            objIndimanCostSheetRemarks.ModifiedDate = DateTime.Now;
-
-                            this.ObjContext.SaveChanges();
-
+                            objIndimanCostSheetRemarks.ModifiedDate = DateTime.Now;                            
                         }
                     }
 
@@ -1037,70 +1029,70 @@ namespace Indico
 
                     #region Save Price Values
 
-                    List<PriceBO> lstPrices = (from o in (new PriceBO()).SearchObjects()
-                                               where o.Pattern == int.Parse(this.ddlPattern.SelectedValue) &&
-                                                     o.FabricCode == ((OldFabric > 0) ? OldFabric : int.Parse(this.ddlFabric.SelectedValue))
-                                               select o).ToList();
-                    PriceBO objPrice = new PriceBO(this.ObjContext);
-                    if (lstPrices.Count > 0)
-                    {
-                        objPrice.ID = lstPrices[0].ID;
-                        objPrice.GetObject();
-                    }
-                    else
-                    {
-                        objPrice.EnableForPriceList = false;
-                        objPrice.Creator = this.LoggedUser.ID;
-                        objPrice.CreatedDate = Convert.ToDateTime(DateTime.Now.ToString("g"));
-                    }
+                    //List<PriceBO> lstPrices = (from o in (new PriceBO()).SearchObjects()
+                    //                           where o.Pattern == int.Parse(this.ddlPattern.SelectedValue) &&
+                    //                                 o.FabricCode == ((OldFabric > 0) ? OldFabric : int.Parse(this.ddlFabric.SelectedValue))
+                    //                           select o).ToList();
+                    //PriceBO objPrice = new PriceBO(this.ObjContext);
+                    //if (lstPrices.Count > 0)
+                    //{
+                    //    objPrice.ID = lstPrices[0].ID;
+                    //    objPrice.GetObject();
+                    //}
+                    //else
+                    //{
+                    //    objPrice.EnableForPriceList = false;
+                    //    objPrice.Creator = this.LoggedUser.ID;
+                    //    objPrice.CreatedDate = Convert.ToDateTime(DateTime.Now.ToString("g"));
+                    //}
 
-                    objPrice.Pattern = int.Parse(this.ddlPattern.SelectedValue);
-                    objPrice.FabricCode = int.Parse(this.ddlFabric.SelectedValue);
-                    objPrice.Modifier = this.LoggedUser.ID;
-                    objPrice.ModifiedDate = Convert.ToDateTime(DateTime.Now.ToString("g"));
+                    //objPrice.Pattern = int.Parse(this.ddlPattern.SelectedValue);
+                    //objPrice.FabricCode = int.Parse(this.ddlFabric.SelectedValue);
+                    //objPrice.Modifier = this.LoggedUser.ID;
+                    //objPrice.ModifiedDate = Convert.ToDateTime(DateTime.Now.ToString("g"));
 
-                    this.ObjContext.SaveChanges();
+                    //this.ObjContext.SaveChanges();
 
-                    if (lstPrices.Count == 0)
-                    {
+                    //if (lstPrices.Count == 0)
+                    //{
 
-                        foreach (int priceLevel in (new PriceLevelBO()).GetAllObject().Select(o => o.ID))
-                        {
-                            PriceLevelCostBO objPriceLevelCost = new PriceLevelCostBO(this.ObjContext);
+                    //    foreach (int priceLevel in (new PriceLevelBO()).GetAllObject().Select(o => o.ID))
+                    //    {
+                    //        PriceLevelCostBO objPriceLevelCost = new PriceLevelCostBO(this.ObjContext);
 
-                            decimal indimaprice = (string.IsNullOrEmpty(this.txtQuotedCif.Text)) ? Convert.ToDecimal(string.IsNullOrEmpty(this.txtCIF.Text) ? "0.00" : this.txtCIF.Text) : (this.txtQuotedCif.Text == "0.00") ? Convert.ToDecimal(string.IsNullOrEmpty(this.txtCIF.Text) ? "0.00" : this.txtCIF.Text) : Convert.ToDecimal(this.txtQuotedCif.Text);
+                    //        decimal indimaprice = (string.IsNullOrEmpty(this.txtQuotedCif.Text)) ? Convert.ToDecimal(string.IsNullOrEmpty(this.txtCIF.Text) ? "0.00" : this.txtCIF.Text) : (this.txtQuotedCif.Text == "0.00") ? Convert.ToDecimal(string.IsNullOrEmpty(this.txtCIF.Text) ? "0.00" : this.txtCIF.Text) : Convert.ToDecimal(this.txtQuotedCif.Text);
 
-                            objPriceLevelCost.FactoryCost = (string.IsNullOrEmpty(this.txtJKFobQuoted.Text)) ? Convert.ToDecimal(string.IsNullOrEmpty(this.txtFobCost.Text) ? "0.00" : this.txtFobCost.Text) : (this.txtJKFobQuoted.Text == "0.00") ? Convert.ToDecimal(string.IsNullOrEmpty(this.txtFobCost.Text) ? "0.00" : this.txtFobCost.Text) : Convert.ToDecimal(this.txtJKFobQuoted.Text);
-                            objPriceLevelCost.IndimanCost = (indimaprice == 0) ? objPriceLevelCost.IndimanCost : indimaprice;
-                            objPriceLevelCost.Creator = this.LoggedUser.ID;
-                            objPriceLevelCost.CreatedDate = DateTime.Now;
-                            objPriceLevelCost.Modifier = this.LoggedUser.ID;
-                            objPriceLevelCost.ModifiedDate = DateTime.Now;
-                            objPriceLevelCost.PriceLevel = priceLevel;
-                            objPrice.PriceLevelCostsWhereThisIsPrice.Add(objPriceLevelCost);
-                        }
-                    }
-                    else
-                    {
-                        List<PriceLevelCostBO> lstPriceLevelCost = (new PriceLevelCostBO()).GetAllObject().Where(o => o.Price == lstPrices[0].ID).ToList();
+                    //        objPriceLevelCost.FactoryCost = (string.IsNullOrEmpty(this.txtJKFobQuoted.Text)) ? Convert.ToDecimal(string.IsNullOrEmpty(this.txtFobCost.Text) ? "0.00" : this.txtFobCost.Text) : (this.txtJKFobQuoted.Text == "0.00") ? Convert.ToDecimal(string.IsNullOrEmpty(this.txtFobCost.Text) ? "0.00" : this.txtFobCost.Text) : Convert.ToDecimal(this.txtJKFobQuoted.Text);
+                    //        objPriceLevelCost.IndimanCost = (indimaprice == 0) ? objPriceLevelCost.IndimanCost : indimaprice;
+                    //        objPriceLevelCost.Creator = this.LoggedUser.ID;
+                    //        objPriceLevelCost.CreatedDate = DateTime.Now;
+                    //        objPriceLevelCost.Modifier = this.LoggedUser.ID;
+                    //        objPriceLevelCost.ModifiedDate = DateTime.Now;
+                    //        objPriceLevelCost.PriceLevel = priceLevel;
+                    //        objPrice.PriceLevelCostsWhereThisIsPrice.Add(objPriceLevelCost);
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    List<PriceLevelCostBO> lstPriceLevelCost = (new PriceLevelCostBO()).GetAllObject().Where(o => o.Price == lstPrices[0].ID).ToList();
 
-                        foreach (PriceLevelCostBO plc in lstPriceLevelCost)
-                        {
-                            PriceLevelCostBO objPriceLevelCost = new PriceLevelCostBO(this.ObjContext);
-                            objPriceLevelCost.ID = plc.ID;
-                            objPriceLevelCost.GetObject();
+                    //    foreach (PriceLevelCostBO plc in lstPriceLevelCost)
+                    //    {
+                    //        PriceLevelCostBO objPriceLevelCost = new PriceLevelCostBO(this.ObjContext);
+                    //        objPriceLevelCost.ID = plc.ID;
+                    //        objPriceLevelCost.GetObject();
 
-                            objPriceLevelCost.FactoryCost = (string.IsNullOrEmpty(this.txtJKFobQuoted.Text)) ? Convert.ToDecimal(string.IsNullOrEmpty(this.txtFobCost.Text) ? "0.00" : this.txtFobCost.Text) : (this.txtJKFobQuoted.Text == "0.00") ? Convert.ToDecimal(string.IsNullOrEmpty(this.txtFobCost.Text) ? "0.00" : this.txtFobCost.Text) : Convert.ToDecimal(this.txtJKFobQuoted.Text);
-                            objPriceLevelCost.IndimanCost = (string.IsNullOrEmpty(this.txtQuotedCif.Text)) ? Convert.ToDecimal(string.IsNullOrEmpty(this.txtCIF.Text) ? "0.00" : this.txtCIF.Text) : (this.txtQuotedCif.Text == "0.00") ? Convert.ToDecimal(string.IsNullOrEmpty(this.txtCIF.Text) ? "0.00" : this.txtCIF.Text) : Convert.ToDecimal(this.txtQuotedCif.Text);
-                            objPriceLevelCost.Modifier = this.LoggedUser.ID;
-                            objPriceLevelCost.ModifiedDate = DateTime.Now;
-                        }
-                    }
+                    //        objPriceLevelCost.FactoryCost = (string.IsNullOrEmpty(this.txtJKFobQuoted.Text)) ? Convert.ToDecimal(string.IsNullOrEmpty(this.txtFobCost.Text) ? "0.00" : this.txtFobCost.Text) : (this.txtJKFobQuoted.Text == "0.00") ? Convert.ToDecimal(string.IsNullOrEmpty(this.txtFobCost.Text) ? "0.00" : this.txtFobCost.Text) : Convert.ToDecimal(this.txtJKFobQuoted.Text);
+                    //        objPriceLevelCost.IndimanCost = (string.IsNullOrEmpty(this.txtQuotedCif.Text)) ? Convert.ToDecimal(string.IsNullOrEmpty(this.txtCIF.Text) ? "0.00" : this.txtCIF.Text) : (this.txtQuotedCif.Text == "0.00") ? Convert.ToDecimal(string.IsNullOrEmpty(this.txtCIF.Text) ? "0.00" : this.txtCIF.Text) : Convert.ToDecimal(this.txtQuotedCif.Text);
+                    //        objPriceLevelCost.Modifier = this.LoggedUser.ID;
+                    //        objPriceLevelCost.ModifiedDate = DateTime.Now;
+                    //    }
+                    //}
 
                     #endregion
 
-                    //Update VL fabrics
-                    if (this.QueryID > 0)
+                    //Update VL fabrics if changed
+                    if (this.QueryID > 0 && (objCostSheet.Fabric != oldFabric))
                     {
                         VisualLayoutBO objVL = new VisualLayoutBO();
                         objVL.Pattern = objCostSheet.Pattern;
