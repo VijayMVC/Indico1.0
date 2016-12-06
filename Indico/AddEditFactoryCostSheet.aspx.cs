@@ -914,6 +914,7 @@ namespace Indico
                     objCostSheet.MP = Convert.ToDecimal(string.IsNullOrEmpty(this.txtMp.Text) ? "0.00" : this.txtMp.Text);
                     objCostSheet.QuotedCIF = Convert.ToDecimal(string.IsNullOrEmpty(this.txtQuotedCif.Text) ? "0.00" : this.txtQuotedCif.Text);
                     objCostSheet.FobFactor = Convert.ToDecimal(string.IsNullOrEmpty(this.txtFobFactor.Text) ? "0.00" : this.txtFobFactor.Text);
+                    objCostSheet.JKFOBCost = Convert.ToDecimal(string.IsNullOrEmpty(this.txtJKFobQuoted.Text) ? "0.00" : this.txtJKFobQuoted.Text);
 
                     #region Change SMV
 
@@ -1010,7 +1011,7 @@ namespace Indico
                             objCostSheetRemarks.CostSheet = costsheetid;
                             objCostSheetRemarks.Remarks = this.txtRemarks.Text;
                             objCostSheetRemarks.Modifier = LoggedUser.ID;
-                            objCostSheetRemarks.ModifiedDate = DateTime.Now;                            
+                            objCostSheetRemarks.ModifiedDate = DateTime.Now;
                         }
                     }
                     else if (this.LoggedUserRoleName == UserRole.IndimanAdministrator || this.LoggedUserRoleName == UserRole.IndimanCoordinator)
@@ -1021,7 +1022,7 @@ namespace Indico
                             objIndimanCostSheetRemarks.CostSheet = costsheetid;
                             objIndimanCostSheetRemarks.Remarks = this.txtRemarks.Text;
                             objIndimanCostSheetRemarks.Modifier = LoggedUser.ID;
-                            objIndimanCostSheetRemarks.ModifiedDate = DateTime.Now;                            
+                            objIndimanCostSheetRemarks.ModifiedDate = DateTime.Now;
                         }
                     }
 
@@ -2142,7 +2143,7 @@ namespace Indico
             this.txtFinance.Text = objCostValues.finance.ToString("0.00");
             this.txtCM.Text = objCostValues.calculatedCM.ToString("0.00");
             this.txtFobCost.Text = objCostValues.FOBCost.ToString("0.00");
-            this.txtJKFobQuoted.Text = (isClone) ? "0.00" : objCostValues.quotedFOB.ToString("0.00");
+            this.txtJKFobQuoted.Text = (isClone) ? "0.00" : objCostValues.JKQuotedFOB.ToString("0.00");
             this.txtRoundUp.Text = objCostValues.roundUp.ToString("0.00");
             this.txtSubWastage.Text = objCostValues.subWastage.ToString("0.00");
             this.txtSubFinance.Text = objCostValues.subFinance.ToString("0.00");
@@ -2381,6 +2382,8 @@ namespace Indico
         public decimal FOBCost { get; set; }
         public decimal quotedFOB { get; set; }
 
+        public decimal JKQuotedFOB { get; set; }
+
         public decimal roundUp { get; set; }
         public decimal dutyRate { get; set; }
 
@@ -2443,6 +2446,7 @@ namespace Indico
             this.subFinance = (totalFabricCost + totalAccCost + heatpress + labelCost + packing) * (finance / 100);
             this.FOBCost = calculatedCM + totalFabricCost + totalAccCost + heatpress + labelCost + packing + subWastage + subFinance;
             this.quotedFOB = (objCostSheet.QuotedCIF.GetValueOrDefault()) - (objCostSheet.FobFactor.GetValueOrDefault());
+            this.JKQuotedFOB = objCostSheet.JKFOBCost;
             this.roundUp = quotedFOB - FOBCost;
             this.dutyRate = objCostSheet.DutyRate ?? 0;
 
