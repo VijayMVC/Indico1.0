@@ -545,7 +545,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     ×</button>
-                <h3 id="odTitle" runat="server">New Order Detail</h3>
+                <h3><span id="odTitle" runat="server">New Order Detail</span></h3>
             </div>
             <asp:HiddenField ID="hfScrollPosition" Value="0" runat="server" />
 

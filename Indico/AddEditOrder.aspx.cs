@@ -529,8 +529,6 @@ namespace Indico
             {
                 try
                 {
-                    odTitle.InnerText = "Edit Order Detail";
-
                     int index = int.Parse(((HtmlAnchor)sender).Attributes["index"].ToString());
 
                     OrderDetail objTempOD = this.ListOrderDetails.Where(m => m.Index == index).SingleOrDefault();
@@ -552,6 +550,8 @@ namespace Indico
 
                     ResetOrderDetailForm();
 
+                    odTitle.InnerText = "Edit Order Detail - " + objTempOD.Order + " - " + objTempOD.SheduledDate;
+                    
                     ddlSizes.Items.Clear();
                     ddlSizes.Items.Add(new ListItem("Select a Size", "0"));
                     foreach (int size in lst)
@@ -630,6 +630,11 @@ namespace Indico
                     collapse1.Attributes.Add("class", "accordion-body collapse");
                     collapse2.Attributes.Add("class", "accordion-body collapse in");
                     collapse3.Attributes.Add("class", "accordion-body collapse");
+
+                    bool isNotFactory = !(LoggedUserRoleName == UserRole.FactoryAdministrator || LoggedUserRoleName == UserRole.FactoryCoordinator);
+                    hlNewVisualLayout.Visible = isNotFactory;
+                    btnRefreshVL.Visible = isNotFactory;
+                    ddlSizes.Visible = isNotFactory;
 
                     ViewState["PopulateOrderDetail"] = true;
                 }
@@ -1442,7 +1447,7 @@ namespace Indico
                     objDis.Coordinator = LoggedUser.ID;
                 }
 
-                List<CompanyBO> lstDistributors = objDis.SearchObjects().OrderBy(m => m.Name).ToList(); // (new CompanyBO()).GetAllObject().Where(o => o.IsDistributor == true && o.IsActive == true && o.IsDelete == false).OrderBy(o => o.Name).ToList(); ;
+                List<CompanyBO> lstDistributors = objDis.SearchObjects().OrderBy(m => m.Name).ToList();
                 foreach (CompanyBO distributor in lstDistributors)
                 {
                     ddlDistributor.Items.Add(new ListItem(distributor.Name, distributor.ID.ToString()));
@@ -1540,6 +1545,7 @@ namespace Indico
                     txtPoNo.Text = (objOrder.PurchaseOrderNo != null) ? objOrder.PurchaseOrderNo.ToString() : string.Empty;
                     txtOldPoNo.Text = objOrder.OldPONo;
 
+                    litHeaderText.Text += " - " + txtRefference.Text;
                     liClient.Visible = true;
 
                     rbDateYes.Checked = (objOrder.IsDateNegotiable) ? true : false;
@@ -1570,12 +1576,7 @@ namespace Indico
                     lblJobName.Text = objOrderDetail.objVisualLayout.objClient.Name;
                     btnEditJobName.Visible = true;
 
-                    //Populate OrderItems
                     PopulateOrderDetails();
-
-                    //ddlDistributor.Enabled = false;
-                    //ddlClient.Enabled = false;
-                    //ddlJobName.Enabled = false;
 
                     OrderDetailBO objODetail = new OrderDetailBO();
                     objODetail.Order = objOrder.ID;
@@ -1597,6 +1598,33 @@ namespace Indico
                         btnSubmit.Visible = false;
                     }
                     //&& (!(lstOD.Where(m => !m.VisualLayout.HasValue || m.VisualLayout.Value == 0).Count() > 0));
+
+                    //Disable fields to Factory
+
+                    bool isNotFactory = !(LoggedUserRoleName == UserRole.FactoryAdministrator || LoggedUserRoleName == UserRole.FactoryCoordinator);
+                    txtDate.Enabled = isNotFactory;
+                    txtPoNo.Enabled = isNotFactory;
+                    ddlDistributor.Enabled = isNotFactory;
+                    ddlClient.Enabled = isNotFactory;
+                    ddlJobName.Enabled = isNotFactory;
+                    ddlBillingAddress.Enabled = isNotFactory;
+                    ddlDespatchAddress.Enabled = isNotFactory;
+                    ddlStatus.Enabled = isNotFactory;
+                    txtRefference.Enabled = isNotFactory;
+                    txtOldPoNo.Enabled = isNotFactory;
+                    txtDesiredDate.Enabled = isNotFactory;
+
+                    aAddClient.Visible = isNotFactory;
+                    btnEditClient.Visible = isNotFactory;
+                    ancNewJobName.Visible = isNotFactory;
+                    btnEditJobName.Visible = isNotFactory;
+                    aAddShippingAddress.Visible = isNotFactory;
+                    btnEditBilling.Visible = isNotFactory;
+                    ancDespatchAddress.Visible = isNotFactory;
+                    btnEditDespatch.Visible = isNotFactory;
+
+                    btnNewOrderDetail.Visible = isNotFactory;
+
                 }
                 //else if (QueryReservationID > 0)
                 //{
