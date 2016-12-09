@@ -1027,7 +1027,7 @@ namespace Indico
                     }
 
                     #endregion
-                    
+
                     //Update VL fabrics if changed
                     if (this.QueryID > 0 && (objCostSheet.Fabric != oldFabric))
                     {
@@ -1849,7 +1849,7 @@ namespace Indico
                 this.ddlPattern.Items.FindByValue(objCostSheet.Pattern.ToString()).Selected = true;
 
                 PopulateCostValues(objCostSheet, true);
-                
+
                 ViewState["MainFabric"] = objCostSheet.Fabric.ToString();
 
                 if (objCostSheet.FOBAUD.ToString() == "0.00" && this.LoggedUserRoleName == UserRole.IndicoAdministrator)
@@ -2261,7 +2261,7 @@ namespace Indico
             this.subFinance = (totalFabricCost + totalAccCost + heatpress + labelCost + packing) * (finance / 100);
             this.FOBCost = calculatedCM + totalFabricCost + totalAccCost + heatpress + labelCost + packing + subWastage + subFinance;
             this.IndimanQuotedFOB = (objCostSheet.QuotedCIF.GetValueOrDefault()) - (objCostSheet.FobFactor.GetValueOrDefault());
-            this.JKQuotedFOB = objCostSheet.QuotedFOBCost.HasValue? objCostSheet.QuotedFOBCost.Value : FOBCost;
+            this.JKQuotedFOB = objCostSheet.QuotedFOBCost.HasValue ? objCostSheet.QuotedFOBCost.Value : FOBCost;
             this.roundUp = IndimanQuotedFOB - FOBCost;
             this.dutyRate = objCostSheet.DutyRate ?? 0;
 
@@ -2299,7 +2299,7 @@ namespace Indico
             this.indimanCIF = landed / ((100 - marginRate) / 100);
             indimanCIF = decimal.Truncate(indimanCIF * 100) / 100;
             this.calMgn = indimanCIF - landed;
-            this.calMp = (1 - (landed / indimanCIF)) * 100;
+            this.calMp = (indimanCIF > 0) ? ((1 - (landed / indimanCIF)) * 100) : 0;
 
             this.quotedCIF = (objCostSheet.QuotedCIF.HasValue && (objCostSheet.QuotedCIF ?? 0) > 0) ? objCostSheet.QuotedCIF.Value
                 : (objCostSheet.IndimanCIF.HasValue && (objCostSheet.IndimanCIF ?? 0) > 0) ? objCostSheet.IndimanCIF.Value

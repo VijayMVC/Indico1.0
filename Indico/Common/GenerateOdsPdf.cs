@@ -2386,7 +2386,6 @@ namespace Indico.Common
                     document.Close();
 
                     lstfilepaths.Add(tempfilepath);
-
                 }
 
                 if (lstfilepaths.Count > 0)
