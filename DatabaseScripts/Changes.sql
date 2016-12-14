@@ -144,3 +144,10 @@ INSERT INTO [dbo].[WeeklyProductionCapacityDetails] (WeeklyProductionCapacity,It
 VALUES (@Id,2,450.00,10.00,20.00,15,0.25)
 
 --**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
+
+-- Pattern Sizes corrections --
+
+DELETE FROM [dbo].SizeChart
+WHERE Pattern = 2407 AND  ID > 125270
+
+--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
