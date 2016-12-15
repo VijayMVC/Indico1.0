@@ -550,7 +550,7 @@ namespace Indico
 
                     ResetOrderDetailForm();
 
-                    odTitle.InnerText = "Edit Order Detail - " + objTempOD.Order + " - " + objTempOD.SheduledDate;
+                    odTitle.InnerText = "Edit Order Detail - PO " + objTempOD.Order + " Shipment Date : " + txtShipmentDate.Text;
                     
                     ddlSizes.Items.Clear();
                     ddlSizes.Items.Add(new ListItem("Select a Size", "0"));
@@ -1545,7 +1545,7 @@ namespace Indico
                     txtPoNo.Text = (objOrder.PurchaseOrderNo != null) ? objOrder.PurchaseOrderNo.ToString() : string.Empty;
                     txtOldPoNo.Text = objOrder.OldPONo;
 
-                    litHeaderText.Text += " - " + txtRefference.Text;
+                    litHeaderText.Text += " - PO " + txtRefference.Text;
                     liClient.Visible = true;
 
                     rbDateYes.Checked = (objOrder.IsDateNegotiable) ? true : false;

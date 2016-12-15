@@ -126,7 +126,7 @@
                                     Production Line</label>
                                 <div class="controls">
                                     <asp:DropDownList ID="ddlProductionLine" runat="server">
-                                    </asp:DropDownList>                                    
+                                    </asp:DropDownList>
                                 </div>
                             </div>
                             <div class="control-group">
@@ -242,7 +242,7 @@
                                     <div class="controls">
                                         <asp:DropDownList ID="ddlAgeGroup" runat="server">
                                         </asp:DropDownList>
-                                        <a id="ancAddNewAgeGroup" class="btn-link iadd" title="Add New Age Group"><i class="icon-plus"></i></a>
+                                        <a id="ancAddNewAgeGroup" class="btn-link iadd" title="Add New Age Group" runat="server"><i class="icon-plus"></i></a>
                                     </div>
                                 </div>
                                 <div class="control-group">
@@ -331,7 +331,7 @@
                     <div id="collapse4" class="accordion-body collapse" runat="server">
                         <div class="accordion-inner">
                             <p class="help-block" style="margin-bottom: 10px;">
-                               <span class="label label-info">Hint:</span> Please ensure the photo image is at least 1000 pixels in width x 1000 pixels in height
+                                <span class="label label-info">Hint:</span> Please ensure the photo image is at least 1000 pixels in width x 1000 pixels in height
                             </p>
                             <ol class="inlineupload" style="">
                                 <li class="text-center">
@@ -360,8 +360,8 @@
                                             </td>
                                         </tr>
                                     </table>
-                                   
-                                     <input id="hdnPhotoImageOne" runat="server" name="hdnUploadFiles" type="hidden" value="0" />
+
+                                    <input id="hdnPhotoImageOne" runat="server" name="hdnUploadFiles" type="hidden" value="0" />
                                     <div id="dvUploader_1" runat="server" class="file_upload_controller">
                                         <div id="dropzone_2" class="fileupload preview single hide-dropzone setdefault" maxfilesize="1024">
                                             <input id="hdnIsValid_2" type="hidden" value="1" />
@@ -555,10 +555,11 @@
                     </div>
                     <div id="collapse6" class="accordion-body collapse" runat="server">
                         <div class="accordion-inner">
-                            <a class="pull-left" onmouseover="onhelphover(event,'templateHelpDiv')" onmouseout="onhelphover(event,'templateHelpDiv')" id="templateInfo" ><img src="/Content/img/info-icon.png" style="width: 25px; height: 25px;"></a>
-                            <div class="ihero well "  style=" width: 500px; display: none; height: 350px; overflow: hidden"  id="templateHelpDiv">
+                            <a class="pull-left" onmouseover="onhelphover(event,'templateHelpDiv')" onmouseout="onhelphover(event,'templateHelpDiv')" id="templateInfo">
+                                <img src="/Content/img/info-icon.png" style="width: 25px; height: 25px;"></a>
+                            <div class="ihero well " style="width: 500px; display: none; height: 350px; overflow: hidden" id="templateHelpDiv">
                                 <h4>example measurement image: </h4>
-                                <img src="Content/img/examples/example-patternTemplateImage.jpg" width=""/>
+                                <img src="Content/img/examples/example-patternTemplateImage.jpg" width="" />
                             </div>
                             <fieldset id="fsTemplateImages" runat="server">
                                 <div id="dvPatternTemplateUpload" ishide="true" runat="server">
@@ -613,7 +614,7 @@
                             <strong>Microsoft Explorer has currently no support for Drag & Drop or multiple file selection.</strong>
                             <![endif]-->
                                             </p>
-                                           
+
                                         </div>
                                     </div>
                                 </div>
@@ -668,16 +669,17 @@
                     <div id="collapse7" class="accordion-body collapse">
                         <div class="accordion-inner">
                             <h4>Size Guide</h4>
-                             <a class="pull-left" onmouseover="onhelphover(event,'compressionHelpDiv')" onmouseout="onhelphover(event,'compressionHelpDiv')" ><img src="/Content/img/info-icon.png" style="width: 25px; height: 25px;"></a>
+                            <a class="pull-left" onmouseover="onhelphover(event,'compressionHelpDiv')" onmouseout="onhelphover(event,'compressionHelpDiv')">
+                                <img src="/Content/img/info-icon.png" style="width: 25px; height: 25px;"></a>
                             <div class="well" style="width: 500px; display: none; height: 350px;" id="compressionHelpDiv">
                                 <h4>Example Size Guide: </h4>
-                                <img src="Content/img/examples/example-pattern-compressionImage.JPG" width=""/>
+                                <img src="Content/img/examples/example-pattern-compressionImage.JPG" width="" />
                             </div>
                             <div class="control-group">
                                 <div class="controls">
                                     <label class="checkbox">
                                         <asp:CheckBox ID="chkDisplayCompressionImage" runat="server" />
-                                         &nbsp; Display Size Guide in Blackhrome
+                                        &nbsp; Display Size Guide in Blackhrome
                                     </label>
                                 </div>
                             </div>
@@ -726,7 +728,7 @@
                                     To generate the garment specification, you have to select "Item" and "Size set"
                                 </p>
                             </div>
-                            <hr/>
+                            <hr />
                             <h4>Garment specification</h4>
                             <!-- / -->
                             <div id="dvSpecGrd" runat="server" visible="false">
@@ -1071,13 +1073,14 @@
         var linkDeletePatternTemplateImage = '<%=linkDeletePatternTemplateImage.ClientID %>';
         var hdnGarmentImage = '<%=hdnGarmentImage.ClientID %>';
         var hdnChangeGramentSpec = '<%=hdnChangeGramentSpec.ClientID %>';
-        var ancAddNewSizeSet = '<%=ancAddNewSizeSet.ClientID %>';        
+        var ancAddNewSizeSet = '<%=ancAddNewSizeSet.ClientID %>';
+        var ancAddNewAgeGroup = '<%=ancAddNewAgeGroup.ClientID %>';          
     </script>
     <script type="text/javascript">
         function onhelphover(e, divid) {
 
-            var left = (e.clientX+25) + "px";
-            var top = (e.clientY+25) + "px";
+            var left = (e.clientX + 25) + "px";
+            var top = (e.clientY + 25) + "px";
 
             var div = document.getElementById(divid);
 
@@ -1120,7 +1123,7 @@
                 $('#' + hdnChangeGramentSpec).val('change');
             });
 
-           
+
         });
 
         isPatternTemplate();
@@ -1214,33 +1217,33 @@
         if (isPopulate) {
             window.setTimeout(function () {
                 switch ($('#' + hdnSelected)[0].value) {
-                case 'ancAddNewItem':
-                    loadNew('Item', true, false, false, 'New Item');
-                    break;
-                case 'ancAddNewItemAttribute':
-                    loadNew('ItemAttribute', false, false, false, 'New Item Attribute');
-                    break;
+                    case 'ancAddNewItem':
+                        loadNew('Item', true, false, false, 'New Item');
+                        break;
+                    case 'ancAddNewItemAttribute':
+                        loadNew('ItemAttribute', false, false, false, 'New Item Attribute');
+                        break;
 
-                case 'ancAddNewItemSubCategory':
-                    loadNew('ItemSubCategory', false, false, false, 'New Item Sub-Category');
-                    break;
-                case 'ancAddNewGender':
-                    loadNew('Gender', true, true, false, 'New Gender');
-                    break;
-                case 'ancAddNewAgeGroup':
-                    loadNew('AgeGroup', true, false, false, 'New Age Group');
-                    break;
-                case 'ancAddNewSizeSet':
-                    loadNew('SizeSet', true, false, false, 'New Size Set');
-                    break;
-                case 'ancAddNewCoreCategory':
-                    loadNew('CoreCategory', true, false, false, 'New Core Category');
-                    break;
-                case 'ancAddNewPrintType':
-                    loadNew('PrintType', true, false, false, 'New Print Type');
-                    break;
-                default:
-                    break;
+                    case 'ancAddNewItemSubCategory':
+                        loadNew('ItemSubCategory', false, false, false, 'New Item Sub-Category');
+                        break;
+                    case 'ancAddNewGender':
+                        loadNew('Gender', true, true, false, 'New Gender');
+                        break;
+                    case 'ancAddNewAgeGroup':
+                        loadNew('AgeGroup', true, false, false, 'New Age Group');
+                        break;
+                    case 'ancAddNewSizeSet':
+                        loadNew('SizeSet', true, false, false, 'New Size Set');
+                        break;
+                    case 'ancAddNewCoreCategory':
+                        loadNew('CoreCategory', true, false, false, 'New Core Category');
+                        break;
+                    case 'ancAddNewPrintType':
+                        loadNew('PrintType', true, false, false, 'New Print Type');
+                        break;
+                    default:
+                        break;
                 }
             }, 20);
         }
@@ -1270,7 +1273,7 @@
             loadNew('Gender', true, true, true, true, 'New Gender');
         });
 
-        $('#ancAddNewAgeGroup').click(function () {
+        $('#' + ancAddNewAgeGroup).click(function () {
             $('#' + hdnSelected)[0].value = 'ancAddNewAgeGroup';
             loadNew('AgeGroup', true, false, true, 'New Age Group');
         });
