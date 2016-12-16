@@ -159,7 +159,9 @@ namespace Indico
                         var vls = o.OrderBy(t => t.ProductID).ToList();
                         foreach (var vl in vls)
                         {
-                            vl.PurchaseOrderNumber = vl.PurchaseOrderNumber + "-" + i;
+                            //vl.PurchaseOrderNumber = vl.PurchaseOrderNumber + "-" + i;
+                            string index = (i < 10) ? ("0" + i) : i.ToString();
+                            vl.PurchaseOrderNumber = vl.PurchaseOrderNumber + "-" + index;                            
                             i++;
                         }
                     }
@@ -223,7 +225,7 @@ namespace Indico
                         }
                         break;
                 }
-
+                
                 Session["DrilldownView"] = data;
                 OrderGrid.DataSource = data;
                 OrderGrid.DataBind();
@@ -234,6 +236,67 @@ namespace Indico
         private void PopulateControls()
         {
             litHeaderText.Text = string.Format("{2} For The Week {0}/{1}.", _year,_weekNumber,TypeToNormalString(_type));
+        }
+
+        public static string TypeToString(ViewDrillDownType type)
+        {
+            switch (type)
+            {
+                case ViewDrillDownType.Firm:
+                    return "FIRM";
+                case ViewDrillDownType.Hold:
+                    return "HOLD";
+                case ViewDrillDownType.Reservations:
+                    return "RESERVATIONS";
+                case ViewDrillDownType.AllPieces:
+                    return "ALL";
+                case ViewDrillDownType.Outerware:
+                    return "OUTERWARE";
+                case ViewDrillDownType.UptoFive:
+                    return "UPTOFIVE";
+                case ViewDrillDownType.Samples:
+                    return "SAMPLE";
+                case ViewDrillDownType.Shipments:
+                    return "SHIPMENT";
+                case ViewDrillDownType.ShipmentDetails:
+                    return "SHIPMENTDETAIL";
+                default:
+                    return "";
+            }
+        }
+
+        private string TypeToNormalString(ViewDrillDownType type)
+        {
+            switch (type)
+            {
+                case ViewDrillDownType.Firm:
+                    return "Firm Orders";
+                case ViewDrillDownType.Hold:
+                    return "Hold Items";
+                case ViewDrillDownType.Reservations:
+                    return "Reservations";
+                case ViewDrillDownType.AllPieces:
+                    return "Orders";
+                case ViewDrillDownType.Outerware:
+                    return "Outer wares";
+                case ViewDrillDownType.UptoFive:
+                    return "Up to five Orders";
+                case ViewDrillDownType.Samples:
+                    return "Sample Orders";
+                case ViewDrillDownType.Shipments:
+                    return "Shipments";
+                case ViewDrillDownType.ShipmentDetails:
+                    return "Shipment Details";
+                default:
+                    return "";
+            }
+        }
+        
+        private void ReBindGrid()
+        {
+            if (Session["DrilldownView"] == null) return;
+            OrderGrid.DataSource = (List<DrillDownModel>)Session["DrilldownView"];
+            OrderGrid.DataBind();
         }
 
         #endregion
@@ -247,9 +310,7 @@ namespace Indico
             PopulateOrderGrid();
             PopulateControls();
         }
-
-        #endregion
-
+        
         protected void OnOrderGridItemDataBound(object sender, GridItemEventArgs e)
         {
             var dataItem = e.Item.DataItem as DrillDownModel;
@@ -292,60 +353,7 @@ namespace Indico
                 qtyLink.Style.Add(HtmlTextWriterStyle.FontWeight, "bold");
             }
         }
-
-        public static string TypeToString(ViewDrillDownType type)
-        {
-            switch (type)
-            {
-                case ViewDrillDownType.Firm:
-                    return "FIRM";
-                case ViewDrillDownType.Hold :
-                    return "HOLD";
-                case ViewDrillDownType.Reservations :
-                    return "RESERVATIONS";
-                case ViewDrillDownType.AllPieces:
-                    return "ALL";
-                case ViewDrillDownType.Outerware:
-                    return "OUTERWARE";
-                case ViewDrillDownType.UptoFive:
-                    return "UPTOFIVE";
-                case ViewDrillDownType.Samples:
-                    return "SAMPLE";
-                case ViewDrillDownType.Shipments:
-                    return "SHIPMENT";
-                case ViewDrillDownType.ShipmentDetails:
-                    return "SHIPMENTDETAIL";
-                default:
-                    return "";
-            }
-        }
-        private  string TypeToNormalString(ViewDrillDownType type)
-        {
-            switch (type)
-            {
-                case ViewDrillDownType.Firm:
-                    return "Firm Orders";
-                case ViewDrillDownType.Hold:
-                    return "Hold Items";
-                case ViewDrillDownType.Reservations:
-                    return "Reservations";
-                case ViewDrillDownType.AllPieces:
-                    return "Orders";
-                case ViewDrillDownType.Outerware:
-                    return "Outer wares";
-                case ViewDrillDownType.UptoFive:
-                    return "Up to five Orders";
-                case ViewDrillDownType.Samples:
-                    return "Sample Orders";
-                case ViewDrillDownType.Shipments:
-                    return "Shipments";
-                case ViewDrillDownType.ShipmentDetails:
-                    return "Shipment Details";
-                default:
-                    return "";
-            }
-        }
-
+        
         protected void OnExportToExcelButtonClick(object sender, EventArgs e)
         {
             const string alternateText = "ExcelML";
@@ -356,7 +364,6 @@ namespace Indico
             OrderGrid.ExportSettings.FileName = string.Format("{0}-{1}-{2}", TypeToNormalString(_type), _year + "/" + _weekNumber, string.Format("{0}_{1}_{2}_{3}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Hour, DateTime.Now.Minute));
             OrderGrid.MasterTableView.ExportToExcel();
         }
-
 
         protected void OrderGrid_OnPageSizeChanged(object sender, GridPageSizeChangedEventArgs e)
         {
@@ -372,6 +379,7 @@ namespace Indico
         {
             ReBindGrid();
         }
+
         protected void OnItemClick(object sender, RadMenuEventArgs e)
         {
             ReBindGrid();
@@ -381,15 +389,7 @@ namespace Indico
         {
             ReBindGrid();
         }
-
-        private void ReBindGrid()
-        {
-            if (Session["DrilldownView"] == null) return;
-            OrderGrid.DataSource = (List<DrillDownModel>)Session["DrilldownView"];
-            OrderGrid.DataBind();
-        }
-
-
-
+        
+        #endregion
     }
 }
