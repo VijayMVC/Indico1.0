@@ -1102,6 +1102,7 @@ namespace Indico
                                 objOrder.Status = GetOrderStatus(OrderStatus.IndimanSubmitted).ID;
                                 objOrder.Modifier = LoggedUser.ID;
                                 objOrder.ModifiedDate = DateTime.Now;
+                                objOrder.OrderSubmittedDate = DateTime.Now;
 
                                 SendOrderSubmissionEmail(OrderID, mailTo, "Factory", true, null);
                             }

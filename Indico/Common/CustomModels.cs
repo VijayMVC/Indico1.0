@@ -89,6 +89,7 @@ namespace Indico.Common
         public DateTime? ShipmentDate { get; set; }
         public DateTime? SheduledDate { get; set; }
         public DateTime? RequestedDate { get; set; }
+        public DateTime? IndimanSubmittedDate { get; set; }
         public int Quantity { get; set; }
         public int DateDiffrence { get; set; }
         public string PurONo { get; set; }

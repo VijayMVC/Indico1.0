@@ -1754,8 +1754,8 @@ namespace Indico
 
                 aAddClient.Visible = canEdit;
                 ancNewJobName.Visible = canEdit;
-                btnEditJobName.Visible = canEdit;
-                btnEditClient.Visible = canEdit;
+                btnEditJobName.Visible = true;
+                btnEditClient.Visible = true;
 
                 //Get check box values from table with dapper
 
@@ -1798,8 +1798,8 @@ namespace Indico
 
                 aAddClient.Visible = canEdit;
                 ancNewJobName.Visible = canEdit;
-                btnEditJobName.Visible = canEdit;
-                btnEditClient.Visible = canEdit;
+                btnEditJobName.Visible = true;
+                btnEditClient.Visible = true;
 
                 ddlDistributor.Items.FindByValue(objJobName.objClient.Distributor.ToString()).Selected = true;
                 hdnDistributorID.Value = objJobName.objClient.Distributor.ToString();

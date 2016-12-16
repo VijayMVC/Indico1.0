@@ -4545,6 +4545,7 @@ namespace Indico
                             objOrder.Status = this.GetOrderStatus(OrderStatus.IndimanSubmitted).ID;
                             objOrder.Modifier = this.LoggedUser.ID;
                             objOrder.ModifiedDate = DateTime.Now;
+                            objOrder.OrderSubmittedDate = DateTime.Now;
 
                             this.SendOrderSubmissionEmail(order, mailTo, "Factory", true, null);
                         }
@@ -5377,6 +5378,7 @@ namespace Indico
             this.RadGridOrders.MasterTableView.GetColumn("CreatedDate").Display = false;
             this.RadGridOrders.MasterTableView.GetColumn("Modifier").Display = false;
             this.RadGridOrders.MasterTableView.GetColumn("ModifiedDate").Display = false;
+            this.RadGridOrders.MasterTableView.GetColumn("IndimanSubmittedDate").Display = false;
             this.RadGridOrders.MasterTableView.GetColumn("ResolutionProfile").Display = (this.LoggedUserRoleName == UserRole.FactoryAdministrator || this.LoggedUserRoleName == UserRole.FactoryCoordinator) ? true : false;
             //this.RadGridOrders.MasterTableView.GetColumn("QA").Display = (this.LoggedUserRoleName == UserRole.DistributorAdministrator || this.LoggedUserRoleName == UserRole.DistributorCoordinator) ? false : true;
             //this.RadGridOrders.MasterTableView.GetColumn("ODS").Display = (this.LoggedUserRoleName == UserRole.DistributorAdministrator || this.LoggedUserRoleName == UserRole.DistributorCoordinator) ? false : true;
@@ -6132,3 +6134,4 @@ namespace Indico
         #endregion
     }
 }
+
