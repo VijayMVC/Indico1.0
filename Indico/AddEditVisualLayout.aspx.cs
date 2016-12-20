@@ -1330,7 +1330,9 @@ namespace Indico
                         ts.Complete();
                     }
 
-                    if (newClient > 0)
+                    hdnClientID.Value = newClient.ToString();
+
+                    if (id == 0)
                     {
                         //    ddlDistributor_SelectedIndexChange(null, null);
                         //    ddlClient.ClearSelection();
@@ -1339,8 +1341,7 @@ namespace Indico
                         //    hdnEditJobNameID.Value = ddlJobName.SelectedValue;
                         //    ddlClient_SelectedIndexChanged(null, null);
                         //    ddlJobName_SelectedIndexChanged(null, null);
-
-                        hdnClientID.Value = newClient.ToString();
+                                               
                         hdnJobNameID.Value = "0";
                     }
 
