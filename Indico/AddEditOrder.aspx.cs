@@ -1611,7 +1611,7 @@ namespace Indico
                     ddlBillingAddress.Enabled = isNotFactory;
                     ddlDespatchAddress.Enabled = isNotFactory;
                     ddlStatus.Enabled = isNotFactory;
-                    txtRefference.Enabled = isNotFactory;
+                    //txtRefference.Enabled = isNotFactory;
                     txtOldPoNo.Enabled = isNotFactory;
                     txtDesiredDate.Enabled = isNotFactory;
 

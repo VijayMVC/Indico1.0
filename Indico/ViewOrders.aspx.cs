@@ -5731,7 +5731,7 @@ namespace Indico
                 foreach (var o in orders)
                 {
                     int i = 1;
-                    var vls = o.OrderByDescending(t => t.Order).ToList();
+                    var vls = o.OrderBy(t => t.OrderDetail).ToList();
                     foreach (var vl in vls)
                     {
                         string index = (i < 10) ? ("0" + i) : i.ToString();
@@ -5739,7 +5739,7 @@ namespace Indico
                         i++;
                     }
                 }
-                lstOrderDetails = lstOrderDetails.OrderBy(d => d.Order).ToList();
+                lstOrderDetails = lstOrderDetails.OrderByDescending(d => d.Order).ToList();
 
                 this.RadGridOrders.DataSource = lstOrderDetails;
                 this.RadGridOrders.DataBind();
