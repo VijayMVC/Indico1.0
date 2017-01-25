@@ -1624,7 +1624,7 @@ namespace Indico
                     ancDespatchAddress.Visible = isNotFactory;
                     btnEditDespatch.Visible = isNotFactory;
 
-                    btnNewOrderDetail.Visible = isNotFactory;
+                  //  btnNewOrderDetail.Visible = isNotFactory;
 
                 }
                 //else if (QueryReservationID > 0)

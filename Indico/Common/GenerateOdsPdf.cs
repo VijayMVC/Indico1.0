@@ -4853,7 +4853,7 @@ namespace Indico.Common
             if (objOrder.BillingAddress.HasValue && objOrder.BillingAddress > 0)
             {
                 builder.Replace("<$billingcompanyname$>", objOrder.objBillingAddress.CompanyName.ToUpper())
-                    .Replace("<$shiptoaddresstype$>", ((objOrder.objBillingAddress.AddressType ?? 1) == 1) ? "RESIDENTIAL" : "BUSINESS")
+                    .Replace("<$billingaddresstype$>", ((objOrder.objBillingAddress.AddressType ?? 1) == 1) ? "RESIDENTIAL" : "BUSINESS")
                     .Replace("<$billingaddress$>", objOrder.objBillingAddress.Address.ToUpper())
                     .Replace("<$billingsuberb$>", objOrder.objBillingAddress.Suburb.ToUpper())
                     .Replace("<$billingpostcode$>", objOrder.objBillingAddress.PostCode.ToUpper())
@@ -4884,7 +4884,7 @@ namespace Indico.Common
             if (objOrder.DespatchToAddress.HasValue && objOrder.DespatchToAddress > 0)
             {
                 builder.Replace("<$shiptocompanyname$>", objOrder.objDespatchToAddress.CompanyName.ToUpper())
-                    .Replace("<$shiptoaddresstype$>", ((objOrder.objDespatchToAddress.AddressType ?? 1) == 1) ? "RESIDENTIAL" : "BUSINESS")
+                    .Replace("<$deliveryaddresstype$>", ((objOrder.objDespatchToAddress.AddressType ?? 1) == 1) ? "RESIDENTIAL" : "BUSINESS")
                     .Replace("<$shiptoaddress$>", objOrder.objDespatchToAddress.Address.ToUpper())
                     .Replace("<$shiptosuburb$>", objOrder.objDespatchToAddress.Suburb.ToUpper())
                     .Replace("<$shiptopostcode$>", objOrder.objDespatchToAddress.PostCode.ToUpper())
