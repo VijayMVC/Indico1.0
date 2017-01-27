@@ -62,7 +62,7 @@ BEGIN
 			ON vl.[ResolutionProfile] = rf.[ID]	
 		LEFT OUTER JOIN [dbo].[PocketType] pt
 			ON vl.[PocketType] = pt.[ID]
-	WHERE od.[Order] = 56883	
+	WHERE od.[Order] = @P_Order	
 END 
 
 GO
