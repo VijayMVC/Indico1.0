@@ -5,6 +5,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="iContentPlaceHolder" runat="server">
     <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
     </telerik:RadScriptManager>
+
+      <asp:ScriptManager ID="ScriptManager" runat="server">
+    </asp:ScriptManager>
     <!-- Page -->
     <div class="page">
         <!-- Page Header -->

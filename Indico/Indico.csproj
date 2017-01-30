@@ -148,6 +148,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AddReservation.aspx" />
     <Content Include="CloneOrder.aspx" />
     <Content Include="Content\css\chosen-sprite%402x.png" />
     <Content Include="Content\css\chosen-sprite.png" />
@@ -158,9 +159,18 @@
     <Content Include="Content\js\chosen.jquery.min.js" />
     <Content Include="DrillDownReportByClient.aspx" />
     <Content Include="DrillDownReport.aspx" />
+    <Content Include="InventoryCategory.aspx" />
+    <Content Include="InventoryItem.aspx" />
+    <Content Include="InventorySubCategory.aspx" />
+    <Content Include="InventoryUoM.aspx" />
+    <Content Include="Issues.aspx" />
     <Content Include="OrderDrillDown.aspx" />
+    <Content Include="Purchaser.aspx" />
+    <Content Include="Receipts.aspx" />
     <Content Include="SalesGridReport.aspx" />
+    <Content Include="StockView.aspx" />
     <Content Include="Transfers.aspx" />
+    <Content Include="Vendor.aspx" />
     <Content Include="ViewDrillDown.aspx" />
     <Content Include="ViewFiveWeekDetails.aspx" />
     <Content Include="ViewPatternDevelopment.aspx" />
@@ -622,6 +632,13 @@
     <Content Include="Welcome.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddReservation.aspx.cs">
+      <DependentUpon>AddReservation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddReservation.aspx.designer.cs">
+      <DependentUpon>AddReservation.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CloneOrder.aspx.cs">
       <DependentUpon>CloneOrder.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -629,7 +646,11 @@
     <Compile Include="CloneOrder.aspx.designer.cs">
       <DependentUpon>CloneOrder.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Common\CheckReservationExpiration.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Common\CustomModels.cs" />
+    <Compile Include="Common\Extensions\DateTimeExtensions.cs" />
     <Compile Include="Common\ImageService.cs" />
     <Compile Include="Common\MyobService.cs" />
     <Compile Include="DrillDownReportByClient.aspx.cs">
@@ -646,21 +667,87 @@
     <Compile Include="DrillDownReport.aspx.designer.cs">
       <DependentUpon>DrillDownReport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="InventoryCategory.aspx.cs">
+      <DependentUpon>InventoryCategory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InventoryCategory.aspx.designer.cs">
+      <DependentUpon>InventoryCategory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InventoryItem.aspx.cs">
+      <DependentUpon>InventoryItem.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InventoryItem.aspx.designer.cs">
+      <DependentUpon>InventoryItem.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InventorySubCategory.aspx.cs">
+      <DependentUpon>InventorySubCategory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InventorySubCategory.aspx.designer.cs">
+      <DependentUpon>InventorySubCategory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InventoryUoM.aspx.cs">
+      <DependentUpon>InventoryUoM.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InventoryUoM.aspx.designer.cs">
+      <DependentUpon>InventoryUoM.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Issues.aspx.cs">
+      <DependentUpon>Issues.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Issues.aspx.designer.cs">
+      <DependentUpon>Issues.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AddressIdModel.cs" />
+    <Compile Include="Models\DistributorModel.cs" />
     <Compile Include="Models\DrillDownModel.cs" />
     <Compile Include="Models\FiveWeekDetailsModel.cs" />
     <Compile Include="Models\GetNonDevelopedPatternsModel.cs" />
     <Compile Include="Models\GetPatternDevelopmentHistoryModel.cs" />
     <Compile Include="Models\GetPatternDevelopmentsModel.cs" />
+    <Compile Include="Models\InventorySubCategoryModel.cs" />
+    <Compile Include="Models\InvItemModel.cs" />
+    <Compile Include="Models\ModeModel.cs" />
+    <Compile Include="Models\NameIdModel.cs" />
+    <Compile Include="Models\NewShipmentOrderDetailSizeQtyViewModel.cs" />
     <Compile Include="Models\OrderDrillDownMedel.cs" />
+    <Compile Include="Models\OrderReservationsLoadModel.cs" />
+    <Compile Include="Models\PatternModel.cs" />
+    <Compile Include="Models\PortModel.cs" />
+    <Compile Include="Models\ReceiptsModel.cs" />
+    <Compile Include="Models\ReservationBalanceModel.cs" />
+    <Compile Include="Models\ShipmentkeyModel.cs" />
+    <Compile Include="Models\StockModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\WeeklyBackordersSummaryModel.cs" />
     <Compile Include="Models\WeeklyPiecesSummariesModel.cs" />
     <Compile Include="Models\WeeklySmvSummariesModel.cs" />
+    <Compile Include="Models\WeekModel.cs" />
+    <Compile Include="Models\WeekNoWeekendDateModel.cs" />
     <Compile Include="OrderDrillDown.aspx.cs">
       <DependentUpon>OrderDrillDown.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OrderDrillDown.aspx.designer.cs">
       <DependentUpon>OrderDrillDown.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Purchaser.aspx.cs">
+      <DependentUpon>Purchaser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Purchaser.aspx.designer.cs">
+      <DependentUpon>Purchaser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Receipts.aspx.cs">
+      <DependentUpon>Receipts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Receipts.aspx.designer.cs">
+      <DependentUpon>Receipts.aspx</DependentUpon>
     </Compile>
     <Compile Include="SalesGridReport.aspx.cs">
       <DependentUpon>SalesGridReport.aspx</DependentUpon>
@@ -669,12 +756,26 @@
     <Compile Include="SalesGridReport.aspx.designer.cs">
       <DependentUpon>SalesGridReport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="StockView.aspx.cs">
+      <DependentUpon>StockView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StockView.aspx.designer.cs">
+      <DependentUpon>StockView.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Transfers.aspx.cs">
       <DependentUpon>Transfers.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Transfers.aspx.designer.cs">
       <DependentUpon>Transfers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vendor.aspx.cs">
+      <DependentUpon>Vendor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vendor.aspx.designer.cs">
+      <DependentUpon>Vendor.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewDrillDown.aspx.cs">
       <DependentUpon>ViewDrillDown.aspx</DependentUpon>
@@ -1741,7 +1842,7 @@
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>54324</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://local-indico.com/</IISUrl>
+          <IISUrl>http://local-indico.com</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>http://local-indico.com/</CustomServerUrl>

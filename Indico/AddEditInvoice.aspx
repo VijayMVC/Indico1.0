@@ -34,8 +34,8 @@
                     <div class="controls">
                         <telerik:RadComboBox ID="RadComboWeek" runat="server" HighlightTemplatedItems="true"
                             Skin="Metro" CssClass="RadComboBox_Metro" DropDownWidth="300" OnItemDataBound="RadComboWeek_ItemDataBound"
-                            DataTextField="WeekendDate" EmptyMessage="Select a WeekEnd Date" OnSelectedIndexChanged="RadComboWeek_SelectedIndexChanged"
-                            AutoPostBack="true" EnableLoadOnDemand="true" Filter="StartsWith">
+                            DataTextField="weeknoyear" EmptyMessage="Select a WeekEnd Date" OnSelectedIndexChanged="RadComboWeek_SelectedIndexChanged"
+                            AutoPostBack="true" EnableLoadOnDemand="true" Filter="StartsWith" DataValueField="ID">
                             <HeaderTemplate>
                                 <table style="width: 300px" cellspacing="0" cellpadding="0">
                                     <tr>
@@ -68,10 +68,11 @@
                         Shipment Dates
                     </label>
                     <div class="controls">
-                        <asp:DropDownList ID="ddlShipmentDates" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlShipmentDates_SelectedIndexChanged" Enabled="false"></asp:DropDownList>
-                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Shipment Date is required" InitialValue="0" ValidationGroup="validateInvoice" ControlToValidate="ddlShipmentDates" EnableClientScript="false">
-                        <img src="Content/img/icon_warning.png"  title="Shipment Date is required" alt="Shipment Date is required" />
-                        </asp:RequiredFieldValidator>
+                        <div data-date-viewmode="years" data-date-format="dd MM yyyy" class="input-append date datepicker">
+                            <asp:TextBox ID="txtShipmentDate" runat="server"></asp:TextBox>
+                            <span class="add-on"><i class="icon-calendar"></i></span>
+
+                        </div>
                     </div>
                 </div>
                 <div class="control-group">
@@ -80,7 +81,7 @@
                     </label>
                     <div class="controls">
                         <telerik:RadComboBox ID="RadComboShipmentKey" runat="server" HighlightTemplatedItems="true"
-                            Skin="Metro" CssClass="RadComboBox_Metro" AutoPostBack="true" Enabled="false"
+                            Skin="Metro" CssClass="RadComboBox_Metro" AutoPostBack="true" Enabled="true"
                             DropDownWidth="650" OnItemDataBound="RadComboShipmentKey_ItemDataBound" DataTextField="CompanyName"
                             OnSelectedIndexChanged="RadComboShipmentKey_SelectedIndexChanged" EmptyMessage="Select Week Details"
                             EnableLoadOnDemand="true" Filter="StartsWith">
@@ -89,14 +90,13 @@
                                     <tr>
                                         <td style="width: 200px;">Ship To
                                         </td>
-                                        <td style="width: 75px;">Week
+                                        <td style="width: 75px;">Port
                                         </td>
                                         <td style="width: 150px;">ETD
                                         </td>
-                                        <td style="width: 50px;">Mode
+                                        <td style="width: 50px;">Price Term
                                         </td>
-                                        <td style="width: 25px;">Qty
-                                        </td>
+                                        
                                     </tr>
                                 </table>
                             </HeaderTemplate>
@@ -110,7 +110,7 @@
                                             <asp:Literal ID="litWeek" runat="server"></asp:Literal>
                                         </td>
                                         <td style="width: 150px;">
-                                            <asp:Literal ID="litETD" runat="server"></asp:Literal>
+                                            <asp:Literal ID="Literal1" runat="server"></asp:Literal>
                                         </td>
                                         <td style="width: 50px;">
                                             <asp:Literal ID="litMode" runat="server"></asp:Literal>
@@ -175,7 +175,9 @@
                         Ship To
                     </label>
                     <div class="controls">
-                        <asp:TextBox ID="txtShipTo" runat="server" Enabled="false"></asp:TextBox>
+                        
+                  <asp:DropDownList ID="ddlShipTo" runat="server"></asp:DropDownList>
+
                     </div>
                 </div>
                 <div class="control-group">
@@ -188,7 +190,7 @@
                         Bill To
                     </label>
                     <div class="controls">
-                        <asp:DropDownList ID="ddlBillTo" runat="server"></asp:DropDownList>
+                        <asp:DropDownList ID="ddlBillTo" runat="server" DataValueField="Id" DataTextField="Address"></asp:DropDownList>
                         <a id="aShippingAddressCourier" runat="server" class="btn btn-link ishippingAddress" title="Add New Bill To Address Details"><i class="icon-plus"></i></a>
                         <asp:CustomValidator ID="cvBillTo" runat="server" ControlToValidate="ddlBillTo" ErrorMessage="Bill To Is Required" EnableClientScript="false"
                             OnServerValidate="cvBillTo_ServerValidate" ValidationGroup="validateInvoice">
@@ -201,7 +203,7 @@
                         Bank
                     </label>
                     <div class="controls">
-                        <asp:DropDownList ID="ddlBank" runat="server"></asp:DropDownList>
+                        <asp:DropDownList ID="ddlBank" runat="server" DataValueField="ID" DataTextField="Name"></asp:DropDownList>
                         <asp:RequiredFieldValidator ID="rfvBank" runat="server" ErrorMessage="Bank is required" InitialValue="0"
                             ValidationGroup="validateInvoice" ControlToValidate="ddlBank" EnableClientScript="false">
                         <img src="Content/img/icon_warning.png"  title="Bank is required" alt="Bank is required" />
@@ -213,15 +215,26 @@
                         Mode
                     </label>
                     <div class="controls">
-                        <asp:TextBox ID="txtShipmentMode" runat="server" Enabled="false"></asp:TextBox>
+                        <asp:DropDownList ID="ddlMode" runat="server" DataTextField="Name" DataValueField="ID" ></asp:DropDownList>
                     </div>
                 </div>
+                 <div class="control-group">
+                    <label class="control-label">
+                        Port
+                    </label>
+                    <div class="controls">
+                        <asp:DropDownList ID="ddlport" runat="server" DataTextField="Name" DataValueField="ID" ></asp:DropDownList>
+                    </div>
+                </div>
+
+
+
                 <div class="control-group">
                     <label class="control-label">
                         Status
                     </label>
                     <div class="controls">
-                        <asp:DropDownList ID="ddlStatus" runat="server"></asp:DropDownList>
+                        <asp:DropDownList ID="ddlStatus" runat="server" DataTextField="Name" DataValueField="ID"></asp:DropDownList>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="Status is required" InitialValue="0" ValidationGroup="validateInvoice" ControlToValidate="ddlStatus" EnableClientScript="false">
                         <img src="Content/img/icon_warning.png"  title="Status is required" alt="Status is required" />
                         </asp:RequiredFieldValidator>
@@ -337,7 +350,7 @@
                                         <asp:HiddenField ID="hdnOrderDetail" runat="server" />
                                     </ItemTemplate>
                                     <FooterTemplate>
-                                        <asp:Label ID="lblQty" runat="server"></asp:Label>
+                                        <asp:Label ID="Label1" runat="server"></asp:Label>
                                     </FooterTemplate>
                                 </telerik:GridTemplateColumn>
                                 <telerik:GridTemplateColumn HeaderText="Factory Rate" AllowFiltering="false" ItemStyle-Width="70px">
@@ -558,14 +571,14 @@
     <!--/-->
     <asp:HiddenField ID="hdnSelectedID" runat="server" />
     <asp:HiddenField ID="hdnIndexID" runat="server" />
-    <asp:HiddenField ID="hdnOrderDetail" runat="server" />
+    <asp:HiddenField ID="HiddenField1" runat="server" />
     <!-- Page Scripts -->
     <script type="text/javascript">
         var txtInvoiceDate = "<%=txtInvoiceDate.ClientID %>";
         var RadInvoice = "<%=RadInvoice.ClientID %>";
         var hdnSelectedID = "<%=hdnSelectedID.ClientID %>";
         var hdnIndexID = "<%=hdnIndexID.ClientID %>";
-        var hdnOrderDetail = "<%=hdnOrderDetail.ClientID %>";
+       
         var PopulatePrintedOrders = ('<%=ViewState["PopulatePrintedOrders"]%>' == "True") ? true : false;
       
     </script>

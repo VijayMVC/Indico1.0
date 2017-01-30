@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Indico.Master" AutoEventWireup="true"
+﻿view<%@ Page Title="" Language="C#" MasterPageFile="~/Indico.Master" AutoEventWireup="true"
     CodeBehind="AddEditEmbroidery.aspx.cs" Inherits="Indico.AddEditEmbroidery" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="iContentPlaceHolder" runat="server">

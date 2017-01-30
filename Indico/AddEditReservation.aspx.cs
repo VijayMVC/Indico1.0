@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic;
@@ -9,10 +10,11 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
-
+using Dapper;
 using Indico.Common;
 using Indico.BusinessObjects;
 using System.Threading;
+using Indico.Models;
 
 namespace Indico
 {
@@ -79,6 +81,11 @@ namespace Indico
             if (!this.IsPostBack)
             {
                 PopulateControls();
+
+                if (QueryID > 0)
+                {
+                    PopulateControls2();
+                }
             }
         }
 
@@ -96,10 +103,44 @@ namespace Indico
 
         }
 
+        
+
         protected void ddlShipToAddress_SelectedIndexChanged(object sender, EventArgs e)
         {
             PopulateShipToAddress();
         }
+
+
+        public void ProcessForm()
+        {
+
+            if (QueryID > 0)
+            {
+                using (var connection = GetIndicoConnnection())
+                {
+
+                    var query = string.Format("UPDATE [dbo].[Reservation] SET OrderDate='{0}',Pattern={1},Coordinator={2},Distributor={3},Client='{4}',ShipmentDate='{5}',Qty={6},Notes='{7}',DateCreated='{8}',DateModified='{9}',Creator={10},Modifier={11},Status={12},QtyPolo={13},QtyOutwear={14} WHERE ID={15} ", DateTime.Parse(txtDate.Text).ToString("yyyyMMdd"), ddlPattern.SelectedValue, ddlCoordinator.SelectedValue, ddlDistributor.SelectedValue, txtClient.Text, DateTime.Parse(txtShippingDate.Text).ToString("yyyyMMdd"), txtQty.Text, txtNotes.Text, DateTime.Now.ToString("yyyyMMdd"), DateTime.Now.ToString("yyyyMMdd"), LoggedUser.ID, LoggedUser.ID, 1, txtQtyPolo.Text, txtQtyOutwear.Text,QueryID);
+                    connection.Execute(query);
+                    Response.Redirect("ViewReservations.aspx");
+                }
+
+            }
+            else
+            {
+                using (var connection = GetIndicoConnnection())
+                {
+
+                    var query = string.Format("INSERT INTO [dbo].[Reservation] (OrderDate,Pattern,Coordinator,Distributor,Client,ShipmentDate,Qty,Notes,DateCreated,DateModified,Creator,Modifier,Status,QtyPolo,QtyOutwear) VALUES('{0}',{1},{2},{3},'{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}')", DateTime.Parse(txtDate.Text).ToString("yyyyMMdd"), ddlPattern.SelectedValue, ddlCoordinator.SelectedValue, ddlDistributor.SelectedValue, txtClient.Text, DateTime.Parse(txtShippingDate.Text).ToString("yyyyMMdd"), txtQty.Text, txtNotes.Text, DateTime.Now.ToString("yyyyMMdd"), DateTime.Now.ToString("yyyyMMdd"), LoggedUser.ID, LoggedUser.ID, 1, txtQtyPolo.Text, txtQtyOutwear.Text);
+                    connection.Execute(query);
+                    Response.Redirect("ViewReservations.aspx");
+
+                }
+            }
+        }
+
+
+
+
 
         /*  protected void ddlDistributor_SelectedIndexChanged(object sender, EventArgs e)
           {
@@ -124,221 +165,187 @@ namespace Indico
 
         #region Methods
 
-        private void PopulateControls()
+        /*
+    private void PopulateControls()
+    {
+        //Header Text
+        this.litHeaderText.Text = (this.QueryID > 0) ? "Edit Reservation" : "New Reservation";
+        this.divReservationNo.Visible = (this.QueryID > 0) ? true : false;
+
+        ViewState["PopulatePatern"] = false;
+        // this.PopulatePatterns();
+
+        this.txtDate.Text = DateTime.Now.ToString("dd MMMM yyyy");
+
+        //Populate Coordinator
+        this.ddlCoordinator.Items.Clear();
+        this.ddlCoordinator.Items.Add(new ListItem("Select Coordinator", "0"));
+        List<UserBO> lstCoordinators = (new UserBO()).GetAllObject().Where(o => o.objCompany.Type == 3).ToList(); ;
+        foreach (UserBO coordinator in lstCoordinators)
         {
-            //Header Text
-            this.litHeaderText.Text = (this.QueryID > 0) ? "Edit Reservation" : "New Reservation";
-            this.divReservationNo.Visible = (this.QueryID > 0) ? true : false;
+            this.ddlCoordinator.Items.Add(new ListItem(coordinator.GivenName + " " + coordinator.FamilyName, coordinator.ID.ToString()));
+        }
 
-            ViewState["PopulatePatern"] = false;
-            // this.PopulatePatterns();
+        //Populate Distributors
+        this.ddlDistributor.Items.Clear();
+        this.ddlDistributor.Items.Add(new ListItem("Select Distributor", "0"));
+        List<CompanyBO> lstDistributors = (new CompanyBO()).GetAllObject().Where(o => o.IsDistributor == true).OrderBy(o => o.Name).ToList(); ;
+        foreach (CompanyBO distributor in lstDistributors)
+        {
+            this.ddlDistributor.Items.Add(new ListItem(distributor.Name, distributor.ID.ToString()));
+        }
 
-            this.txtDate.Text = DateTime.Now.ToString("dd MMMM yyyy");
+        //Populate Ship To            
+        //this.ddlShipToAddress.Items.Clear();
+        //this.ddlShipToAddress.Items.Add(new ListItem("Select Ship To", "0"));
 
-            //Populate Coordinator
-            this.ddlCoordinator.Items.Clear();
-            this.ddlCoordinator.Items.Add(new ListItem("Select Coordinator", "0"));
-            List<UserBO> lstCoordinators = (new UserBO()).GetAllObject().Where(o => o.objCompany.Type == 3).ToList(); ;
-            foreach (UserBO coordinator in lstCoordinators)
-            {
-                this.ddlCoordinator.Items.Add(new ListItem(coordinator.GivenName + " " + coordinator.FamilyName, coordinator.ID.ToString()));
-            }
+       List<DistributorClientAddressBO> lstDistributorClientAddress = (new DistributorClientAddressBO()).GetAllObject().OrderBy(o => o.CompanyName).ToList();
 
-            //Populate Distributors
-            this.ddlDistributor.Items.Clear();
-            this.ddlDistributor.Items.Add(new ListItem("Select Distributor", "0"));
-            List<CompanyBO> lstDistributors = (new CompanyBO()).GetAllObject().Where(o => o.IsDistributor == true).OrderBy(o => o.Name).ToList(); ;
+        //Populate Shipment Modes
+        //this.ddlShipmentMode.Items.Clear();
+        //this.ddlShipmentMode.Items.Add(new ListItem("Select Shipment Mode", "0"));
+        List<ShipmentModeBO> lstShipmentMode = (new ShipmentModeBO()).GetAllObject();
+
+        //Populate Status
+        //.ddlStatus.Items.Clear();
+        List<ReservationStatusBO> lstReservationStatus = (new ReservationStatusBO()).GetAllObject();
+
+        // populate Pattern
+        this.ddlPattern.Items.Clear();
+        this.ddlPattern.Items.Add(new ListItem("Select a Pattern", "0"));
+        List<PatternBO> lstPattern = (new PatternBO()).GetAllObject().Where(o => o.IsActive == true).OrderBy(o => o.Number).ToList();
+        foreach (PatternBO pattern in lstPattern)
+        {
+            this.ddlPattern.Items.Add(new ListItem(pattern.Number + " - " + pattern.NickName, pattern.ID.ToString()));
+        }
+
+        if (this.LoggedUser.IsDirectSalesPerson)
+        {
+            this.ddlDistributor.Items.FindByValue(this.Distributor.ID.ToString()).Selected = true;
+            this.ddlCoordinator.Items.FindByValue(this.Distributor.Coordinator.ToString()).Selected = true;
+            this.ddlDistributor.Enabled = this.ddlCoordinator.Enabled = false;
+        }
+        else if (this.LoggedUserRoleName == UserRole.IndicoAdministrator || this.LoggedUserRoleName == UserRole.IndicoCoordinator)
+        {
+            this.ddlCoordinator.Items.FindByValue(LoggedUser.ID.ToString()).Selected = true;
+            this.ddlCoordinator.Enabled = false;
+            lstDistributors = lstDistributors.Where(m => m.Coordinator == LoggedUser.ID).ToList();
+
+            lstDistributors.Clear();
             foreach (CompanyBO distributor in lstDistributors)
             {
                 this.ddlDistributor.Items.Add(new ListItem(distributor.Name, distributor.ID.ToString()));
             }
+        }
 
-            //Populate Ship To            
-            this.ddlShipToAddress.Items.Clear();
-            this.ddlShipToAddress.Items.Add(new ListItem("Select Ship To", "0"));
-            List<DistributorClientAddressBO> lstDistributorClientAddress = (new DistributorClientAddressBO()).GetAllObject().OrderBy(o => o.CompanyName).ToList();
-            foreach (DistributorClientAddressBO item in lstDistributorClientAddress)
-            {
-                this.ddlShipToAddress.Items.Add(new ListItem(item.CompanyName, item.ID.ToString()));
-            }
+        if (this.QueryID > 0)
+        {
+            //this.liStatus.Visible = true;
+            this.ResetDropdowns();
 
-            //Populate Shipment Modes
-            this.ddlShipmentMode.Items.Clear();
-            this.ddlShipmentMode.Items.Add(new ListItem("Select Shipment Mode", "0"));
-            List<ShipmentModeBO> lstShipmentMode = (new ShipmentModeBO()).GetAllObject();
-            foreach (ShipmentModeBO shipmentMode in lstShipmentMode)
-            {
-                this.ddlShipmentMode.Items.Add(new ListItem(shipmentMode.Name, shipmentMode.ID.ToString()));
-            }
+            ReservationBO objReservation = new ReservationBO();
+            objReservation.ID = this.QueryID;
+            objReservation.GetObject();
 
-            //Populate Status
-            this.ddlStatus.Items.Clear();
-            List<ReservationStatusBO> lstReservationStatus = (new ReservationStatusBO()).GetAllObject();
-            foreach (ReservationStatusBO status in lstReservationStatus)
-            {
-                this.ddlStatus.Items.Add(new ListItem(status.Name, status.ID.ToString()));
-            }
+            this.txtDate.Text = objReservation.OrderDate.ToString("dd MMM yyyy");
+            this.ddlPattern.Items.FindByValue(objReservation.Pattern.ToString()).Selected = true;
+            this.txtReservationNo.Text = "RES - " + objReservation.ReservationNo.ToString("0000");
 
-            // populate Pattern
-            this.ddlPattern.Items.Clear();
-            this.ddlPattern.Items.Add(new ListItem("Select a Pattern", "0"));
-            List<PatternBO> lstPattern = (new PatternBO()).GetAllObject().Where(o => o.IsActive == true).OrderBy(o => o.Number).ToList();
-            foreach (PatternBO pattern in lstPattern)
-            {
-                this.ddlPattern.Items.Add(new ListItem(pattern.Number + " - " + pattern.NickName, pattern.ID.ToString()));
-            }
+            this.ddlCoordinator.Items.FindByValue(objReservation.Coordinator.ToString()).Selected = true;
+            this.ddlDistributor.Items.FindByValue(objReservation.Distributor.ToString()).Selected = true;
+            this.txtClient.Text = objReservation.Client.ToString();
+            //this.ddlShipmentMode.Items.FindByValue(objReservation.ShipmentMode.ToString()).Selected = true;
+            //this.ddlStatus.Items.FindByValue(objReservation.Status.ToString()).Selected = true;
+            this.txtShippingDate.Text = objReservation.ShipmentDate.ToString("dd MMM yyyy");
+            this.txtQty.Text = objReservation.Qty.ToString();
+            this.txtNotes.Text = objReservation.Notes;
+            //this.ddlShipToAddress.Items.FindByValue((objReservation.ShipTo != null && objReservation.ShipTo > 0) ? objReservation.ShipTo.ToString() : "0").Selected = true;
 
-            if (this.LoggedUser.IsDirectSalesPerson)
-            {
-                this.ddlDistributor.Items.FindByValue(this.Distributor.ID.ToString()).Selected = true;
-                this.ddlCoordinator.Items.FindByValue(this.Distributor.Coordinator.ToString()).Selected = true;
-                this.ddlDistributor.Enabled = this.ddlCoordinator.Enabled = false;
-            }
-            else if (this.LoggedUserRoleName == UserRole.IndicoAdministrator || this.LoggedUserRoleName == UserRole.IndicoCoordinator)
-            {
-                this.ddlCoordinator.Items.FindByValue(LoggedUser.ID.ToString()).Selected = true;
-                this.ddlCoordinator.Enabled = false;
-                lstDistributors = lstDistributors.Where(m => m.Coordinator == LoggedUser.ID).ToList();
+            PopulateShipToAddress();
+        }
+        else
+        {
+            //this.liStatus.Visible = false;
+        }
+    }
 
-                lstDistributors.Clear();
-                foreach (CompanyBO distributor in lstDistributors)
-                {
-                    this.ddlDistributor.Items.Add(new ListItem(distributor.Name, distributor.ID.ToString()));
+*/
+
+
+        private void PopulateControls2()
+        {
+            this.litHeaderText.Text = (this.QueryID > 0) ? "Edit Reservation" : "New Reservation";
+
+            if(this.QueryID>0)
+            {
+                var connection = GetIndicoConnnection();
+                var result = connection.Query<ReservationBalanceModel>(String.Format("SELECT * FROM [dbo].[Reservation_balanceView] WHERE ID={0}",QueryID));
+                foreach(var record in result)
+                {   
+                    
+                    txtClient.Text = record.Client;
+                    txtDate.Text =Convert.ToString(record.ReservationDate);
+                    txtShippingDate.Text = Convert.ToString(record.ShipmentDate);
+                    txtQty.Text = Convert.ToString(record.Qty);
+                    txtQtyOutwear.Text = Convert.ToString(record.QtyOutwear);
+                    txtQtyPolo.Text= Convert.ToString(record.QtyPolo);
+                    txtNotes.Text = record.Notes;
+
+                    ddlDistributor.SelectedIndex = ddlDistributor.Items.IndexOf(ddlDistributor.Items.FindByText(record.Distributor));
+                    ddlCoordinator.SelectedIndex = ddlCoordinator.Items.IndexOf(ddlCoordinator.Items.FindByText(record.Coordinator));
+                    ddlPattern.SelectedIndex = ddlPattern.Items.IndexOf(ddlPattern.Items.FindByText(record.Pattern));
+
+                
+
                 }
-            }
-
-            if (this.QueryID > 0)
-            {
-                this.liStatus.Visible = true;
-                this.ResetDropdowns();
-
-                ReservationBO objReservation = new ReservationBO();
-                objReservation.ID = this.QueryID;
-                objReservation.GetObject();
-
-                this.txtDate.Text = objReservation.OrderDate.ToString("dd MMM yyyy");
-                this.ddlPattern.Items.FindByValue(objReservation.Pattern.ToString()).Selected = true;
-                this.txtReservationNo.Text = "RES - " + objReservation.ReservationNo.ToString("0000");
-
-                this.ddlCoordinator.Items.FindByValue(objReservation.Coordinator.ToString()).Selected = true;
-                this.ddlDistributor.Items.FindByValue(objReservation.Distributor.ToString()).Selected = true;
-                this.txtClient.Text = objReservation.Client.ToString();
-                this.ddlShipmentMode.Items.FindByValue(objReservation.ShipmentMode.ToString()).Selected = true;
-                this.ddlStatus.Items.FindByValue(objReservation.Status.ToString()).Selected = true;
-                this.txtShippingDate.Text = objReservation.ShipmentDate.ToString("dd MMM yyyy");
-                this.txtQty.Text = objReservation.Qty.ToString();
-                this.txtNotes.Text = objReservation.Notes;
-                this.ddlShipToAddress.Items.FindByValue((objReservation.ShipTo != null && objReservation.ShipTo > 0) ? objReservation.ShipTo.ToString() : "0").Selected = true;
-
-                PopulateShipToAddress();
-            }
-            else
-            {
-                this.liStatus.Visible = false;
             }
         }
 
-        //private void PopulatePatterns()
-        //{
-        //    // Hide Controls
-        //    this.dvEmptyContentPattern.Visible = false;
-        //    this.dvDataContentPattern.Visible = false;
-        //    this.dvNoSearchResultPattern.Visible = false;
 
-        //    string searchText = this.txtSearchPattern.Text.ToLower();
 
-        //    PatternBO objPattern = new PatternBO();
-        //    List<PatternBO> lstPatterns = objPattern.GetAllObject().AsQueryable().OrderBy(SortExpression).ToList();
-
-        //    if (searchText != string.Empty)
-        //    {
-        //        lstPatterns = (from o in lstPatterns.AsQueryable().OrderBy(SortExpression)
-        //                       where o.Number.ToLower().Contains(searchText) ||
-        //                             o.NickName.ToLower().Contains(searchText) ||
-        //                             o.objItem.Name.ToLower().Contains(searchText) ||
-        //                             o.objPrinterType.Name.ToLower().Contains(searchText)
-        //                       select o).ToList();
-        //    }
-
-        //    if (lstPatterns.Count > 0)
-        //    {
-        //        this.dgPatterns.AllowPaging = (lstPatterns.Count > this.dgPatterns.PageSize);
-        //        this.dgPatterns.DataSource = lstPatterns;
-        //        this.dgPatterns.DataBind();
-
-        //        this.dvDataContentPattern.Visible = true;
-        //    }
-        //    else if ((searchText != string.Empty && searchText != "search"))
-        //    {
-        //        this.lblSerchKeyPattern.Text = searchText + ((searchText != string.Empty) ? " - " : string.Empty);
-
-        //        this.dvDataContentPattern.Visible = true;
-        //        this.dvNoSearchResultPattern.Visible = true;
-        //    }
-        //    else
-        //    {
-        //        this.dvEmptyContentPattern.Visible = true;
-        //    }
-
-        //    this.dgPatterns.Visible = (lstPatterns.Count > 0);
-        //}
-
-        /// <summary>
-        /// Process the page data.
-        /// </summary>
-        private void ProcessForm()
+        public static List<PatternModel> GetPattern()
         {
-            try
+            using (var connection = GetIndicoConnnection())
             {
-                using (TransactionScope ts = new TransactionScope())
-                {
-                    ReservationBO objReservation = new ReservationBO(this.ObjContext);
-                    if (this.QueryID > 0)
-                    {
-                        objReservation.ID = this.QueryID;
-                        objReservation.GetObject();
-                    }
-
-                    if (this.QueryID == 0)
-                    {
-                        objReservation.ReservationNo = objReservation.GetAllObject().Count == 0 ? 1 : objReservation.GetAllObject().Select(o => o.ReservationNo).Max() + 1;
-                    }
-
-                    objReservation.OrderDate = DateTime.Parse(this.txtDate.Text);
-                    objReservation.Pattern = int.Parse(this.ddlPattern.SelectedValue);
-
-                    objReservation.Coordinator = int.Parse(this.ddlCoordinator.SelectedValue);
-                    objReservation.Distributor = int.Parse(this.ddlDistributor.SelectedValue);
-                    objReservation.Client = this.txtClient.Text;
-
-                    objReservation.ShipTo = int.Parse(this.ddlShipToAddress.SelectedValue);
-
-                    objReservation.ShipmentMode = int.Parse(this.ddlShipmentMode.SelectedValue);
-                    objReservation.ShipmentDate = DateTime.Parse(this.txtShippingDate.Text);
-                    objReservation.Qty = int.Parse(this.txtQty.Text.Trim());
-                    objReservation.Status = (this.QueryID == 0) ? 6 : int.Parse(this.ddlStatus.SelectedValue);
-                    objReservation.Notes = this.txtNotes.Text.Trim();
-                    objReservation.DateModified = DateTime.Now;
-                    objReservation.Modifier = this.LoggedUser.ID;
-
-                    if (this.QueryID == 0)
-                    {
-                        objReservation.Creator = this.LoggedUser.ID;
-                        objReservation.DateCreated = DateTime.Now;
-
-                        //objReservation.Add();
-                    }
-
-                    this.ObjContext.SaveChanges();
-                    ts.Complete();
-
-                    new Thread(new ThreadStart(SendEmail)).Start();
-                }
+                return connection.Query<PatternModel>("SELECT ID,NickName FROM [dbo].[Pattern]").ToList();
             }
-            catch (Exception ex)
+        }
+
+        public static List<UserModel> GetCordinator()
+        {
+            using (var connection = GetIndicoConnnection())
             {
-                IndicoLogging.log.Error("Error occured while saving or updating reservations in AddEditReservations.aspx", ex);
+                return connection.Query<UserModel>("SELECT ID,UserName FROM [dbo].[User]").ToList();
             }
+        }
+
+        public static List<DistributorModel> GetDistributor()
+        {
+            using(var connection = GetIndicoConnnection())
+            {
+                return connection.Query<DistributorModel>("SELECT ID,Name FROM [dbo].[Company]").ToList();
+            }
+        }
+
+        public void PopulateControls()
+        {
+            var cat = new PatternModel { NickName = "Please Select", ID = 0 };
+            var cats = new List<PatternModel> { cat };
+            cats.AddRange(GetPattern());
+            ddlPattern.DataSource = cats;
+            ddlPattern.DataBind();
+
+            var coordinator = new UserModel { ID = 0, Username = "Please select" };
+            var coordinators = new List<UserModel> { coordinator };
+            coordinators.AddRange(GetCordinator());
+            ddlCoordinator.DataSource = coordinators;
+            ddlCoordinator.DataBind();
+
+            var distributor = new DistributorModel { ID = 0, Name = "Please select" };
+            var distributors = new List<DistributorModel> { distributor };
+            distributors.AddRange(GetDistributor());
+            ddlDistributor.DataSource = distributors;
+            ddlDistributor.DataBind();
         }
 
         private void ResetDropdowns()
@@ -375,8 +382,8 @@ namespace Indico
 
         private void PopulateShipToAddress()
         {
-            int shipto = int.Parse(this.ddlShipToAddress.SelectedValue);
-
+            //int shipto = int.Parse(this.ddlShipToAddress.SelectedValue);
+            /*
             if (shipto > 0)
             {
                 DistributorClientAddressBO objDistributorClientAddress = new DistributorClientAddressBO();
@@ -394,8 +401,10 @@ namespace Indico
                                              objDistributorClientAddress.ContactPhone + " ) ";
             }
             this.lblShipToAddress.Visible = (shipto > 0) ? true : false;
+            */
         }
-
+        
         #endregion
+      
     }
 }

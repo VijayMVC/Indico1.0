@@ -21,9 +21,7 @@
             <div class="row-fluid">
                 <!-- Empty Content -->
                 <div id="dvEmptyContent" runat="server" class="alert alert-info">
-                    <h4>
-                        <a href="AddEditReservation.aspx" title="Add a Reservation.">Add the first reservation.</a>
-                    </h4>
+                    
                     <p>
                         You can add as many reservations as you like.
                     </p>
@@ -69,49 +67,56 @@
                         <PagerStyle Mode="NextPrevNumericAndAdvanced"></PagerStyle>
                         <MasterTableView AllowFilteringByColumn="true">
                             <Columns>
-                                <telerik:GridBoundColumn UniqueName="ReservationNo" SortExpression="ReservationNo" HeaderText="Res No." AllowSorting="true" CurrentFilterFunction="Contains" AutoPostBackOnFilter="true"
-                                    FilterControlWidth="75px" DataField="ReservationNo">
-                                </telerik:GridBoundColumn>
-                                <telerik:GridDateTimeColumn DataField="OrderDate" HeaderText="Date" FilterControlWidth="110px" CurrentFilterFunction="EqualTo" AutoPostBackOnFilter="true"
+                                <telerik:GridDateTimeColumn DataField="ReservationDate" HeaderText="Reservation Date" FilterControlWidth="110px" CurrentFilterFunction="EqualTo" AutoPostBackOnFilter="true"
                                     SortExpression="OrderDate" PickerType="DatePicker" EnableTimeIndependentFiltering="true"
                                     DataFormatString="{0:dd MMMM yyyy}">
                                 </telerik:GridDateTimeColumn>
                                 <telerik:GridBoundColumn UniqueName="Pattern" SortExpression="Pattern" HeaderText="Pattern" AllowSorting="true" CurrentFilterFunction="Contains"
                                     FilterControlWidth="100px" AutoPostBackOnFilter="true" DataField="Pattern">
                                 </telerik:GridBoundColumn>
-                                <telerik:GridNumericColumn UniqueName="Qty" SortExpression="Qty" HeaderText="Reserved Qty" DataFormatString="{0} " ItemStyle-Width="5%" CurrentFilterFunction="Contains"
-                                    FilterControlWidth="50px" AutoPostBackOnFilter="true"
-                                    DataField="Qty">
-                                </telerik:GridNumericColumn>
-                                <telerik:GridNumericColumn UniqueName="UsedQty" SortExpression="UsedQty" HeaderText="Used" DataFormatString="{0} " ItemStyle-Width="5%" CurrentFilterFunction="Contains"
-                                    FilterControlWidth="50px" AutoPostBackOnFilter="true"
-                                    DataField="UsedQty">
-                                </telerik:GridNumericColumn>
-                                <telerik:GridNumericColumn UniqueName="Balance" SortExpression="Balance" HeaderText="Balance" DataFormatString="{0} " ItemStyle-Width="5%" CurrentFilterFunction="Contains"
-                                    FilterControlWidth="50px" AutoPostBackOnFilter="true"
-                                    DataField="Balance">
-                                </telerik:GridNumericColumn>
                                 <telerik:GridBoundColumn UniqueName="Coordinator" SortExpression="Coordinator" HeaderText="Coordinator" AllowSorting="true" CurrentFilterFunction="Contains"
                                     FilterControlWidth="100px" AutoPostBackOnFilter="true" DataField="Coordinator">
-                                </telerik:GridBoundColumn>
-                                <telerik:GridBoundColumn UniqueName="Client" SortExpression="Client" HeaderText="Client" AllowSorting="true" CurrentFilterFunction="Contains"
-                                    FilterControlWidth="100px" AutoPostBackOnFilter="true" DataField="Client">
                                 </telerik:GridBoundColumn>
                                 <telerik:GridBoundColumn UniqueName="Distributor" SortExpression="Distributor" HeaderText="Distributor" AllowSorting="true" CurrentFilterFunction="Contains"
                                     FilterControlWidth="100px" AutoPostBackOnFilter="true" DataField="Distributor">
                                 </telerik:GridBoundColumn>
-                                <telerik:GridDateTimeColumn DataField="ShipmentDate" HeaderText="Shipment Date" FilterControlWidth="110px" CurrentFilterFunction="EqualTo" AutoPostBackOnFilter="true"
-                                    SortExpression="ShipmentDate" PickerType="DatePicker" EnableTimeIndependentFiltering="true"
+                                <telerik:GridBoundColumn UniqueName="Client" SortExpression="Client" HeaderText="Client" AllowSorting="true" CurrentFilterFunction="Contains"
+                                    FilterControlWidth="100px" AutoPostBackOnFilter="true" DataField="Client">
+                                </telerik:GridBoundColumn>
+                               <telerik:GridDateTimeColumn DataField="ShipmentDate" HeaderText="Shipment Date" FilterControlWidth="110px" CurrentFilterFunction="EqualTo" AutoPostBackOnFilter="true"
+                                    SortExpression="OrderDate" PickerType="DatePicker" EnableTimeIndependentFiltering="true"
                                     DataFormatString="{0:dd MMMM yyyy}">
                                 </telerik:GridDateTimeColumn>
+
+                                <telerik:GridBoundColumn UniqueName="QtyPolo" SortExpression="QtyPolo" HeaderText="Quantity Polo" AllowSorting="true" CurrentFilterFunction="Contains"
+                                    FilterControlWidth="100px" AutoPostBackOnFilter="true" DataField="QtyPolo">
+                                </telerik:GridBoundColumn>
+
+                                <telerik:GridBoundColumn UniqueName="QtyOutwear" SortExpression="QtyOutwear" HeaderText="Quantity Outwear" AllowSorting="true" CurrentFilterFunction="Contains"
+                                    FilterControlWidth="100px" AutoPostBackOnFilter="true" DataField="QtyOutwear">
+                                </telerik:GridBoundColumn>
+
+
+                                <telerik:GridBoundColumn UniqueName="Qty" SortExpression="Qty" HeaderText="Reserved Quantity" AllowSorting="true" CurrentFilterFunction="Contains"
+                                    FilterControlWidth="100px" AutoPostBackOnFilter="true" DataField="Qty">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn UniqueName="Total" SortExpression="Total" HeaderText="Used Quantity" AllowSorting="true" CurrentFilterFunction="Contains"
+                                    FilterControlWidth="100px" AutoPostBackOnFilter="true" DataField="Total">
+                                </telerik:GridBoundColumn>
+
+                                <telerik:GridBoundColumn UniqueName="Balance" SortExpression="Balance" HeaderText="Balance" AllowSorting="true" CurrentFilterFunction="Contains"
+                                    FilterControlWidth="100px" AutoPostBackOnFilter="true" DataField="Balance">
+                                </telerik:GridBoundColumn>
+
                                 <telerik:GridBoundColumn UniqueName="Notes" SortExpression="Notes" HeaderText="Notes" AllowSorting="true" CurrentFilterFunction="Contains"
                                     FilterControlWidth="100px" AutoPostBackOnFilter="true" DataField="Notes">
                                 </telerik:GridBoundColumn>
-                                <telerik:GridTemplateColumn HeaderText="Status" AllowFiltering="false" Groupable="false">
-                                    <ItemTemplate>
-                                        <asp:Literal ID="lblStatus" runat="server"></asp:Literal>
-                                    </ItemTemplate>
-                                </telerik:GridTemplateColumn>
+
+                                
+                                <telerik:GridBoundColumn UniqueName="Status" SortExpression="Status" HeaderText="Reservation Status" AllowSorting="true" CurrentFilterFunction="Contains"
+                                    FilterControlWidth="100px" AutoPostBackOnFilter="true" DataField="Status">
+                                </telerik:GridBoundColumn>
+                                
                                 <%--<telerik:GridTemplateColumn HeaderText="Create Order" AllowFiltering="false" Groupable="false" ItemStyle-HorizontalAlign="Center" HeaderStyle-Width="6%">
                                     <ItemTemplate>
                                         <asp:HyperLink ID="linkCreateOrder" runat="server" CssClass="btn-link iadd" ToolTip="Create Order using this Reservation"><i class="icon-plus"></i></asp:HyperLink>

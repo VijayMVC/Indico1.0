@@ -243,6 +243,7 @@ INSERT INTO [dbo].[MenuItemRole] ([MenuItem],[Role])
 	 VALUES (@MenuItemId, 11)
 GO
 
+
 --**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--**--
 
 /****** Object:  StoredProcedure [dbo].[SPC_GetIndimanPriceListData]    Script Date: 02/03/2014 14:26:55 ******/

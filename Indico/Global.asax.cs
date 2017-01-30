@@ -10,9 +10,14 @@ namespace Indico
     {
         protected void Application_Start(object sender, EventArgs e)
         {
+            
+
             // Check for expired Quotes            
             if (CheckQuotes.State != CheckQuotes.CheckQuoteState.Started)
                 CheckQuotes.Start();
+
+            if (CheckReservationExpiration.State != CheckReservationExpiration.CheckReservationExpirationState.Started)
+                CheckReservationExpiration.Start();
         }
 
         protected void Application_End(object sender, EventArgs e)
@@ -23,7 +28,7 @@ namespace Indico
         protected void Application_Error(object sender, EventArgs e)
         {
             Exception exception = Server.GetLastError();
-            while (exception != null && exception.InnerException != null)
+             while (exception != null && exception.InnerException != null)
             {
                 exception = exception.InnerException;
             }

@@ -76,22 +76,13 @@ namespace Indico {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanShipmentError;
         
         /// <summary>
-        /// ddlShipmentDates control.
+        /// txtShipmentDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlShipmentDates;
-        
-        /// <summary>
-        /// RequiredFieldValidator1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        protected global::System.Web.UI.WebControls.TextBox txtShipmentDate;
         
         /// <summary>
         /// RadComboShipmentKey control.
@@ -175,13 +166,13 @@ namespace Indico {
         protected global::System.Web.UI.WebControls.TextBox txtAwbNo;
         
         /// <summary>
-        /// txtShipTo control.
+        /// ddlShipTo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtShipTo;
+        protected global::System.Web.UI.WebControls.DropDownList ddlShipTo;
         
         /// <summary>
         /// chkIsBillTo control.
@@ -238,13 +229,22 @@ namespace Indico {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvBank;
         
         /// <summary>
-        /// txtShipmentMode control.
+        /// ddlMode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtShipmentMode;
+        protected global::System.Web.UI.WebControls.DropDownList ddlMode;
+        
+        /// <summary>
+        /// ddlport control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlport;
         
         /// <summary>
         /// ddlStatus control.
@@ -580,12 +580,12 @@ namespace Indico {
         protected global::System.Web.UI.WebControls.HiddenField hdnIndexID;
         
         /// <summary>
-        /// hdnOrderDetail control.
+        /// HiddenField1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnOrderDetail;
+        protected global::System.Web.UI.WebControls.HiddenField HiddenField1;
     }
 }

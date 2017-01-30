@@ -281,6 +281,7 @@ namespace Indico.BusinessObjects
         
         private static List<Indico.BusinessObjects.ReturnInvoiceDetailsBO> IQueryableToList(IQueryable<Indico.DAL.ReturnInvoiceDetails> oQuery)
         {
+            
             List<Indico.DAL.ReturnInvoiceDetails> oList = oQuery.ToList();
             List<Indico.BusinessObjects.ReturnInvoiceDetailsBO> rList = new List<Indico.BusinessObjects.ReturnInvoiceDetailsBO>(oList.Count);
             foreach (Indico.DAL.ReturnInvoiceDetails o in oList)
@@ -289,6 +290,7 @@ namespace Indico.BusinessObjects
                 rList.Add(obj);
             }
             return rList;
+            
         }
         #endregion
         

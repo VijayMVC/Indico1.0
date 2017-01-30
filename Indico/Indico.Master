@@ -1,4 +1,4 @@
-<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Indico.Master.cs" Inherits="Indico.Indico" %>
+nventoryca<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Indico.Master.cs" Inherits="Indico.Indico" %>
 
 <%@ Register TagPrefix="iNav" TagName="Navigation" Src="~/Controls/Navigation.ascx" %>
 

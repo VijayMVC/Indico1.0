@@ -6,19 +6,23 @@ using System.Transactions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+using Dapper;
 using Indico.BusinessObjects;
 using Indico.Common;
 using Telerik.Web.UI;
+
 using System.Web.UI.HtmlControls;
 using System.Globalization;
+using Indico.Models;
+using Indico.Common.Extensions;
 
 namespace Indico
 {
     public partial class AddEditInvoice : IndicoPage
     {
         #region Fields
-
+        DateTime exdate;
+        DateTime startdate;
         private int urlQueryID = -1;
         private int createdInvoiceId;
         private DateTime _weekendate = new DateTime(1100, 1, 1);
@@ -290,20 +294,52 @@ namespace Indico
         {
             if (!this.IsPostBack)
             {
-                PopulateControls();
+                //PopulateControls();
+                
+                loadWeekNo();
+                
+                loadPort();
+                loadMode();
+                loadStatus();
+                loadBanks();
+                loadBillTo();
+                
             }
         }
+
+       protected void RadComboShipmentKey_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            RadComboBoxItem item = RadComboShipmentKey.SelectedItem;
+            Literal l1 = item.FindControl("litShipTo") as Literal;
+            string varshipto = l1.Text;
+            Literal l2 = item.FindControl("litDestinationPort") as Literal;
+            string vardestinationport = l2.Text;
+            Literal l3 = item.FindControl("litETD") as Literal;
+            string varetd = l3.Text;
+            Literal l4 = item.FindControl("LitPriceTerm") as Literal;
+            string varpriceterm = l4.Text;
+
+            var connection = GetIndicoConnnection();
+
+            var result1 = connection.Query<NewShipmentOrderDetailSizeQtyViewModel>(string.Format("SELECT *,0,0,0,0,'' FROM [dbo].[NewShipmentOrderDetailSizeQtyView] WHERE ShiptoName='{0}' AND PortName='{1}' AND ShipmentDate='{2}' AND PaymentMethodName='{3}' ",varshipto,vardestinationport,DateTimeExtensions.GetSQLDateString(Convert.ToDateTime(varetd)),varpriceterm)).ToList();
+            RadInvoice.DataSource = result1;
+            RadInvoice.DataBind();
+
+        }
+
+
 
         protected void RadInvoice_ItemDataBound(object sender, GridItemEventArgs e)
         {
             //GridPagerItem item = (GridPagerItem)e.Item;
-
+            /*
             if (e.Item is GridDataItem)
             {
                 var item = e.Item as GridDataItem;
 
                 if ((item.ItemIndex > -1 && item.DataItem is ReturnInvoiceOrderDetailViewBO))
                 {
+                    
                     ReturnInvoiceOrderDetailViewBO objInvoiceOrderDetailView = (ReturnInvoiceOrderDetailViewBO)item.DataItem;
 
                     Label lblQty = (Label)item.FindControl("lblQty");
@@ -354,12 +390,14 @@ namespace Indico
                 Label lblTotalAmount = (Label)item.FindControl("lblTotalAmount");
                 lblTotalAmount.Text = totalamount.ToString("0.00");
 
-                /*  Label lblTotalRate = (Label)item.FindControl("lblTotalRate");
-                  lblTotalRate.Text = totalrate.ToString("0.00");*/
+                 Label lblTotalRate = (Label)item.FindControl("lblTotalRate");
+                  lblTotalRate.Text = totalrate.ToString("0.00");
 
                 Label lblQty = (Label)item.FindControl("lblQty");
                 lblQty.Text = totalqty.ToString();
             }
+            */
+        
         }
 
         protected void RadInvoice_SortCommand(object sender, Telerik.Web.UI.GridSortCommandEventArgs e)
@@ -424,71 +462,84 @@ namespace Indico
 
         protected void RadComboWeek_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            DateTime WeekendDate = DateTime.Parse(this.RadComboWeek.SelectedItem.Text);
-            int id = int.Parse(this.RadComboWeek.SelectedValue);
+            RadComboShipmentKey.Text = "";
+            int weekid = Convert.ToInt32(RadComboWeek.SelectedValue);
 
-            if (WeekendDate != null)
+            var connection = GetIndicoConnnection();
+
+            var result1 = connection.Query<WeekNoWeekendDateModel>(string.Format("SELECT ID,WeekNo,WeekendDate,'make' FROM [dbo].[WeeklyProductionCapacity] WHERE ID={0}",weekid)).ToList();
+
+            foreach(var result2 in result1)
             {
-                this.PopulateShipmentDates(WeekendDate, id);
+                exdate = result2.WeekendDate;
             }
+
+            //txtShipmentDate.Text = exdate.ToString("dd MM yyyy");
+            startdate = exdate.AddDays(-6);
+
+            var result3 = connection.Query<ShipmentkeyModel>(string.Format("EXEC [dbo].[spc_GetShipmentKeys]{0}",weekid)).ToList();
+
+            RadComboShipmentKey.DataSource = result3;
+            RadComboShipmentKey.DataBind();
+
         }
 
         protected void RadComboWeek_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
         {
+            
             RadComboBoxItem item = e.Item;
 
-            if (item.Index > -1 && item.DataItem is WeeklyProductionCapacityBO)
+            if (item.Index > -1 && item.DataItem is WeekNoWeekendDateModel)
             {
-                WeeklyProductionCapacityBO objWeeklyProductionCapacity = (WeeklyProductionCapacityBO)item.DataItem;
+                WeekNoWeekendDateModel objWeeklyProductionCapacity = (WeekNoWeekendDateModel)item.DataItem;
 
                 Literal litWeekNo = (Literal)item.FindControl("litWeekNo");
-                litWeekNo.Text = objWeeklyProductionCapacity.WeekNo + "/" + objWeeklyProductionCapacity.WeekendDate.Year;
+                litWeekNo.Text = objWeeklyProductionCapacity.WeekNo.ToString();
 
                 Literal litETD = (Literal)item.FindControl("litETD");
                 litETD.Text = objWeeklyProductionCapacity.WeekendDate.ToString("dd MMMM yyyy");
 
-                item.Value = objWeeklyProductionCapacity.ID.ToString();
+                
             }
+            
         }
 
         protected void RadComboShipmentKey_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
         {
+            
             RadComboBoxItem item = e.Item;
 
-            if (item.Index > -1 && item.DataItem is ReturnWeeklySummaryViewBO)
+            if (item.Index > -1 && item.DataItem is ShipmentkeyModel)
             {
-                ReturnWeeklySummaryViewBO objWeeklySummaryView = (ReturnWeeklySummaryViewBO)item.DataItem;
+                ShipmentkeyModel objWeeklySummaryView = (ShipmentkeyModel)item.DataItem;
 
                 Literal litShipTo = (Literal)item.FindControl("litShipTo");
-                litShipTo.Text = objWeeklySummaryView.CompanyName;
+                litShipTo.Text = objWeeklySummaryView.ShipTo;
 
-                Literal litWeek = (Literal)item.FindControl("litWeek");
-                litWeek.Text = WeekNo;
+                Literal litWeek = (Literal)item.FindControl("litDestinationPort");
+                litWeek.Text = objWeeklySummaryView.DestinationPort;
 
                 Literal litETD = (Literal)item.FindControl("litETD");
-                litETD.Text = WeekEndDate.ToString("dd MMMM yyyy");
+                litETD.Text = objWeeklySummaryView.ShipmentDate.ToString("dd MMMM yyyy");
 
-                Literal litMode = (Literal)item.FindControl("litMode");
-                litMode.Text = objWeeklySummaryView.ShipmentMode;
+                Literal litPriceTerm = (Literal)item.FindControl("litPriceTerm");
+                litPriceTerm.Text = objWeeklySummaryView.PriceTerm;
 
-                Literal litQty = (Literal)item.FindControl("litQty");
-                litQty.Text = objWeeklySummaryView.Qty.ToString();
 
-                item.Value = objWeeklySummaryView.DistributorClientAddress.ToString() + "," + objWeeklySummaryView.ShipmentModeID.ToString();
+
             }
 
         }
-
+        /*
         protected void RadComboShipmentKey_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             int id = int.Parse(this.RadComboShipmentKey.SelectedValue.Split(',')[0]);
             int shipmentid = int.Parse(this.RadComboShipmentKey.SelectedValue.Split(',')[1]);
-
+            
             if (id > 0 && shipmentid > 0)
             {
                 ViewState["DistributorClientAddress"] = id;
                 ViewState["ShipmentID"] = shipmentid;
-
                 DistributorClientAddressBO objDistributorClientAddress = new DistributorClientAddressBO();
                 objDistributorClientAddress.ID = id;
                 objDistributorClientAddress.GetObject();
@@ -498,7 +549,7 @@ namespace Indico
                 objShipmentMode.GetObject();
 
                 this.txtShipTo.Text = objDistributorClientAddress.CompanyName;
-                this.txtShipmentMode.Text = objShipmentMode.Name;
+                this.ddlMode.Text = objShipmentMode.Name;
 
                 string state = (objDistributorClientAddress.State != null) ? objDistributorClientAddress.Suburb : string.Empty;
 
@@ -506,15 +557,17 @@ namespace Indico
 
 
                 this.populateInvoiceOrders(0, id, true, shipmentid, false, id, true);
+
+
             }
         }
-
+        */
         protected void btnDelete_Click(object sender, EventArgs e)
         {
             //NNM
             int id = int.Parse(this.hdnSelectedID.Value);
             int indexid = int.Parse(this.hdnIndexID.Value);
-            int orderdetail = int.Parse(this.hdnOrderDetail.Value);
+           
 
             try
             {
@@ -543,7 +596,7 @@ namespace Indico
 
                         #region Add
 
-                        lstNotInvoiceOrderDetail.AddRange(lstInvoiceOrderDetailView.Where(o => o.OrderDetail == orderdetail).ToList());
+                        //lstNotInvoiceOrderDetail.AddRange(lstInvoiceOrderDetailView.Where(o => o.OrderDetail == orderdetail).ToList());
 
                         Session["NotInvoiceOrderDetails"] = lstNotInvoiceOrderDetail;
 
@@ -572,7 +625,7 @@ namespace Indico
                 IndicoLogging.log.Error("Error occured while deleting or removing order details from the AddEditInvoicePage.aspx", ex);
             }
         }
-
+        /*
         protected void ddlShipmentDates_SelectedIndexChanged(object sender, EventArgs e)
         {
             DateTime ShipmentDate = DateTime.Parse(this.ddlShipmentDates.SelectedItem.Text);
@@ -584,7 +637,7 @@ namespace Indico
 
             this.RadComboShipmentKey.Enabled = (ShipmentDate != null) ? true : false;
         }
-
+        */
         protected void btnSaveShippingAddress_ServerClick(object sender, EventArgs e)
         {
             if (Page.IsValid)
@@ -745,7 +798,7 @@ namespace Indico
 
             FactoryInvoice objFactoryInvoice = new FactoryInvoice();
             objFactoryInvoice.Week = int.Parse(this.RadComboWeek.SelectedValue);
-            objFactoryInvoice.ShipmentDate = Convert.ToDateTime(this.ddlShipmentDates.SelectedItem.Text);
+            //objFactoryInvoice.ShipmentDate = Convert.ToDateTime(this.ddlShipmentDates.SelectedItem.Text);
             objFactoryInvoice.ShipmentKey = (this.DistributorClientAddress > 0) ? this.DistributorClientAddress : (this.RadComboShipmentKey.Items.Count > 0) ? int.Parse(this.RadComboShipmentKey.SelectedValue) : 0;
             objFactoryInvoice.InvoiceNo = this.txtInvoiceNo.Text;
             objFactoryInvoice.InvoiceDate = (!string.IsNullOrEmpty(this.txtInvoiceDate.Text)) ? Convert.ToDateTime(this.txtInvoiceDate.Text) : DateTime.Now;
@@ -839,7 +892,7 @@ namespace Indico
             var monday = DateTime.Today.AddDays(-daysTillMonday);
 
             this.RadComboWeek.Enabled = (this.QueryID > 0) ? false : true;
-            this.ddlShipmentDates.Enabled = (this.QueryID > 0) ? false : true;
+            //this.ddlShipmentDates.Enabled = (this.QueryID > 0) ? false : true;
 
             // populate Invoice Status
             this.ddlStatus.Items.Clear();
@@ -917,12 +970,12 @@ namespace Indico
                 //this.PopulateShipmentDates(this.GetWeeklyProductionCapacityDetails(objInvoice.WeeklyProductionCapacity).WeekendDate, (int)objInvoice.WeeklyProductionCapacity);
 
                 this.PopulateInvoiceShipmentDates(objInvoice.objWeeklyProductionCapacity.WeekendDate, (int)objInvoice.WeeklyProductionCapacity);
-                this.ddlShipmentDates.Items.FindByText(objInvoice.ShipmentDate.ToString("dd MMMM yyyy")).Selected = true;
+                //this.ddlShipmentDates.Items.FindByText(objInvoice.ShipmentDate.ToString("dd MMMM yyyy")).Selected = true;
                 this.PopulateShipmentKey(objInvoice.ShipmentDate);
                 this.txtInvoiceDate.Text = objInvoice.InvoiceDate.ToString("dd MMMM yyyy");
                 this.txtAwbNo.Text = objInvoice.AWBNo;
-                this.txtShipTo.Text = objInvoice.objShipTo.CompanyName;
-                this.txtShipmentMode.Text = objInvoice.objShipmentMode.Name;
+                //this.txtShipTo.Text = objInvoice.objShipTo.CompanyName;
+                this.ddlMode.Text = objInvoice.objShipmentMode.Name;
                 this.RadComboShipmentKey.Enabled = false;
                 this.txtInvoiceNo.Text = objInvoice.InvoiceNo;
                 this.ddlStatus.Items.FindByValue(objInvoice.Status.ToString()).Selected = true;
@@ -966,7 +1019,7 @@ namespace Indico
 
                 this.PopulateShipmentDates(this.WeeklyCapacityDate);
 
-                this.ddlShipmentDates.Items.FindByText(this.ShipmentDate.ToString("dd MMMM yyyy")).Selected = true;
+                //this.ddlShipmentDates.Items.FindByText(this.ShipmentDate.ToString("dd MMMM yyyy")).Selected = true;
 
                 this.PopulateShipmentKey(this.ShipmentDate);
 
@@ -982,8 +1035,8 @@ namespace Indico
                 objShipmentMode.ID = this.ShipmentMode;
                 objShipmentMode.GetObject();
 
-                this.txtShipTo.Text = objDistributorClientAddress.CompanyName;
-                this.txtShipmentMode.Text = objShipmentMode.Name;
+                //this.txtShipTo.Text = objDistributorClientAddress.CompanyName;
+                this.ddlMode.Text = objShipmentMode.Name;
                 ViewState["DistributorClientAddress"] = this.ShipmentKey;
                 ViewState["ShipmentID"] = this.ShipmentMode;
 
@@ -1022,7 +1075,7 @@ namespace Indico
 
                 this.PopulateShipmentDates(this.GetWeeklyProductionCapacityDetails(objFactoryInvoice.Week).WeekendDate);
 
-                this.ddlShipmentDates.Items.FindByText(objFactoryInvoice.ShipmentDate.ToString("dd MMMM yyyy")).Selected = true;
+                //this.ddlShipmentDates.Items.FindByText(objFactoryInvoice.ShipmentDate.ToString("dd MMMM yyyy")).Selected = true;
 
                 this.PopulateShipmentKey(objFactoryInvoice.ShipmentDate);
 
@@ -1053,8 +1106,8 @@ namespace Indico
                 objShipmentMode.ID = objFactoryInvoice.ShipmentMode;
                 objShipmentMode.GetObject();
 
-                this.txtShipTo.Text = objDistributorClientAddress.CompanyName;
-                this.txtShipmentMode.Text = objShipmentMode.Name;
+                //this.txtShipTo.Text = objDistributorClientAddress.CompanyName;
+                this.ddlMode.Text = objShipmentMode.Name;
                 ViewState["DistributorClientAddress"] = objFactoryInvoice.ShipmentKey;
                 ViewState["ShipmentID"] = objFactoryInvoice.ShipmentMode;
 
@@ -1154,7 +1207,7 @@ namespace Indico
                     objInvoice.AWBNo = this.txtAwbNo.Text;
                     objInvoice.WeeklyProductionCapacity = (this.chkChangeOrderDate.Checked == true) ? objWeeklyProductionCapacity.ID : int.Parse(this.RadComboWeek.SelectedValue);
                     objInvoice.ShipmentMode = this.ShipmentModeID;
-                    objInvoice.ShipmentDate = (this.chkChangeOrderDate.Checked == true) ? Convert.ToDateTime(this.txtInvoiceDate.Text) : Convert.ToDateTime(this.ddlShipmentDates.SelectedItem.Text);
+                    //objInvoice.ShipmentDate = (this.chkChangeOrderDate.Checked == true) ? Convert.ToDateTime(this.txtInvoiceDate.Text) : Convert.ToDateTime(this.ddlShipmentDates.SelectedItem.Text);
                     objInvoice.Status = int.Parse(this.ddlStatus.SelectedValue);
                     objInvoice.IsBillTo = this.chkIsBillTo.Checked;
                     objInvoice.BillTo = (this.chkIsBillTo.Checked) ? int.Parse(this.ddlBillTo.SelectedValue) : 22;
@@ -1273,6 +1326,117 @@ namespace Indico
             }
         }
 
+        public void loadWeekNo()
+        {
+            int difdate=0;
+            DateTime todaydate = DateTime.Today.Date;
+            DateTime expdate = new DateTime();
+            string todayday = todaydate.DayOfWeek.ToString();
+            if (todayday == "Tuesday")
+            {
+                difdate = 0;
+            }
+
+            if(todayday=="Wednesday")
+            {
+                difdate = 6;
+            }
+
+            if(todayday=="Thursday")
+            {
+
+                difdate = 5;
+            }
+
+            if(todayday=="Friday")
+            {
+
+                difdate = 4;
+            }
+
+            if(todayday=="Saturday")
+            {
+
+                difdate = 3;
+            }
+
+            if(todayday=="Sunday")
+            {
+
+                difdate = 2;
+            }
+
+            if(todayday=="Monday")
+            {
+
+                difdate = 1;
+            }
+
+            expdate = todaydate.AddDays(difdate);
+
+            var connection = GetIndicoConnnection();
+            
+                var result1= connection.Query<WeekNoWeekendDateModel>(string.Format("SELECT ID,WeekNo,WeekendDate,'make' FROM [dbo].[WeeklyProductionCapacity] WHERE WeekendDate>='{0}'",expdate.GetSQLDateString())).ToList();
+                result1.ForEach(c => c.makeweeknoyear());
+                RadComboWeek.DataSource = result1;
+                RadComboWeek.DataBind();
+          
+        }
+
+       public void loadPort()
+        {
+
+            var connection = GetIndicoConnnection();
+
+            var result1 = connection.Query<PortModel>("SELECT ID,Name FROM [dbo].[DestinationPort]");
+
+            ddlport.DataSource = result1;
+            ddlport.DataBind();
+        }
+
+        public void loadMode()
+        {
+            var connection = GetIndicoConnnection();
+
+            var result1 = connection.Query<ModeModel>("SELECT ID,Name FROM [dbo].[ShipmentMode]");
+            ddlMode.DataSource = result1;
+            ddlMode.DataBind();
+
+        }
+
+        public void loadStatus()
+        {
+
+            var connection = GetIndicoConnnection();
+            var result1 = connection.Query<NameIdModel>("SELECT ID,Name FROM [dbo].[InvoiceStatus]");
+            ddlStatus.DataSource = result1;
+            ddlStatus.DataBind();
+
+        }
+
+        public void loadBanks()
+        {
+            var connection = GetIndicoConnnection();
+            var result1 = connection.Query<NameIdModel>("SELECT ID,Name FROM [dbo].[Bank]");
+            ddlBank.DataSource = result1;
+            ddlBank.DataBind();
+        }
+
+        public void loadBillTo()
+        {
+
+            var connection = GetIndicoConnnection();
+            var result1 = connection.Query<AddressIdModel>("SELECT ID,Address FROM [dbo].[DistributorClientAddress]");
+            ddlBillTo.DataSource = result1;
+            ddlBillTo.DataBind();
+
+
+        }
+
+
+
+
+
         private void populateInvoiceOrders(int invoice = 0, int distributorclientaddress = 0, bool isNew = true, int shipmentid = 0, bool isPopulate = true, int wid = 0, bool isweekly = false)
         {
             List<ReturnInvoiceOrderDetailViewBO> lstInvoiceOrderDetails = new List<ReturnInvoiceOrderDetailViewBO>();
@@ -1291,7 +1455,7 @@ namespace Indico
                     {
                         InvoiceBO objInvoice = new InvoiceBO();
                         objInvoice.WeeklyProductionCapacity = wid;
-                        objInvoice.ShipmentDate = DateTime.Parse(this.ddlShipmentDates.SelectedValue);
+                        //objInvoice.ShipmentDate = DateTime.Parse(this.ddlShipmentDates.SelectedValue);
                         objInvoice.ShipTo = distributorclientaddress;
                         //objInvoice.Status = 4;
 
@@ -1299,9 +1463,9 @@ namespace Indico
 
                         if (lstInvoice.Count > 0)
                         {
-                            lstInvoiceOrderDetails = InvoiceBO.InvoiceOrderDetailView(lstInvoice[0].ID, distributorclientaddress, false, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
+                            //lstInvoiceOrderDetails = InvoiceBO.InvoiceOrderDetailView(lstInvoice[0].ID, distributorclientaddress, false, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
 
-                            lst = InvoiceBO.InvoiceOrderDetailView(0, distributorclientaddress, isNew, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
+                           // lst = InvoiceBO.InvoiceOrderDetailView(0, distributorclientaddress, isNew, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
 
                             lstnotexists = lst.Select(o => (int)o.OrderDetail).ToList().Except(lstInvoiceOrderDetails.Select(o => (int)o.OrderDetail).ToList()).ToList();
 
@@ -1326,9 +1490,9 @@ namespace Indico
 
                             if (lstInvoice.Count > 0)
                             {
-                                lstInvoiceOrderDetails = InvoiceBO.InvoiceOrderDetailView(lstInvoice[0].ID, distributorclientaddress, false, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
+                                //lstInvoiceOrderDetails = InvoiceBO.InvoiceOrderDetailView(lstInvoice[0].ID, distributorclientaddress, false, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
 
-                                lst = InvoiceBO.InvoiceOrderDetailView(0, distributorclientaddress, isNew, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
+                                //lst = InvoiceBO.InvoiceOrderDetailView(0, distributorclientaddress, isNew, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
 
                                 lstnotexists = lst.Select(o => (int)o.OrderDetail).ToList().Except(lstInvoiceOrderDetails.Select(o => (int)o.OrderDetail).ToList()).ToList();
 
@@ -1339,13 +1503,13 @@ namespace Indico
                             }
                             else
                             {
-                                lstInvoiceOrderDetails = InvoiceBO.InvoiceOrderDetailView(invoice, distributorclientaddress, isNew, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
+                               // lstInvoiceOrderDetails = InvoiceBO.InvoiceOrderDetailView(invoice, distributorclientaddress, isNew, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
                             }
                         }
                     }
                     else
                     {
-                        lstInvoiceOrderDetails = InvoiceBO.InvoiceOrderDetailView(invoice, distributorclientaddress, isNew, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
+                        //lstInvoiceOrderDetails = InvoiceBO.InvoiceOrderDetailView(invoice, distributorclientaddress, isNew, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
                     }
                 }
                 else
@@ -1356,13 +1520,13 @@ namespace Indico
 
                     if (objInvoice.Status == 5)
                     {
-                        lstInvoiceOrderDetails = InvoiceBO.InvoiceOrderDetailView(invoice, distributorclientaddress, isNew, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
+                        //lstInvoiceOrderDetails = InvoiceBO.InvoiceOrderDetailView(invoice, distributorclientaddress, isNew, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
                     }
                     else
                     {
-                        lstInvoiceOrderDetails = InvoiceBO.InvoiceOrderDetailView(this.QueryID, distributorclientaddress, isNew, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
+                       // lstInvoiceOrderDetails = InvoiceBO.InvoiceOrderDetailView(this.QueryID, distributorclientaddress, isNew, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
 
-                        lst = InvoiceBO.InvoiceOrderDetailView(0, distributorclientaddress, true, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
+                        //lst = InvoiceBO.InvoiceOrderDetailView(0, distributorclientaddress, true, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
 
                         lstnotexists = lst.Select(o => (int)o.OrderDetail).ToList().Except(lstInvoiceOrderDetails.Select(o => (int)o.OrderDetail).ToList()).ToList();
 
@@ -1596,14 +1760,14 @@ namespace Indico
 
             lstShipmentDates = InvoiceBO.GetShipmentDates(WeekendDate);
 
-            this.ddlShipmentDates.Items.Clear();
-            this.ddlShipmentDates.Items.Add(new ListItem("Select a Shipment Date"));
+            //this.ddlShipmentDates.Items.Clear();
+            //this.ddlShipmentDates.Items.Add(new ListItem("Select a Shipment Date"));
             foreach (ReturnShipmentDatesViewBO shipdates in lstShipmentDates)
             {
-                this.ddlShipmentDates.Items.Add(new ListItem(Convert.ToDateTime(shipdates.ShipmentDate.ToString()).ToString("dd MMMM yyyy")));
+               // this.ddlShipmentDates.Items.Add(new ListItem(Convert.ToDateTime(shipdates.ShipmentDate.ToString()).ToString("dd MMMM yyyy")));
             }
 
-            this.ddlShipmentDates.Enabled = (WeekendDate != new DateTime(1100, 1, 1)) ? true : false;
+            //this.ddlShipmentDates.Enabled = (WeekendDate != new DateTime(1100, 1, 1)) ? true : false;
         }
 
         private void PopulateInvoiceShipmentDates(DateTime WeekendDate, int id = 0)
@@ -1619,11 +1783,11 @@ namespace Indico
                 lstDates.Add(WeekendDate.AddDays(-i));
             }
 
-            this.ddlShipmentDates.Items.Clear();
-            this.ddlShipmentDates.Items.Add(new ListItem("Select a Shipment Date"));
+            //this.ddlShipmentDates.Items.Clear();
+            //this.ddlShipmentDates.Items.Add(new ListItem("Select a Shipment Date"));
             foreach (DateTime shipdates in lstDates)
             {
-                this.ddlShipmentDates.Items.Add(new ListItem(Convert.ToDateTime(shipdates.ToString()).ToString("dd MMMM yyyy")));
+                //this.ddlShipmentDates.Items.Add(new ListItem(Convert.ToDateTime(shipdates.ToString()).ToString("dd MMMM yyyy")));
             }
         }
 

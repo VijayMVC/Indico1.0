@@ -30,6 +30,9 @@
                     <div id="collapse1" runat="server" class="accordion-body collapse in">
                         <div class="accordion-inner">
                             <div class="control-group">
+                                <b style="text-decoration: underline">Adelaide Store Keeper Instructions</b>
+                            </div>
+                            <div class="control-group">
                                 <label class="control-label required">
                                     Date</label>
                                 <div class="controls">
@@ -61,7 +64,7 @@
                                 <label class="control-label required">
                                     Distributor</label>
                                 <div class="controls">
-                                    <asp:DropDownList CssClass="input-xxlarge" ID="ddlDistributor" runat="server" EnableViewState="true">
+                                    <asp:DropDownList CssClass="input-xxlarge" ID="ddlDistributor" runat="server"  OnSelectedIndexChanged="ddlDistributor_SelectedIndexChanged" AutoPostBack="true">
                                     </asp:DropDownList>
                                     <asp:RequiredFieldValidator ID="rfvDistributor" runat="server" ErrorMessage="Distributor is required."
                                         ControlToValidate="ddlDistributor" InitialValue="0" EnableClientScript="false"
@@ -71,6 +74,55 @@
                                     <asp:Label ID="lblDistributorAddress" runat="server" Visible="false"></asp:Label>
                                 </div>
                             </div>
+
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Deduct Reservations
+                                </label>
+                                <div class="controls">
+                                    <telerik:RadComboBox ID="RadComboReservations" runat="server" HighlightTemplatedItems="true"
+                                        Skin="Metro" CssClass="RadComboBox_Metro" AutoPostBack="true" DropDownWidth="650"
+                                        OnItemDataBound="RadComboReservations_ItemDataBound" DataTextField="ID"
+                                        EmptyMessage="Select Reservation" EnableLoadOnDemand="true" Filter="StartsWith" DataValueField="ID" CheckBoxes="true">
+                                        <HeaderTemplate>
+                                            <table style="width: 100%" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td style="width: 15%;">Reservation No
+                                                    </td>
+                                                    <td style="width: 15%;">Order Week
+                                                    </td>
+                                                    <td style="width: 15%;">ETD
+                                                    </td>
+                                                    <td style="width: 15%;">Status
+                                                    </td>
+                                                    
+                                                </tr>
+                                            </table>
+                                        </HeaderTemplate>
+                                        <ItemTemplate>
+                                            <table style="width: 100%" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td style="width: 15%;">
+                                                        <asp:Literal ID="litReservation" runat="server"></asp:Literal>
+                                                    </td>
+                                                    <td style="width: 15%;">
+                                                        <asp:Literal ID="litOrderWeek" runat="server"></asp:Literal>
+                                                    </td>
+                                                    <td style="width: 15%;">
+                                                        <asp:Literal ID="litETD" runat="server"></asp:Literal>
+                                                    </td>
+                                                    <td style="width: 15%;">
+                                                        <asp:Literal ID="litStatus" runat="server"></asp:Literal>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </ItemTemplate>
+                                    </telerik:RadComboBox>
+                                    <asp:Label ID="litReservationDetail" runat="server" Visible="false"></asp:Label>
+                                </div>
+                            </div>
+
+
                             <div id="liClient" runat="server" class="control-group">
                                 <label class="control-label required">
                                     Client</label>
@@ -193,7 +245,10 @@
                                     <asp:TextBox ID="txtNotes" TextMode="MultiLine" runat="server"></asp:TextBox>
                                 </div>
                             </div>
-                            <div id="dvOfficeUse" runat="server" class="control-group">
+                            <div class="control-group">
+                                <b style="text-decoration: underline">Factory Instructions</b>
+                            </div>
+                            <div class="control-group">
                                 <label class="control-label required">
                                     Shipment Date</label>
                                 <div class="controls">
@@ -539,7 +594,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                     ×</button>
-                <h3 id="odTitle" runat="server">New Order Detail</h3>
+                <h3><span id="odTitle" runat="server">New Order Detail</span></h3>
             </div>
             <asp:HiddenField ID="hfScrollPosition" Value="0" runat="server" />
 
@@ -686,9 +741,9 @@
                                         <div class="controls">
                                             <asp:DropDownList ID="ddlVlNumber" CssClass="input-xlarge" runat="server" AutoPostBack="true"
                                                 OnSelectedIndexChanged="ddlVlNumber_SelectedIndexChange" Url="/AddEditOrder.aspx">
-                                            </asp:DropDownList>                                            
-                                                    <asp:HyperLink ID="hlNewVisualLayout" CssClass="btn" runat="server" Target="_blank" Text="New Visual Layout" NavigateUrl="~/AddEditVisualLayout.aspx"></asp:HyperLink>                                                
-                                                    <asp:Button ID="btnRefreshVL" runat="server" CssClass="btn" Text="Refresh" OnClick="btnRefreshVL_Click" />                                                                                            
+                                            </asp:DropDownList>
+                                            <asp:HyperLink ID="hlNewVisualLayout" CssClass="btn" runat="server" Target="_blank" Text="New Visual Layout" NavigateUrl="~/AddEditVisualLayout.aspx"></asp:HyperLink>
+                                            <asp:Button ID="btnRefreshVL" runat="server" CssClass="btn" Text="Refresh" OnClick="btnRefreshVL_Click" />
                                         </div>
                                     </div>
                                     <div class="control-group">
@@ -696,21 +751,21 @@
                                             <div class="search-control" style="display: inline-block; margin-bottom: 0;">
                                                 <asp:DropDownList ID="ddlSizes" CssClass="input-medium" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlSizes_SelectedIndexChanged"></asp:DropDownList>
                                             </div>
-                                           
+
                                         </div>
 
-                                          <div class="alert alert-danger" runat="server" ID="sizeWarningAlert" Visible="False" style="margin-top: 10px;">
-                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                          You are selecting a size which is our normal size range and is essentially a bespoke garment.
-                                                <br/>
-                                                Please provide the specific key measurements;namely the chest width and centre back measurements.
-                                                <br/>
-                                                This will involve creating an appropriate template and accommodating the artwork in the new template.Artwork must be done again.
-                                                <br/>
-                                                The order is likely to be delayed.
-                                                <br/>
-                                                Please contact Melbourne coordinator to enquire is the new size can be accommodated for this pattern
-                                      </div>
+                                        <div class="alert alert-danger" runat="server" id="sizeWarningAlert" visible="False" style="margin-top: 10px;">
+                                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                            You are selecting a size which is out of our normal size range and is essentially a bespoke garment.
+                                                <br />
+                                            Please provide the specific key measurements;namely the chest width and centre back measurements.
+                                                <br />
+                                            This will involve creating an appropriate template and accommodating the artwork in the new template.Artwork must be done again.
+                                                <br />
+                                            The order is likely to be delayed.
+                                                <br />
+                                            Please contact Melbourne coordinator to enquire if the new size can be accommodated for this pattern
+                                        </div>
                                     </div>
                                     <div class="control-group">
                                         <ol id="olSizeQuantities" class="ioderlist-table" style="display: block; margin-left: 100px; margin-top: 0; width: 620px;">
@@ -865,7 +920,7 @@
                                         </div>
                                     </div>
                                 </ContentTemplate>
-                                <Triggers >
+                                <Triggers>
                                     <asp:AsyncPostBackTrigger ControlID="btnRefreshVL" EventName="Click" />
                                 </Triggers>
                             </asp:UpdatePanel>
@@ -1033,61 +1088,7 @@
                                 //    });
                                 //});
                             </script>
-                            <div class="control-group">
-                                <label class="control-label">
-                                    Deduct Reservations
-                                </label>
-                                <div class="controls">
-                                    <telerik:RadComboBox ID="RadComboReservations" runat="server" HighlightTemplatedItems="true"
-                                        Skin="Metro" CssClass="RadComboBox_Metro" AutoPostBack="true" DropDownWidth="650" OnSelectedIndexChanged="RadComboReservations_SelectedIndexChanged"
-                                        OnItemDataBound="RadComboReservations_ItemDataBound" DataTextField="ReservationNo"
-                                        EmptyMessage="Select Reservation" EnableLoadOnDemand="true" Filter="StartsWith">
-                                        <HeaderTemplate>
-                                            <table style="width: 100%" cellspacing="0" cellpadding="0">
-                                                <tr>
-                                                    <td style="width: 15%;">Reservation
-                                                    </td>
-                                                    <td style="width: 15%;">Order Week
-                                                    </td>
-                                                    <td style="width: 20%;">ETD
-                                                    </td>
-                                                    <td style="width: 20%;">Distibutor
-                                                    </td>
-                                                    <td style="width: 20%;">Client
-                                                    </td>
-                                                    <td style="width: 10%;">Status
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </HeaderTemplate>
-                                        <ItemTemplate>
-                                            <table style="width: 100%" cellspacing="0" cellpadding="0">
-                                                <tr>
-                                                    <td style="width: 15%;">
-                                                        <asp:Literal ID="litReservation" runat="server"></asp:Literal>
-                                                    </td>
-                                                    <td style="width: 15%;">
-                                                        <asp:Literal ID="litOrderWeek" runat="server"></asp:Literal>
-                                                    </td>
-                                                    <td style="width: 20%;">
-                                                        <asp:Literal ID="litETD" runat="server"></asp:Literal>
-                                                    </td>
-                                                    <td style="width: 20%;">
-                                                        <asp:Literal ID="litDistributor" runat="server"></asp:Literal>
-                                                    </td>
-                                                    <td style="width: 20%;">
-                                                        <asp:Literal ID="litClient" runat="server"></asp:Literal>
-                                                    </td>
-                                                    <td style="width: 10%;">
-                                                        <asp:Literal ID="litStatus" runat="server"></asp:Literal>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </ItemTemplate>
-                                    </telerik:RadComboBox>
-                                    <asp:Label ID="litReservationDetail" runat="server" Visible="false"></asp:Label>
-                                </div>
-                            </div>
+                            
                             <!-- / -->
                         </fieldset>
 
@@ -1480,7 +1481,7 @@
             var hdnUploadFiles = "<%=hdnUploadFiles.ClientID %>";
             var lblTotalQty = "<%=txtTotalQty.ClientID %>";
             var ancNewPaymentMethod = "<%=ancNewPaymentMethod.ClientID %>";
-            var ddlDistributor = "<%=ddlDistributor.ClientID %>";
+
             var txtOdNotes = "<%=txtOdNotes.ClientID %>";
             var ddlShipmentMode = "<%=ddlShipmentMode.ClientID %>";
             var hdnEditType = "<%=hdnEditType.ClientID %>";
@@ -1770,12 +1771,12 @@
 
             $("#" + ddlCourierAddress).change(function () {
                 $("#" + hdnCourierAddressID).val($(this).val());
-                $("#" + hdnDespatchAddressID).val($(this).val());
 
-                $("#" + ddlDespatchAddress).val($(this).val());
-                $("#" + ddlDespatchAddress).select2();
+                //$("#" + hdnDespatchAddressID).val($(this).val());
+                //$("#" + ddlDespatchAddress).val($(this).val());
+                //$("#" + ddlDespatchAddress).select2();
+                //PopulateAddressDetails($(this).val(), 2);
 
-                PopulateAddressDetails($(this).val(), 2);
                 PopulateAddressDetails($(this).val(), 3);
             });
 

@@ -13,13 +13,9 @@
         <!-- Page Content -->
         <div class="page-content">
             <div id="dvPageContent" runat="server" class="inner">
-                <!-- Page Validation -->
-                <asp:ValidationSummary ID="validationSummary" runat="server" CssClass="alert alert-danger"
-                    ValidationGroup="vgReservationFields" DisplayMode="BulletList" HeaderText="<strong>Errors were encountered while trying to process the form below</strong>"></asp:ValidationSummary>
-                <!-- / -->
-                <!-- / -->
-                <!-- Page Data -->
+                
                 <legend>Reservation Details</legend>
+                 <div class="alert alert-danger" id="dvAlert" style="display:none;"></div>
                 <div class="control-group" id="divReservationNo" runat="server" visible="false">
                     <label class="control-label required">
                         Reservation No</label>
@@ -30,18 +26,17 @@
 
                 <div class="control-group">
                     <label class="control-label required">
-                        Date</label>
+                        Reservation Date</label>
                     <div class="controls">
                         <div data-date-viewmode="years" data-date-format="dd MM yyyy" class="input-append date datepicker">
                             <asp:TextBox ID="txtDate" runat="server" CssClass="datePick"></asp:TextBox>
                             <span class="add-on"><i class="icon-calendar"></i></span>
                         </div>
-                        <asp:RequiredFieldValidator ID="rfvDate" runat="server" ErrorMessage="Date is required."
-                            ControlToValidate="txtDate" EnableClientScript="false" Display="Dynamic" ValidationGroup="vgReservationFields">
-                            <img src="Content/img/icon_warning.png"  title="Date is required." alt="Date is required." />
-                        </asp:RequiredFieldValidator>
+                        
                     </div>
                 </div>
+
+
                 <%-- <div class="control-group">
                     <label class="control-label">
                         New/Repeat
@@ -54,16 +49,14 @@
                     </div>
                 </div>--%>
                 <div class="control-group">
-                    <label class="control-label">
+                    <label class="control-label required">
                         Pattern</label>
                     <%--<asp:HiddenField ID="hdnPatternId" runat="server" Value="0" />--%>
                     <div class="controls">
-                        <asp:DropDownList ID="ddlPattern" runat="server" CssClass="input-xlarge"></asp:DropDownList>
-                        <asp:RequiredFieldValidator ID="rfvPattern" runat="server" ErrorMessage="Pattern is required."
-                            ControlToValidate="ddlPattern" InitialValue="0" EnableClientScript="false"
-                            Display="Dynamic" ValidationGroup="vgReservationFields">
-                            <img src="Content/img/icon_warning.png"  title="Pattern is required." alt="Pattern is required." />
-                        </asp:RequiredFieldValidator>
+                        <asp:DropDownList ID="ddlPattern" runat="server" CssClass="input-xlarge" DataTextField="NickName" DataValueField="ID"></asp:DropDownList>
+                        
+                            
+                        
                         <%-- <asp:TextBox ID="txtPattern" runat="server" Enabled="false"></asp:TextBox>
                         <asp:HyperLink ID="linkSearchPattern" runat="server" CssClass="btn-link isearch"
                             data-target="#dvSearchPattern" data-toggle="modal" ToolTip="Search Pattern"><i class="icon-search"></i></asp:HyperLink>
@@ -83,25 +76,17 @@
                     <label class="control-label required">
                         Coordinator</label>
                     <div class="controls">
-                        <asp:DropDownList ID="ddlCoordinator" runat="server"></asp:DropDownList>
-                        <asp:RequiredFieldValidator ID="rfvCoordinator" runat="server" ErrorMessage="Coordinator is required."
-                            ControlToValidate="ddlCoordinator" InitialValue="0" EnableClientScript="false"
-                            Display="Dynamic" ValidationGroup="vgReservationFields">
-                            <img src="Content/img/icon_warning.png"  title="Coordinator is required." alt="Coordinator is required." />
-                        </asp:RequiredFieldValidator>
+                        <asp:DropDownList ID="ddlCoordinator" runat="server" DataValueField="ID" DataTextField="Username"></asp:DropDownList>
+                        
                     </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label required">
                         Distributor</label>
                     <div class="controls">
-                        <asp:DropDownList ID="ddlDistributor" runat="server">
+                        <asp:DropDownList ID="ddlDistributor" runat="server" DataValueField="ID" DataTextField="Name">
                         </asp:DropDownList>
-                        <asp:RequiredFieldValidator ID="rfvDistributor" runat="server" ErrorMessage="Distributor is required."
-                            ControlToValidate="ddlDistributor" InitialValue="0" EnableClientScript="false"
-                            Display="Dynamic" ValidationGroup="vgReservationFields">
-                            <img src="Content/img/icon_warning.png"  title="Distributor is required." alt="Distributor is required." />
-                        </asp:RequiredFieldValidator>
+                        
                     </div>
                 </div>
                 <div class="control-group">
@@ -111,35 +96,16 @@
                         <asp:TextBox ID="txtClient" runat="server"></asp:TextBox>
                     </div>
                 </div>
-                <div class="control-group">
-                    <label class="control-label">
-                        Shipt To</label>
-                    <div class="controls">
-                        <asp:DropDownList ID="ddlShipToAddress" runat="server"></asp:DropDownList>
-                        <asp:Label ID="lblShipToAddress" runat="server" Visible="false"></asp:Label>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">
-                        Shipement Mode</label>
-                    <div class="controls">
-                        <asp:DropDownList ID="ddlShipmentMode" runat="server">
-                        </asp:DropDownList>
-                    </div>
-                </div>
+                
                 <div class="control-group">
                     <label class="control-label required">
-                        Shipping Date</label>
+                        ETD</label>
                     <div class="controls">
                         <div data-date-viewmode="years" data-date-format="dd MM yyyy" class="input-append date datepicker">
                             <asp:TextBox ID="txtShippingDate" runat="server" CssClass="datePick"></asp:TextBox>
                             <span class="add-on"><i class="icon-calendar"></i></span>
                         </div>
-                        <asp:RequiredFieldValidator ID="rfvShippingDate" runat="server" ErrorMessage="Shipping date is required."
-                            ControlToValidate="txtShippingDate" EnableClientScript="false" Display="Dynamic"
-                            ValidationGroup="vgReservationFields">
-                            <img src="Content/img/icon_warning.png"  title="Shipping date is required." alt="Shipping date is required." />
-                        </asp:RequiredFieldValidator>
+                       
                     </div>
                 </div>
                 <div class="control-group">
@@ -147,20 +113,28 @@
                         Quantity</label>
                     <div class="controls">
                         <asp:TextBox ID="txtQty" runat="server" CssClass="iintiger"></asp:TextBox>
-                        <asp:RequiredFieldValidator ID="rfvQuantity" runat="server" ErrorMessage="Quantity is required."
-                            ControlToValidate="txtQty" EnableClientScript="false" Display="Dynamic" ValidationGroup="vgReservationFields">
-                            <img src="Content/img/icon_warning.png"  title="Quantity is required." alt="Quantity is required." />
-                        </asp:RequiredFieldValidator>
+                        
                     </div>
                 </div>
-                <div id="liStatus" runat="server" visible="false" class="control-group">
+
+                <div class="control-group">
                     <label class="control-label">
-                        Status</label>
+                        Quantity-Polo and Others</label>
                     <div class="controls">
-                        <asp:DropDownList ID="ddlStatus" runat="server">
-                        </asp:DropDownList>
+                        <asp:TextBox ID="txtQtyPolo" runat="server" CssClass="iintiger" Text="0"></asp:TextBox>
+                        
                     </div>
                 </div>
+
+                 <div class="control-group">
+                    <label class="control-label">
+                        Quantity-Outerwear</label>
+                    <div class="controls">
+                        <asp:TextBox ID="txtQtyOutwear" runat="server" CssClass="iintiger" Text="0"></asp:TextBox>
+                        
+                    </div>
+                </div>
+
                 <div class="control-group">
                     <label class="control-label">
                         Notes</label>
@@ -169,9 +143,10 @@
                     </div>
                 </div>
                 <div class="form-actions">
-                    <button id="btnSaveChanges" runat="server" class="btn btn-primary" text="" type="submit"
-                        data-loading-text="Saving..." onserverclick="btnSaveChanges_Click" validationgroup="vgReservationFields">
-                        Save Changes</button>
+                    <button id="btnSaveChanges"  class="btn btn-primary"
+                        type="button">
+                       Save Changes</button>
+                    <button id="saveButtonServer" runat="server" class="btn btn-primary" style="display:none;" type="submit" onserverclick="btnSaveChanges_Click"></button>
                 </div>
             </div>
         </div>
@@ -185,16 +160,61 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
-            if (PopulatePatern) {
-                window.setTimeout(function () {
-                    $('#dvSearchPattern').modal('show');
-                }, 10);
+            $('.datepicker').datepicker({ format: 'dd MM yyyy' });
+            var reservationno = "#<%=txtReservationNo.ClientID%>";
+            var resdate = "#<%=txtDate.ClientID%>";
+            var pattern = "#<%=ddlPattern.ClientID%>";
+            var coordinator = "#<%=ddlCoordinator.ClientID%>";
+            var distributor = "#<%=ddlDistributor.ClientID%>";
+            var client = "#<%=txtClient.ClientID%>";
+            var shippingdate = "#<%=txtShippingDate.ClientID%>";
+            var qty = "#<%=txtQty.ClientID%>";
+            function validateControl(dd, name) {
+                console.log($(dd).val());
+                return !$(dd).val() ? " " + name + " is required. </br>" : "";
             }
 
-            $('#' + ddlPattern).select2();
+           function isFormValid() {
+                var error = "";
+                error += validateControl(resdate, "Reservation Date");
+                error += validateControl(client, "Client");
+                error += validateControl(shippingdate, "ETD");
+                error += validateControl(qty, "Quantity");
+                if($(pattern)[0].selectedIndex==0)
+                {
+                    error += "Pattern is required<br/>";
+                }
+                if ($(coordinator)[0].selectedIndex == 0) {
+                    error += "Coordinator is required<br/>";
+                }
 
-            $('.datepicker').datepicker({ format: 'dd MM yyyy' });
-        });
+                if ($(distributor)[0].selectedIndex == 0) {
+                    error += "Distributor is required<br/>";
+                }
+           
+                if(error){
+                    $("#dvAlert").html(error);
+                    $("#dvAlert").show();
+                    return false;
+                }
+                return true;
+
+            }
+
+
+            function onSaveButonClick() {
+
+                if (isFormValid()) {
+                    $("#<%=saveButtonServer.ClientID%>").click();
+                }
+
+            }
+
+            $(function () {
+                $("#btnSaveChanges").on("click", onSaveButonClick);
+            });
+  
+        })(window.jQuery, document);
     </script>
     <!-- / -->
 </asp:Content>

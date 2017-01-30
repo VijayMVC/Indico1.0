@@ -7,16 +7,18 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
 using Telerik.Web.UI;
-
+using Indico.Models;
 using Indico.BusinessObjects;
 using Indico.Common;
 using System.IO;
 using System.Transactions;
+using Dapper;
 
 namespace Indico
 {
     public partial class ViewReservations : IndicoPage
     {
+        private List<ReservationBalanceModel> Reservation { get { return (List<ReservationBalanceModel>)Session["Reservation"]; } set { Session["Reservation"] = value; } }
         #region Fields
 
         private DateTime qpWeekEndDate = new DateTime(1100, 1, 1);
@@ -90,6 +92,7 @@ namespace Indico
             if (!this.IsPostBack)
             {
                 PopulateControls();
+                PopulateDataGrid();
             }
         }
 
@@ -113,10 +116,10 @@ namespace Indico
             if (e.Item is GridDataItem)
             {
                 var item = e.Item as GridDataItem;
-
-                if (item.ItemIndex > -1 && item.DataItem is ReservationDetailsViewBO)
+                
+                if (item.ItemIndex > -1 && item.DataItem is ReservationBalanceModel)
                 {
-                    ReservationDetailsViewBO objReservation = (ReservationDetailsViewBO)item.DataItem;
+                    ReservationBalanceModel objReservation = (ReservationBalanceModel)item.DataItem;
 
                     //ReservationBO objRes = new ReservationBO();
                     //objRes.ID = (int)objReservation.ID;
@@ -127,8 +130,8 @@ namespace Indico
                     //Literal lblOrderQty = (Literal)item.FindControl("lblOrderQty");
                     //lblOrderQty.Text = totalOrderQty.ToString();
 
-                    Literal lblStatus = (Literal)item.FindControl("lblStatus");
-                    lblStatus.Text = "<span class=\"label label-" + objReservation.Status.ToLower().Replace(" ", string.Empty).Trim() + "\">" + objReservation.Status + "</span>";
+                   // Literal lblStatus = (Literal)item.FindControl("lblStatus");
+                   // lblStatus.Text = "<span class=\"label label-" + objReservation.Status.ToLower().Replace(" ", string.Empty).Trim() + "\">" + objReservation.Status + "</span>";
 
                     //HyperLink linkCreateOrder = (HyperLink)item.FindControl("linkCreateOrder");
                     //linkCreateOrder.NavigateUrl = "AddEditOrder.aspx?rid=" + objReservation.ID.ToString();
@@ -356,93 +359,23 @@ namespace Indico
 
         private void PopulateDataGrid()
         {
-            // Hide Controls
-            this.dvEmptyContent.Visible = false;
-            this.dvDataContent.Visible = false;
-            this.dvNoSearchResult.Visible = false;
-
-            // Search text
-            string searchText = this.txtSearch.Text.ToLower().Trim();
-
-            List<ReservationDetailsViewBO> lstReservations = new List<ReservationDetailsViewBO>();
-
-            DateTime? selecteddate2 = null;
-
-            if (WeekEndDate != new DateTime(1100, 1, 1))
+            List<ReservationBalanceModel> reservation;
+            using (var connection = GetIndicoConnnection())
             {
-                selecteddate2 = WeekEndDate;
-
-                int offset = WeekEndDate.DayOfWeek - DayOfWeek.Monday;
-
-                DateTime lastMonday = WeekEndDate.AddDays(-offset);
-                DateTime nextSunday = lastMonday.AddDays(6);
-
-                this.litHeaderText.Text = "" + "Reservations for period " + lastMonday.ToShortDateString() + " - " + nextSunday.ToShortDateString() + "";
+                reservation = connection.Query<ReservationBalanceModel>("SELECT * FROM [dbo].[NewFinalReservationBalanceView]").ToList();
+                //issue.ForEach(c => c.setdate());
+                Reservation = reservation;
+                ReBindGrid();
             }
-
-            //Sort by condition
-            /* int sortbyStatus = int.Parse(this.ddlFilterBy.SelectedItem.Value);
-             if (sortbyStatus != 0)
-                 objReservation.StatusID = sortbyStatus;*/
-
-            string coordinator = string.Empty;
-            string distributor = string.Empty;
-            string filter = (int.Parse(this.ddlFilterBy.SelectedValue) > 0) ? this.ddlFilterBy.SelectedItem.Text : string.Empty;
-
-            if (this.LoggedUser.IsDirectSalesPerson)
-            {
-                distributor = this.Distributor.ID.ToString();
-            }
-            else if (this.LoggedUserRoleName == UserRole.IndicoAdministrator || this.LoggedUserRoleName == UserRole.IndicoCoordinator)
-            {
-                coordinator = this.LoggedUser.ID.ToString();
-            }
-
-            if ((searchText != string.Empty) && (searchText != "search"))
-            {
-                lstReservations = ReservationBO.GetReservationDetails(WeekEndDate, searchText, filter, distributor, coordinator);
-            }
-            else
-            {
-                lstReservations = ReservationBO.GetReservationDetails(selecteddate2, string.Empty, filter, distributor, coordinator);
-            }
-
-            if (lstReservations.Count > 0)
-            {
-                this.RadGridReservations.AllowPaging = (lstReservations.Count > this.RadGridReservations.PageSize);
-                this.RadGridReservations.DataSource = lstReservations;
-                this.RadGridReservations.DataBind();
-                Session["ReservationDetails"] = lstReservations;
-
-                this.dvDataContent.Visible = true;
-                this.btnAddOrder.Visible = true;
-            }
-            else if ((searchText != string.Empty && searchText != "search") || ((int.Parse(this.ddlFilterBy.SelectedValue) > 0))) //|| (int.Parse(this.ddlDistributor.SelectedValue) > 0) || (int.Parse(this.ddlCoordinator.SelectedValue) > 0)))
-            {
-                this.lblSerchKey.Text = searchText + ((searchText != string.Empty) ? " - " : string.Empty) + "Filter by " + this.ddlFilterBy.SelectedItem.Text;
-
-                this.btnAddOrder.Visible = true;
-                this.dvDataContent.Visible = true;
-                this.dvNoSearchResult.Visible = true;
-            }
-            else
-            {
-                this.dvEmptyContent.Visible = true;
-                this.btnAddOrder.Visible = false;
-            }
-            this.RadGridReservations.Visible = (lstReservations.Count > 0);
         }
 
         private void ReBindGrid()
         {
-            if (Session["ReservationDetails"] != null)
-            {
-                RadGridReservations.DataSource = (List<ReservationDetailsViewBO>)Session["ReservationDetails"];
-                RadGridReservations.DataBind();
-            }
+            RadGridReservations.DataSource = Reservation;
+            RadGridReservations.DataBind();
+
         }
 
         #endregion
-
     }
 }

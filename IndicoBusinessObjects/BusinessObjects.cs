@@ -58,7 +58,8 @@ namespace Indico.BusinessObjects
             {
                 if (resmgr == null)
                 {
-                    resmgr = new ResourceManager("Indico.IndicoStrings", Assembly.GetExecutingAssembly());
+                    //resmgr = new ResourceManager("Indico.IndicoStrings", Assembly.GetExecutingAssembly());
+                   // resmgr = new ResourceManager();
                 }
                 return resmgr;
             }

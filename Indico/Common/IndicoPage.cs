@@ -1254,6 +1254,15 @@ namespace Indico.Common
             return isValid;
         }
 
+        /// <summary>
+        /// Returns default connection to the Indico Database 
+        /// </summary>
+        /// <returns></returns>
+        protected static IDbConnection GetIndicoConnnection()
+        {
+            return new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+        }
+
         #endregion
 
         #region Enums
