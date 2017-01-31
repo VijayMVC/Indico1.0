@@ -27,7 +27,12 @@ namespace Indico.Common
         public decimal DistributorSurcharge { get; set; }
         public string EditedPriceRemarks { get; set; }
         public string FactoryInstructions { get; set; }
+        public bool IsEmbroidery { get; set; }
+        public bool IsRepeat { get; set; }
+        public string ResolutionProfile { get; set; }
+        public string PocketType { get; set; }
     }
+
     public class CostSheetDetailsView
     {
         public int CostSheet { get; set; }
@@ -71,6 +76,7 @@ namespace Indico.Common
         public int FabricID { get; set; }
 
     }
+
     public class OrdersView
     {
         public int OrderDetail { get; set; }
@@ -89,6 +95,7 @@ namespace Indico.Common
         public DateTime? ShipmentDate { get; set; }
         public DateTime? SheduledDate { get; set; }
         public DateTime? RequestedDate { get; set; }
+        public DateTime? IndimanSubmittedDate { get; set; }
         public int Quantity { get; set; }
         public int DateDiffrence { get; set; }
         public string PurONo { get; set; }
@@ -114,6 +121,7 @@ namespace Indico.Common
         public bool FOCPenalty { get; set; }
         public string DespatchTo { get; set; }
     }
+
     public class JobNameDetailsView
     {
         public int ID { get; set; }

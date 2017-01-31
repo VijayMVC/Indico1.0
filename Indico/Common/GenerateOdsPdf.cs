@@ -1115,7 +1115,7 @@ namespace Indico.Common
             jkgarmentshtmlstring = jkgarmentshtmlstring.Replace("<$smvrate$>", Convert.ToDecimal(objCostValues.smvRate).ToString("0.00"));
             jkgarmentshtmlstring = jkgarmentshtmlstring.Replace("<$cm$>", objCostValues.calculatedCM.ToString("0.00")); // CM
             jkgarmentshtmlstring = jkgarmentshtmlstring.Replace("<$fobcost$>", objCostValues.FOBCost.ToString("0.00")); // fob cost
-            jkgarmentshtmlstring = jkgarmentshtmlstring.Replace("<$fobcostroundup$>", objCostValues.quotedFOB.ToString("0.00")); //Convert.ToDecimal((objCostSheet.QuotedFOBCost != null && objCostSheet.QuotedFOBCost != decimal.Parse("0")) ? objCostSheet.QuotedFOBCost.ToString() : (objCostSheet.JKFOBCost != null) ? objCostSheet.JKFOBCost.ToString() : "0").ToString("0.00"));
+            jkgarmentshtmlstring = jkgarmentshtmlstring.Replace("<$fobcostroundup$>", objCostValues.JKQuotedFOB.ToString("0.00")); //Convert.ToDecimal((objCostSheet.QuotedFOBCost != null && objCostSheet.QuotedFOBCost != decimal.Parse("0")) ? objCostSheet.QuotedFOBCost.ToString() : (objCostSheet.JKFOBCost != null) ? objCostSheet.JKFOBCost.ToString() : "0").ToString("0.00"));
 
             // factory remarks
             List<CostSheetRemarksBO> lstRemarks = (new CostSheetRemarksBO()).GetAllObject().Where(o => o.CostSheet == objCostSheet.ID).ToList();
@@ -2386,7 +2386,6 @@ namespace Indico.Common
                     document.Close();
 
                     lstfilepaths.Add(tempfilepath);
-
                 }
 
                 if (lstfilepaths.Count > 0)
@@ -2533,21 +2532,6 @@ namespace Indico.Common
 
             CostSheet objCostValues = new AddEditFactoryCostSheet().CalculateCostSheet(objCostSheet);
 
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$totalfabriccost$>", Convert.ToDecimal(objCostSheet.TotalFabricCost.Value).ToString("0.00"));
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$totalaccessorycost$>", Convert.ToDecimal(objCostSheet.TotalAccessoriesCost.Value).ToString("0.00"));
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$totalhpcost$>", Convert.ToDecimal(objCostSheet.HPCost).ToString("0.00"));
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$totallabelcost$>", Convert.ToDecimal(objCostSheet.LabelCost).ToString("0.00"));
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$othercost$>", Convert.ToDecimal(objCostSheet.Other).ToString("0.00"));
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$wastage$>", Convert.ToDecimal(objCostSheet.Wastage).ToString("0.00"));
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$finance$>", Convert.ToDecimal(objCostSheet.Finance).ToString("0.00"));
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$subwastage$>", Convert.ToDecimal(objCostSheet.SubWastage).ToString("0.00"));
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$subfinance$>", Convert.ToDecimal(objCostSheet.SubFinance).ToString("0.00"));
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$smv$>", (objCostSheet.objPattern.SMV != null) ? Convert.ToDecimal(objCostSheet.objPattern.SMV.ToString()).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$smvrate$>", (objCostSheet.SMVRate != null) ? Convert.ToDecimal(objCostSheet.SMVRate.ToString()).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cm$>", (objCostSheet.CM != null) ? Convert.ToDecimal(objCostSheet.CM.ToString()).ToString("0.00") : string.Empty);
-            ////IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cm$>", Convert.ToDecimal(objCostSheet.CM).ToString("0.00"));
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$fobcost$>", Convert.ToDecimal(objCostSheet.JKFOBCost).ToString("0.00"));
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$fobcostroundup$>", Convert.ToDecimal((objCostSheet.QuotedFOBCost != null && objCostSheet.QuotedFOBCost != decimal.Parse("0")) ? objCostSheet.QuotedFOBCost.ToString() : (objCostSheet.JKFOBCost != null) ? objCostSheet.JKFOBCost.ToString() : "0").ToString("0.00"));
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$totalfabriccost$>", Convert.ToDecimal(objCostValues.totalFabricCost).ToString("0.00"));
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$totalaccessorycost$>", Convert.ToDecimal(objCostValues.totalAccCost).ToString("0.00"));
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$totalhpcost$>", Convert.ToDecimal(objCostValues.heatpress).ToString("0.00"));
@@ -2561,73 +2545,36 @@ namespace Indico.Common
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$smvrate$>", objCostValues.smvRate.ToString("0.00"));//(objCostSheet.SMVRate != null) ? Convert.ToDecimal(objCostSheet.SMVRate.ToString()).ToString("0.00") : string.Empty);
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cm$>", objCostValues.calculatedCM.ToString("0.00"));//(objCostSheet.CM != null) ? Convert.ToDecimal(objCostSheet.CM.ToString()).ToString("0.00") : string.Empty);
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$fobcost$>", Convert.ToDecimal(objCostValues.FOBCost).ToString("0.00"));
-            IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$quotedFOB$>", objCostValues.quotedFOB.ToString("0.00")); //Convert.ToDecimal((objCostSheet.QuotedFOBCost != null && objCostSheet.QuotedFOBCost != decimal.Parse("0")) ? objCostSheet.QuotedFOBCost.ToString() : (objCostSheet.JKFOBCost != null) ? objCostSheet.JKFOBCost.ToString() : "0").ToString("0.00"));
+            IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$quotedJKFOB$>", objCostValues.JKQuotedFOB.ToString("0.00")); //Convert.ToDecimal((objCostSheet.QuotedFOBCost != null && objCostSheet.QuotedFOBCost != decimal.Parse("0")) ? objCostSheet.QuotedFOBCost.ToString() : (objCostSheet.JKFOBCost != null) ? objCostSheet.JKFOBCost.ToString() : "0").ToString("0.00"));
 
             // indiman cost
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$subconsumption$>", Convert.ToDecimal(objCostSheet.SubCons).ToString("0.00"));
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$dutyrate$>", Convert.ToDecimal(objCostSheet.DutyRate).ToString("0.00"));                        
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$dutyrate$>", Convert.ToDecimal(objCostValues.dutyRate).ToString("0.00"));
 
             //cost1
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$costfactor1name$>", (!string.IsNullOrEmpty(objCostSheet.CF1)) ? objCostSheet.CF1 : "Cost Factor 1");
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cost11$>", (objCostSheet.CONS1 != null) ? Convert.ToDecimal(objCostSheet.CONS1).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cost12$>", (objCostSheet.Rate1 != null) ? Convert.ToDecimal(objCostSheet.Rate1).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cost13$>", (objCostSheet.Cost1 != null) ? Convert.ToDecimal(objCostSheet.Cost1).ToString("0.00") : string.Empty);
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cost11$>", objCostValues.cons1.ToString("0.00"));
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cost12$>", objCostValues.rate1.ToString("0.00"));
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cost13$>", objCostValues.cost1.ToString("0.00"));
 
             //cost2
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$costfactor2name$>", (!string.IsNullOrEmpty(objCostSheet.CF1)) ? objCostSheet.CF2 : "Cost Factor 2");
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cost21$>", (objCostSheet.CONS2 != null) ? Convert.ToDecimal(objCostSheet.CONS2).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cost22$>", (objCostSheet.Rate2 != null) ? Convert.ToDecimal(objCostSheet.Rate2).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cost23$>", (objCostSheet.Cost2 != null) ? Convert.ToDecimal(objCostSheet.Cost2).ToString("0.00") : string.Empty);
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cost21$>", objCostValues.cons2.ToString("0.00"));
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cost22$>", objCostValues.rate2.ToString("0.00"));
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cost23$>", objCostValues.cost2.ToString("0.00"));
 
             //cost3
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$costfactor3name$>", (!string.IsNullOrEmpty(objCostSheet.CF1)) ? objCostSheet.CF3 : "Cost Factor 3");
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cost31$>", (objCostSheet.CONS3 != null) ? Convert.ToDecimal(objCostSheet.CONS3).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cost32$>", (objCostSheet.Rate3 != null) ? Convert.ToDecimal(objCostSheet.Rate3).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cost33$>", (objCostSheet.Cost3 != null) ? Convert.ToDecimal(objCostSheet.Cost3).ToString("0.00") : string.Empty);
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cost31$>", objCostValues.cons3.ToString("0.00"));
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cost32$>", objCostValues.rate3.ToString("0.00"));
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cost33$>", objCostValues.cost3.ToString("0.00"));
 
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$ink$>", (objCostSheet.InkCons != null) ? Convert.ToDecimal(objCostSheet.InkCons).ToString("0.000") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$inkrate$>", (objCostSheet.InkRate != null) ? Convert.ToDecimal(objCostSheet.InkRate).ToString("0.000") : string.Empty);
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$ink$>", objCostValues.ink.ToString("0.000"));
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$inkrate$>", objCostValues.inkRate.ToString("0.000"));
 
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$papaer$>", (objCostSheet.PaperCons != null) ? Convert.ToDecimal(objCostSheet.PaperCons).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$paperrate$>", (objCostSheet.PaperRate != null) ? Convert.ToDecimal(objCostSheet.PaperRate).ToString("0.00") : string.Empty);
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$papaer$>", objCostValues.paper.ToString("0.000"));
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$paperrate$>", objCostValues.paperRate.ToString("0.000"));
 
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$exchrate$>", (objCostSheet.ExchangeRate != null) ? Convert.ToDecimal(objCostSheet.ExchangeRate).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$fobaud$>", (objCostSheet.FOBAUD != null) ? Convert.ToDecimal(objCostSheet.FOBAUD).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$duty$>", (objCostSheet.Duty != null) ? Convert.ToDecimal(objCostSheet.Duty).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cost1$>", (objCostSheet.Cost1 != null) ? Convert.ToDecimal(objCostSheet.Cost1).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cost2$>", (objCostSheet.Cost2 != null) ? Convert.ToDecimal(objCostSheet.Cost2).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cost3$>", (objCostSheet.Cost2 != null) ? Convert.ToDecimal(objCostSheet.Cost3).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$inkcost$>", (objCostSheet.InkCost != null) ? Convert.ToDecimal(objCostSheet.InkCost).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$papercost$>", (objCostSheet.PaperCost != null) ? Convert.ToDecimal(objCostSheet.PaperCost).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$airfreight$>", (objCostSheet.AirFregiht != null) ? Convert.ToDecimal(objCostSheet.AirFregiht).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$impcharges$>", (objCostSheet.ImpCharges != null) ? Convert.ToDecimal(objCostSheet.ImpCharges).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$mgtoh$>", (objCostSheet.MGTOH != null) ? Convert.ToDecimal(objCostSheet.MGTOH).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$indicooh$>", (objCostSheet.IndicoOH != null) ? Convert.ToDecimal(objCostSheet.IndicoOH).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$depr$>", (objCostSheet.Depr != null) ? Convert.ToDecimal(objCostSheet.Depr).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$landed$>", (objCostSheet.Landed != null) ? Convert.ToDecimal(objCostSheet.Landed).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$cif$>", (objCostSheet.IndimanCIF != null) ? Convert.ToDecimal(objCostSheet.IndimanCIF).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$margin$>", (objCostSheet.MP != null) ? Convert.ToDecimal(objCostSheet.MP).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$mp$>", (objCostSheet.CalMGN != null) ? Convert.ToDecimal(objCostSheet.CalMGN).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$quotedcif$>", (objCostSheet.QuotedCIF != null) ? Convert.ToDecimal(objCostSheet.QuotedCIF).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$quotedmargin$>", (objCostSheet.ActMgn != null) ? Convert.ToDecimal(objCostSheet.ActMgn).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$quotedmp$>", (objCostSheet.QuotedMP != null) ? Convert.ToDecimal(objCostSheet.QuotedMP).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$fobfactor$>", (objCostSheet.FobFactor != null) ? Convert.ToDecimal(objCostSheet.FobFactor).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$quotedfob$>", (objCostSheet.IndimanFOB != null) ? Convert.ToDecimal(objCostSheet.IndimanFOB).ToString("0.00") : string.Empty);
-            //IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$marginrate$>", (objCostSheet.MarginRate != null) ? Convert.ToDecimal(objCostSheet.MarginRate).ToString("0.00") : string.Empty);
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$exchrate$>", objCostValues.exchangeRate.ToString("0.00"));
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$fobaud$>", objCostValues.fobAUD.ToString("0.00"));
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$duty$>", objCostValues.duty.ToString("0.00"));
@@ -2650,11 +2597,10 @@ namespace Indico.Common
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$quotedmp$>", objCostValues.quotedMp.ToString("0.00"));
 
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$fobfactor$>", (objCostSheet.FobFactor != null) ? Convert.ToDecimal(objCostSheet.FobFactor).ToString("0.00") : string.Empty);
-            IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$quotedfob$>", (objCostSheet.IndimanFOB != null) ? Convert.ToDecimal(objCostSheet.IndimanFOB).ToString("0.00") : string.Empty);
+            IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$quotedIndimanFOB$>", objCostValues.IndimanQuotedFOB.ToString("0.00")); //(objCostSheet.IndimanFOB != null) ? Convert.ToDecimal(objCostSheet.IndimanFOB).ToString("0.00") : string.Empty);
             IndimanCostSheethtmlstring = IndimanCostSheethtmlstring.Replace("<$marginrate$>", objCostValues.marginRate.ToString("0.00"));
 
             // factory remarks
-
             CostSheetRemarksBO objRemark = new CostSheetRemarksBO();
             objRemark.CostSheet = objCostSheet.ID;
             List<CostSheetRemarksBO> lstRemarks = objRemark.SearchObjects();
@@ -4907,7 +4853,7 @@ namespace Indico.Common
             if (objOrder.BillingAddress.HasValue && objOrder.BillingAddress > 0)
             {
                 builder.Replace("<$billingcompanyname$>", objOrder.objBillingAddress.CompanyName.ToUpper())
-                    .Replace("<$shiptoaddresstype$>", ((objOrder.objBillingAddress.AddressType ?? 1) == 1) ? "RESIDENTIAL" : "BUSINESS")
+                    .Replace("<$billingaddresstype$>", ((objOrder.objBillingAddress.AddressType ?? 1) == 1) ? "RESIDENTIAL" : "BUSINESS")
                     .Replace("<$billingaddress$>", objOrder.objBillingAddress.Address.ToUpper())
                     .Replace("<$billingsuberb$>", objOrder.objBillingAddress.Suburb.ToUpper())
                     .Replace("<$billingpostcode$>", objOrder.objBillingAddress.PostCode.ToUpper())
@@ -4938,7 +4884,7 @@ namespace Indico.Common
             if (objOrder.DespatchToAddress.HasValue && objOrder.DespatchToAddress > 0)
             {
                 builder.Replace("<$shiptocompanyname$>", objOrder.objDespatchToAddress.CompanyName.ToUpper())
-                    .Replace("<$shiptoaddresstype$>", ((objOrder.objDespatchToAddress.AddressType ?? 1) == 1) ? "RESIDENTIAL" : "BUSINESS")
+                    .Replace("<$deliveryaddresstype$>", ((objOrder.objDespatchToAddress.AddressType ?? 1) == 1) ? "RESIDENTIAL" : "BUSINESS")
                     .Replace("<$shiptoaddress$>", objOrder.objDespatchToAddress.Address.ToUpper())
                     .Replace("<$shiptosuburb$>", objOrder.objDespatchToAddress.Suburb.ToUpper())
                     .Replace("<$shiptopostcode$>", objOrder.objDespatchToAddress.PostCode.ToUpper())

@@ -470,36 +470,21 @@ namespace Indico
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            int patternId = int.Parse(this.hdnSelectedPatternID.Value);
+            var patternId = int.Parse(hdnSelectedPatternID.Value);
 
-            if (patternId > 0)
+            if (patternId <= 0)
+                return;
+            try
             {
-                WebServicePattern objWebServicePattern = new WebServicePattern();
-                try
-                {
-                    using (TransactionScope ts = new TransactionScope())
-                    {
-                        PatternBO objPattern = new PatternBO(this.ObjContext);
-                        objPattern.ID = patternId;
-                        objPattern.GetObject();
-
-                        objPattern.IsActive = false;
-                        objPattern.IsActiveWS = false;
-                        objWebServicePattern.DeletePatternNumber = objPattern.Number;
-                        objWebServicePattern.GUID = IndicoConfiguration.AppConfiguration.HttpPostGuid;
-                        objWebServicePattern.DeleteDirectoriesGivenPattern(objPattern);
-                        objWebServicePattern.Post(true);
-
-                        this.ObjContext.SaveChanges();
-                        ts.Complete();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    IndicoLogging.log.Error("Error occured while deleting pattern From the View Patterns Page", ex);
-                }
-                this.PopulateDataGrid();
+                var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+                connection.Execute("EXEC [dbo].[SPC_DeletePattern] " + patternId);
+              
             }
+            catch (Exception ex)
+            {
+                IndicoLogging.log.Error("Error occured while deleting pattern From the View Patterns Page", ex);
+            }
+            PopulateDataGrid();
         }
 
         protected void ancGarmentSpec_click(object sender, EventArgs e)

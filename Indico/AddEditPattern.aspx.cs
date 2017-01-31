@@ -1357,7 +1357,10 @@ namespace Indico
                 ReturnIntViewBO objReturnInt = new ReturnIntViewBO();
                 objReturnInt = SettingsBO.ValidateField(0, "VisualLayout", "Pattern", objPattern.ID.ToString());
                 this.ddlSizeSet.Items.FindByValue(objPattern.SizeSet.ToString()).Selected = true;
+
                 this.ddlSizeSet.Enabled = ancAddNewSizeSet.Visible = objReturnInt.RetVal == 1;
+                this.ddlGender.Enabled = ancAddNewAgeGroup.Visible = objReturnInt.RetVal == 1;
+                this.ddlAgeGroup.Enabled =  objReturnInt.RetVal == 1;
 
                 this.ddlCoreCategory.Items.FindByValue(objPattern.CoreCategory.ToString()).Selected = true;
                 this.ddlPrintType.Items.FindByValue(objPattern.PrinterType.ToString()).Selected = true;
@@ -1853,6 +1856,7 @@ namespace Indico
                     this.ObjContext.SaveChanges();
 
                     #endregion
+
                     // Delete removed sub item attributes
                     foreach (int i in deleteItemAttributeSubs)
                     {
@@ -2019,7 +2023,6 @@ namespace Indico
                 }
 
                 #endregion
-
             }
             catch (Exception ex)
             {

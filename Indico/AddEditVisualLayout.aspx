@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Indico.Master" AutoEventWireup="true"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Indico.Master" AutoEventWireup="true" EnableEventValidation="false"
     CodeBehind="AddEditVisualLayout.aspx.cs" Inherits="Indico.AddEditVisualLayout" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="iContentPlaceHolder" runat="server">
@@ -14,7 +14,7 @@
     </asp:ScriptManager>
     <!-- Page -->
     <div class="page">
-        
+
         <!-- Page Header -->
         <div class="page-header">
             <h3>
@@ -31,13 +31,13 @@
                     ValidationGroup="valGrpVL"></asp:ValidationSummary>
                 <!-- / -->
                 <!-- Page Data -->
-                <legend>Details</legend>               
-                <input type="text" style="display: none;" runat="server" ID="serverImagePath"/>
+                <legend>Details</legend>
+                <input type="text" style="display: none;" runat="server" id="serverImagePath" />
 
                 <div class="control-group">
                     <div class="controls">
                         <label class="checkbox">
-                            <asp:CheckBox ID="chkIsActive" runat="server" Checked ="true" />
+                            <asp:CheckBox ID="chkIsActive" runat="server" Checked="true" />
                             Is Active
                         </label>
                     </div>
@@ -75,7 +75,7 @@
                         </asp:TextBox>
                         <asp:Button ID="btnCheckName" runat="server" Text="Check Name" CssClass="btn-info" OnClick="btnCheckName_Click" />
                         <asp:Label ID="lblCheckName" runat="server"></asp:Label>
-                        <button style="display: none;"  ID="checkImageOnServerButton" class="btn-info" title="Check if the image is available in the server!">Check Image</button>
+                        <button style="display: none;" id="checkImageOnServerButton" class="btn-info" title="Check if the image is available in the server!">Check Image</button>
                         <asp:RequiredFieldValidator ID="rfvProductNumber" runat="server" ErrorMessage="Product number is required"
                             ControlToValidate="txtProductNumber" EnableClientScript="false" ValidationGroup="valGrpVL"
                             InitialValue="0">
@@ -95,14 +95,71 @@
 
                     </div>
                 </div>
-                <asp:UpdateProgress ID="upDistributor" runat="server" AssociatedUpdatePanelID="updatePnlDistributor">
+                <%-- <asp:UpdateProgress ID="upDistributor" runat="server" AssociatedUpdatePanelID="updatePnlDistributor">
                     <ProgressTemplate>
                         <div style="position: fixed; text-align: center; height: 100%; width: 100%; top: 0; right: 0; left: 0; z-index: 9999999; background-color: #000000; opacity: 0.7;">
                             <span style="border-width: 0px; position: fixed; padding: 50px; background-color: #FFFFFF; font-size: 24px; left: 40%; top: 40%;">Loading...</span>
                         </div>
                     </ProgressTemplate>
-                </asp:UpdateProgress>
+                </asp:UpdateProgress>--%>
                 <div id="dvHideColums" runat="server">
+                    <div id="liDistributor" runat="server" class="control-group">
+                        <label class="control-label required">
+                            Distributor</label>
+                        <div class="controls">
+                            <asp:DropDownList CssClass="input-xxlarge" ID="ddlDistributor" runat="server" EnableViewState="true">
+                            </asp:DropDownList>
+                            <asp:RequiredFieldValidator ID="rfvDistributor" runat="server" ErrorMessage="Distributor is required."
+                                ControlToValidate="ddlDistributor" InitialValue="0" EnableClientScript="false"
+                                Display="Dynamic" ValidationGroup="valGrpOrderHeader">
+                                            <img src="Content/img/icon_warning.png"  title="Distributor is required." alt="Distributor is required." />
+                            </asp:RequiredFieldValidator>
+                            <asp:Label ID="lblDistributorAddress" runat="server" Visible="false"></asp:Label>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">
+                            Primary Coordinator</label>
+                        <div class="controls">
+                            <b>
+                                <asp:Label ID="lblPrimaryCoordinator" runat="server"></asp:Label></b>
+                        </div>
+                    </div>
+                    <div id="liClient" runat="server" class="control-group">
+                        <label class="control-label required">
+                            Client</label>
+                        <div class="controls">
+                            <asp:DropDownList ID="ddlClient" CssClass="input-xxlarge" runat="server" EnableViewState="true">
+                            </asp:DropDownList>
+                            <a id="aAddClient" runat="server" class="btn btn-link iClient" onclick="javascript:AddNewClient();" title="Add New Client"><i class="icon-plus"></i></a>
+                            <a id="btnEditClient" runat="server" class="btn btn-link" onclick="javascript:EditClient();" title="Edit Client"><i class="icon-pencil"></i></a>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label required">
+                            Job Name</label>
+                        <div class="controls">
+                            <asp:DropDownList ID="ddlJobName" CssClass="input-xxlarge" runat="server" EnableViewState="true">
+                            </asp:DropDownList>
+                            <a id="ancNewJobName" runat="server" class="btn btn-link" onclick="javascript:AddNewJobName();" title="Add New Job Name"><i class="icon-plus"></i></a>
+                            <a id="btnEditJobName" runat="server" class="btn btn-link" onclick="javascript:EditJobName();" title="Edit JobName"><i class="icon-pencil"></i></a>
+                            <asp:RequiredFieldValidator ID="rfvClientOrJobName" runat="server" ErrorMessage="Job Name is required."
+                                ControlToValidate="ddlJobName" InitialValue="0" EnableClientScript="false"
+                                Display="Dynamic" ValidationGroup="valGrpOrderHeader">
+                                            <img src="Content/img/icon_warning.png"  title="Job Name is required." alt="Job Name is required." />
+                            </asp:RequiredFieldValidator>
+                        </div>
+                    </div>
+                    <div class="control-group" id="lblSecCord" runat="server" visible="false">
+                        <label class="control-label">
+                            Secondary Coordinator</label>
+                        <div class="controls">
+                            <b>
+                                <asp:Label ID="lblSecondaryCoordinator" runat="server" Visible="false"></asp:Label></b>
+                        </div>
+                    </div>
+                </div>
+                <%-- <div id="dvHideColums" runat="server">
                     <asp:UpdatePanel ID="updatePnlDistributor" runat="server">
                         <ContentTemplate>
                             <div class="control-group">
@@ -113,15 +170,7 @@
                                     </asp:DropDownList>
                                 </div>
                             </div>
-                            <div class="control-group">
-                                <label class="control-label">
-                                    Primary Coordinator</label>
-                                <div class="controls">
-                                    <b>
-                                        <asp:Label ID="lblPrimaryCoordinator" runat="server"></asp:Label></b>
-                                </div>
-                            </div>
-                            <div class="control-group">
+                   <div class="control-group">
                                 <label class="control-label required">
                                     Client</label>
                                 <div class="controls">
@@ -130,7 +179,6 @@
                                     <a id="ancNewClient" runat="server" visible="false" class="btn btn-link" onclick="javascript:AddNewClient();" title="Add New Client"><i class="icon-plus"></i></a>
                                     <asp:Literal ID="litClient" runat="server"></asp:Literal>
                                     <a id="ancEditClient" runat="server" visible="false" class="btn btn-link" onclick="javascript:EditClient();" title="Edit Client"><i class="icon-pencil"></i></a>
-                                    <%--<asp:LinkButton ID="btnEditClient" runat="server" Visible="false" class="btn btn-link" OnClick="btnEditClient_Click"><i class="icon-pencil"></i></asp:LinkButton>--%>
                                     <asp:RequiredFieldValidator ID="rfvClient" runat="server" ErrorMessage="Client is required."
                                         ControlToValidate="ddlClient" InitialValue="0" EnableClientScript="false"
                                         Display="Dynamic" ValidationGroup="valGrpOrderHeader">
@@ -164,10 +212,10 @@
                             </div>
                         </ContentTemplate>
                         <Triggers>
-                            <asp:PostBackTrigger ControlID="btnEditJobName" />                            
+                            <asp:PostBackTrigger ControlID="btnEditJobName" />
                         </Triggers>
                     </asp:UpdatePanel>
-                </div>
+                </div>--%>
                 <asp:UpdateProgress ID="upFabric" runat="server" AssociatedUpdatePanelID="updatePnlFabric">
                     <ProgressTemplate>
                         <div style="position: fixed; text-align: center; height: 100%; width: 100%; top: 0; right: 0; left: 0; z-index: 9999999; background-color: #000000; opacity: 0.7;">
@@ -216,87 +264,6 @@
                     </Triggers>
                 </asp:UpdatePanel>
                 <div class="span6">
-                    <%--<div>
-                        <legend>Fabric Details</legend>
-                        <div class="control-group">
-                            <div class="controls">
-                                <asp:DropDownList ID="ddlFabricCodeType" runat="server" CssClass="input-medium" AutoPostBack="true" OnSelectedIndexChanged="ddlFabricCodeType_SelectedIndexChanged">
-                                </asp:DropDownList>
-                                <asp:DropDownList ID="ddlAddFabrics" runat="server" CssClass="input-xxlarge pull-right"
-                                    AutoPostBack="true" OnSelectedIndexChanged="ddlAddFabrics_SelectedIndexChange">
-                                </asp:DropDownList>
-                            </div>
-                        </div>
-                        <asp:DataGrid ID="dgvAddEditFabrics" runat="server" CssClass="table igridfabric" AllowCustomPaging="False"
-                            AutoGenerateColumns="false" GridLines="None" PageSize="10" OnItemDataBound="dgvAddEditFabrics_ItemDataBound"
-                            OnItemCommand="dgvAddEditFabrics_onItemCommand">
-                            <HeaderStyle CssClass="header" />
-                            <Columns>
-                                <asp:TemplateColumn HeaderText="ID" Visible="false">
-                                    <ItemTemplate>
-                                        <asp:Literal ID="litID" runat="server"></asp:Literal>
-                                    </ItemTemplate>
-                                </asp:TemplateColumn>
-                                <%-- <asp:TemplateColumn HeaderText="VisualLayoutFabricID" Visible="false">
-                                    <ItemTemplate>
-                                        <asp:Literal ID="litVFID" runat="server"></asp:Literal>
-                                    </ItemTemplate>
-                                </asp:TemplateColumn>--% >
-                                <asp:TemplateColumn Visible="false">
-                                    <ItemTemplate>
-                                        <asp:Literal ID="litFabricTypeID" runat="server"></asp:Literal>
-                                    </ItemTemplate>
-                                </asp:TemplateColumn>
-                                <asp:TemplateColumn HeaderText="Fabric Code Type">
-                                    <ItemTemplate>
-                                        <%--<asp:DropDownList ID="ddlfabricCodeType" runat="server" OnSelectedIndexChanged ="ddlfabricCodeType_SelectedIndexChanged"></asp:DropDownList>--% >
-                                        <asp:Literal ID="litFabricType" runat="server"></asp:Literal>
-                                    </ItemTemplate>
-                                </asp:TemplateColumn>
-                                <asp:TemplateColumn HeaderText="Fabric">
-                                    <ItemTemplate>
-                                        <asp:Literal ID="litCode" runat="server"></asp:Literal>
-                                    </ItemTemplate>
-                                </asp:TemplateColumn>
-                                <asp:TemplateColumn HeaderText="Nick Name">
-                                    <ItemTemplate>
-                                        <asp:Literal ID="litFabricNickName" runat="server" Text=""></asp:Literal>
-                                    </ItemTemplate>
-                                </asp:TemplateColumn>
-                                <asp:TemplateColumn HeaderText="Supplier">
-                                    <ItemTemplate>
-                                        <asp:Literal ID="litFabricSupplier" runat="server" Text=""></asp:Literal>
-                                    </ItemTemplate>
-                                </asp:TemplateColumn>
-                                <asp:TemplateColumn HeaderText="Where">
-                                    <ItemTemplate>
-                                        <asp:TextBox ID="txtWhere" runat="server" Text=""></asp:TextBox>
-                                    </ItemTemplate>
-                                </asp:TemplateColumn>
-                                <asp:TemplateColumn>
-                                    <ItemTemplate>
-                                        <div class="btn-group pull-right">
-                                            <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
-                                                <i class="icon-cog"></i><span class="caret"></span></a>
-                                            <ul class="dropdown-menu pull-right">
-                                                <li>
-                                                    <asp:LinkButton CommandName="Delete" ID="linkDelete" runat="server" CssClass="btn-link ifdelete"
-                                                        ToolTip="Delete "><i class="icon-trash"></i>Delete</asp:LinkButton>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </ItemTemplate>
-                                </asp:TemplateColumn>
-                            </Columns>
-                        </asp:DataGrid>
-                        <div id="dvEmptyFabrics" runat="server" class="alert alert-info">
-                            <h4>There are no Fabrics added to this Visual Layout.
-                            </h4>
-                            <p>
-                                You can add many Fabrics to this Visual Layout.
-                            </p>
-                        </div>
-                    </div>--%>
                     <div class="control-group">
                         <label class="control-label">
                             Resolution Profile</label>
@@ -312,13 +279,13 @@
                         </div>
                     </div>
                     <div class="control-group">
-                    <div class="controls">
-                        <label class="checkbox">
-                            <asp:CheckBox ID="chkIsEmbroidery" runat="server" />
-                            Embrodery? Yes
-                        </label>
+                        <div class="controls">
+                            <label class="checkbox">
+                                <asp:CheckBox ID="chkIsEmbroidery" runat="server" />
+                                Embrodery? Yes
+                            </label>
+                        </div>
                     </div>
-                </div>
                     <!-- View Pattern -->
                     <div id="dvViewPattern" class="modal">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -476,40 +443,35 @@
 
                         <div class="controls" style="">
                             <div id="serverImageContainer" style="display: none;">
-                                 <div class="form-inline">
-                                     
+                                <div class="form-inline">
+
                                     <img alt="" src="" runat="server" style="max-width: 400px" title="Image From the FTP server" id="serverImgaeHolder" />
                                     <span class="icon icon-remove" id="removeServerImageIcon" title="Do not use server Image (upload new images)"></span>
                                 </div>
                             </div>
-                            
-                                                    <div id="dropzone_1" multirow="true" class="fileupload preview">
-                            <input id="file_1" name="file_1" type="file" />
-                            <button id="btnup_1" type="submit">
-                                Upload</button>
-                            <div id="divup_1">
-                                Drag file here or click to upload
-                            </div>
 
-                            <div>
-                                <label class="control-label ">
-                                </label>
-                                <p class="extra-helper">
-                                    <span class="label label-info">Hint:</span> You can drag & drop files from your
+                            <div id="dropzone_1" multirow="true" class="fileupload preview">
+                                <input id="file_1" name="file_1" type="file" />
+                                <button id="btnup_1" type="submit">
+                                    Upload</button>
+                                <div id="divup_1">
+                                    Drag file here or click to upload
+                                </div>
+
+                                <div>
+                                    <label class="control-label ">
+                                    </label>
+                                    <p class="extra-helper">
+                                        <span class="label label-info">Hint:</span> You can drag & drop files from your
                         desktop on this webpage with Google Chrome, Mozilla Firefox and Apple Safari.
                         <!--[if IE]>
                             <strong>Microsoft Explorer has currently no support for Drag & Drop or multiple file selection.</strong>
                             <![endif]-->
-                                </p>
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                           
-                        </div>
-
-
-                        
                     </div>
-
                     <!-- / -->
                     <div class="control-group">
                         <label class="control-label">
@@ -517,7 +479,7 @@
                         <div class="controls">
                             <asp:TextBox ID="txtNotes" runat="server" TextMode="MultiLine"></asp:TextBox>
                         </div>
-                    </div>                    
+                    </div>
                     <!-- VL Image -->
                     <div id="dvEmptyContentVLImages" runat="server" class="alert alert-info">
                         <h4>There are no Product images found.
@@ -640,7 +602,7 @@
                             <asp:AsyncPostBackTrigger ControlID="ddlPattern" EventName="SelectedIndexChanged" />
                         </Triggers>
                     </asp:UpdatePanel>
-                    <div class="form-actions">                        
+                    <div class="form-actions">
                         <button id="btnSaveChanges" runat="server" class="btn btn-primary" type="submit"
                             data-loading-text="Saving..." onserverclick="btnSaveChanges_Click" validationgroup="valGrpVL">
                             Save Changes</button>
@@ -659,8 +621,10 @@
         </div>
         <!-- / -->
         <asp:HiddenField ID="hdnSelectedID" runat="server" Value="0" />
-        <asp:HiddenField ID="hdnEditJobNameID" runat="server" Value="0" />
+
+        <asp:HiddenField ID="hdnDistributorID" runat="server" Value="0" />
         <asp:HiddenField ID="hdnClientID" runat="server" Value="0" />
+        <asp:HiddenField ID="hdnJobNameID" runat="server" Value="0" />
         <!-- Delete VL Image -->
         <div id="requestDelete" class="modal fade" role="dialog" aria-hidden="true">
             <div class="modal-header">
@@ -696,21 +660,12 @@
                         <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="alert alert-danger"
                             ValidationGroup="cliorjob" DisplayMode="BulletList" HeaderText="<strong>Errors were encountered while trying to process the form below</strong>"></asp:ValidationSummary>
                         <!-- / -->
-                        <fieldset>
-                            <div class="control-group">
-                                <label class="control-label required">
-                                    Distributor</label>
-                                <div class="controls">
-                                    <asp:DropDownList CssClass="input-xlarge" ID="ddlClientDistributor" runat="server" Enabled="false">
-                                    </asp:DropDownList>
-                                    <%--     <asp:Label ID="lblclient" runat ="server">123</asp:Label>  --%>
-                                </div>
-                            </div>
+                        <fieldset>                           
                             <div class="control-group">
                                 <label class="control-label required">
                                     Client</label>
                                 <div class="controls">
-                                    <asp:TextBox ID="txtNewClient" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtNewClient" runat="server" CssClass="input-xxlarge"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" CssClass="error" ValidationGroup="cliorjob"
                                         ControlToValidate="txtNewClient" Display="Dynamic" EnableClientScript="false"
                                         ErrorMessage="Client is required">
@@ -748,24 +703,12 @@
                         <asp:ValidationSummary ID="vsNewJobName" runat="server" CssClass="alert alert-danger"
                             ValidationGroup="newJobName" DisplayMode="BulletList" HeaderText="<strong>Errors were encountered while trying to process the form below</strong>"></asp:ValidationSummary>
                         <!-- / -->
-                        <fieldset>
-                            <div class="control-group">
-                                <label class="control-label required">
-                                    Client</label>
-                                <div class="controls">
-                                    <asp:DropDownList CssClass="input-xlarge" ID="ddlJobNameClient" runat="server" Enabled="false">
-                                    </asp:DropDownList>
-                                    <asp:RequiredFieldValidator ID="rfvJobNameClient" runat="server" ErrorMessage="Client is required" Display="Dynamic" ValidationGroup="newJobName"
-                                        ControlToValidate="ddlJobNameClient" InitialValue="0" EnableClientScript="false">
-                                <img src="Content/img/icon_warning.png"  title="Client is required" alt="Client is required" />
-                                    </asp:RequiredFieldValidator>
-                                </div>
-                            </div>
+                        <fieldset>                           
                             <div class="control-group">
                                 <label class="control-label required">
                                     Job Name</label>
                                 <div class="controls">
-                                    <asp:TextBox ID="txtNewJobName" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtNewJobName" runat="server" CssClass="input-xxlarge"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="rfvNewJobName" runat="server" CssClass="error" ValidationGroup="newJobName"
                                         ControlToValidate="txtNewJobName" Display="Dynamic" EnableClientScript="false"
                                         ErrorMessage="Job Name is required">
@@ -776,7 +719,7 @@
                              <img src="Content/img/icon_warning.png"  title="Name is already in use" alt="Name is already in use" />
                                     </asp:CustomValidator>
                                 </div>
-                            </div>                       
+                            </div>
                         </fieldset>
                     </div>
                 </ContentTemplate>
@@ -799,14 +742,14 @@
                     </div>
                     <div class="modal-body">
                         <% if (QueryID > 0)
-                           { %>
-                               <p>An image found for this product in the blackchrome server. Do want to replace current product image with this one?</p>
-                           <% } %>
-                       
-                         <%  else%>
-                          <% {%>
-                               <p>An image found for this product in the blackchrome server. Do want to add this image for this product?</p> 
-                           <%} %>
+                            { %>
+                        <p>An image found for this product in the blackchrome server. Do want to replace current product image with this one?</p>
+                        <% } %>
+
+                        <%  else%>
+                        <% {%>
+                        <p>An image found for this product in the blackchrome server. Do want to add this image for this product?</p>
+                        <%} %>
                         <img src="#" id="imageFoundModalImage" style="margin: 30px; max-width: 500px; max-height: 500px" alt="" />
                     </div>
                     <div class="modal-footer">
@@ -826,6 +769,8 @@
         var PopulateFabric = ('<%=ViewState["PopulateFabric"]%>' == "True") ? true : false;
         var PopulateClientOrJob = ('<%=ViewState["PopulateClientOrJob"]%>' == 'True') ? true : false;
         var PopulateJobName = ('<%=ViewState["PopulateJobName"]%>' == "True") ? true : false;
+        var PopulateDropDown = ('<%=ViewState["PopulateDropDown"]%>' == 'True') ? true : false;
+
         var hdnSelectedID = "<%=hdnSelectedID.ClientID %>";
         var rbGenerate = "<%=rbGenerate.ClientID %>";
         var txtProductNumber = "<%=txtProductNumber.ClientID %>";
@@ -835,16 +780,24 @@
         var ddlPattern = "<%=ddlPattern.ClientID %>";
         var ddlFabric = "<%=ddlFabric.ClientID %>";
         var ddlPrinterType = "<%=ddlPrinterType.ClientID %>";
-        var ddlClient = "<%=ddlClient.ClientID %>";
+
         var ddlDistributor = "<%=ddlDistributor.ClientID %>";
+        var ddlClient = "<%=ddlClient.ClientID %>";
+        var ddlJobName = "<%=ddlJobName.ClientID%>";
+        var btnEditClient = "<%=btnEditClient.ClientID %>";
+        var btnEditJobName = "<%=btnEditJobName.ClientID %>";
+        //var dvClientDetails = "< %=dvClientDetails.ClientID%>";
+        var aAddClient = "<%=aAddClient.ClientID %>";
+        var ancNewJobName = "<%=ancNewJobName.ClientID %>";
+
         var ddlPocketType = "<%=ddlPocketType.ClientID %>";
         var ddlResolutionProfile = "<%=ddlResolutionProfile.ClientID %>";
-        //var ddlAddFabrics = "< %=ddlAddFabrics.ClientID%>";
-        var ddlJobName = "<%=ddlJobName.ClientID%>";
         var txtNewClient = "<%=txtNewClient.ClientID%>";
         var txtNewJobName = "<%=txtNewJobName.ClientID%>";
-        var hdnEditJobNameID = "<%=hdnEditJobNameID.ClientID%>";
-        var hdnClientID = "<%=hdnClientID.ClientID%>";              
+
+        var hdnDistributorID = "<%=hdnDistributorID.ClientID %>";
+        var hdnClientID = "<%=hdnClientID.ClientID %>";
+        var hdnJobNameID = "<%=hdnJobNameID.ClientID %>";
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -931,11 +884,11 @@
             $("#dropzone_1").show();
             $("#serverImageContainer").hide();
             <% if (QueryID > 0)
-               {%>
-                    $("#<%=dvVLImagePreview.ClientID%>").show();
+        {%>
+            $("#<%=dvVLImagePreview.ClientID%>").show();
             <% }%>
 
-            
+
         });
 
         function checkChanged(e) {
@@ -959,7 +912,6 @@
             $('#addjobName').modal('show');
             $('#titleJobName').text('New Job Name');
             $('#' + txtNewJobName).val('');
-            $('#' + hdnEditJobNameID).val('0');
             $('#' + hdnSelectedID).val('New');
         }
 
@@ -969,6 +921,14 @@
             $('#' + hdnClientID).val($('#' + ddlClient).val());
             $('#' + txtNewClient).val($('#' + ddlClient + ' :selected').text());
             $('#addjobClient').modal('show');
+        }
+
+        function EditJobName() {
+            $('div.alert-danger, span.error').hide();
+            $('#titleClient').text('Edit JobName');
+            $('#' + hdnJobNameID).val($('#' + ddlJobName).val());
+            $('#' + txtNewJobName).val($('#' + ddlJobName + ' :selected').text());
+            $('#addjobName').modal('show');
         }
 
         function toggleImageCheckButton() {
@@ -988,7 +948,7 @@
         toggleImageCheckButton();
 
         function showImageFoundModal(imagepath) {
-            $("#imageFoundModalImage").attr("src",imagepath);
+            $("#imageFoundModalImage").attr("src", imagepath);
             $('#imageFoundModal').modal('show');
             $("#imageFoundModalYesButton").click(function () {
                 $("#<%=serverImgaeHolder.ClientID%>").attr("src", imagepath);
@@ -999,14 +959,14 @@
                 $("#uploadContainer").hide();
                 $("#serverImageContainer").show();
                 <% if (QueryID > 0)
-                    {%>
-                         $("#<%=dvVLImagePreview.ClientID%>").hide();
+        {%>
+                $("#<%=dvVLImagePreview.ClientID%>").hide();
                     <% }%>
             });
-            
+
         }
 
-        $("#checkImageOnServerButton").click(function(e) {
+        $("#checkImageOnServerButton").click(function (e) {
             e.preventDefault();
             console.log("clicked");
             var target = $("#<%=txtProductNumber.ClientID%>");
@@ -1038,6 +998,151 @@
                 }
             });
         });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(EndRequest);
+            function EndRequest(sender, args) {
+                if (args.get_error() == undefined) {
+                    BindPopupEvents();
+                }
+            }
+
+            BindPopupEvents();
+        });
+
+        $("#" + ddlDistributor).change(function () {
+            $("#" + hdnDistributorID).val($(this).val());
+            PopulateClients($(this).val());
+        });
+
+        $("#" + ddlClient).change(function () {
+            $("#" + hdnClientID).val($(this).val());
+            $("#" + hdnJobNameID).val("0");
+            PopulateJobNames($(this).val());
+
+            if ($(this).val() != "0") {
+                $("#" + btnEditClient).show();
+                $("#" + ancNewJobName).show();
+            }
+            else {
+                $("#" + btnEditClient).hide();
+                $("#" + ancNewJobName).hide();
+                $("#" + btnEditJobName).hide();
+            }
+        });
+
+        $("#" + ddlJobName).change(function () {
+            $("#" + hdnJobNameID).val($(this).val());
+            if ($(this).val() != "0") {
+                $("#" + btnEditJobName).show();
+                $("#" + ancNewJobName).show();
+            }
+            else {
+                $("#" + btnEditJobName).hide();
+            }
+        });
+
+        function BindPopupEvents() {
+            $('#' + ddlClient).select2();
+            $('#' + ddlJobName).select2();
+            $('#' + ddlDistributor).select2();
+
+            $("input[type='text']").on("click", function () {
+                $(this).select();
+            });
+
+            PopulateClients($("#" + hdnDistributorID).val());            
+        }
+
+        function PopulateClients(id) {
+            $.ajax({
+                type: "POST",
+                url: "AddEditOrder.aspx/GetClients",
+                data: JSON.stringify({ 'id': id }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (Result) {
+                    Result = Result.d;
+                    $("#" + ddlClient).empty().append('<option selected="selected" value="0">Select Client</option>');
+                    $.each(Result, function (key, value) {
+                        $("#" + ddlClient).append($("<option></option>").val
+                        (value.Value).html(value.Text));
+                    });
+
+                    if (id > 0) {
+                        $("#" + aAddClient).show();
+
+                        $("#" + ddlClient).val($("#" + hdnClientID).val());
+                        $("#" + ddlClient).select2();
+
+                        if ($("#" + hdnClientID).val() != "0") {
+                            $("#" + btnEditClient).show();
+                        }
+                        else {
+                            $("#" + btnEditClient).hide();
+                        }
+
+                        PopulateJobNames($("#" + hdnClientID).val());
+                    }
+                    else {
+                        $("#" + hdnClientID).val("0");
+                        $("#" + aAddClient).hide();
+                        $("#" + ancNewJobName).hide();
+                        $("#" + btnEditJobName).hide();
+                        $("#" + btnEditClient).hide();
+                    }
+
+                    $("#" + ddlJobName).empty().append('<option selected="selected" value="0">Select Job Name</option>');
+                    $("#" + ddlJobName).select2();
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    var err = eval("(" + xhr.responseText + ")");
+                    alert(err.Message);
+                }
+            });
+        }
+
+        function PopulateJobNames(id) {
+            $.ajax({
+                type: "POST",
+                url: "AddEditOrder.aspx/GetJobNames",
+                data: JSON.stringify({ 'id': id }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (Result) {
+                    Result = Result.d;
+                    $("#" + ddlJobName).empty().append('<option selected="selected" value="0">Select Job Name</option>');
+                    $.each(Result, function (key, value) {
+                        $("#" + ddlJobName).append($("<option></option>").val
+                        (value.Value).html(value.Text));
+                    });
+
+                    if (id == "0") {
+                        $("#" + ancNewJobName).hide();
+                        $("#" + btnEditJobName).hide();
+                        $("#" + hdnJobNameID).val("0");
+                    }
+                    else {
+                        $("#" + ddlJobName).val($("#" + hdnJobNameID).val());
+                        $("#" + ddlJobName).select2();
+
+                        $("#" + ancNewJobName).show();
+
+                        if ($("#" + hdnJobNameID).val() == "0") {
+                            $("#" + btnEditJobName).hide();
+                        }
+                        else {
+                            $("#" + btnEditJobName).show();
+                        }
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    var err = eval("(" + xhr.responseText + ")");
+                    alert(err.Message);
+                }
+            });
+        }
     </script>
     <!-- / -->
 </asp:Content>

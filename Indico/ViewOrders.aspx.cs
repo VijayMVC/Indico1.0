@@ -233,7 +233,7 @@ namespace Indico
                     lnkPONumber.Text = objOrderDetailsView.Order;
 
                     int index = objOrderDetailsView.Order.IndexOf("-");
-                    string orderID = objOrderDetailsView.Order.Substring(0, index);                    
+                    string orderID = objOrderDetailsView.Order.Substring(0, index);
                     lnkPONumber.NavigateUrl = "AddEditOrder.aspx?id=" + orderID;
 
                     CheckBox chkGenerateLabel = (CheckBox)item.FindControl("chkGenerateLabel");
@@ -395,7 +395,7 @@ namespace Indico
                     OrderStatus currentStatus = this.GetOrderStatus(int.Parse(objOrderDetailsView.OrderStatusID.ToString()));
 
                     bool isEditEnable = (isDirectSales && currentStatus == OrderStatus.New) ||
-                                           (!isDirectSales && isIndico && currentStatus == OrderStatus.DistributorSubmitted) ||
+                                           (!isDirectSales && isIndico && ((currentStatus == OrderStatus.New && objOrderDetailsView.CreatorID == LoggedUser.ID) || currentStatus == OrderStatus.DistributorSubmitted)) ||
                                           (!isDirectSales && isIndiman && (currentStatus == OrderStatus.New || currentStatus == OrderStatus.DistributorSubmitted || currentStatus == OrderStatus.CoordinatorSubmitted)) ||
                                           (isFactory && currentStatus != OrderStatus.Completed);
 
@@ -3896,8 +3896,6 @@ namespace Indico
                 lblEditDeptTotal.Text = "0" + "(" + objOrderDetailQty.Qty.ToString() + ") ";
                 lblEditDeptTotal.Attributes.Add("tqty", objOrderDetailQty.Qty.ToString());
                 lblEditDeptTotal.Attributes.Add("tqty", "0");
-
-
             }
             else if (item.ItemIndex > -1 && item.DataItem is FactoryOrderDetialBO)
             {
@@ -4524,7 +4522,7 @@ namespace Indico
                             this.SendOrderSubmissionEmail(order, this.Distributor.objCoordinator.EmailAddress,
                                 this.Distributor.objCoordinator.GivenName + " " + this.Distributor.objCoordinator.FamilyName, true, CustomSettings.DSOCC);
                         }
-                        else if (this.LoggedUserRoleName == UserRole.IndicoCoordinator && currentOrderStatus == OrderStatus.DistributorSubmitted)
+                        else if (this.LoggedUserRoleName == UserRole.IndicoCoordinator && (currentOrderStatus == OrderStatus.DistributorSubmitted || currentOrderStatus == OrderStatus.New))
                         {
                             SettingsBO objSetting = new SettingsBO();
                             objSetting.Key = CustomSettings.CSOTO.ToString();
@@ -4547,6 +4545,7 @@ namespace Indico
                             objOrder.Status = this.GetOrderStatus(OrderStatus.IndimanSubmitted).ID;
                             objOrder.Modifier = this.LoggedUser.ID;
                             objOrder.ModifiedDate = DateTime.Now;
+                            objOrder.OrderSubmittedDate = DateTime.Now;
 
                             this.SendOrderSubmissionEmail(order, mailTo, "Factory", true, null);
                         }
@@ -5379,6 +5378,7 @@ namespace Indico
             this.RadGridOrders.MasterTableView.GetColumn("CreatedDate").Display = false;
             this.RadGridOrders.MasterTableView.GetColumn("Modifier").Display = false;
             this.RadGridOrders.MasterTableView.GetColumn("ModifiedDate").Display = false;
+            this.RadGridOrders.MasterTableView.GetColumn("IndimanSubmittedDate").Display = false;
             this.RadGridOrders.MasterTableView.GetColumn("ResolutionProfile").Display = (this.LoggedUserRoleName == UserRole.FactoryAdministrator || this.LoggedUserRoleName == UserRole.FactoryCoordinator) ? true : false;
             //this.RadGridOrders.MasterTableView.GetColumn("QA").Display = (this.LoggedUserRoleName == UserRole.DistributorAdministrator || this.LoggedUserRoleName == UserRole.DistributorCoordinator) ? false : true;
             //this.RadGridOrders.MasterTableView.GetColumn("ODS").Display = (this.LoggedUserRoleName == UserRole.DistributorAdministrator || this.LoggedUserRoleName == UserRole.DistributorCoordinator) ? false : true;
@@ -5730,15 +5730,16 @@ namespace Indico
                 var orders = lstOrderDetails.GroupBy(i => i.Order);
                 foreach (var o in orders)
                 {
-                    var i = 1;
-                    var vls = o.OrderByDescending(t => t.Order).ToList();
+                    int i = 1;
+                    var vls = o.OrderBy(t => t.OrderDetail).ToList();
                     foreach (var vl in vls)
                     {
-                        vl.Order = vl.Order + "-" + i;
+                        string index = (i < 10) ? ("0" + i) : i.ToString();
+                        vl.Order = vl.Order + "-" + index;
                         i++;
                     }
                 }
-                lstOrderDetails = lstOrderDetails.OrderBy(d => d.Order).ToList();
+                lstOrderDetails = lstOrderDetails.OrderByDescending(d => d.Order).ToList();
 
                 this.RadGridOrders.DataSource = lstOrderDetails;
                 this.RadGridOrders.DataBind();
@@ -6133,3 +6134,4 @@ namespace Indico
         #endregion
     }
 }
+

@@ -388,34 +388,40 @@ namespace Indico
             ddlYear.Items.Clear();
             //ddlYear.Items.Add(new ListItem("All", "0"));
             List<int> lstYears = (new WeeklyProductionCapacityBO()).SearchObjects().Select(o => o.WeekendDate.Year).Distinct().ToList();
-            foreach (int year in lstYears)
+            if (lstYears.Count > 0)
             {
-                ddlYear.Items.Add(new ListItem(year.ToString()));
-            }
+                foreach (int year in lstYears)
+                {
+                    ddlYear.Items.Add(new ListItem(year.ToString()));
+                }
 
-            var exists = lstYears.Contains(DateTime.Now.Year);
+                var exists = lstYears.Contains(DateTime.Now.Year);
 
-            if (exists)
-            {
-                ddlYear.Items.FindByValue(DateTime.Now.Year.ToString()).Selected = true;
+                if (exists)
+                {
+                    ddlYear.Items.FindByValue(DateTime.Now.Year.ToString()).Selected = true;
+                }
+                else
+                {
+                    ddlYear.Items.FindByValue("0").Selected = true;
+                }
             }
-            else
-            {
-                ddlYear.Items.FindByValue("0").Selected = true;
-            }
+            
 
             ddlMonth.Items.Clear();
-            //ddlMonth.Items.Add(new ListItem("All", "0"));
             var lstMonths = (new WeeklyProductionCapacityBO()).SearchObjects().Select(o => o.WeekendDate.Month).Distinct().ToList();
-            foreach (var month in lstMonths)
+            if (lstMonths.Count > 0)
             {
-                var monthname = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month);
-                ddlMonth.Items.Add(new ListItem(monthname, month.ToString()));
+                foreach (var month in lstMonths)
+                {
+                    var monthname = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month);
+                    ddlMonth.Items.Add(new ListItem(monthname, month.ToString()));
+                }
+
+                ddlMonth.Items.FindByValue(DateTime.Now.Month.ToString()).Selected = true;
+
+                Session["WeeklyProductionCapacity"] = null;
             }
-
-            ddlMonth.Items.FindByValue(DateTime.Now.Month.ToString()).Selected = true;
-
-            Session["WeeklyProductionCapacity"] = null;
 
             PopulateDataGrid();
         }
@@ -652,7 +658,7 @@ namespace Indico
                 {
                     if (currentWeeks.Count > 1)
                     {
-                        var lastWeek = currentWeeks.Last().WeekendDate;
+                        var lastWeek = currentWeeks.OrderBy(w=>w.WeekendDate).Last().WeekendDate;
                         currentYear = lastWeek.Year == currentWeeks[currentWeeks.Count() - 2].WeekendDate.Year ?
                                                                                                     lastWeek.AddYears(1).Year : lastWeek.Year;
                     }

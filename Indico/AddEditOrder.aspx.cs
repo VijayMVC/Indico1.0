@@ -15,10 +15,6 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
-using Dapper;
-using Indico.Models;
-using Indico.Common.Extensions;
-
 
 namespace Indico
 {
@@ -29,10 +25,7 @@ namespace Indico
         #endregion
 
         #region Fields
-        public int disid;
-        public int orderid;
-        public int weekno;
-        public int orderdetailqty=0;
+
         private int urlQueryID = -1;
         //private int urlVisualLayoutID = -1;
         //private int urlArtWorkID = -1;
@@ -299,10 +292,21 @@ namespace Indico
                 string index = ((objOrderDetail.Index + 1) < 10) ? ("0" + (objOrderDetail.Index + 1)) : (objOrderDetail.Index + 1).ToString();
                 lblIndex.Text = index; // (objOrderDetail.Index + 1).ToString();
 
+                Literal lblRepeat = (Literal)item.FindControl("lblRepeat");
+                lblRepeat.Text = objOrderDetail.IsRepeat ? "Repeat" : string.Empty;
+
+                Literal litEmbroidery = (Literal)item.FindControl("litEmbroidery");
+                litEmbroidery.Text = objOrderDetail.IsEmbroidery ? "Yes" : "No";
+
+                Literal litColorProfile = (Literal)item.FindControl("litColorProfile");
+                litColorProfile.Text = objOrderDetail.ResolutionProfile;
+
+                HyperLink hlVlNumber = (HyperLink)item.FindControl("hlVlNumber");
+                hlVlNumber.Text = string.IsNullOrEmpty(objOrderDetail.VisualLayoutName) ? string.Empty : objOrderDetail.VisualLayoutName;
+                hlVlNumber.NavigateUrl = "AddEditVisualLayout.aspx?id=" + objOrderDetail.VisualLayout;
 
                 Literal lblVLNumber = (Literal)item.FindControl("lblVLNumber");
-                lblVLNumber.Text = (string.IsNullOrEmpty(objOrderDetail.VisualLayoutName) ? string.Empty : objOrderDetail.VisualLayoutName + " / ")
-                    + objOrderDetail.PatternName + " / " + objOrderDetail.FabricName;
+                lblVLNumber.Text = " / " + objOrderDetail.PatternName + " / " + objOrderDetail.FabricName;
 
                 HtmlAnchor ancVLImage = (HtmlAnchor)item.FindControl("ancVLImage");
                 HtmlGenericControl ivlimageView = (HtmlGenericControl)item.FindControl("ivlimageView");
@@ -325,11 +329,8 @@ namespace Indico
                     ivlimageView.Attributes.Add("class", "icon-eye-close");
                 }
 
-                //OrderDetailQtyBO objOrderDetailQty = new OrderDetailQtyBO();
-                //objOrderDetailQty.OrderDetail = objOrderDetail.ID;
-
                 Repeater rptSizeQtyView = (Repeater)item.FindControl("rptSizeQtyView");
-                rptSizeQtyView.DataSource = objOrderDetail.ListQtys; // objOrderDetailQty.SearchObjects();
+                rptSizeQtyView.DataSource = objOrderDetail.ListQtys.Where(m => m.Qty > 0);
                 rptSizeQtyView.DataBind();
 
                 Literal lblOdNotes = (Literal)item.FindControl("lblOdNotes");
@@ -356,12 +357,8 @@ namespace Indico
                 linkEdit.Attributes.Add("qid", objOrderDetail.ID.ToString());
                 linkEdit.Attributes.Add("index", objOrderDetail.Index.ToString());
 
-                VisualLayoutBO objVL = new VisualLayoutBO();
-                objVL.ID = objOrderDetail.VisualLayout;
-                objVL.GetObject();
-
                 Literal litPocket = (Literal)item.FindControl("litPocket");
-                litPocket.Text = ((objVL.PocketType ?? 0) > 0) ? objVL.objPocketType.Name : string.Empty;
+                litPocket.Text = objOrderDetail.PocketType;
 
                 Literal lblQty = (Literal)item.FindControl("lblQty");
                 lblQty.Text = objOrderDetail.ListQtys.Sum(m => m.Qty).ToString();
@@ -506,10 +503,10 @@ namespace Indico
                 txtOdNotes.Text = objVLNumber.Description;
                 litPocket.Text = (objVLNumber.PocketType.HasValue && objVLNumber.PocketType.Value > 0) ? objVLNumber.objPocketType.Name : string.Empty;
 
-                PopulateVlImage(VisualLayoutId);
+                PopulateVlImage(VisualLayoutId, 0);
 
                 //populate Reservations
-               //**** SDS PopulateReservations(VisualLayoutId, 0);
+                PopulateReservations(VisualLayoutId, 0);
 
                 int orderDetailId = int.Parse(hdnSelectedID.Value);
 
@@ -526,23 +523,6 @@ namespace Indico
             }
             ViewState["populateVlNotes"] = true;
             // PopulateFileUploder(rptUploadFile, hdnUploadFiles);
-        }
-
-        protected void ddlDistributor_SelectedIndexChanged(object sender,EventArgs e)
-        {
-            RadComboReservations.Items.Clear();
-            string distributorName = ddlDistributor.SelectedItem.Text;
-             
-            var connection = GetIndicoConnnection();
-            
-                var result = connection.Query<NameIdModel>(String.Format("SELECT ID,Name from [dbo].[Company] WHERE Name='{0}'",distributorName));
-               foreach(var result2 in result)
-            {
-                disid = result2.ID;
-            }
-                var result3 = connection.Query<ReservationBalanceModel>(String.Format("SELECT * FROM [dbo].[NewFinalReservationBalanceView] WHERE Distributor='{0}' AND (Status='{1}' OR Status='{2}')", distributorName,"New","Partialy Redeemed"));
-            RadComboReservations.DataSource = result3;
-            RadComboReservations.DataBind();
         }
 
         protected void linkEdit_Click(object sender, EventArgs e)
@@ -574,8 +554,8 @@ namespace Indico
 
                     ResetOrderDetailForm();
 
-                    odTitle.InnerText = "Edit Order Detail - " + objTempOD.Order + " - " + objTempOD.SheduledDate;
-                    
+                    odTitle.InnerText = "Edit Order Detail - PO " + objTempOD.Order + " Shipment Date : " + txtShipmentDate.Text;
+
                     ddlSizes.Items.Clear();
                     ddlSizes.Items.Add(new ListItem("Select a Size", "0"));
                     foreach (int size in lst)
@@ -605,10 +585,9 @@ namespace Indico
                     if (objTempOD.VisualLayout > 0)
                     {
                         ddlVlNumber.Items.FindByValue(objTempOD.VisualLayout.ToString()).Selected = true;
-                        PopulateVlImage(objTempOD.VisualLayout);
+                        PopulateVlImage(objTempOD.VisualLayout, objTempOD.Label);
                         PopulateOrderItemDetails(objTempOD.Pattern, objTempOD.Fabric);
                         ddlVlNumber.Enabled = false;
-
                     }
 
                     rbNaNuYes.Checked = objTempOD.IsNamesAndNumbers;
@@ -804,75 +783,28 @@ namespace Indico
         {
             RadComboBoxItem item = e.Item;
 
-            if (item.Index > -1 && item.DataItem is ReservationBalanceModel)
+            if (item.Index > -1 && item.DataItem is ReservationBO)
             {
-                ReservationBalanceModel objReservation = (ReservationBalanceModel) item.DataItem;
+                ReservationBO objReservation = (ReservationBO)item.DataItem;
 
                 Literal litReservation = (Literal)item.FindControl("litReservation");
-                litReservation.Text = "RES-" + objReservation.ID;
+                litReservation.Text = "RES-" + objReservation.ReservationNo.ToString("0000");
 
                 Literal litOrderWeek = (Literal)item.FindControl("litOrderWeek");
-                litOrderWeek.Text ="09/20";
+                litOrderWeek.Text = objReservation.OrderDate.ToString("dd MMM yyyy");
 
                 Literal litETD = (Literal)item.FindControl("litETD");
                 litETD.Text = objReservation.ShipmentDate.ToString("dd MMM yyyy");
 
-                DateTime dt = objReservation.ShipmentDate;
-                string dayss = dt.DayOfWeek.ToString();
-                int diff=-1;
-                
-                if(dayss=="Wednesday")
-                {
-                    diff = 6;
-                }
+                Literal litDistributor = (Literal)item.FindControl("litDistributor");
+                litDistributor.Text = objReservation.objDistributor.Name;
 
-                if(dayss=="Thursday")
-                {
-                    diff = 5;
-                }
-
-                if(dayss=="Friday")
-                {
-                    diff = 4;
-                }
-
-                if(dayss=="Saturday")
-                {
-                    diff = 3;
-                }
-
-                if(dayss=="Sunday")
-                {
-                    diff = 2;
-                }
-
-                if (dayss == "Monday")
-                {
-                    diff = 1;
-                }
-                if (dayss == "Tuesday")
-                {
-
-                    diff = 0;
-                }
-
-                DateTime enddate=dt.AddDays(diff);
+                Literal litClient = (Literal)item.FindControl("litClient");
+                litClient.Text = objReservation.Client;
 
                 Literal litStatus = (Literal)item.FindControl("litStatus");
-                litStatus.Text = objReservation.Status;
+                litStatus.Text = "<span class=\"label label-" + objReservation.objStatus.Name.ToLower().Replace(" ", string.Empty).Trim() + "\">" + objReservation.objStatus.Name + "</span>";
 
-                var connection = GetIndicoConnnection();
-
-                var result = connection.Query<WeekModel>(string.Format("SELECT WeekNo from [dbo].[WeeklyProductionCapacity] WHERE WeekendDate='{0}'", enddate.GetSQLDateString()));
-                foreach (var result2 in result)
-                {
-                    weekno = result2.WeekNo;
-                }
-                string yearstring = enddate.Year.ToString();
-                yearstring = yearstring.Remove(0, 2);
-                string weakstring = Convert.ToString(weekno);
-                string orderweekno = yearstring + "/" + weakstring;
-                litOrderWeek.Text = Convert.ToString(orderweekno);
                 item.Value = objReservation.ID.ToString();
 
             }
@@ -1006,13 +938,8 @@ namespace Indico
 
                 if (Page.IsValid)
                 {
-                    
-                    
                     ProcessForm();
-                    newProcessForm();
                     Response.Redirect("/ViewOrders.aspx");
-                    
-                    
                 }
             }
         }
@@ -1055,16 +982,16 @@ namespace Indico
                 // validate Deduct  Reservation Qty in OrderDetail
                 if (RadComboReservations.Items.Count > 0 && !string.IsNullOrEmpty(RadComboReservations.SelectedValue) && int.Parse(RadComboReservations.SelectedValue) > 0)
                 {
-                    //ReservationBO objReservation = new ReservationBO();
-                    //objReservation.ID = int.Parse(RadComboReservations.SelectedValue);
-                    //objReservation.GetObject();
+                    ReservationBO objReservation = new ReservationBO();
+                    objReservation.ID = int.Parse(RadComboReservations.SelectedValue);
+                    objReservation.GetObject();
 
                     int totalQuentity = int.Parse(hdnTotalQuantity.Value);
 
-                    //int reservationqty = objReservation.Qty - ((objReservation.OrderDetailsWhereThisIsReservation.Count > 0) ? objReservation.OrderDetailsWhereThisIsReservation.Sum(o => o.OrderDetailQtysWhereThisIsOrderDetail.Sum(p => p.Qty)) : 0);
+                    int reservationqty = objReservation.Qty - ((objReservation.OrderDetailsWhereThisIsReservation.Count > 0) ? objReservation.OrderDetailsWhereThisIsReservation.Sum(o => o.OrderDetailQtysWhereThisIsOrderDetail.Sum(p => p.Qty)) : 0);
 
-                   // reservationqty = reservationqty - totalQuentity;
-                   /*
+                    reservationqty = reservationqty - totalQuentity;
+
                     if (totalQuentity > reservationqty)
                     {
                         cv = new CustomValidator();
@@ -1072,8 +999,7 @@ namespace Indico
                         cv.ValidationGroup = "vgOrderDetail";
                         cv.ErrorMessage = "Your order quantity is greater than reservation quantity ";
                         Page.Validators.Add(cv);
-                    
-                    */
+                    }
                 }
 
                 if (Page.IsValid)
@@ -1136,11 +1062,8 @@ namespace Indico
                 {
                     if (Page.IsValid)
                     {
-                        
-                        
                         ProcessForm();
-                        
-                        
+
                         using (TransactionScope ts = new TransactionScope())
                         {
                             OrderBO objOrder = new OrderBO(this.ObjContext);
@@ -1182,6 +1105,7 @@ namespace Indico
                                 objOrder.Status = GetOrderStatus(OrderStatus.IndimanSubmitted).ID;
                                 objOrder.Modifier = LoggedUser.ID;
                                 objOrder.ModifiedDate = DateTime.Now;
+                                objOrder.OrderSubmittedDate = DateTime.Now;
 
                                 SendOrderSubmissionEmail(OrderID, mailTo, "Factory", true, null);
                             }
@@ -1191,10 +1115,7 @@ namespace Indico
                         }
 
                         Response.Redirect("ViewOrders.aspx");
-                        
-                        
                     }
-                    
                 }
                 catch (Exception ex)
                 {
@@ -1586,7 +1507,7 @@ namespace Indico
                 //Populate Pattern
                 //PoplatePatterns();
 
-                PopulateVlImage(0);
+                PopulateVlImage(0, 0);
 
                 //Populate Order Types
                 ddlOrderType.Items.Clear();
@@ -1628,7 +1549,7 @@ namespace Indico
                     txtPoNo.Text = (objOrder.PurchaseOrderNo != null) ? objOrder.PurchaseOrderNo.ToString() : string.Empty;
                     txtOldPoNo.Text = objOrder.OldPONo;
 
-                    litHeaderText.Text += " - " + txtRefference.Text;
+                    litHeaderText.Text += " - PO " + txtRefference.Text;
                     liClient.Visible = true;
 
                     rbDateYes.Checked = (objOrder.IsDateNegotiable) ? true : false;
@@ -1693,7 +1614,7 @@ namespace Indico
                     ddlBillingAddress.Enabled = isNotFactory;
                     ddlDespatchAddress.Enabled = isNotFactory;
                     ddlStatus.Enabled = isNotFactory;
-                    txtRefference.Enabled = isNotFactory;
+                    //txtRefference.Enabled = isNotFactory;
                     txtOldPoNo.Enabled = isNotFactory;
                     txtDesiredDate.Enabled = isNotFactory;
 
@@ -1706,7 +1627,7 @@ namespace Indico
                     ancDespatchAddress.Visible = isNotFactory;
                     btnEditDespatch.Visible = isNotFactory;
 
-                    btnNewOrderDetail.Visible = isNotFactory;
+                    //  btnNewOrderDetail.Visible = isNotFactory;
 
                 }
                 //else if (QueryReservationID > 0)
@@ -1979,7 +1900,6 @@ namespace Indico
                         objOrderDetail.ShipmentMode = int.Parse(ddlShipmentMode.SelectedValue);
                         objOrderDetail.IsCourierDelivery = (rbCourier.Checked);
                         objOrderDetail.IsWeeklyShipment = (rbWeeklyShipment.Checked);
-                        //objOrderDetail.Reservation
 
                         if (!string.IsNullOrEmpty(objTempOD.NameAndNumbersFileName))
                         {
@@ -2020,7 +1940,6 @@ namespace Indico
                                 objQty.OrderDetail = objTempOD.ID;
                             objQty.Size = objTempQty.Size;
                             objQty.Qty = objTempQty.Qty;
-                            orderdetailqty = orderdetailqty + objQty.Qty;
 
                             if (objTempOD.ID == 0)
                             {
@@ -2067,7 +1986,7 @@ namespace Indico
 
                         index++;
                     }
-                    orderid = objOrder.ID;
+
                     #endregion
 
                     var nnFileTempDirectory = IndicoConfiguration.AppConfiguration.PathToDataFolder + "\\Temp\\" + objOrder.ID.ToString();
@@ -2079,10 +1998,6 @@ namespace Indico
                 //save to myob
                 var myobService = new MyobService();
                 myobService.SaveOrder(OrderID);
-                //int q = orderdetailqty;
-
-                
-
             }
             catch (Exception ex)
             {
@@ -2151,6 +2066,11 @@ namespace Indico
                 objTempOrderDetail.OrderDetailNotes = txtOdNotes.Text;
                 objTempOrderDetail.FactoryInstructions = txtFactoryDescription.Text;
 
+                //objTempOrderDetail.IsRepeat = txtFactoryDsescription.Text;
+                //objTempOrderDetail.IsEmbroidery = txtFactsoryDescription.Text;
+                //objTempOrderDetail.ResolutionProfile = txtFactorsyDescription.Text;
+                //objTempOrderDetail.PocketType = txtFactoryDesscription.Text;
+
                 if (RadComboReservations.Items.Count > 0 && !string.IsNullOrEmpty(RadComboReservations.SelectedValue) && int.Parse(RadComboReservations.SelectedValue) > 0)
                 {
                     objTempOrderDetail.Reservation = int.Parse(RadComboReservations.SelectedValue);
@@ -2214,7 +2134,7 @@ namespace Indico
                     totalPRice += (decimal.Parse(objOD.DistributorEditedPrice) * ((decimal)(1 + (decimal.Parse(objOD.DistributorSurcharge)) / (decimal)100.00))) * qty;
                 }
 
-                //PopulateReservations(0, 0);
+                PopulateReservations(0, 0);
                 PopulateBillingDetails(totalPRice, null);
 
                 this.ListOrderDetails = lstOrderDetails;
@@ -2234,120 +2154,6 @@ namespace Indico
             }
         }
 
-        public void newProcessForm()
-        {
-            var collection = RadComboReservations.CheckedItems;
-            int[] reservationarray = new int[collection.Count];
-            int[] balanceqty = new int[collection.Count];
-            int i = 0;
-
-            foreach (var result in collection)
-            {
-                int reservationid = Convert.ToInt32(result.Value);
-                reservationarray[i] = reservationid;
-                i = i + 1;
-            }
-
-            for (int k = 0; k < collection.Count; ++k)
-            {
-
-                var connection2 = GetIndicoConnnection();
-
-                var result3 = connection2.Query<ReservationBalanceModel>(String.Format("SELECT * FROM [dbo].[NewFinalReservationBalanceView] WHERE ID={0}", reservationarray[k]));
-                foreach (var result2 in result3)
-                {
-                    int bal = result2.Balance;
-                    balanceqty[k] = bal;
-                }
-
-            }
-
-            int checks = reservationarray[0];
-            int[] orderarray = new int[collection.Count];
-            for(int k=0;k<collection.Count;++k)
-            {
-                orderarray[k] = orderid;
-            }
-            int[] qtyarray = new int[collection.Count];
-            for (int c = 0; c < collection.Count; ++c)
-            {
-                if(balanceqty[c]>=orderdetailqty)
-                {
-                    qtyarray[c] = orderdetailqty;
-                    orderdetailqty = orderdetailqty - qtyarray[c];
-                }
-
-                else if(balanceqty[c]<orderdetailqty)
-                {
-                    qtyarray[c] = balanceqty[c];
-                    orderdetailqty = orderdetailqty - qtyarray[c];
-
-                }
-
-
-
-            }
-
-            for (int j = 0; j < collection.Count; ++j)
-            {
-                using (var connection = GetIndicoConnnection())
-                {
-                    var query = string.Format("INSERT INTO [dbo].[OrderReservationMapping]([Order],[Reservation],[Qty]) values({0},{1},{2})",orderarray[j],reservationarray[j],qtyarray[j]);
-                    connection.Execute(query);
-                }
-            }
-
-
-            for(int x=0;x<collection.Count;++x)
-            {
-                if (balanceqty[x] == qtyarray[x])
-                {
-                    using (var connection = GetIndicoConnnection())
-                    {
-                        var query = string.Format("UPDATE [dbo].[Reservation] SET Status=5 WHERE ID={0}", reservationarray[x]);
-                        connection.Execute(query);
-                    }
-                }
-
-                else if ((balanceqty[x] > qtyarray[x]) && qtyarray[x] > 0)
-                {
-                    using (var connection = GetIndicoConnnection())
-                    {
-                        var query = string.Format("UPDATE [dbo].[Reservation] SET Status=2 WHERE ID={0}", reservationarray[x]);
-                        connection.Execute(query);
-                    }
-
-                }
-
-                else
-                {
-                    using (var connection = GetIndicoConnnection())
-                    {
-                        var query = string.Format("UPDATE [dbo].[Reservation] SET Status=1 WHERE ID={0}", reservationarray[x]);
-                        connection.Execute(query);
-                    }
-
-
-
-                }
-
-
-
-
-
-
-            }
-
-
-
-
-
-            
-
-        }
-
-
-         
         private void PopulateOrderStatus(int orderId)
         {
             List<OrderStatusBO> lstOrderStatus = new OrderStatusBO().SearchObjects();
@@ -2780,17 +2586,42 @@ namespace Indico
             }
         }
 
-        private void PopulateVlImage(int VisualLayoutId)
+        private void PopulateVlImage(int VisualLayoutId, int label)
         {
             string filepath = IndicoConfiguration.AppConfiguration.DataFolderName + "/noimage-png-350px-350px.png";
-            if (VisualLayoutId > 0)
+
+            try
             {
-                filepath = IndicoPage.GetVLImagePath(VisualLayoutId);
-                if (string.IsNullOrEmpty(filepath))
+                bool isFactory = this.LoggedUserRoleName == UserRole.FactoryAdministrator || this.LoggedUserRoleName == UserRole.FactoryCoordinator || this.LoggedUserRoleName == UserRole.FactoryPatternDeveloper;
+
+                if (isFactory && label > 0)
                 {
-                    filepath = IndicoConfiguration.AppConfiguration.DataFolderName + "/noimage-png-350px-350px.png";
+                    litVLImageCaption.Text = "Label Image";
+
+                    LabelBO objLabel = new LabelBO();
+                    objLabel.ID = label;
+                    objLabel.GetObject();
+
+                    string labelLocation = IndicoConfiguration.AppConfiguration.DataFolderName + "/Labels/" + objLabel.LabelImagePath;
+
+                    if (File.Exists(IndicoConfiguration.AppConfiguration.PathToProjectFolder + "/" + labelLocation))
+                    {
+                        filepath = labelLocation;
+                    }
+                }
+                else if (VisualLayoutId > 0)
+                {
+                    filepath = IndicoPage.GetVLImagePath(VisualLayoutId);
+                    if (string.IsNullOrEmpty(filepath))
+                    {
+                        filepath = IndicoConfiguration.AppConfiguration.DataFolderName + "/noimage-png-350px-350px.png";
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+            }
+
             imgvlImage.ImageUrl = filepath;
         }
 
@@ -3115,7 +2946,7 @@ namespace Indico
                 {
                     ddlSizes.Items.Add(new ListItem(size.SizeName, size.ID.ToString()));
                 }
-                var unit = objPattern.objUnit;
+
                 txtUnit.Text = (objPattern.Unit != null && objPattern.Unit > 0) ? objPattern.objUnit.Name : string.Empty;
 
                 List<OrderDetailQtyBO> lstOrderDetailQty = new List<OrderDetailQtyBO>();
@@ -3246,6 +3077,11 @@ namespace Indico
                 objOrderDetailtemp.OrderDetailNotes = objOD.VisualLayoutNotes;
                 objOrderDetailtemp.FactoryInstructions = objOD.FactoryInstructions;
 
+                objOrderDetailtemp.IsRepeat = objOD.IsRepeat;
+                objOrderDetailtemp.IsEmbroidery = objOD.IsEmbroidery;
+                objOrderDetailtemp.ResolutionProfile = objOD.ResolutionProfile;
+                objOrderDetailtemp.PocketType = objOD.PocketType;
+
                 OrderDetailQtyBO objOrderDetailQty = new OrderDetailQtyBO();
                 objOrderDetailQty.OrderDetail = objOD.OrderDetail;
                 objOrderDetailtemp.ListQtys = objOrderDetailQty.SearchObjects();
@@ -3308,7 +3144,7 @@ namespace Indico
 
                 populateLabels(int.Parse(hdnDistributorID.Value));
                 PopulateVisualLayouts(int.Parse(hdnJobNameID.Value));
-                PopulateVlImage(0);
+                PopulateVlImage(0, 0);
 
                 ddlSizes.ClearSelection();
                 ddlSizes.Visible = false;
@@ -3625,7 +3461,7 @@ namespace Indico
             public bool IsPhotoApprovalRequired { get; set; }
             public bool UseBrandingkit { get; set; }
             public bool UseLockerPatch { get; set; }
-            //public bool FromVisualLayout { get; set; }
+
 
             public int OrderType { get; set; }
             public int Label { get; set; }
@@ -3646,7 +3482,6 @@ namespace Indico
             public List<OrderDetailQtyBO> ListQtys { get; set; }
 
             public string PromoCode { get; set; }
-
             public string DistributorEditedPrice { get; set; }
             public string IndimanSurCharge { get; set; }
             public string DistributorSurcharge { get; set; }
@@ -3664,9 +3499,12 @@ namespace Indico
             public bool IsCourierDelivery { get; set; }
             public bool IsWeeklyShipment { get; set; }
 
-            public int Reservation { get; set; }
+            public bool IsEmbroidery { get; set; }
             public bool IsRepeat { get; set; }
+            public string ResolutionProfile { get; set; }
+            public string PocketType { get; set; }
 
+            public int Reservation { get; set; }
             public int StatusID { get; set; }
             public string Status { get; set; }
             public int Order { get; set; }

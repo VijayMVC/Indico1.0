@@ -357,21 +357,6 @@
                                     <telerik:GridBoundColumn UniqueName="ShipmentMethod" SortExpression="ShipmentMethod" HeaderText="Shipment Mode" AllowSorting="true" AutoPostBackOnFilter="true" CurrentFilterFunction="Contains"
                                         FilterControlWidth="50px" DataField="ShipmentMethod">
                                     </telerik:GridBoundColumn>
-                                    <%--<telerik:GridCheckBoxColumn UniqueName="WeeklyShipment" HeaderText="Is Weekly Shipment" DataField="WeeklyShipment" AllowFiltering="false" ItemStyle-CssClass="rfdCheckboxChecked" ItemStyle-HorizontalAlign="Center"
-                                        AllowSorting="true">
-                                    </telerik:GridCheckBoxColumn>--%>
-                                    <%-- <telerik:GridCheckBoxColumn UniqueName="CourierDelivery" HeaderText="IsCourierDelivery" DataField="CourierDelivery" AllowFiltering="false" ItemStyle-CssClass="rfdCheckboxChecked" ItemStyle-HorizontalAlign="Center"
-                                        AllowSorting="true">
-                                    </telerik:GridCheckBoxColumn>
-                                   <telerik:GridCheckBoxColumn UniqueName="AdelaideWareHouse" HeaderText="IsAdelaideWareHouse" DataField="AdelaideWareHouse" AllowFiltering="false" ItemStyle-CssClass="rfdCheckboxChecked" ItemStyle-HorizontalAlign="Center"
-                                        AllowSorting="true">
-                                    </telerik:GridCheckBoxColumn>
-                                    <telerik:GridCheckBoxColumn UniqueName="FollowingAddress" HeaderText="IsFollowingAddress" DataField="FollowingAddress" AllowFiltering="false" ItemStyle-CssClass="rfdCheckboxChecked" ItemStyle-HorizontalAlign="Center"
-                                        AllowSorting="true">
-                                    </telerik:GridCheckBoxColumn>--%>
-                                    <%--<telerik:GridBoundColumn UniqueName="ShippingAddress" SortExpression="ShippingAddress" HeaderText="Shipping Address" AllowSorting="true" AutoPostBackOnFilter="true" CurrentFilterFunction="Contains"
-                                        FilterControlWidth="100px" DataField="ShippingAddress">
-                                    </telerik:GridBoundColumn>--%>
                                     <telerik:GridTemplateColumn UniqueName="ShippingAddress" SortExpression="ShippingAddress" HeaderText="Shipping Address" AutoPostBackOnFilter="true" CurrentFilterFunction="Contains"
                                         FilterControlWidth="100px" DataField="ShippingAddress">
                                         <ItemTemplate>
@@ -387,6 +372,9 @@
                                     <telerik:GridDateTimeColumn UniqueName="CreatedDate" DataField="CreatedDate" HeaderText="Created Date" FilterControlWidth="110px" Groupable="false" SortExpression="CreatedDate" PickerType="DatePicker" EnableTimeIndependentFiltering="true"
                                         DataFormatString="{0:dd MMMM yyyy}">
                                     </telerik:GridDateTimeColumn>
+                                    <telerik:GridDateTimeColumn UniqueName="IndimanSubmittedDate" DataField="IndimanSubmittedDate" HeaderText="Indiman Submitted Date" FilterControlWidth="110px" Groupable="false" SortExpression="IndimanSubmittedDate" PickerType="DatePicker" EnableTimeIndependentFiltering="true"
+                                        DataFormatString="{0:dd MMMM yyyy}">
+                                    </telerik:GridDateTimeColumn>
                                     <telerik:GridBoundColumn UniqueName="Modifier" SortExpression="Modifier" HeaderText="Modifier" AllowSorting="true" AutoPostBackOnFilter="true" CurrentFilterFunction="Contains"
                                         FilterControlWidth="75px" DataField="Modifier">
                                     </telerik:GridBoundColumn>
@@ -398,13 +386,7 @@
                                             <asp:DropDownList ID="ddlResolutionProfile" runat="server" Width="165px"></asp:DropDownList>
                                         </ItemTemplate>
                                     </telerik:GridTemplateColumn>
-                                    <%--  <telerik:GridTemplateColumn HeaderText="View" AllowFiltering="false" Groupable="false" Visible="false">
-                                    <ItemTemplate>
-                                        <a id="ancViewOrder" runat="server" class="btn btn-link ispec" title="View Order"
-                                            onserverclick="ancViewOrder_Click"><i class="icon-th-list"></i></a>
-                                    </ItemTemplate>
-                                </telerik:GridTemplateColumn>--%>
-                                    <telerik:GridTemplateColumn HeaderText="Status" AllowFiltering="true" Groupable="false" FilterControlWidth="50px" DataField="OrderStatus" UniqueName="OrderStatus">
+                                      <telerik:GridTemplateColumn HeaderText="Status" AllowFiltering="true" Groupable="false" FilterControlWidth="50px" DataField="OrderStatus" UniqueName="OrderStatus">
                                         <FilterTemplate>
                                             <telerik:RadComboBox ID="radComboOrderStatus" DataTextField="Name" DataValueField="ID" AppendDataBoundItems="true" runat="server" Skin="Metro" CssClass="RadComboBox_Metro" OnSelectedIndexChanged="radComboOrderStatus_SelectedIndexChanged" AutoPostBack="true">
                                                 <Items>
