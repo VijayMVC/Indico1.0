@@ -1,0 +1,294 @@
+﻿<%@ Page EnableEventValidation="False" Language="C#" AutoEventWireup="true" CodeBehind="Purchaser.aspx.cs" MasterPageFile="~/Indico.Master" Inherits="Indico.Purchaser" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="iContentPlaceHolder" runat="server">
+    <asp:ScriptManager runat="server"></asp:ScriptManager>
+    <asp:HiddenField ID="hdnSelectedItemID" runat="server" Value="0" />
+    <div class="page">
+        <div class="page-header">
+            <div class="header-actions">
+            </div>
+            <h3>
+                <asp:Literal ID="litHeaderText" runat="server"></asp:Literal></h3>
+        </div>
+
+        <div class="page-content">
+
+            <div class="row-fluid">
+                <div class="wrapper">
+                    <input id="txtSearch" runat="server" name="txtSearch" size="20" class="riTextBox riEnabled" type="text" value="" style="height: 25px;" />
+                    <%--<asp:Button runat="server" CssClass="btn btn-primary" ID="SearchGoButton" OnClick="SearchGoButton_Click" Text="Go"/>--%>
+                     <button type="button" id="searchbutton" onServerClick="searchbutton_ServerClick" runat="server" class="btn btn-info"><i class="icon-search"></i></button>
+
+                    <div class="pull-right">
+                        <input type="button" class="btn btn-primary" runat="server" value="New Purchaser" id="btnAdd" style="height: 25px;" />
+                    </div>
+                    <br />
+                    <br />
+                    <telerik:RadGrid ID="PurchaserGrid" runat="server" AllowPaging="true" AllowFilteringByColumn="true"
+                        ShowGroupPanel="true" ShowFooter="false" OnPageSizeChanged="PurchaserGrid_PageSizeChanged"
+                        PageSize="20" OnPageIndexChanged="PurchaserGrid_PageIndexChanged" EnableHeaderContextMenu="true"
+                        EnableHeaderContextFilterMenu="true" AutoGenerateColumns="false" OnItemDataBound="PurchaserGrid_ItemDataBound"
+                        Skin="Metro" CssClass="RadGrid" AllowSorting="true" EnableEmbeddedSkins="true" OnItemCommand="PurchaserGrid_ItemCommand" OnSortCommand="PurchaserGrid_SortCommand">
+                        <PagerStyle Mode="NextPrevNumericAndAdvanced"></PagerStyle>
+                        <GroupingSettings CaseSensitive="false" />
+                        <MasterTableView AllowFilteringByColumn="true" TableLayout="Auto" GroupsDefaultExpanded="false">
+                            <Columns>
+
+                                <telerik:GridBoundColumn DataField="Name" SortExpression="Name" HeaderText="Name"
+                                    Groupable="True" UniqueName="Name" FilterControlWidth="60px" AutoPostBackOnFilter="True" CurrentFilterFunction="Contains">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridTemplateColumn UniqueName="UserFunctions" HeaderText="" AllowFiltering="false">
+
+                                    <ItemTemplate>
+                                        <div class="btn-group pull-right">
+                                            <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);">
+                                                <i class="icon-cog"></i><span class="caret"></span></a>
+                                            <ul class="dropdown-menu pull-right">
+                                                <li>
+                                                    <asp:HyperLink ID="linkEdit" runat="server" CssClass="btn-link iedit" ToolTip="Edit Item"><i class="icon-pencil"></i>Edit</asp:HyperLink>
+                                                </li>
+                                                <%--
+                                                    <li>
+                                                    <asp:HyperLink ID="linkDelete" runat="server" CssClass="btn-link idelete" ToolTip="Delete Item"><i class="icon-trash" ></i> Delete</asp:HyperLink>
+                                                </li>
+                                                     --%>
+                                                
+                                            </ul>
+                                        </div>
+                                    </ItemTemplate>
+                                </telerik:GridTemplateColumn>
+
+                            </Columns>
+
+                        </MasterTableView>
+                        <ClientSettings AllowDragToGroup="True" AllowGroupExpandCollapse="true" AllowExpandCollapse="true">
+                        </ClientSettings>
+                        <GroupingSettings ShowUnGroupButton="true" />
+                    </telerik:RadGrid>
+
+                    </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!--Modals-->
+    <div id="requestDelete" class="modal fade" role="dialog" aria-hidden="true" keyboard="false"
+        data-backdrop="static">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                ×</button>
+            <h3>Delete Category</h3>
+        </div>
+        <div class="modal-body">
+            <p>
+                Are you sure you wish to delete Category?
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">
+                Close</button>
+            <button id="btnDelete" runat="server" class="btn btn-primary" onserverclick="btnDelete_ServerClick"
+                data-loading-text="Deleting..." type="submit">
+                Yes</button>
+        </div>
+    </div>
+
+
+     <!--Modals-->
+
+    <div id="requestAddEdit" class="modal fade" role="dialog" aria-hidden="true"
+        keyboard="false" data-backdrop="static">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                ×</button>
+            <h3 id="lbladd">Add Purchaser</h3>
+            <h3 id="lbledit">Edit Purchaser</h3>
+        </div>
+        <div class="modal-body">
+            <asp:UpdatePanel runat="server">
+                <ContentTemplate>
+                    <div class="alert alert-danger" id="dvAlert" style="display: none;">
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label required">
+                            Name</label>
+                        <div class="controls">
+                            <asp:TextBox ID="txtName" runat="server" MaxLength="128"></asp:TextBox>
+                            <%--                        <asp:RequiredFieldValidator ID="rfvName" runat="server" CssClass="error"
+                                ControlToValidate="txtName" Display="Dynamic" EnableClientScript="False"
+                                ErrorMessage="Name is required">
+                                    <img src="Content/img/icon_warning.png" title="Name is required" alt="Name is required" />
+                            </asp:RequiredFieldValidator>--%>
+                            <%--                         <asp:CustomValidator ID="cvTxtName" runat="server" OnServerValidate="cvTxtName_ServerValidate" ErrorMessage="Name is already in use"
+                                ControlToValidate="txtName" EnableClientScript="false">
+                                 <img src="Content/img/icon_warning.png"  title="Name is already in use" alt="Name is already in use" />
+                            </asp:CustomValidator>--%>
+                        </div>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            <button id="btnSaveChanges" class="btn btn-primary" type="button">Save Changes</button>
+            <button id="addButton" class="btn btn-primary" type="button">Add</button>
+
+            <button id="saveButtonServer" runat="server" class="btn btn-primary" style="display: none;" onserverclick="saveButtonServer_ServerClick" type="submit"></button>
+            <button id="addButtonServer" runat="server" class="btn btn-primary" style="display: none;" onserverclick="addButtonServer_ServerClick" type="submit"></button>
+
+        </div>
+    </div>
+
+    <!--Modals-->
+
+     <script type="text/javascript">
+
+
+
+        (function ($) {
+
+            var categoryName = "#<%=txtName.ClientID%>";
+            var addButton = "#addButton";
+            var saveButton = "#btnSaveChanges";
+            var addNewPurchaserButton = "#<%=btnAdd.ClientID%>";
+
+            function onDeleteClick() {
+                var qid = $(this).attr("qid");
+                 $("#<%=hdnSelectedItemID.ClientID%>").val(qid);
+                $("#requestDelete").modal("show");
+            }
+
+ function onEditClick() {
+                var qid = $(this).attr("qid");
+                $("#<%=hdnSelectedItemID.ClientID%>").val(qid);
+                loadData(qid);
+                $(addButton).hide();
+                $(saveButton).show();
+                $("#lbledit").show();
+                $("#lbladd").hide();
+                $("#requestAddEdit").modal("show");
+            }
+
+
+            function getDataFromPage(method, data, success, error) {
+                $.ajax({
+                    type: "POST",
+                    url: "Purchaser.aspx/" + method,
+                    data: JSON.stringify(data ? data : {}),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: success
+                });
+            }
+
+
+            function loadData(id) {
+
+                // loadAllDropdowns();
+                getDataFromPage("GetItemData", { code: id }, function (data) {
+                    data = data.d;
+                    console.log(data);
+                    $("#<%=txtName.ClientID%>").val(data.Name);
+
+                });
+            }
+
+
+            function onAddNewButtonClick() {
+                $(saveButton).hide();
+                $(addButton).show();
+                $("#requestAddEdit").find("input").val("");
+                $("#lbledit").hide();
+                $("#lbladd").show();
+                $("#requestAddEdit").modal("show");
+            }
+
+
+            function validateControl(dd, name) {
+                console.log($(dd).val());
+                return !$(dd).val() ? " " + name + " is required. </br>" : "";
+            }
+
+            function isFormValid() {
+                var error = "";
+                error += validateControl("#<%=txtName.ClientID%>", "Name");
+
+                if (error) {
+                    $("#dvAlert").html(error);
+                    $("#dvAlert").show();
+                    return false;
+                }
+
+                return true;
+
+            }
+
+            function onAddButtonClick() {
+
+                if (isFormValid()) {
+                    $("#<%=addButtonServer.ClientID%>").click();
+                }
+
+            }
+
+            function onSaveButtonClick() {
+                console.log("save button click");
+                if (isFormValid()) {
+                    console.log("form valid");
+                    $("#<%=saveButtonServer.ClientID%>").click();
+                }
+            }
+
+
+            $(function () {
+                $(".idelete").on("click", onDeleteClick);
+                $(".iedit").on("click", onEditClick);
+
+                $(addNewPurchaserButton).on("click", onAddNewButtonClick);
+
+                $(addButton).on("click", onAddButtonClick);
+                $(saveButton).on("click", onSaveButtonClick);
+
+            });
+
+        })(window.jQuery);
+
+
+        function showModal() {
+            $('#requestAddEdit').modal('show');
+        }
+    </script>
+
+</asp:Content>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
