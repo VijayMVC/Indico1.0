@@ -1524,6 +1524,8 @@ namespace Indico
                         o.Name == "SAMPLE" ||
                         o.Name == "REPLACEMENT AT SAMPLE PRICE" ||
                         o.Name == "REPLACEMENT FREE OF COST" ||
+                        o.Name == "MARKETING SAMPLE" ||
+                        o.Name == "SPONSORSHIP SAMPLE" ||
                         o.Name == "TEST PANEL").ToList();
                     chkBrandingKit.Checked = true;
                 }

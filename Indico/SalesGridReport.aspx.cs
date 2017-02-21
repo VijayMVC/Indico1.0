@@ -1,27 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Drawing;
 using System.Linq;
 using System.Linq.Dynamic;
-using System.Transactions;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
 using Dapper;
 using Indico.Common;
 using Indico.BusinessObjects;
-using System.Text.RegularExpressions;
-using Microsoft.Reporting.WebForms;
-using System.Threading;
-using System.Reflection;
 using Telerik.Web.UI;
 //using Indico.Model;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Globalization;
-using System.Data;
 
 namespace Indico
 {
@@ -188,7 +177,7 @@ namespace Indico
                     var totalSalesPrice = decimal.Parse(e.Item.Cells[6].Text.Replace("$", string.Empty).Replace(",", string.Empty));
                     e.Item.Cells[11].Text = ((totalGrossProfit / totalSalesPrice) * 100).ToString("0.00") + "%";
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     //ignored
                 }
@@ -210,7 +199,7 @@ namespace Indico
                 var lnkQuentity = (HyperLink)item.FindControl("lnkQuantity");
                 lnkQuentity.Text = Convert.ToString(obj.Quantity);
                 lnkQuentity.NavigateUrl = "DrillDownReport.aspx?id=" + obj.ID +
-                                          "&DistributorName="+obj.Name+
+                                          "&DistributorName=" + obj.Name +
                                           "&Start=" + DateTime.Parse(this.txtCheckin.Value).ToShortDateString() +
                                           "&End=" + DateTime.Parse(this.txtCheckout.Value).ToShortDateString() +
                                           "&Current=" + HeaderText +
@@ -234,7 +223,7 @@ namespace Indico
                 GridGroupFooterItem groupFooter = e.Item as GridGroupFooterItem;
                 decimal totalGrossProfit = decimal.Parse(e.Item.Cells[10].Text.Replace("$", string.Empty).Replace(",", string.Empty));
                 decimal totalSalesPrice = decimal.Parse(e.Item.Cells[6].Text.Replace("$", string.Empty).Replace(",", string.Empty));
-                e.Item.Cells[11].Text = ((totalGrossProfit/totalSalesPrice)*100).ToString("0.00") + "%";
+                e.Item.Cells[11].Text = ((totalGrossProfit / totalSalesPrice) * 100).ToString("0.00") + "%";
 
                 groupFooter.Style.Add("color", "blue");
                 groupFooter.Style.Add("font-weight", "bold");
@@ -342,6 +331,20 @@ namespace Indico
             this.validationSummary.Visible = !Page.IsValid;
         }
 
+        protected void RadGridSalesReport_OnItemCreated(object sender, GridItemEventArgs e)
+        {
+            var filteringItem = e.Item as GridFilteringItem;
+            if (filteringItem == null) return;
+            filteringItem["Quantity"].HorizontalAlign = HorizontalAlign.Right;
+            filteringItem["QuantityPercentage"].HorizontalAlign = HorizontalAlign.Right;
+            filteringItem["Value"].HorizontalAlign = HorizontalAlign.Right;
+            filteringItem["PurchasePrice"].HorizontalAlign = HorizontalAlign.Right;
+            filteringItem["ValuePercentage"].HorizontalAlign = HorizontalAlign.Right;
+            filteringItem["AvgPrice"].HorizontalAlign = HorizontalAlign.Right;
+            filteringItem["GrossProfit"].HorizontalAlign = HorizontalAlign.Right;
+            filteringItem["GrossMargin"].HorizontalAlign = HorizontalAlign.Right;
+        }
+
         #endregion
 
         #region Methods
@@ -356,6 +359,12 @@ namespace Indico
 
             this.txtCheckout.Value = DateTime.Now.ToString("MMM dd, yyyy");
             this.txtCheckin.Value = DateTime.Now.ToString("MMM 1, yyyy");
+
+            if (LoggedUser.IsDirectSalesPerson)
+            {
+                this.txtName.Text = this.Distributor.Name;
+                this.txtName.Enabled = false;
+            }
 
             if (GetQueryIDs)
             {
@@ -421,20 +430,6 @@ namespace Indico
             }
         }
 
-        #endregion
-
-        protected void RadGridSalesReport_OnItemCreated(object sender, GridItemEventArgs e)
-        {
-            var filteringItem = e.Item as GridFilteringItem;
-            if (filteringItem == null) return;
-            filteringItem["Quantity"].HorizontalAlign = HorizontalAlign.Right;
-            filteringItem["QuantityPercentage"].HorizontalAlign = HorizontalAlign.Right;
-            filteringItem["Value"].HorizontalAlign = HorizontalAlign.Right;
-            filteringItem["PurchasePrice"].HorizontalAlign = HorizontalAlign.Right;
-            filteringItem["ValuePercentage"].HorizontalAlign = HorizontalAlign.Right;
-            filteringItem["AvgPrice"].HorizontalAlign = HorizontalAlign.Right;
-            filteringItem["GrossProfit"].HorizontalAlign = HorizontalAlign.Right;
-            filteringItem["GrossMargin"].HorizontalAlign = HorizontalAlign.Right;
-        }
+        #endregion        
     }
 }
