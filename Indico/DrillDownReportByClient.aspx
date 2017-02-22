@@ -51,7 +51,7 @@
                                        DataFormatString="{0:C2}" FooterAggregateFormatString="{0:C2}" FilterControlWidth="50px">
                                     </telerik:GridBoundColumn>
                                     <telerik:GridBoundColumn FooterStyle-HorizontalAlign="Right"  HeaderStyle-HorizontalAlign="Right" ItemStyle-HorizontalAlign="Right" DataField="GrossMargin" UniqueName="GrossMargin" HeaderText="Gross Margin %" SortExpression="GrossMargin" AllowSorting="true" CurrentFilterFunction="Contains" AutoPostBackOnFilter="true" Groupable="false"
-                                      FooterText="GM" DataFormatString="{0:P1}" FilterControlWidth="50px">
+                                      FooterText="GM" DataFormatString="{0:P}" FilterControlWidth="50px" >
                                     </telerik:GridBoundColumn>
                                 </Columns>
                                 <%--<GroupByExpressions>

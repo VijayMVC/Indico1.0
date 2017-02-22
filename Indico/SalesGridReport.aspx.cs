@@ -360,7 +360,7 @@ namespace Indico
             this.txtCheckout.Value = DateTime.Now.ToString("MMM dd, yyyy");
             this.txtCheckin.Value = DateTime.Now.ToString("MMM 1, yyyy");
 
-            if (LoggedUser.IsDirectSalesPerson)
+            if (LoggedUser.IsDirectSalesPerson && this.Distributor.Name != "BLACKCHROME - TROY BEARD")
             {
                 this.txtName.Text = this.Distributor.Name;
                 this.txtName.Enabled = false;
