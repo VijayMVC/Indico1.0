@@ -1058,7 +1058,7 @@ select,
 textarea {
   font-size: 14px;
   font-weight: normal;
-  line-height: 20px;
+  line-height: 30px;
 }
 
 input,
@@ -1091,11 +1091,11 @@ input[type="tel"],
 input[type="color"],
 .uneditable-input {
   display: inline-block;
-  height: 20px;
+  height: 30px;
   padding: 4px 6px;
   margin-bottom: 10px;
   font-size: 14px;
-  line-height: 20px;
+  line-height: 30px;
   color: #555555;
   vertical-align: middle;
   -webkit-border-radius: 4px;
@@ -1714,7 +1714,7 @@ select:focus:invalid:focus {
 .input-prepend .add-on {
   display: inline-block;
   width: auto;
-  height: 20px;
+  height: 30px;
   min-width: 16px;
   padding: 4px 5px;
   font-size: 14px;

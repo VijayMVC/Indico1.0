@@ -392,7 +392,6 @@ namespace Indico
             }
 
             //Hide Controls
-
             this.dvDataContent.Visible = true;
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
