@@ -41,7 +41,7 @@
                                         </ItemTemplate>
                                     </telerik:GridTemplateColumn>
                                     <telerik:GridBoundColumn HeaderStyle-HorizontalAlign="Right" ItemStyle-HorizontalAlign="Right" FooterStyle-HorizontalAlign="Right" Aggregate="Sum" DataField="QuantityPercentage" UniqueName="QuantityPercentage" HeaderText="% of Units"  SortExpression="QuantityPercentage" AllowSorting="true" CurrentFilterFunction="Contains" AutoPostBackOnFilter="true" Groupable="false"
-                                        DataFormatString="{0:P2}" FooterAggregateFormatString="{0:P1}"  FilterControlWidth="50px" Display="False">
+                                        DataFormatString="{0:P}" FooterAggregateFormatString="{0:P1}"  FilterControlWidth="50px" Display="False">
                                     </telerik:GridBoundColumn>
                                     <telerik:GridBoundColumn HeaderStyle-HorizontalAlign="Right" ItemStyle-HorizontalAlign="Right" FooterStyle-HorizontalAlign="Right" Aggregate="Sum" DataField="Value" UniqueName="Value" HeaderText="Sales Value" SortExpression="Value" AllowSorting="true" CurrentFilterFunction="Contains" AutoPostBackOnFilter="true" Groupable="false"
                                         FooterText="" FooterAggregateFormatString="{0:C2}" DataFormatString="{0:C2}"  FooterStyle-Font-Bold="true"  FilterControlWidth="50px">
@@ -50,7 +50,7 @@
                                         FooterText="" FooterAggregateFormatString="{0:C2}" DataFormatString="{0:C2}"  FooterStyle-Font-Bold="true"  FilterControlWidth="50px">
                                     </telerik:GridBoundColumn>
                                     <telerik:GridBoundColumn HeaderStyle-HorizontalAlign="Right" ItemStyle-HorizontalAlign="Right" FooterStyle-HorizontalAlign="Right" Aggregate="Sum" DataField="ValuePercentage" UniqueName="ValuePercentage" HeaderText="% of Value" SortExpression="ValuePercentage" AllowSorting="true" CurrentFilterFunction="Contains" AutoPostBackOnFilter="true" Groupable="false"
-                                       DataFormatString="{0:P2}" FooterAggregateFormatString="{0:P1}"  FilterControlWidth="50px" Display="False">
+                                       DataFormatString="{0:P}" FooterAggregateFormatString="{0:P1}"  FilterControlWidth="50px" Display="False">
                                     </telerik:GridBoundColumn>
                                      <telerik:GridBoundColumn HeaderStyle-HorizontalAlign="Right" ItemStyle-HorizontalAlign="Right" FooterStyle-HorizontalAlign="Right" Aggregate="Avg" DataField="AvgPrice" UniqueName="AvgPrice" HeaderText="Avg Price" SortExpression="AvgPrice" AllowSorting="true" CurrentFilterFunction="Contains" AutoPostBackOnFilter="true" Groupable="false"
                                         FooterText="" DataFormatString="{0:C2}" FooterStyle-Font-Bold="true"  FilterControlWidth="50px">
@@ -59,7 +59,7 @@
                                        DataFormatString="{0:C2}" FooterAggregateFormatString="{0:C2}" FilterControlWidth="50px">
                                     </telerik:GridBoundColumn>
                                     <telerik:GridBoundColumn HeaderStyle-HorizontalAlign="Right" ItemStyle-HorizontalAlign="Right" FooterStyle-HorizontalAlign="Right" DataField="GrossMargin" UniqueName="GrossMargin" HeaderText="Gross Margin %" SortExpression="GrossMargin" AllowSorting="true" CurrentFilterFunction="Contains" AutoPostBackOnFilter="true" Groupable="false"
-                                       DataFormatString="{0:P1}" FilterControlWidth="50px">
+                                       DataFormatString="{0:P}" FilterControlWidth="50px">
                                     </telerik:GridBoundColumn>
                                 </Columns>
                             <%--    <GroupByExpressions>

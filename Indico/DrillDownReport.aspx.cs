@@ -344,6 +344,20 @@ namespace Indico
             Response.Redirect("/SalesGridReport.aspx?Name=" + this.DistributorName + "&Type=" + this.DistributorType + "&Start=" + this.Start.ToShortDateString() + "&End=" + this.End.ToShortDateString());
         }
 
+        protected void RadGridDrillDownReport_OnItemCreated(object sender, GridItemEventArgs e)
+        {
+            var filteringItem = e.Item as GridFilteringItem;
+            if (filteringItem == null) return;
+            filteringItem["Quantity"].HorizontalAlign = HorizontalAlign.Right;
+            filteringItem["QuantityPercentage"].HorizontalAlign = HorizontalAlign.Right;
+            filteringItem["Value"].HorizontalAlign = HorizontalAlign.Right;
+            filteringItem["PurchasePrice"].HorizontalAlign = HorizontalAlign.Right;
+            filteringItem["ValuePercentage"].HorizontalAlign = HorizontalAlign.Right;
+            filteringItem["AvgPrice"].HorizontalAlign = HorizontalAlign.Right;
+            filteringItem["GrossProfit"].HorizontalAlign = HorizontalAlign.Right;
+            filteringItem["GrossMargin"].HorizontalAlign = HorizontalAlign.Right;
+        }
+
         #endregion
 
         #region Methods
@@ -430,19 +444,5 @@ namespace Indico
         }
 
         #endregion
-
-        protected void RadGridDrillDownReport_OnItemCreated(object sender, GridItemEventArgs e)
-        {
-            var filteringItem = e.Item as GridFilteringItem;
-            if (filteringItem == null) return;
-            filteringItem["Quantity"].HorizontalAlign = HorizontalAlign.Right;
-            filteringItem["QuantityPercentage"].HorizontalAlign = HorizontalAlign.Right;
-            filteringItem["Value"].HorizontalAlign = HorizontalAlign.Right;
-            filteringItem["PurchasePrice"].HorizontalAlign = HorizontalAlign.Right;
-            filteringItem["ValuePercentage"].HorizontalAlign = HorizontalAlign.Right;
-            filteringItem["AvgPrice"].HorizontalAlign = HorizontalAlign.Right;
-            filteringItem["GrossProfit"].HorizontalAlign = HorizontalAlign.Right;
-            filteringItem["GrossMargin"].HorizontalAlign = HorizontalAlign.Right;
-        }
     }
 }
