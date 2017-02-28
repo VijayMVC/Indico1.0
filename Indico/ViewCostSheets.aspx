@@ -114,7 +114,7 @@
                                     <HeaderTemplate>
                                         <asp:Literal runat="server" Text="Exchange Rate"></asp:Literal>
                                         <div>
-                                            <asp:TextBox ID="txtApplyExchangeRate" BorderStyle="Inset" Height="10px" Text="" runat="server" Width="40px"></asp:TextBox>
+                                            <asp:TextBox ID="txtApplyExchangeRate" BorderStyle="Inset" Height="20px" Text="" runat="server" Width="40px"></asp:TextBox>
                                             <asp:Button ID="btnExchangeRate" CssClass="btn-info" runat="server" Text="Apply" Width="50px" OnClick="btnExchangeRate_Click" />
                                         </div>
                                     </HeaderTemplate>
@@ -127,7 +127,7 @@
                                     <HeaderTemplate>
                                         <asp:Literal runat="server" Text="Quoted CIF"></asp:Literal>
                                         <div>
-                                            <asp:TextBox ID="txtApplyQuotedCIF" BorderStyle="Inset" Height="10px" Text="" runat="server" Width="40px"></asp:TextBox>
+                                            <asp:TextBox ID="txtApplyQuotedCIF" BorderStyle="Inset" Height="20px" Text="" runat="server" Width="40px"></asp:TextBox>
                                             <asp:Button ID="btnQuotedCIF" CssClass="btn-info" runat="server" Text="Apply" Width="50px" OnClick="btnQuotedCIF_Click" />
                                         </div>
                                     </HeaderTemplate>
@@ -140,7 +140,7 @@
                                     <HeaderTemplate>
                                         <asp:Literal runat="server" Text="Duty Rate"></asp:Literal>
                                         <div>
-                                            <asp:TextBox ID="txtApplyDutyRate" BorderStyle="Inset" Height="10px" Text="" runat="server" Width="40px"></asp:TextBox>
+                                            <asp:TextBox ID="txtApplyDutyRate" BorderStyle="Inset" Height="20px" Text="" runat="server" Width="40px"></asp:TextBox>
                                             <asp:Button ID="btnDutyRate" CssClass="btn-info" runat="server" Text="Apply" Width="50px" OnClick="btnDutyRate_Click" />
                                         </div>
                                     </HeaderTemplate>
@@ -153,7 +153,7 @@
                                     <HeaderTemplate>
                                         <asp:Literal runat="server" Text="SMV Rate"></asp:Literal>
                                         <div>
-                                            <asp:TextBox ID="txtApplySMVRate" BorderStyle="Inset" Height="10px" Text="" runat="server" Width="40px"></asp:TextBox>
+                                            <asp:TextBox ID="txtApplySMVRate" BorderStyle="Inset" Height="20px" Text="" runat="server" Width="40px"></asp:TextBox>
                                             <asp:Button ID="btnSMVRate" CssClass="btn-info" runat="server" Text="Apply" Width="50px" OnClick="btnSMVRate_Click" />
                                         </div>
                                     </HeaderTemplate>

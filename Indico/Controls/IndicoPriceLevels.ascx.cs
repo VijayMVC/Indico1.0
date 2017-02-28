@@ -344,7 +344,7 @@ namespace Indico.Controls
                             txtPrice.Text = objLevel.Markup.ToString();
                             txtPrice.Width = Unit.Pixel(50);
                             txtPrice.BorderStyle = BorderStyle.Inset;
-                            txtPrice.Height = Unit.Pixel(10);
+                            txtPrice.Height = Unit.Pixel(20);
                             txtPrice.Width = Unit.Pixel(40);
 
                             cell.Controls.Add(txtPrice);
