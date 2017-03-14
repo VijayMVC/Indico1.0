@@ -20,6 +20,7 @@
             <div class="header-actions">
                 <a id="btnAddUser" runat="server" class="btn btn-link pull-right" href="~/AddEditFactoryCostSheet.aspx">New Cost Sheet</a>
                 <asp:LinkButton ID="btnBulkCostSheet" runat="server" CssClass="btn btn-link" OnClick="btnBulkCostSheet_Click"><i class="icon-print"></i>Print All Cost Sheets</asp:LinkButton>
+                <asp:LinkButton ID="btnSendToZoho" runat="server" CssClass="btn btn-link" OnClick="OnbtnSendToZohoClick"><i class="icon-print"></i>Send to Zoho</asp:LinkButton>
             </div>
             <h3>
                 <asp:Literal ID="litHeaderText" runat="server"></asp:Literal></h3>

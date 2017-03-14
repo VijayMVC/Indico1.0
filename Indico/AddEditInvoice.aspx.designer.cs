@@ -58,22 +58,13 @@ namespace Indico {
         protected global::System.Web.UI.WebControls.ValidationSummary validationSummary;
         
         /// <summary>
-        /// RadComboWeek control.
+        /// WeekComboBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox RadComboWeek;
-        
-        /// <summary>
-        /// spanShipmentError control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spanShipmentError;
+        protected global::Telerik.Web.UI.RadComboBox WeekComboBox;
         
         /// <summary>
         /// txtShipmentDate control.
@@ -166,58 +157,31 @@ namespace Indico {
         protected global::System.Web.UI.WebControls.TextBox txtAwbNo;
         
         /// <summary>
-        /// ddlShipTo control.
+        /// ShipToDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlShipTo;
+        protected global::System.Web.UI.WebControls.DropDownList ShipToDropDownList;
         
         /// <summary>
-        /// chkIsBillTo control.
+        /// BillToDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox chkIsBillTo;
+        protected global::System.Web.UI.WebControls.DropDownList BillToDropDownList;
         
         /// <summary>
-        /// ddlBillTo control.
+        /// BankDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlBillTo;
-        
-        /// <summary>
-        /// aShippingAddressCourier control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor aShippingAddressCourier;
-        
-        /// <summary>
-        /// cvBillTo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator cvBillTo;
-        
-        /// <summary>
-        /// ddlBank control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlBank;
+        protected global::System.Web.UI.WebControls.DropDownList BankDropDownList;
         
         /// <summary>
         /// rfvBank control.
@@ -229,31 +193,31 @@ namespace Indico {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvBank;
         
         /// <summary>
-        /// ddlMode control.
+        /// ShipmentModeDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlMode;
+        protected global::System.Web.UI.WebControls.DropDownList ShipmentModeDropDownList;
         
         /// <summary>
-        /// ddlport control.
+        /// PortDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlport;
+        protected global::System.Web.UI.WebControls.DropDownList PortDropDownList;
         
         /// <summary>
-        /// ddlStatus control.
+        /// StatusDropDownList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlStatus;
+        protected global::System.Web.UI.WebControls.DropDownList StatusDropDownList;
         
         /// <summary>
         /// RequiredFieldValidator2 control.
@@ -265,33 +229,6 @@ namespace Indico {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
         
         /// <summary>
-        /// dgNotExistingInvoiceOrders control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DataGrid dgNotExistingInvoiceOrders;
-        
-        /// <summary>
-        /// dvEmptyNotExistingOrders control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvEmptyNotExistingOrders;
-        
-        /// <summary>
-        /// litMeassage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litMeassage;
-        
-        /// <summary>
         /// dvNewContent control.
         /// </summary>
         /// <remarks>
@@ -301,40 +238,13 @@ namespace Indico {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvNewContent;
         
         /// <summary>
-        /// dvFactoryRate control.
+        /// ItemGrid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvFactoryRate;
-        
-        /// <summary>
-        /// txtFactoryCost control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtFactoryCost;
-        
-        /// <summary>
-        /// btnChangeCost control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btnChangeCost;
-        
-        /// <summary>
-        /// RadInvoice control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid RadInvoice;
+        protected global::Telerik.Web.UI.RadGrid ItemGrid;
         
         /// <summary>
         /// dvEmptyContentInvoiceOrders control.

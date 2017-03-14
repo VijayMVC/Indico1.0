@@ -1,28 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Indico.Models
 {
     public class WeekNoWeekendDateModel
     {
-        public int ID { get; set;}
-       public int WeekNo { get; set;}
+        private string _text;
 
-       public DateTime WeekendDate { get; set;}
+        public int ID { get; set; }
+        public int WeekNo { get; set; }
 
-       public string weeknoyear { get; set;}
+        public DateTime WeekendDate { get; set; }
 
-        public void makeweeknoyear()
-        {
-
-            int yearportion = WeekendDate.Year;
-            int weekportion = WeekNo;
-
-            string wny = weekportion.ToString() + "/" + yearportion.ToString();
-            weeknoyear = wny;
-        }
-
+        public string Text { get { return (_text ?? (_text = (WeekendDate.Year + "/" + WeekNo)));  } }
     }
 }

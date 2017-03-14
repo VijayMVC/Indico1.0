@@ -153,8 +153,9 @@ namespace Indico
                 if (Page.IsValid)
                 {
                     this.ProcessForm(shipmentaddressid);
-                    var myobService = new MyobService();
-                    myobService.SaveAddress(shipmentaddressid);
+                    // TODO Add Later - MYOBSERVICE
+                    //var myobService = new MyobService();
+                    //myobService.SaveAddress(shipmentaddressid);
                     Response.Redirect("/ViewShipmentAddresses.aspx");
                 }
 

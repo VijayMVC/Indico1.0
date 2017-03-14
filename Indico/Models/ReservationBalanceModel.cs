@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Indico.Models
 {
@@ -34,6 +31,8 @@ namespace Indico.Models
         public int? QtyPolo { get; set; }
 
         public int? QtyOutwear { get; set;}
-        
+
+        public int ReservationNo { get; set; }
+        public DateTime OrderDate { get; set; }
     }
 }

@@ -295,9 +295,9 @@ namespace Indico
             {
                 var visualLayout = ProcessForm();
                 SaveAccessories();
-
-                var myobService = new MyobService();
-                myobService.SaveVisualLayout(visualLayoutID);
+                // TODO Add Later - MYOBSERVICE
+                //var myobService = new MyobService();
+                //myobService.SaveVisualLayout(visualLayoutID);
                 Response.Redirect("/ViewVisualLayouts.aspx");
             }
         }
