@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
-using System.Linq.Dynamic;
 using System.Transactions;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Dapper;
 using Indico.BusinessObjects;
 using Indico.Common;
 using Telerik.Web.UI;
 
-using System.Web.UI.HtmlControls;
-using System.Globalization;
 using Indico.Models;
 using Indico.Common.Extensions;
 
@@ -21,25 +17,23 @@ namespace Indico
     public partial class AddEditInvoice : IndicoPage
     {
         #region Fields
-        DateTime exdate;
-        DateTime startdate;
-        private int urlQueryID = -1;
-        private int createdInvoiceId;
+
+        private IDbConnection _connection = GetIndicoConnnection();
+        DateTime _exdate;
+        private int _urlQueryID = -1;
         private DateTime _weekendate = new DateTime(1100, 1, 1);
-        private string weekNo = string.Empty;
+        private string _weekNo = string.Empty;
         private int _distributorClientAddress = 0;
         private int _shipmentid = 0;
-        private int urlWeeklyID = -1;
-        private decimal totalamount = 0;
-        //private decimal totalrate = 0;
-        private int totalqty = 0;
-        private int weekid = 0;
-        private DateTime urlweekendate = new DateTime(1100, 1, 1);
-        private DateTime urlshipmentate = new DateTime(1100, 1, 1);
-        private int urlshipmentkey = -1;
-        private string urlinvoiceno = string.Empty;
-        private int urlshipmentmode = -1;
-        private int costsheet = -1;
+        private int _urlWeeklyID = -1;
+        private int _weekid = 0;
+        private DateTime _urlweekendate = new DateTime(1100, 1, 1);
+        private DateTime _urlshipmentate = new DateTime(1100, 1, 1);
+        private int _urlshipmentkey = -1;
+        private string _urlinvoiceno = string.Empty;
+        private int _urlshipmentmode = -1;
+        private int _costsheet = -1;
+        private DateTime _startdate;
 
         #endregion
 
@@ -83,15 +77,15 @@ namespace Indico
         {
             get
             {
-                if (urlQueryID > -1)
-                    return urlQueryID;
+                if (_urlQueryID > -1)
+                    return _urlQueryID;
 
-                urlQueryID = 0;
+                _urlQueryID = 0;
                 if (Request.QueryString["id"] != null)
                 {
-                    urlQueryID = Convert.ToInt32(Request.QueryString["id"].ToString());
+                    _urlQueryID = Convert.ToInt32(Request.QueryString["id"].ToString());
                 }
-                return urlQueryID;
+                return _urlQueryID;
             }
         }
 
@@ -111,12 +105,12 @@ namespace Indico
         {
             get
             {
-                if (string.IsNullOrEmpty(weekNo))
+                if (string.IsNullOrEmpty(_weekNo))
                 {
-                    weekNo = ViewState["weekNo"].ToString();
+                    _weekNo = ViewState["weekNo"].ToString();
                 }
 
-                return weekNo;
+                return _weekNo;
             }
         }
 
@@ -124,12 +118,12 @@ namespace Indico
         {
             get
             {
-                if (weekid == 0)
+                if (_weekid == 0)
                 {
-                    weekid = int.Parse(ViewState["weekid"].ToString());
+                    _weekid = int.Parse(ViewState["weekid"].ToString());
                 }
 
-                return weekid;
+                return _weekid;
             }
         }
 
@@ -161,15 +155,15 @@ namespace Indico
         {
             get
             {
-                if (urlWeeklyID > -1)
-                    return urlWeeklyID;
+                if (_urlWeeklyID > -1)
+                    return _urlWeeklyID;
 
-                urlWeeklyID = 0;
+                _urlWeeklyID = 0;
                 if (Request.QueryString["wid"] != null)
                 {
-                    urlWeeklyID = Convert.ToInt32(Request.QueryString["wid"].ToString());
+                    _urlWeeklyID = Convert.ToInt32(Request.QueryString["wid"].ToString());
                 }
-                return urlWeeklyID;
+                return _urlWeeklyID;
             }
         }
 
@@ -177,15 +171,15 @@ namespace Indico
         {
             get
             {
-                if (urlweekendate != new DateTime(1100, 1, 1))
-                    return urlweekendate;
+                if (_urlweekendate != new DateTime(1100, 1, 1))
+                    return _urlweekendate;
 
-                urlweekendate = new DateTime(1100, 1, 1);
+                _urlweekendate = new DateTime(1100, 1, 1);
                 if (Request.QueryString["widdate"] != null)
                 {
-                    urlweekendate = Convert.ToDateTime(Request.QueryString["widdate"].ToString());
+                    _urlweekendate = Convert.ToDateTime(Request.QueryString["widdate"].ToString());
                 }
-                return urlweekendate;
+                return _urlweekendate;
             }
         }
 
@@ -193,15 +187,15 @@ namespace Indico
         {
             get
             {
-                if (urlshipmentate != new DateTime(1100, 1, 1))
-                    return urlshipmentate;
+                if (_urlshipmentate != new DateTime(1100, 1, 1))
+                    return _urlshipmentate;
 
-                urlshipmentate = new DateTime(1100, 1, 1);
+                _urlshipmentate = new DateTime(1100, 1, 1);
                 if (Request.QueryString["sdate"] != null)
                 {
-                    urlshipmentate = Convert.ToDateTime(Request.QueryString["sdate"].ToString());
+                    _urlshipmentate = Convert.ToDateTime(Request.QueryString["sdate"].ToString());
                 }
-                return urlshipmentate;
+                return _urlshipmentate;
             }
         }
 
@@ -209,15 +203,15 @@ namespace Indico
         {
             get
             {
-                if (urlshipmentkey > -1)
-                    return urlshipmentkey;
+                if (_urlshipmentkey > -1)
+                    return _urlshipmentkey;
 
-                urlshipmentkey = 0;
+                _urlshipmentkey = 0;
                 if (Request.QueryString["smkey"] != null)
                 {
-                    urlshipmentkey = Convert.ToInt32(Request.QueryString["smkey"].ToString());
+                    _urlshipmentkey = Convert.ToInt32(Request.QueryString["smkey"].ToString());
                 }
-                return urlshipmentkey;
+                return _urlshipmentkey;
             }
         }
 
@@ -225,15 +219,15 @@ namespace Indico
         {
             get
             {
-                if (!string.IsNullOrEmpty(urlinvoiceno))
-                    return urlinvoiceno;
+                if (!string.IsNullOrEmpty(_urlinvoiceno))
+                    return _urlinvoiceno;
 
-                urlinvoiceno = string.Empty;
+                _urlinvoiceno = string.Empty;
                 if (Request.QueryString["invno"] != null)
                 {
-                    urlinvoiceno = Request.QueryString["invno"].ToString();
+                    _urlinvoiceno = Request.QueryString["invno"].ToString();
                 }
-                return urlinvoiceno;
+                return _urlinvoiceno;
             }
         }
 
@@ -241,15 +235,15 @@ namespace Indico
         {
             get
             {
-                if (urlshipmentmode > -1)
-                    return urlshipmentmode;
+                if (_urlshipmentmode > -1)
+                    return _urlshipmentmode;
 
-                urlshipmentmode = 0;
+                _urlshipmentmode = 0;
                 if (Request.QueryString["smid"] != null)
                 {
-                    urlshipmentmode = Convert.ToInt32(Request.QueryString["smid"].ToString());
+                    _urlshipmentmode = Convert.ToInt32(Request.QueryString["smid"].ToString());
                 }
-                return urlshipmentmode;
+                return _urlshipmentmode;
             }
         }
 
@@ -257,15 +251,15 @@ namespace Indico
         {
             get
             {
-                if (costsheet > -1)
-                    return costsheet;
+                if (_costsheet > -1)
+                    return _costsheet;
 
-                costsheet = 0;
+                _costsheet = 0;
                 if (Request.QueryString["csid"] != null)
                 {
-                    costsheet = Convert.ToInt32(Request.QueryString["csid"].ToString());
+                    _costsheet = Convert.ToInt32(Request.QueryString["csid"].ToString());
                 }
-                return costsheet;
+                return _costsheet;
             }
         }
 
@@ -277,12 +271,7 @@ namespace Indico
 
         #region Events
 
-        /// <summary>
-        /// Page load event.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /// 
+       
 
         protected void Page_PreRender(object sender, EventArgs e)
         {
@@ -292,40 +281,26 @@ namespace Indico
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!this.IsPostBack)
+            if (!IsPostBack)
             {
+                InitializeUserInterface();
                 //PopulateControls();
-                
-                loadWeekNo();
-                
-                loadPort();
-                loadMode();
-                loadStatus();
-                loadBanks();
-                loadBillTo();
-                
+                //using (var connection = GetIndicoConnnection())
+                //{
+                //    BindData(WeekComboBox, GetWeeks(connection));
+                //}
+                //// loadWeekNo();
+
+                //loadPort();
+                //loadMode();
+                //loadStatus();
+                //loadBanks();
+                //loadBillTo();
+
             }
         }
 
-       protected void RadComboShipmentKey_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
-        {
-            RadComboBoxItem item = RadComboShipmentKey.SelectedItem;
-            Literal l1 = item.FindControl("litShipTo") as Literal;
-            string varshipto = l1.Text;
-            Literal l2 = item.FindControl("litDestinationPort") as Literal;
-            string vardestinationport = l2.Text;
-            Literal l3 = item.FindControl("litETD") as Literal;
-            string varetd = l3.Text;
-            Literal l4 = item.FindControl("LitPriceTerm") as Literal;
-            string varpriceterm = l4.Text;
 
-            var connection = GetIndicoConnnection();
-
-            var result1 = connection.Query<NewShipmentOrderDetailSizeQtyViewModel>(string.Format("SELECT *,0,0,0,0,'' FROM [dbo].[NewShipmentOrderDetailSizeQtyView] WHERE ShiptoName='{0}' AND PortName='{1}' AND ShipmentDate='{2}' AND PaymentMethodName='{3}' ",varshipto,vardestinationport,DateTimeExtensions.GetSQLDateString(Convert.ToDateTime(varetd)),varpriceterm)).ToList();
-            RadInvoice.DataSource = result1;
-            RadInvoice.DataBind();
-
-        }
 
 
 
@@ -397,7 +372,7 @@ namespace Indico
                 lblQty.Text = totalqty.ToString();
             }
             */
-        
+
         }
 
         protected void RadInvoice_SortCommand(object sender, Telerik.Web.UI.GridSortCommandEventArgs e)
@@ -460,73 +435,45 @@ namespace Indico
             }
         }
 
-        protected void RadComboWeek_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+
+
+        protected void OnWeekDataBound(object sender, RadComboBoxItemEventArgs e)
         {
-            RadComboShipmentKey.Text = "";
-            int weekid = Convert.ToInt32(RadComboWeek.SelectedValue);
-
-            var connection = GetIndicoConnnection();
-
-            var result1 = connection.Query<WeekNoWeekendDateModel>(string.Format("SELECT ID,WeekNo,WeekendDate,'make' FROM [dbo].[WeeklyProductionCapacity] WHERE ID={0}",weekid)).ToList();
-
-            foreach(var result2 in result1)
-            {
-                exdate = result2.WeekendDate;
-            }
-
-            //txtShipmentDate.Text = exdate.ToString("dd MM yyyy");
-            startdate = exdate.AddDays(-6);
-
-            var result3 = connection.Query<ShipmentkeyModel>(string.Format("EXEC [dbo].[spc_GetShipmentKeys]{0}",weekid)).ToList();
-
-            RadComboShipmentKey.DataSource = result3;
-            RadComboShipmentKey.DataBind();
-
-        }
-
-        protected void RadComboWeek_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
-        {
-            
-            RadComboBoxItem item = e.Item;
-
+            var item = e.Item;
             if (item.Index > -1 && item.DataItem is WeekNoWeekendDateModel)
             {
-                WeekNoWeekendDateModel objWeeklyProductionCapacity = (WeekNoWeekendDateModel)item.DataItem;
+                var @object = (WeekNoWeekendDateModel)item.DataItem;
 
-                Literal litWeekNo = (Literal)item.FindControl("litWeekNo");
-                litWeekNo.Text = objWeeklyProductionCapacity.WeekNo.ToString();
+                var weekNoLiteral = GetControl<Literal>(item, "litWeekNo");
+                weekNoLiteral.Text = @object.WeekNo.ToString();
 
-                Literal litETD = (Literal)item.FindControl("litETD");
-                litETD.Text = objWeeklyProductionCapacity.WeekendDate.ToString("dd MMMM yyyy");
-
-                
+                var litEtd = GetControl<Literal>(item, "litETD");
+                litEtd.Text = @object.WeekendDate.ToString("dd MMMM yyyy");
             }
-            
         }
 
         protected void RadComboShipmentKey_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
         {
-            
-            RadComboBoxItem item = e.Item;
+            var item = e.Item;
 
             if (item.Index > -1 && item.DataItem is ShipmentkeyModel)
             {
-                ShipmentkeyModel objWeeklySummaryView = (ShipmentkeyModel)item.DataItem;
+                var shipmentKey = (ShipmentkeyModel)item.DataItem;
 
-                Literal litShipTo = (Literal)item.FindControl("litShipTo");
-                litShipTo.Text = objWeeklySummaryView.ShipTo;
+                var litShipTo = GetControl<Literal>(item, "litShipTo");
+                litShipTo.Text = shipmentKey.ShipTo;
 
-                Literal litWeek = (Literal)item.FindControl("litDestinationPort");
-                litWeek.Text = objWeeklySummaryView.DestinationPort;
+                var litWeek = GetControl<Literal>(item, "litDestinationPort");
+                litWeek.Text = shipmentKey.DestinationPort;
 
-                Literal litETD = (Literal)item.FindControl("litETD");
-                litETD.Text = objWeeklySummaryView.ShipmentDate.ToString("dd MMMM yyyy");
+                var litetd = GetControl<Literal>(item, "litETD");
+                litetd.Text = shipmentKey.ShipmentDate.ToString("dd MMMM yyyy");
 
-                Literal litPriceTerm = (Literal)item.FindControl("litPriceTerm");
-                litPriceTerm.Text = objWeeklySummaryView.PriceTerm;
+                var litPriceTerm = GetControl<Literal>(item, "litPriceTerm");
+                litPriceTerm.Text = shipmentKey.PriceTerm;
 
-
-
+                var quantityLiteral = GetControl<Literal>(item, "litQty");
+                quantityLiteral.Text = shipmentKey.Qty.ToString();
             }
 
         }
@@ -549,7 +496,7 @@ namespace Indico
                 objShipmentMode.GetObject();
 
                 this.txtShipTo.Text = objDistributorClientAddress.CompanyName;
-                this.ddlMode.Text = objShipmentMode.Name;
+                this.ShipmentModeDropDownList.Text = objShipmentMode.Name;
 
                 string state = (objDistributorClientAddress.State != null) ? objDistributorClientAddress.Suburb : string.Empty;
 
@@ -567,7 +514,7 @@ namespace Indico
             //NNM
             int id = int.Parse(this.hdnSelectedID.Value);
             int indexid = int.Parse(this.hdnIndexID.Value);
-           
+
 
             try
             {
@@ -687,13 +634,14 @@ namespace Indico
 
         }
 
-        protected void cvBillTo_ServerValidate(object source, ServerValidateEventArgs e)
-        {
-            if (this.chkIsBillTo.Checked)
-            {
-                e.IsValid = (int.Parse(this.ddlBillTo.SelectedValue) > 0) ? true : false;
-            }
-        }
+        //TODO Remove
+        //protected void cvBillTo_ServerValidate(object source, ServerValidateEventArgs e)
+        //{
+        //    if (this.chkIsBillTo.Checked)
+        //    {
+        //        e.IsValid = (int.Parse(this.BillToDropDownList.SelectedValue) > 0) ? true : false;
+        //    }
+        //}
 
         protected void btnFactoryDetail_Click(object sender, EventArgs e)
         {
@@ -797,16 +745,16 @@ namespace Indico
 
 
             FactoryInvoice objFactoryInvoice = new FactoryInvoice();
-            objFactoryInvoice.Week = int.Parse(this.RadComboWeek.SelectedValue);
+            objFactoryInvoice.Week = int.Parse(this.WeekComboBox.SelectedValue);
             //objFactoryInvoice.ShipmentDate = Convert.ToDateTime(this.ddlShipmentDates.SelectedItem.Text);
             objFactoryInvoice.ShipmentKey = (this.DistributorClientAddress > 0) ? this.DistributorClientAddress : (this.RadComboShipmentKey.Items.Count > 0) ? int.Parse(this.RadComboShipmentKey.SelectedValue) : 0;
             objFactoryInvoice.InvoiceNo = this.txtInvoiceNo.Text;
             objFactoryInvoice.InvoiceDate = (!string.IsNullOrEmpty(this.txtInvoiceDate.Text)) ? Convert.ToDateTime(this.txtInvoiceDate.Text) : DateTime.Now;
             objFactoryInvoice.AWBNoo = this.txtAwbNo.Text;
-            objFactoryInvoice.IsBillTo = this.chkIsBillTo.Checked;
-            objFactoryInvoice.BillTo = int.Parse(this.ddlBillTo.SelectedValue);
-            objFactoryInvoice.Bank = int.Parse(this.ddlBank.SelectedValue);
-            objFactoryInvoice.Status = int.Parse(this.ddlStatus.SelectedValue);
+            //objFactoryInvoice.IsBillTo = this.chkIsBillTo.Checked;
+            //objFactoryInvoice.BillTo = int.Parse(this.BillToDropDownList.SelectedValue);
+            objFactoryInvoice.Bank = int.Parse(this.BankDropDownList.SelectedValue);
+            objFactoryInvoice.Status = int.Parse(this.StatusDropDownList.SelectedValue);
             objFactoryInvoice.InvoiceOrder = invoiceorder;
             objFactoryInvoice.Invoice = (this.QueryID > 0) ? this.QueryID : this.CreatedInvoiceId;
             objFactoryInvoice.ShipmentMode = this.ShipmentModeID;
@@ -830,292 +778,302 @@ namespace Indico
 
         }
 
-        protected void btnChangeCost_ServerClick(object sender, EventArgs e)
-        {
-            decimal cost;
-            if (!string.IsNullOrEmpty(this.txtFactoryCost.Text) && decimal.TryParse(this.txtFactoryCost.Text, out cost))
-            {
-                List<int> lstOrderDetails = new List<int>();
+        //protected void btnChangeCost_ServerClick(object sender, EventArgs e)
+        //{
+        //    decimal cost;
+        //    if (!string.IsNullOrEmpty(this.txtFactoryCost.Text) && decimal.TryParse(this.txtFactoryCost.Text, out cost))
+        //    {
+        //        List<int> lstOrderDetails = new List<int>();
 
-                foreach (GridDataItem item in RadInvoice.Items)
-                {
-                    HiddenField hdnOrderDetail = (HiddenField)item.FindControl("hdnOrderDetail");
-                    lstOrderDetails.Add(int.Parse(hdnOrderDetail.Value));
-                }
+        //        foreach (GridDataItem item in ItemGrid.Items)
+        //        {
+        //            HiddenField hdnOrderDetail = (HiddenField)item.FindControl("hdnOrderDetail");
+        //            lstOrderDetails.Add(int.Parse(hdnOrderDetail.Value));
+        //        }
 
-                if (Session["InvoiceOrderDetails"] != null)
-                {
-                    List<ReturnInvoiceOrderDetailViewBO> lst = (List<ReturnInvoiceOrderDetailViewBO>)Session["InvoiceOrderDetails"];
+        //        if (Session["InvoiceOrderDetails"] != null)
+        //        {
+        //            List<ReturnInvoiceOrderDetailViewBO> lst = (List<ReturnInvoiceOrderDetailViewBO>)Session["InvoiceOrderDetails"];
 
-                    List<ReturnInvoiceOrderDetailViewBO> lstChangeFactoryRate = lst.Where(o => lstOrderDetails.Contains((int)o.OrderDetail)).Select(x => { x.FactoryRate = decimal.Parse(this.txtFactoryCost.Text); return x; }).ToList();//.ToList().ForEach(x => x.FactoryRate = decimal.Parse(this.txtFactoryCost.Text));
+        //            List<ReturnInvoiceOrderDetailViewBO> lstChangeFactoryRate = lst.Where(o => lstOrderDetails.Contains((int)o.OrderDetail)).Select(x => { x.FactoryRate = decimal.Parse(this.txtFactoryCost.Text); return x; }).ToList();//.ToList().ForEach(x => x.FactoryRate = decimal.Parse(this.txtFactoryCost.Text));
 
-                    //List<int> lstChangeOrderDetails = lstChangeFactoryRate.Select(o => (int)o.OrderDetail).ToList();
+        //            //List<int> lstChangeOrderDetails = lstChangeFactoryRate.Select(o => (int)o.OrderDetail).ToList();
 
-                    lst = lst.Where(o => !lstChangeFactoryRate.Select(x => (int)x.OrderDetail).ToList().Contains((int)o.OrderDetail)).ToList();
+        //            lst = lst.Where(o => !lstChangeFactoryRate.Select(x => (int)x.OrderDetail).ToList().Contains((int)o.OrderDetail)).ToList();
 
-                    lst.AddRange(lstChangeFactoryRate);
+        //            lst.AddRange(lstChangeFactoryRate);
 
-                    Session["InvoiceOrderDetails"] = lst;
+        //            Session["InvoiceOrderDetails"] = lst;
 
-                }
+        //        }
 
-                this.RadInvoice.DataSource = null;
-                this.RadInvoice.DataBind();
+        //        this.ItemGrid.DataSource = null;
+        //        this.ItemGrid.DataBind();
 
-                this.RebindGrid();
-            }
+        //        this.RebindGrid();
+        //    }
 
-            this.txtFactoryCost.Text = string.Empty;
-        }
+        //    this.txtFactoryCost.Text = string.Empty;
+        //}
 
         #endregion
 
         #region Methods
 
-        /// <summary>
-        /// Populate the controls.
-        /// </summary>
-        private void PopulateControls()
-        {
-            this.litHeaderText.Text = ((this.QueryID > 0) ? "Edit " : "New ") + this.ActivePage.Heading;
-            this.spanShipmentError.Visible = false;
-            this.btnFactoryDetail.Visible = (this.QueryID > 0) ? true : false;
-            this.btnInvoiceSummary.Visible = (this.QueryID > 0) ? true : false;
-            this.dvEmptyNotExistingOrders.Visible = true;
-            this.litMeassage.Text = "Please add the orders to the system";
-            this.dgNotExistingInvoiceOrders.Visible = false;
-            this.dvFactoryRate.Visible = false;
-
-            this.lblShipmentKeyAddress.Text = string.Empty;
-
-            var daysTillMonday = (int)DateTime.Today.DayOfWeek - (int)DayOfWeek.Monday;
-            var monday = DateTime.Today.AddDays(-daysTillMonday);
-
-            this.RadComboWeek.Enabled = (this.QueryID > 0) ? false : true;
-            //this.ddlShipmentDates.Enabled = (this.QueryID > 0) ? false : true;
-
-            // populate Invoice Status
-            this.ddlStatus.Items.Clear();
-            this.ddlStatus.Items.Add(new ListItem("Select a Status", "0"));
-            List<InvoiceStatusBO> lstStatus = (new InvoiceStatusBO()).GetAllObject().OrderBy(o => o.Name).ToList();
-            foreach (InvoiceStatusBO ins in lstStatus)
-            {
-                this.ddlStatus.Items.Add(new ListItem(ins.Name, ins.ID.ToString()));
-            }
-
-            //populate Bank
-            this.ddlBank.Items.Clear();
-            this.ddlBank.Items.Add(new ListItem("Select a Bank", "0"));
-            List<BankBO> lstBanks = (new BankBO()).GetAllObject();
-            foreach (BankBO bank in lstBanks)
-            {
-                this.ddlBank.Items.Add(new ListItem(bank.Name + " - " + bank.AccountNo, bank.ID.ToString()));
-            }
-
-            //populate bill to
-            this.PopulateBillTo();
-
-            // populate Destination Port
-            this.ddlShipToPort.Items.Clear();
-            this.ddlShipToPort.Items.Add(new ListItem("Select Destination Port", "0"));
-            List<DestinationPortBO> lstDestinationPort = (new DestinationPortBO()).GetAllObject();
-            foreach (DestinationPortBO ds in lstDestinationPort)
-            {
-                this.ddlShipToPort.Items.Add(new ListItem(ds.Name, ds.ID.ToString()));
-            }
-
-            // Populate Country
-            this.ddlShipToCountry.Items.Clear();
-            this.ddlShipToCountry.Items.Add(new ListItem("Select Country", "0"));
-            List<CountryBO> lstCountries = (new CountryBO()).GetAllObject().OrderBy(o => o.ShortName).ToList();
-            foreach (CountryBO country in lstCountries)
-            {
-                this.ddlShipToCountry.Items.Add(new ListItem(country.ShortName, country.ID.ToString()));
-            }
-
-            //populate Distributor
-            this.ddlDistributor.Items.Clear();
-            this.ddlDistributor.Items.Add(new ListItem("Select a Distributor", "0"));
-            List<CompanyBO> lstDistributors = (new CompanyBO()).GetAllObject().Where(o => o.IsDistributor == true).OrderBy(o => o.Name).ToList();
-            foreach (CompanyBO distributor in lstDistributors)
-            {
-                this.ddlDistributor.Items.Add(new ListItem(distributor.Name, distributor.ID.ToString()));
-            }
-
-            // populate RadComboWeek
-            this.RadComboWeek.Items.Clear();
-            if (this.QueryID == 0)
-            {
-                List<WeeklyProductionCapacityBO> lstWeeklyCapacities = (new WeeklyProductionCapacityBO()).SearchObjects().Where(o => o.WeekendDate >= DateTime.Now.AddMonths(-1) && o.WeekendDate.Year >= DateTime.Now.Year).ToList();
-                this.RadComboWeek.DataSource = lstWeeklyCapacities;
-                this.RadComboWeek.DataBind();
-            }
-
-            Session["InvoiceOrderDetails"] = null;
-
-            this.populateInvoiceOrders();
-
-            if (this.QueryID > 0)
-            {
-                InvoiceBO objInvoice = new InvoiceBO();
-                objInvoice.ID = this.QueryID;
-                objInvoice.GetObject();
-
-                DateTime date = objInvoice.objWeeklyProductionCapacity.WeekendDate;
-                List<WeeklyProductionCapacityBO> lstWeeklyCapacities = (new WeeklyProductionCapacityBO()).SearchObjects().Where(o => o.WeekendDate >= date.AddMonths(-1) && o.WeekendDate.Year >= date.Year).ToList();
-                this.RadComboWeek.DataSource = lstWeeklyCapacities;
-                this.RadComboWeek.DataBind();
-
-                this.RadComboWeek.Items.FindItemByValue(objInvoice.WeeklyProductionCapacity.ToString()).Selected = true;
-                //this.PopulateShipmentDates(this.GetWeeklyProductionCapacityDetails(objInvoice.WeeklyProductionCapacity).WeekendDate, (int)objInvoice.WeeklyProductionCapacity);
-
-                this.PopulateInvoiceShipmentDates(objInvoice.objWeeklyProductionCapacity.WeekendDate, (int)objInvoice.WeeklyProductionCapacity);
-                //this.ddlShipmentDates.Items.FindByText(objInvoice.ShipmentDate.ToString("dd MMMM yyyy")).Selected = true;
-                this.PopulateShipmentKey(objInvoice.ShipmentDate);
-                this.txtInvoiceDate.Text = objInvoice.InvoiceDate.ToString("dd MMMM yyyy");
-                this.txtAwbNo.Text = objInvoice.AWBNo;
-                //this.txtShipTo.Text = objInvoice.objShipTo.CompanyName;
-                this.ddlMode.Text = objInvoice.objShipmentMode.Name;
-                this.RadComboShipmentKey.Enabled = false;
-                this.txtInvoiceNo.Text = objInvoice.InvoiceNo;
-                this.ddlStatus.Items.FindByValue(objInvoice.Status.ToString()).Selected = true;
-                this.chkIsBillTo.Checked = (bool)objInvoice.IsBillTo;
-                this.ddlBillTo.Items.FindByValue(objInvoice.BillTo.ToString()).Selected = true;
-                this.ddlBank.Items.FindByValue(objInvoice.Bank.ToString()).Selected = true;
 
 
-                ViewState["DistributorClientAddress"] = objInvoice.ShipTo;
-                ViewState["ShipmentID"] = objInvoice.ShipmentMode;
+        
+        ///// <summary>
+        ///// Populate the controls.
+        ///// </summary>
+        //private void PopulateControls()
+        //{
+        //    using (var connection = GetIndicoConnnection())
+        //    {
+        //        this.litHeaderText.Text = ((this.QueryID > 0) ? "Edit " : "New ") + this.ActivePage.Heading;
+        //        this.spanShipmentError.Visible = false;
+        //        this.btnFactoryDetail.Visible = (this.QueryID > 0) ? true : false;
+        //        this.btnInvoiceSummary.Visible = (this.QueryID > 0) ? true : false;
+        //        this.dvEmptyNotExistingOrders.Visible = true;
+        //        this.litMeassage.Text = "Please add the orders to the system";
+        //        this.dgNotExistingInvoiceOrders.Visible = false;
+        //        this.dvFactoryRate.Visible = false;
 
-                DistributorClientAddressBO objDistributorClientAddress = new DistributorClientAddressBO();
-                objDistributorClientAddress.ID = objInvoice.ShipTo;
-                objDistributorClientAddress.GetObject();
+        //        this.lblShipmentKeyAddress.Text = string.Empty;
 
-                string state = (objDistributorClientAddress.State != null) ? objDistributorClientAddress.Suburb : string.Empty;
+        //        var daysTillMonday = (int)DateTime.Today.DayOfWeek - (int)DayOfWeek.Monday;
+        //        var monday = DateTime.Today.AddDays(-daysTillMonday);
 
-                this.lblShipmentKeyAddress.Text = objDistributorClientAddress.CompanyName + " , " + objDistributorClientAddress.Address + " , " + objDistributorClientAddress.Suburb + " , " + state + " , " + objDistributorClientAddress.objCountry.ShortName + " , " + objDistributorClientAddress.PostCode;
+        //        this.WeekComboBox.Enabled = (this.QueryID > 0) ? false : true;
+        //        //this.ddlShipmentDates.Enabled = (this.QueryID > 0) ? false : true;
+
+        //        // populate Invoice Status
+        //        this.StatusDropDownList.Items.Clear();
+        //        this.StatusDropDownList.Items.Add(new ListItem("Select a Status", "0"));
+        //        List<InvoiceStatusBO> lstStatus = (new InvoiceStatusBO()).GetAllObject().OrderBy(o => o.Name).ToList();
+        //        foreach (InvoiceStatusBO ins in lstStatus)
+        //        {
+        //            this.StatusDropDownList.Items.Add(new ListItem(ins.Name, ins.ID.ToString()));
+        //        }
+
+        //        //populate Bank
+        //        this.BankDropDownList.Items.Clear();
+        //        this.BankDropDownList.Items.Add(new ListItem("Select a Bank", "0"));
+        //        List<BankBO> lstBanks = (new BankBO()).GetAllObject();
+        //        foreach (BankBO bank in lstBanks)
+        //        {
+        //            this.BankDropDownList.Items.Add(new ListItem(bank.Name + " - " + bank.AccountNo, bank.ID.ToString()));
+        //        }
+
+        //        //populate bill to
+        //        this.PopulateBillTo();
+
+        //        // populate Destination Port
+        //        this.ddlShipToPort.Items.Clear();
+        //        this.ddlShipToPort.Items.Add(new ListItem("Select Destination Port", "0"));
+        //        List<DestinationPortBO> lstDestinationPort = (new DestinationPortBO()).GetAllObject();
+        //        foreach (DestinationPortBO ds in lstDestinationPort)
+        //        {
+        //            this.ddlShipToPort.Items.Add(new ListItem(ds.Name, ds.ID.ToString()));
+        //        }
+
+        //        // Populate Country
+        //        this.ddlShipToCountry.Items.Clear();
+        //        this.ddlShipToCountry.Items.Add(new ListItem("Select Country", "0"));
+        //        List<CountryBO> lstCountries = (new CountryBO()).GetAllObject().OrderBy(o => o.ShortName).ToList();
+        //        foreach (CountryBO country in lstCountries)
+        //        {
+        //            this.ddlShipToCountry.Items.Add(new ListItem(country.ShortName, country.ID.ToString()));
+        //        }
+
+        //        //populate Distributor
+        //        this.ddlDistributor.Items.Clear();
+        //        this.ddlDistributor.Items.Add(new ListItem("Select a Distributor", "0"));
+        //        List<CompanyBO> lstDistributors = (new CompanyBO()).GetAllObject().Where(o => o.IsDistributor == true).OrderBy(o => o.Name).ToList();
+        //        foreach (CompanyBO distributor in lstDistributors)
+        //        {
+        //            this.ddlDistributor.Items.Add(new ListItem(distributor.Name, distributor.ID.ToString()));
+        //        }
 
 
-                this.populateInvoiceOrders(this.QueryID, objInvoice.ShipTo, false, objInvoice.ShipmentMode, false);
-            }
-            else
-            {
-                // set default invoice status
-                this.ddlStatus.Items.FindByText("PreShipped").Selected = true;
-            }
+        //        // populate WeekComboBox
+        //        WeekComboBox.Items.Clear();
+        //        if (QueryID == 0)
+        //        {
 
-            // if Redirect From WeeklySummary Page
-            if (this.WeeklyCapacityDate != new DateTime(1100, 1, 1) && this.WeeklyCapacityID > 0)
-            {
-                this.RadComboWeek.Items.FindItemByValue(this.WeeklyCapacityID.ToString()).Selected = true;
-                this.PopulateShipmentDates(this.WeeklyCapacityDate, this.WeeklyCapacityID);
-            }
+        //            //TODO Remove
+        //            //List<WeeklyProductionCapacityBO> lstWeeklyCapacities = (new WeeklyProductionCapacityBO()).SearchObjects().Where(o => o.WeekendDate >= DateTime.Now.AddMonths(-1) && o.WeekendDate.Year >= DateTime.Now.Year).ToList();
+        //            //this.WeekComboBox.DataSource = lstWeeklyCapacities;
+        //            //this.WeekComboBox.DataBind();
+        //        }
 
-            if (this.WeeklyCapacityDate != new DateTime(1100, 1, 1) && this.ShipmentDate != new DateTime(1100, 1, 1) && this.ShipmentKey > 0 && !string.IsNullOrEmpty(this.InvoiceNo) && this.ShipmentMode > 0)
-            {
-                int wid = (new WeeklyProductionCapacityBO()).GetAllObject().Where(o => o.WeekendDate == this.WeeklyCapacityDate).Select(o => o.ID).SingleOrDefault();
+        //        Session["InvoiceOrderDetails"] = null;
 
-                this.RadComboWeek.Items.FindItemByValue(wid.ToString()).Selected = true;
+        //        this.populateInvoiceOrders();
 
-                this.PopulateShipmentDates(this.WeeklyCapacityDate);
+        //        if (this.QueryID > 0)
+        //        {
+        //            InvoiceBO objInvoice = new InvoiceBO();
+        //            objInvoice.ID = this.QueryID;
+        //            objInvoice.GetObject();
 
-                //this.ddlShipmentDates.Items.FindByText(this.ShipmentDate.ToString("dd MMMM yyyy")).Selected = true;
+        //            DateTime date = objInvoice.objWeeklyProductionCapacity.WeekendDate;
+        //            List<WeeklyProductionCapacityBO> lstWeeklyCapacities = (new WeeklyProductionCapacityBO()).SearchObjects().Where(o => o.WeekendDate >= date.AddMonths(-1) && o.WeekendDate.Year >= date.Year).ToList();
+        //            this.WeekComboBox.DataSource = lstWeeklyCapacities;
+        //            this.WeekComboBox.DataBind();
 
-                this.PopulateShipmentKey(this.ShipmentDate);
+        //            this.WeekComboBox.Items.FindItemByValue(objInvoice.WeeklyProductionCapacity.ToString()).Selected = true;
+        //            //this.PopulateShipmentDates(this.GetWeeklyProductionCapacityDetails(objInvoice.WeeklyProductionCapacity).WeekendDate, (int)objInvoice.WeeklyProductionCapacity);
 
-                this.RadComboShipmentKey.Items.FindItemByValue(this.ShipmentKey.ToString() + "," + this.ShipmentMode.ToString()).Selected = true;
-
-                this.txtInvoiceNo.Text = this.InvoiceNo;
-
-                DistributorClientAddressBO objDistributorClientAddress = new DistributorClientAddressBO();
-                objDistributorClientAddress.ID = this.ShipmentKey;
-                objDistributorClientAddress.GetObject();
-
-                ShipmentModeBO objShipmentMode = new ShipmentModeBO();
-                objShipmentMode.ID = this.ShipmentMode;
-                objShipmentMode.GetObject();
-
-                //this.txtShipTo.Text = objDistributorClientAddress.CompanyName;
-                this.ddlMode.Text = objShipmentMode.Name;
-                ViewState["DistributorClientAddress"] = this.ShipmentKey;
-                ViewState["ShipmentID"] = this.ShipmentMode;
-
-                string state = (objDistributorClientAddress.State != null) ? objDistributorClientAddress.Suburb : string.Empty;
-
-                this.lblShipmentKeyAddress.Text = objDistributorClientAddress.CompanyName + " , " + objDistributorClientAddress.Address + " , " + objDistributorClientAddress.Suburb + " " + state + " , " + objDistributorClientAddress.objCountry.ShortName + " , " + objDistributorClientAddress.PostCode;
+        //            this.PopulateInvoiceShipmentDates(objInvoice.objWeeklyProductionCapacity.WeekendDate, (int)objInvoice.WeeklyProductionCapacity);
+        //            //this.ddlShipmentDates.Items.FindByText(objInvoice.ShipmentDate.ToString("dd MMMM yyyy")).Selected = true;
+        //            this.PopulateShipmentKey(objInvoice.ShipmentDate);
+        //            this.txtInvoiceDate.Text = objInvoice.InvoiceDate.ToString("dd MMMM yyyy");
+        //            this.txtAwbNo.Text = objInvoice.AWBNo;
+        //            //this.txtShipTo.Text = objInvoice.objShipTo.CompanyName;
+        //            this.ShipmentModeDropDownList.Text = objInvoice.objShipmentMode.Name;
+        //            this.RadComboShipmentKey.Enabled = false;
+        //            this.txtInvoiceNo.Text = objInvoice.InvoiceNo;
+        //            this.StatusDropDownList.Items.FindByValue(objInvoice.Status.ToString()).Selected = true;
+        //            this.chkIsBillTo.Checked = (bool)objInvoice.IsBillTo;
+        //            this.BillToDropDownList.Items.FindByValue(objInvoice.BillTo.ToString()).Selected = true;
+        //            this.BankDropDownList.Items.FindByValue(objInvoice.Bank.ToString()).Selected = true;
 
 
-                this.populateInvoiceOrders(0, this.ShipmentKey, true, this.ShipmentMode, false, wid, true);
-            }
+        //            ViewState["DistributorClientAddress"] = objInvoice.ShipTo;
+        //            ViewState["ShipmentID"] = objInvoice.ShipmentMode;
 
-            if (this.CostSheet > 0)
-            {
-                FactoryInvoice objFactoryInvoice = (FactoryInvoice)Session["FactoryInvoice"];
+        //            DistributorClientAddressBO objDistributorClientAddress = new DistributorClientAddressBO();
+        //            objDistributorClientAddress.ID = objInvoice.ShipTo;
+        //            objDistributorClientAddress.GetObject();
 
-                if (objFactoryInvoice.InvoiceOrder > 0)
-                {
-                    CostSheetBO objCostSheet = new CostSheetBO();
-                    objCostSheet.ID = this.CostSheet;
-                    objCostSheet.GetObject();
+        //            string state = (objDistributorClientAddress.State != null) ? objDistributorClientAddress.Suburb : string.Empty;
 
-                    using (TransactionScope ts = new TransactionScope())
-                    {
-                        InvoiceOrderBO objInvoiceOrder = new InvoiceOrderBO(this.ObjContext);
-                        objInvoiceOrder.ID = objFactoryInvoice.InvoiceOrder;
-                        objInvoiceOrder.GetObject();
+        //            this.lblShipmentKeyAddress.Text = objDistributorClientAddress.CompanyName + " , " + objDistributorClientAddress.Address + " , " + objDistributorClientAddress.Suburb + " , " + state + " , " + objDistributorClientAddress.objCountry.ShortName + " , " + objDistributorClientAddress.PostCode;
 
-                        objInvoiceOrder.FactoryPrice = (objCostSheet.QuotedFOBCost != null && objCostSheet.QuotedFOBCost != 0) ? objCostSheet.QuotedFOBCost : objCostSheet.JKFOBCost;
 
-                        this.ObjContext.SaveChanges();
-                        ts.Complete();
-                    }
-                }
+        //            this.populateInvoiceOrders(this.QueryID, objInvoice.ShipTo, false, objInvoice.ShipmentMode, false);
+        //        }
+        //        else
+        //        {
+        //            // set default invoice status
+        //            this.StatusDropDownList.Items.FindByText("PreShipped").Selected = true;
+        //        }
 
-                this.RadComboWeek.Items.FindItemByValue(objFactoryInvoice.Week.ToString()).Selected = true;
+        //        // if Redirect From WeeklySummary Page
+        //        if (this.WeeklyCapacityDate != new DateTime(1100, 1, 1) && this.WeeklyCapacityID > 0)
+        //        {
+        //            this.WeekComboBox.Items.FindItemByValue(this.WeeklyCapacityID.ToString()).Selected = true;
+        //            this.PopulateShipmentDates(this.WeeklyCapacityDate, this.WeeklyCapacityID);
+        //        }
 
-                this.PopulateShipmentDates(this.GetWeeklyProductionCapacityDetails(objFactoryInvoice.Week).WeekendDate);
+        //        if (this.WeeklyCapacityDate != new DateTime(1100, 1, 1) && this.ShipmentDate != new DateTime(1100, 1, 1) && this.ShipmentKey > 0 && !string.IsNullOrEmpty(this.InvoiceNo) && this.ShipmentMode > 0)
+        //        {
+        //            int wid = (new WeeklyProductionCapacityBO()).GetAllObject().Where(o => o.WeekendDate == this.WeeklyCapacityDate).Select(o => o.ID).SingleOrDefault();
 
-                //this.ddlShipmentDates.Items.FindByText(objFactoryInvoice.ShipmentDate.ToString("dd MMMM yyyy")).Selected = true;
+        //            this.WeekComboBox.Items.FindItemByValue(wid.ToString()).Selected = true;
 
-                this.PopulateShipmentKey(objFactoryInvoice.ShipmentDate);
+        //            this.PopulateShipmentDates(this.WeeklyCapacityDate);
 
-                this.CreatedInvoiceId = objFactoryInvoice.Invoice;
+        //            //this.ddlShipmentDates.Items.FindByText(this.ShipmentDate.ToString("dd MMMM yyyy")).Selected = true;
 
-                if (this.CreatedInvoiceId == 0 && this.RadComboShipmentKey.Items.Count > 0)
-                {
-                    this.RadComboShipmentKey.Items.FindItemByValue(objFactoryInvoice.ShipmentKey.ToString() + "," + objFactoryInvoice.ShipmentMode.ToString()).Selected = true;
-                }
-                //this.RadComboShipmentKey.Items.FindItemByValue(objFactoryInvoice.ShipmentKey.ToString() + "," + objFactoryInvoice.ShipmentMode.ToString()).Selected = true;
+        //            this.PopulateShipmentKey(this.ShipmentDate);
 
-                this.txtInvoiceNo.Text = objFactoryInvoice.InvoiceNo;
-                this.txtInvoiceDate.Text = objFactoryInvoice.InvoiceDate.ToString("dd MMMM yyyy");
-                this.txtAwbNo.Text = objFactoryInvoice.AWBNoo;
-                this.chkIsBillTo.Checked = objFactoryInvoice.IsBillTo;
-                this.ddlBillTo.Items.FindByValue(this.ddlBillTo.SelectedValue).Selected = false;
-                this.ddlBillTo.Items.FindByValue(objFactoryInvoice.BillTo.ToString()).Selected = true;
-                this.ddlBank.Items.FindByValue(this.ddlBank.SelectedValue).Selected = false;
-                this.ddlBank.Items.FindByValue(objFactoryInvoice.Bank.ToString()).Selected = true;
-                this.ddlStatus.Items.FindByValue(this.ddlStatus.SelectedValue).Selected = false;
-                this.ddlStatus.Items.FindByValue(objFactoryInvoice.Status.ToString()).Selected = true;
+        //            this.RadComboShipmentKey.Items.FindItemByValue(this.ShipmentKey.ToString() + "," + this.ShipmentMode.ToString()).Selected = true;
 
-                DistributorClientAddressBO objDistributorClientAddress = new DistributorClientAddressBO();
-                objDistributorClientAddress.ID = objFactoryInvoice.ShipmentKey;
-                objDistributorClientAddress.GetObject();
+        //            this.txtInvoiceNo.Text = this.InvoiceNo;
 
-                ShipmentModeBO objShipmentMode = new ShipmentModeBO();
-                objShipmentMode.ID = objFactoryInvoice.ShipmentMode;
-                objShipmentMode.GetObject();
+        //            DistributorClientAddressBO objDistributorClientAddress = new DistributorClientAddressBO();
+        //            objDistributorClientAddress.ID = this.ShipmentKey;
+        //            objDistributorClientAddress.GetObject();
 
-                //this.txtShipTo.Text = objDistributorClientAddress.CompanyName;
-                this.ddlMode.Text = objShipmentMode.Name;
-                ViewState["DistributorClientAddress"] = objFactoryInvoice.ShipmentKey;
-                ViewState["ShipmentID"] = objFactoryInvoice.ShipmentMode;
+        //            ShipmentModeBO objShipmentMode = new ShipmentModeBO();
+        //            objShipmentMode.ID = this.ShipmentMode;
+        //            objShipmentMode.GetObject();
 
-                string state = (objDistributorClientAddress.State != null) ? objDistributorClientAddress.Suburb : string.Empty;
-                this.lblShipmentKeyAddress.Text = objDistributorClientAddress.CompanyName + " , " + objDistributorClientAddress.Address + " , " + objDistributorClientAddress.Suburb + " " + state + " , " + objDistributorClientAddress.objCountry.ShortName + " , " + objDistributorClientAddress.PostCode;
-                this.populateInvoiceOrders(objFactoryInvoice.Invoice, objFactoryInvoice.ShipmentKey, true, objFactoryInvoice.ShipmentMode, false, (int)objFactoryInvoice.Week, true);
-            }
-        }
+        //            //this.txtShipTo.Text = objDistributorClientAddress.CompanyName;
+        //            this.ShipmentModeDropDownList.Text = objShipmentMode.Name;
+        //            ViewState["DistributorClientAddress"] = this.ShipmentKey;
+        //            ViewState["ShipmentID"] = this.ShipmentMode;
+
+        //            string state = (objDistributorClientAddress.State != null) ? objDistributorClientAddress.Suburb : string.Empty;
+
+        //            this.lblShipmentKeyAddress.Text = objDistributorClientAddress.CompanyName + " , " + objDistributorClientAddress.Address + " , " + objDistributorClientAddress.Suburb + " " + state + " , " + objDistributorClientAddress.objCountry.ShortName + " , " + objDistributorClientAddress.PostCode;
+
+
+        //            this.populateInvoiceOrders(0, this.ShipmentKey, true, this.ShipmentMode, false, wid, true);
+        //        }
+
+        //        if (this.CostSheet > 0)
+        //        {
+        //            FactoryInvoice objFactoryInvoice = (FactoryInvoice)Session["FactoryInvoice"];
+
+        //            if (objFactoryInvoice.InvoiceOrder > 0)
+        //            {
+        //                CostSheetBO objCostSheet = new CostSheetBO();
+        //                objCostSheet.ID = this.CostSheet;
+        //                objCostSheet.GetObject();
+
+        //                using (TransactionScope ts = new TransactionScope())
+        //                {
+        //                    InvoiceOrderBO objInvoiceOrder = new InvoiceOrderBO(this.ObjContext);
+        //                    objInvoiceOrder.ID = objFactoryInvoice.InvoiceOrder;
+        //                    objInvoiceOrder.GetObject();
+
+        //                    objInvoiceOrder.FactoryPrice = (objCostSheet.QuotedFOBCost != null && objCostSheet.QuotedFOBCost != 0) ? objCostSheet.QuotedFOBCost : objCostSheet.JKFOBCost;
+
+        //                    this.ObjContext.SaveChanges();
+        //                    ts.Complete();
+        //                }
+        //            }
+
+        //            this.WeekComboBox.Items.FindItemByValue(objFactoryInvoice.Week.ToString()).Selected = true;
+
+        //            this.PopulateShipmentDates(this.GetWeeklyProductionCapacityDetails(objFactoryInvoice.Week).WeekendDate);
+
+        //            //this.ddlShipmentDates.Items.FindByText(objFactoryInvoice.ShipmentDate.ToString("dd MMMM yyyy")).Selected = true;
+
+        //            this.PopulateShipmentKey(objFactoryInvoice.ShipmentDate);
+
+        //            this.CreatedInvoiceId = objFactoryInvoice.Invoice;
+
+        //            if (this.CreatedInvoiceId == 0 && this.RadComboShipmentKey.Items.Count > 0)
+        //            {
+        //                this.RadComboShipmentKey.Items.FindItemByValue(objFactoryInvoice.ShipmentKey.ToString() + "," + objFactoryInvoice.ShipmentMode.ToString()).Selected = true;
+        //            }
+        //            //this.RadComboShipmentKey.Items.FindItemByValue(objFactoryInvoice.ShipmentKey.ToString() + "," + objFactoryInvoice.ShipmentMode.ToString()).Selected = true;
+
+        //            this.txtInvoiceNo.Text = objFactoryInvoice.InvoiceNo;
+        //            this.txtInvoiceDate.Text = objFactoryInvoice.InvoiceDate.ToString("dd MMMM yyyy");
+        //            this.txtAwbNo.Text = objFactoryInvoice.AWBNoo;
+        //            this.chkIsBillTo.Checked = objFactoryInvoice.IsBillTo;
+        //            this.BillToDropDownList.Items.FindByValue(this.BillToDropDownList.SelectedValue).Selected = false;
+        //            this.BillToDropDownList.Items.FindByValue(objFactoryInvoice.BillTo.ToString()).Selected = true;
+        //            this.BankDropDownList.Items.FindByValue(this.BankDropDownList.SelectedValue).Selected = false;
+        //            this.BankDropDownList.Items.FindByValue(objFactoryInvoice.Bank.ToString()).Selected = true;
+        //            this.StatusDropDownList.Items.FindByValue(this.StatusDropDownList.SelectedValue).Selected = false;
+        //            this.StatusDropDownList.Items.FindByValue(objFactoryInvoice.Status.ToString()).Selected = true;
+
+        //            DistributorClientAddressBO objDistributorClientAddress = new DistributorClientAddressBO();
+        //            objDistributorClientAddress.ID = objFactoryInvoice.ShipmentKey;
+        //            objDistributorClientAddress.GetObject();
+
+        //            ShipmentModeBO objShipmentMode = new ShipmentModeBO();
+        //            objShipmentMode.ID = objFactoryInvoice.ShipmentMode;
+        //            objShipmentMode.GetObject();
+
+        //            //this.txtShipTo.Text = objDistributorClientAddress.CompanyName;
+        //            this.ShipmentModeDropDownList.Text = objShipmentMode.Name;
+        //            ViewState["DistributorClientAddress"] = objFactoryInvoice.ShipmentKey;
+        //            ViewState["ShipmentID"] = objFactoryInvoice.ShipmentMode;
+
+        //            string state = (objDistributorClientAddress.State != null) ? objDistributorClientAddress.Suburb : string.Empty;
+        //            this.lblShipmentKeyAddress.Text = objDistributorClientAddress.CompanyName + " , " + objDistributorClientAddress.Address + " , " + objDistributorClientAddress.Suburb + " " + state + " , " + objDistributorClientAddress.objCountry.ShortName + " , " + objDistributorClientAddress.PostCode;
+        //            this.populateInvoiceOrders(objFactoryInvoice.Invoice, objFactoryInvoice.ShipmentKey, true, objFactoryInvoice.ShipmentMode, false, (int)objFactoryInvoice.Week, true);
+        //        }
+        //    }
+
+        //}
 
         private void ProcessForm()
         {
@@ -1151,7 +1109,7 @@ namespace Indico
                             }
                         }
 
-                        foreach (GridDataItem item in RadInvoice.Items)
+                        foreach (GridDataItem item in ItemGrid.Items)
                         {
                             TextBox txtRate = (TextBox)item.FindControl("txtRate");
                             int orderdetail = int.Parse(((System.Web.UI.WebControls.WebControl)(txtRate)).Attributes["orderdetail"].ToString());
@@ -1205,13 +1163,13 @@ namespace Indico
                     objInvoice.InvoiceDate = Convert.ToDateTime(this.txtInvoiceDate.Text);
                     objInvoice.ShipTo = this.DistributorClientAddress;
                     objInvoice.AWBNo = this.txtAwbNo.Text;
-                    objInvoice.WeeklyProductionCapacity = (this.chkChangeOrderDate.Checked == true) ? objWeeklyProductionCapacity.ID : int.Parse(this.RadComboWeek.SelectedValue);
+                    objInvoice.WeeklyProductionCapacity = (this.chkChangeOrderDate.Checked == true) ? objWeeklyProductionCapacity.ID : int.Parse(this.WeekComboBox.SelectedValue);
                     objInvoice.ShipmentMode = this.ShipmentModeID;
                     //objInvoice.ShipmentDate = (this.chkChangeOrderDate.Checked == true) ? Convert.ToDateTime(this.txtInvoiceDate.Text) : Convert.ToDateTime(this.ddlShipmentDates.SelectedItem.Text);
-                    objInvoice.Status = int.Parse(this.ddlStatus.SelectedValue);
-                    objInvoice.IsBillTo = this.chkIsBillTo.Checked;
-                    objInvoice.BillTo = (this.chkIsBillTo.Checked) ? int.Parse(this.ddlBillTo.SelectedValue) : 22;
-                    objInvoice.Bank = int.Parse(this.ddlBank.SelectedValue);
+                    objInvoice.Status = int.Parse(this.StatusDropDownList.SelectedValue);
+                    //objInvoice.IsBillTo = this.chkIsBillTo.Checked;
+                    //objInvoice.BillTo = (this.chkIsBillTo.Checked) ? int.Parse(this.BillToDropDownList.SelectedValue) : 22;
+                    objInvoice.Bank = int.Parse(this.BankDropDownList.SelectedValue);
                     //objInvoice.IndimanInvoiceNo = (this.LoggedUserRoleName == UserRole.IndimanAdministrator) ? this.txtIndimanInvoiceNo.Text : string.Empty;
 
                     //if (this.LoggedUserRoleName == UserRole.IndimanAdministrator)
@@ -1230,7 +1188,7 @@ namespace Indico
 
                     #region InvoiceOrderDetail
 
-                    foreach (GridDataItem item in RadInvoice.Items)
+                    foreach (GridDataItem item in ItemGrid.Items)
                     {
                         TextBox txtRate = (TextBox)item.FindControl("txtRate");
                         int id = int.Parse(((System.Web.UI.WebControls.WebControl)(txtRate)).Attributes["invoiceorder"].ToString());
@@ -1261,18 +1219,18 @@ namespace Indico
                     int osatus = 0;
 
 
-                    if (this.ddlStatus.SelectedValue == "5")
+                    if (this.StatusDropDownList.SelectedValue == "5")
                     {
                         odstatus = 16;
                         osatus = 21;
                     }
-                    else if (this.ddlStatus.SelectedValue == "4")
+                    else if (this.StatusDropDownList.SelectedValue == "4")
                     {
                         odstatus = 17;
                         osatus = 19;
                     }
 
-                    foreach (GridDataItem item in RadInvoice.Items)
+                    foreach (GridDataItem item in ItemGrid.Items)
                     {
                         TextBox txtRate = (TextBox)item.FindControl("txtRate");
                         int orderdetail = int.Parse(((System.Web.UI.WebControls.WebControl)(txtRate)).Attributes["orderdetail"].ToString());
@@ -1328,7 +1286,7 @@ namespace Indico
 
         public void loadWeekNo()
         {
-            int difdate=0;
+            int difdate = 0;
             DateTime todaydate = DateTime.Today.Date;
             DateTime expdate = new DateTime();
             string todayday = todaydate.DayOfWeek.ToString();
@@ -1337,36 +1295,36 @@ namespace Indico
                 difdate = 0;
             }
 
-            if(todayday=="Wednesday")
+            if (todayday == "Wednesday")
             {
                 difdate = 6;
             }
 
-            if(todayday=="Thursday")
+            if (todayday == "Thursday")
             {
 
                 difdate = 5;
             }
 
-            if(todayday=="Friday")
+            if (todayday == "Friday")
             {
 
                 difdate = 4;
             }
 
-            if(todayday=="Saturday")
+            if (todayday == "Saturday")
             {
 
                 difdate = 3;
             }
 
-            if(todayday=="Sunday")
+            if (todayday == "Sunday")
             {
 
                 difdate = 2;
             }
 
-            if(todayday=="Monday")
+            if (todayday == "Monday")
             {
 
                 difdate = 1;
@@ -1375,23 +1333,23 @@ namespace Indico
             expdate = todaydate.AddDays(difdate);
 
             var connection = GetIndicoConnnection();
-            
-                var result1= connection.Query<WeekNoWeekendDateModel>(string.Format("SELECT ID,WeekNo,WeekendDate,'make' FROM [dbo].[WeeklyProductionCapacity] WHERE WeekendDate>='{0}'",expdate.GetSQLDateString())).ToList();
-                result1.ForEach(c => c.makeweeknoyear());
-                RadComboWeek.DataSource = result1;
-                RadComboWeek.DataBind();
-          
+
+            var result1 = connection.Query<WeekNoWeekendDateModel>(string.Format("SELECT ID,WeekNo,WeekendDate,'make' FROM [dbo].[WeeklyProductionCapacity] WHERE WeekendDate>='{0}'", expdate.GetSQLDateString())).ToList();
+            //result1.ForEach(c => c.Makeweeknoyear());
+            WeekComboBox.DataSource = result1;
+            WeekComboBox.DataBind();
+
         }
 
-       public void loadPort()
+        public void loadPort()
         {
 
             var connection = GetIndicoConnnection();
 
             var result1 = connection.Query<PortModel>("SELECT ID,Name FROM [dbo].[DestinationPort]");
 
-            ddlport.DataSource = result1;
-            ddlport.DataBind();
+            PortDropDownList.DataSource = result1;
+            PortDropDownList.DataBind();
         }
 
         public void loadMode()
@@ -1399,8 +1357,8 @@ namespace Indico
             var connection = GetIndicoConnnection();
 
             var result1 = connection.Query<ModeModel>("SELECT ID,Name FROM [dbo].[ShipmentMode]");
-            ddlMode.DataSource = result1;
-            ddlMode.DataBind();
+            ShipmentModeDropDownList.DataSource = result1;
+            ShipmentModeDropDownList.DataBind();
 
         }
 
@@ -1409,8 +1367,8 @@ namespace Indico
 
             var connection = GetIndicoConnnection();
             var result1 = connection.Query<NameIdModel>("SELECT ID,Name FROM [dbo].[InvoiceStatus]");
-            ddlStatus.DataSource = result1;
-            ddlStatus.DataBind();
+            StatusDropDownList.DataSource = result1;
+            StatusDropDownList.DataBind();
 
         }
 
@@ -1418,8 +1376,8 @@ namespace Indico
         {
             var connection = GetIndicoConnnection();
             var result1 = connection.Query<NameIdModel>("SELECT ID,Name FROM [dbo].[Bank]");
-            ddlBank.DataSource = result1;
-            ddlBank.DataBind();
+            BankDropDownList.DataSource = result1;
+            BankDropDownList.DataBind();
         }
 
         public void loadBillTo()
@@ -1427,15 +1385,11 @@ namespace Indico
 
             var connection = GetIndicoConnnection();
             var result1 = connection.Query<AddressIdModel>("SELECT ID,Address FROM [dbo].[DistributorClientAddress]");
-            ddlBillTo.DataSource = result1;
-            ddlBillTo.DataBind();
+            BillToDropDownList.DataSource = result1;
+            BillToDropDownList.DataBind();
 
 
         }
-
-
-
-
 
         private void populateInvoiceOrders(int invoice = 0, int distributorclientaddress = 0, bool isNew = true, int shipmentid = 0, bool isPopulate = true, int wid = 0, bool isweekly = false)
         {
@@ -1445,7 +1399,7 @@ namespace Indico
 
             if (isPopulate)
             {
-                this.RadInvoice.Visible = false;
+                this.ItemGrid.Visible = false;
             }
             else
             {
@@ -1465,7 +1419,7 @@ namespace Indico
                         {
                             //lstInvoiceOrderDetails = InvoiceBO.InvoiceOrderDetailView(lstInvoice[0].ID, distributorclientaddress, false, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
 
-                           // lst = InvoiceBO.InvoiceOrderDetailView(0, distributorclientaddress, isNew, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
+                            // lst = InvoiceBO.InvoiceOrderDetailView(0, distributorclientaddress, isNew, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
 
                             lstnotexists = lst.Select(o => (int)o.OrderDetail).ToList().Except(lstInvoiceOrderDetails.Select(o => (int)o.OrderDetail).ToList()).ToList();
 
@@ -1481,7 +1435,7 @@ namespace Indico
                             }
                             else
                             {
-                                this.litMeassage.Text = "All the Orders are added to the system";
+                               // this.litMeassage.Text = "All the Orders are added to the system";
                             }
                         }
                         else
@@ -1503,7 +1457,7 @@ namespace Indico
                             }
                             else
                             {
-                               // lstInvoiceOrderDetails = InvoiceBO.InvoiceOrderDetailView(invoice, distributorclientaddress, isNew, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
+                                // lstInvoiceOrderDetails = InvoiceBO.InvoiceOrderDetailView(invoice, distributorclientaddress, isNew, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
                             }
                         }
                     }
@@ -1524,7 +1478,7 @@ namespace Indico
                     }
                     else
                     {
-                       // lstInvoiceOrderDetails = InvoiceBO.InvoiceOrderDetailView(this.QueryID, distributorclientaddress, isNew, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
+                        // lstInvoiceOrderDetails = InvoiceBO.InvoiceOrderDetailView(this.QueryID, distributorclientaddress, isNew, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
 
                         //lst = InvoiceBO.InvoiceOrderDetailView(0, distributorclientaddress, true, DateTime.Parse(this.ddlShipmentDates.SelectedValue), shipmentid);
 
@@ -1540,7 +1494,7 @@ namespace Indico
                         }
                         else
                         {
-                            this.litMeassage.Text = "All the Orders are added to the system";
+                          //  this.litMeassage.Text = "All the Orders are added to the system";
                         }
                     }
                 }
@@ -1557,7 +1511,7 @@ namespace Indico
 
             List<int> lstshipmentID = (new InvoiceBO()).SearchObjects().Where(o => o.WeeklyProductionCapacity == WeekID && o.ShipmentDate == ShipmentDate).Select(o => o.ShipTo).ToList();
 
-            List<int> lstShipTo = lst.Select(o => (int)o.DistributorClientAddress).ToList();
+            List<int> lstShipTo = lst.Select(o => o.DistributorClientAddress != null ? (int)o.DistributorClientAddress : 0).ToList();
 
             List<int> lstShipmentKeyID = lstShipTo.Except(lstshipmentID).ToList();
 
@@ -1567,12 +1521,11 @@ namespace Indico
                 {
                     if (lstShipmentKeyID.Count > 0)
                     {
-                        foreach (int ShipmentKey in lstShipmentKeyID)
+                        foreach (var shipmentKey in lstShipmentKeyID)
                         {
-                            lstWeeklySummary.AddRange(lst.Where(o => o.DistributorClientAddress == ShipmentKey).ToList());
+                            lstWeeklySummary.AddRange(lst.Where(o => o.DistributorClientAddress == shipmentKey).ToList());
                         }
-
-                        this.spanShipmentError.Visible = false;
+                        // spanShipmentError.Visible = false;
                     }
                     else
                     {
@@ -1582,15 +1535,15 @@ namespace Indico
                         }
                         else
                         {
-                            this.spanShipmentError.InnerText = "All the Shipments added to the system";
-                            this.spanShipmentError.Visible = true;
+                           // this.spanShipmentError.InnerText = "All the Shipments added to the system";
+                           // this.spanShipmentError.Visible = true;
                         }
                     }
                 }
                 else
                 {
-                    this.spanShipmentError.InnerText = "No shipments for this Week";
-                    this.spanShipmentError.Visible = true;
+                   // this.spanShipmentError.InnerText = "No shipments for this Week";
+                   // this.spanShipmentError.Visible = true;
                 }
             }
             else
@@ -1622,8 +1575,8 @@ namespace Indico
         {
             if (Session["InvoiceOrderDetails"] != null)
             {
-                RadInvoice.DataSource = (List<ReturnInvoiceOrderDetailViewBO>)Session["InvoiceOrderDetails"];
-                RadInvoice.DataBind();
+                ItemGrid.DataSource = (List<ReturnInvoiceOrderDetailViewBO>)Session["InvoiceOrderDetails"];
+                ItemGrid.DataBind();
             }
         }
 
@@ -1764,7 +1717,7 @@ namespace Indico
             //this.ddlShipmentDates.Items.Add(new ListItem("Select a Shipment Date"));
             foreach (ReturnShipmentDatesViewBO shipdates in lstShipmentDates)
             {
-               // this.ddlShipmentDates.Items.Add(new ListItem(Convert.ToDateTime(shipdates.ShipmentDate.ToString()).ToString("dd MMMM yyyy")));
+                // this.ddlShipmentDates.Items.Add(new ListItem(Convert.ToDateTime(shipdates.ShipmentDate.ToString()).ToString("dd MMMM yyyy")));
             }
 
             //this.ddlShipmentDates.Enabled = (WeekendDate != new DateTime(1100, 1, 1)) ? true : false;
@@ -1803,17 +1756,17 @@ namespace Indico
         private void PopulateBillTo(int id = 0)
         {
             //populate Bill To
-            this.ddlBillTo.Items.Clear();
-            this.ddlBillTo.Items.Add(new ListItem("Select a Bill To", "0"));
+            this.BillToDropDownList.Items.Clear();
+            this.BillToDropDownList.Items.Add(new ListItem("Select a Bill To", "0"));
             List<DistributorClientAddressBO> lstDistributorClientAddress = (new DistributorClientAddressBO()).GetAllObject().OrderBy(o => o.CompanyName).ToList();
             foreach (DistributorClientAddressBO dca in lstDistributorClientAddress)
             {
-                this.ddlBillTo.Items.Add(new ListItem(dca.CompanyName, dca.ID.ToString()));
+                this.BillToDropDownList.Items.Add(new ListItem(dca.CompanyName, dca.ID.ToString()));
             }
 
             if (id > 0)
             {
-                this.ddlBillTo.Items.FindByValue(id.ToString()).Selected = true;
+                this.BillToDropDownList.Items.FindByValue(id.ToString()).Selected = true;
             }
         }
 
@@ -1821,19 +1774,19 @@ namespace Indico
         {
             if (lstInvoiceOrderDetails.Count > 0)
             {
-                this.RadInvoice.DataSource = lstInvoiceOrderDetails;
-                this.RadInvoice.DataBind();
+                this.ItemGrid.DataSource = lstInvoiceOrderDetails;
+                this.ItemGrid.DataBind();
                 this.dvEmptyContentInvoiceOrders.Visible = false;
-                this.dvFactoryRate.Visible = true;
-                this.RadInvoice.Visible = true;
+          //      this.dvFactoryRate.Visible = true;
+                this.ItemGrid.Visible = true;
 
                 Session["InvoiceOrderDetails"] = lstInvoiceOrderDetails;
             }
             else
             {
-                this.RadInvoice.Visible = false;
+                this.ItemGrid.Visible = false;
                 this.dvEmptyContentInvoiceOrders.Visible = true;
-                this.dvFactoryRate.Visible = false;
+            //    this.dvFactoryRate.Visible = false;
             }
         }
 
@@ -1842,15 +1795,15 @@ namespace Indico
             if (lstNotInvoiceOrderDetails.Count > 0)
             {
 
-                this.dgNotExistingInvoiceOrders.DataSource = lstNotInvoiceOrderDetails;
-                this.dgNotExistingInvoiceOrders.DataBind();
+               // this.dgNotExistingInvoiceOrders.DataSource = lstNotInvoiceOrderDetails;
+               // this.dgNotExistingInvoiceOrders.DataBind();
 
                 Session["NotInvoiceOrderDetails"] = lstNotInvoiceOrderDetails;
             }
 
-            this.dgNotExistingInvoiceOrders.Visible = (lstNotInvoiceOrderDetails.Count > 0) ? true : false;
-            this.dvEmptyNotExistingOrders.Visible = (lstNotInvoiceOrderDetails.Count > 0) ? false : true;
-            this.litMeassage.Text = "All the Orders are added to the system";
+           // this.dgNotExistingInvoiceOrders.Visible = (lstNotInvoiceOrderDetails.Count > 0) ? true : false;
+           // this.dvEmptyNotExistingOrders.Visible = (lstNotInvoiceOrderDetails.Count > 0) ? false : true;
+           // this.litMeassage.Text = "All the Orders are added to the system";
         }
 
         private void ManageInvoice()
@@ -1863,12 +1816,12 @@ namespace Indico
 
                 this.txtInvoiceNo.Text = objInvoice.InvoiceNo;
                 this.txtInvoiceDate.Text = objInvoice.InvoiceDate.ToString("dd MMMM yyyy");
-                this.ddlBank.Items.FindByValue(objInvoice.Bank.ToString()).Selected = true;
+                this.BankDropDownList.Items.FindByValue(objInvoice.Bank.ToString()).Selected = true;
 
-                this.chkIsBillTo.Checked = (bool)objInvoice.IsBillTo;
-                this.ddlBillTo.Items.FindByValue(objInvoice.BillTo.ToString()).Selected = true;
+              //  this.chkIsBillTo.Checked = (bool)objInvoice.IsBillTo;
+                this.BillToDropDownList.Items.FindByValue(objInvoice.BillTo.ToString()).Selected = true;
                 this.txtAwbNo.Text = objInvoice.AWBNo;
-                this.ddlStatus.Items.FindByValue(objInvoice.Status.ToString()).Selected = true;
+                this.StatusDropDownList.Items.FindByValue(objInvoice.Status.ToString()).Selected = true;
 
             }
         }
@@ -1887,11 +1840,6 @@ namespace Indico
         //    // Return the week of our adjusted day
         //    return CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(time, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
         //}
-
-        private void PopulateInvoice()
-        {
-
-        }
 
         #endregion
     }

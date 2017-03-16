@@ -14,6 +14,8 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using Indico.Common.Extensions;
+using Indico.Models;
 using Telerik.Web.UI;
 
 namespace Indico
@@ -25,7 +27,10 @@ namespace Indico
         #endregion
 
         #region Fields
-
+        public int disid;
+        public int orderid;
+        public int weekno;
+        public int orderdetailqty=0;
         private int urlQueryID = -1;
         //private int urlVisualLayoutID = -1;
         //private int urlArtWorkID = -1;
@@ -329,6 +334,9 @@ namespace Indico
                     ivlimageView.Attributes.Add("class", "icon-eye-close");
                 }
 
+                //OrderDetailQtyBO objOrderDetailQty = new OrderDetailQtyBO();
+                //objOrderDetailQty.OrderDetail = objOrderDetail.ID;
+
                 Repeater rptSizeQtyView = (Repeater)item.FindControl("rptSizeQtyView");
                 rptSizeQtyView.DataSource = objOrderDetail.ListQtys.Where(m => m.Qty > 0);
                 rptSizeQtyView.DataBind();
@@ -356,6 +364,10 @@ namespace Indico
                 HtmlAnchor linkEdit = (HtmlAnchor)item.FindControl("linkEdit");
                 linkEdit.Attributes.Add("qid", objOrderDetail.ID.ToString());
                 linkEdit.Attributes.Add("index", objOrderDetail.Index.ToString());
+
+                VisualLayoutBO objVL = new VisualLayoutBO();
+                objVL.ID = objOrderDetail.VisualLayout;
+                objVL.GetObject();
 
                 Literal litPocket = (Literal)item.FindControl("litPocket");
                 litPocket.Text = objOrderDetail.PocketType;
@@ -523,6 +535,24 @@ namespace Indico
             }
             ViewState["populateVlNotes"] = true;
             // PopulateFileUploder(rptUploadFile, hdnUploadFiles);
+        }
+
+        protected void ddlDistributor_SelectedIndexChanged(object sender,EventArgs e)
+        {
+            RadComboReservations.Items.Clear();
+            var distributorName = ddlDistributor.SelectedItem.Text;
+             
+            var connection = GetIndicoConnnection();
+            
+            var result = connection.Query<NameIdModel>(String.Format("SELECT ID,Name from [dbo].[Company] WHERE Name='{0}'",distributorName));
+               foreach(var result2 in result)
+            {
+                disid = result2.ID;
+            }
+
+            var result3 = connection.Query<ReservationBalanceModel>(String.Format("SELECT * FROM [dbo].[NewFinalReservationBalanceView] WHERE Distributor='{0}' AND (Status='{1}' OR Status='{2}')", distributorName,"New","Partialy Redeemed"));
+            RadComboReservations.DataSource = result3;
+            RadComboReservations.DataBind();
         }
 
         protected void linkEdit_Click(object sender, EventArgs e)
@@ -741,8 +771,9 @@ namespace Indico
                             objDistributorClientAddress.Distributor = int.Parse(ddlDistributor.SelectedValue);
 
                             ObjContext.SaveChanges();
-                            var myobService = new MyobService();
-                            myobService.SaveAddress(objDistributorClientAddress.ID);
+                            // TODO Add Later - MYOBSERVICE
+                            //var myobService = new MyobService();
+                            //myobService.SaveAddress(objDistributorClientAddress.ID);
 
                             ts.Complete();
 
@@ -781,30 +812,82 @@ namespace Indico
 
         protected void RadComboReservations_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
         {
-            RadComboBoxItem item = e.Item;
+            var item = e.Item;
 
-            if (item.Index > -1 && item.DataItem is ReservationBO)
+            if (item.Index > -1 && item.DataItem is ReservationBalanceModel)
             {
-                ReservationBO objReservation = (ReservationBO)item.DataItem;
+                var objReservation = (ReservationBalanceModel) item.DataItem;
 
-                Literal litReservation = (Literal)item.FindControl("litReservation");
+                var litReservation = (Literal)item.FindControl("litReservation");
                 litReservation.Text = "RES-" + objReservation.ReservationNo.ToString("0000");
 
-                Literal litOrderWeek = (Literal)item.FindControl("litOrderWeek");
+                var litOrderWeek = (Literal)item.FindControl("litOrderWeek");
                 litOrderWeek.Text = objReservation.OrderDate.ToString("dd MMM yyyy");
 
-                Literal litETD = (Literal)item.FindControl("litETD");
+
+                var litETD = (Literal)item.FindControl("litETD");
                 litETD.Text = objReservation.ShipmentDate.ToString("dd MMM yyyy");
 
-                Literal litDistributor = (Literal)item.FindControl("litDistributor");
-                litDistributor.Text = objReservation.objDistributor.Name;
+                var litDistributor = (Literal)item.FindControl("litDistributor");
+                litDistributor.Text = objReservation.Distributor;
 
-                Literal litClient = (Literal)item.FindControl("litClient");
+                var litClient = (Literal)item.FindControl("litClient");
                 litClient.Text = objReservation.Client;
 
-                Literal litStatus = (Literal)item.FindControl("litStatus");
-                litStatus.Text = "<span class=\"label label-" + objReservation.objStatus.Name.ToLower().Replace(" ", string.Empty).Trim() + "\">" + objReservation.objStatus.Name + "</span>";
+                var dt = objReservation.ShipmentDate;
+                var dayss = dt.DayOfWeek.ToString();
+                var diff =-1;
+                
+                if(dayss=="Wednesday")
+                {
+                    diff = 6;
+                }
+		        if(dayss=="Thursday")
+                {
+                    diff = 5;
+                }
+                if(dayss=="Friday")
+                {
+                    diff = 4;
+                }
 
+                if(dayss=="Saturday")
+                {
+                    diff = 3;
+                }
+
+                if(dayss=="Sunday")
+                {
+                    diff = 2;
+                }
+
+                if (dayss == "Monday")
+                {
+                    diff = 1;
+                }
+                if (dayss == "Tuesday")
+                {
+
+                    diff = 0;
+                }
+
+                var enddate=dt.AddDays(diff);
+
+                var litStatus = (Literal)item.FindControl("litStatus");
+                litStatus.Text = objReservation.Status;
+
+                var connection = GetIndicoConnnection();
+
+                var result = connection.Query<WeekModel>(string.Format("SELECT WeekNo from [dbo].[WeeklyProductionCapacity] WHERE WeekendDate='{0}'", enddate.GetSQLDateString()));
+                foreach (var result2 in result)
+                {
+                    weekno = result2.WeekNo;
+                }
+                var yearstring = enddate.Year.ToString();
+                yearstring = yearstring.Remove(0, 2);
+                var weakstring = Convert.ToString(weekno);
+                var orderweekno = yearstring + "/" + weakstring;
+                litOrderWeek.Text = Convert.ToString(orderweekno);
                 item.Value = objReservation.ID.ToString();
 
             }
@@ -939,6 +1022,7 @@ namespace Indico
                 if (Page.IsValid)
                 {
                     ProcessForm();
+                    NewProcessForm();
                     Response.Redirect("/ViewOrders.aspx");
                 }
             }
@@ -1942,6 +2026,7 @@ namespace Indico
                                 objQty.OrderDetail = objTempOD.ID;
                             objQty.Size = objTempQty.Size;
                             objQty.Qty = objTempQty.Qty;
+                            orderdetailqty = orderdetailqty + objQty.Qty;
 
                             if (objTempOD.ID == 0)
                             {
@@ -1997,9 +2082,10 @@ namespace Indico
                     ts.Complete();
                 }
 
+                // TODO Add Later - MYOBSERVICE
                 //save to myob
-                var myobService = new MyobService();
-                myobService.SaveOrder(OrderID);
+                //var myobService = new MyobService();
+                //myobService.SaveOrder(OrderID);
             }
             catch (Exception ex)
             {
@@ -2156,6 +2242,96 @@ namespace Indico
             }
         }
 
+        public void NewProcessForm()
+        {
+            var collection = RadComboReservations.CheckedItems;
+            var reservationarray = new int[collection.Count];
+            var balanceqty = new int[collection.Count];
+            var i = 0;
+
+            foreach (var result in collection)
+            {
+                int reservationid = Convert.ToInt32(result.Value);
+                reservationarray[i] = reservationid;
+                i = i + 1;
+            }
+
+            for (var k = 0; k < collection.Count; ++k)
+            {
+                var connection2 = GetIndicoConnnection();
+
+                var result3 = connection2.Query<ReservationBalanceModel>(String.Format("SELECT * FROM [dbo].[NewFinalReservationBalanceView] WHERE ID={0}", reservationarray[k]));
+                foreach (var result2 in result3)
+                {
+                    int bal = result2.Balance;
+                    balanceqty[k] = bal;
+                }
+            }
+
+            var orderarray = new int[collection.Count];
+            for(var k =0;k<collection.Count;++k)
+            {
+                orderarray[k] = orderid;
+            }
+            var qtyarray = new int[collection.Count];
+            for (var c = 0; c < collection.Count; ++c)
+            {
+                if(balanceqty[c]>=orderdetailqty)
+                {
+                    qtyarray[c] = orderdetailqty;
+                    orderdetailqty = orderdetailqty - qtyarray[c];
+                }
+
+                else if(balanceqty[c]<orderdetailqty)
+                {
+                    qtyarray[c] = balanceqty[c];
+                    orderdetailqty = orderdetailqty - qtyarray[c];
+                }
+            }
+
+            for (var j = 0; j < collection.Count; ++j)
+            {
+                using (var connection = GetIndicoConnnection())
+                {
+                    var query = string.Format("INSERT INTO [dbo].[OrderReservationMapping]([Order],[Reservation],[Qty]) values({0},{1},{2})",orderarray[j],reservationarray[j],qtyarray[j]);
+                    connection.Execute(query);
+                }
+            }
+
+
+            for(var x =0;x<collection.Count;++x)
+            {
+                if (balanceqty[x] == qtyarray[x])
+                {
+                    using (var connection = GetIndicoConnnection())
+                    {
+                        var query = string.Format("UPDATE [dbo].[Reservation] SET Status=5 WHERE ID={0}", reservationarray[x]);
+                        connection.Execute(query);
+                    }
+                }
+
+                else if ((balanceqty[x] > qtyarray[x]) && qtyarray[x] > 0)
+                {
+                    using (var connection = GetIndicoConnnection())
+                    {
+                        var query = string.Format("UPDATE [dbo].[Reservation] SET Status=2 WHERE ID={0}", reservationarray[x]);
+                        connection.Execute(query);
+                    }
+
+                }
+
+                else
+                {
+                    using (var connection = GetIndicoConnnection())
+                    {
+                        var query = string.Format("UPDATE [dbo].[Reservation] SET Status=1 WHERE ID={0}", reservationarray[x]);
+                        connection.Execute(query);
+                    }
+                }
+            }
+        }
+
+         
         private void PopulateOrderStatus(int orderId)
         {
             List<OrderStatusBO> lstOrderStatus = new OrderStatusBO().SearchObjects();
@@ -2948,7 +3124,7 @@ namespace Indico
                 {
                     ddlSizes.Items.Add(new ListItem(size.SizeName, size.ID.ToString()));
                 }
-
+                var unit = objPattern.objUnit;
                 txtUnit.Text = (objPattern.Unit != null && objPattern.Unit > 0) ? objPattern.objUnit.Name : string.Empty;
 
                 List<OrderDetailQtyBO> lstOrderDetailQty = new List<OrderDetailQtyBO>();
@@ -3501,12 +3677,12 @@ namespace Indico
             public bool IsCourierDelivery { get; set; }
             public bool IsWeeklyShipment { get; set; }
 
+	        public int Reservation { get; set; }
             public bool IsEmbroidery { get; set; }
             public bool IsRepeat { get; set; }
             public string ResolutionProfile { get; set; }
             public string PocketType { get; set; }
 
-            public int Reservation { get; set; }
             public int StatusID { get; set; }
             public string Status { get; set; }
             public int Order { get; set; }

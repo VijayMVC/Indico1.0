@@ -11,3 +11,7 @@
 /packages
 /Deployment
 /.vs
+/ZohoProxy/bin
+/ZohoProxy/obj
+/ZohoLibrary/obj
+/ZohoLibrary/bin

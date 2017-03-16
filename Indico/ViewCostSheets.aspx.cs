@@ -747,6 +747,21 @@ namespace Indico
             }
         }
 
+        protected void OnbtnSendToZohoClick(object sender, EventArgs e)
+        {
+            using (var indicoDatabaseConnection = DatabaseConnection)
+            {
+                var queryToRetrieveActiveCostSheet =
+                    @"SELECT TOP 1 *
+                      FROM[dbo].[CostSheet] WHERE [ShowToIndico] = 1
+                    ";
+                var costSheets = indicoDatabaseConnection.Query<CostSheetModel>(queryToRetrieveActiveCostSheet).ToList();
+                if (costSheets.Count < 1)
+                    return;
+
+            }
+        }
+
         #endregion
 
         #region Methods

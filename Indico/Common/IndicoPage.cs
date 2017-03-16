@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Web;
 using System.Web.UI.WebControls;
+using Telerik.Web.UI;
 
 namespace Indico.Common
 {
@@ -1353,6 +1354,39 @@ namespace Indico.Common
             Main = 0,
             Secondary = 1,
             Lining = 2
+        }
+
+        #endregion
+
+
+
+        #region Protected Helper Methods
+
+        protected static void BindData(BaseDataBoundControl control, IEnumerable<object> data)
+        {
+            control.DataSource = data;
+            control.DataBind();
+        }
+
+        protected static T GetControl<T>(System.Web.UI.Control control, string name) where T : System.Web.UI.Control
+        {
+            return control.FindControl(name) as T;
+        }
+
+        /// <summary>
+        /// Enable disabled controls
+        /// </summary>
+        /// <param name="controls"></param>
+        protected static void EnableControl(params WebControl[] controls)
+        {
+            foreach (var control in controls.Where(control => !control.Enabled))
+                control.Enabled = true;
+        }
+
+        protected static void DisableControl(params WebControl[] controls)
+        {
+            foreach (var control in controls.Where(control => control.Enabled))
+                control.Enabled = false;
         }
 
         #endregion
