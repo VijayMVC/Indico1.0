@@ -9,10 +9,6 @@ IF OBJECT_ID('dbo.InvoiceOrderDetailItem', 'U') IS NOT NULL
   DROP TABLE  [dbo].[InvoiceOrderDetailItem]
 GO
 
-IF OBJECT_ID('dbo.InvoiceStatus', 'U') IS NOT NULL 
-  DROP TABLE  [dbo].[InvoiceStatus]
-GO
-
 CREATE TABLE [dbo].[InvoiceOrderDetailItem](
  [ID] [int] IDENTITY(1,1) NOT NULL,
  [Invoice] [int] NULL,
@@ -89,36 +85,36 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Size Srn' , @l
 GO
 
 
------------------------------------------------------------------------ 
+------------------------------------------------------------------------- 
 
 
-CREATE TABLE [dbo].[InvoiceStatus](
- [ID] [int] IDENTITY(1,1) NOT NULL,
- [Key] [nvarchar](64) NOT NULL,
- [Name] [nvarchar](64) NOT NULL,
- CONSTRAINT [PK_InvoiceStatus] PRIMARY KEY CLUSTERED 
-(
- [ID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
-) ON [PRIMARY]
+--CREATE TABLE [dbo].[InvoiceStatus](
+-- [ID] [int] IDENTITY(1,1) NOT NULL,
+-- [Key] [nvarchar](64) NOT NULL,
+-- [Name] [nvarchar](64) NOT NULL,
+-- CONSTRAINT [PK_InvoiceStatus] PRIMARY KEY CLUSTERED 
+--(
+-- [ID] ASC
+--)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+--) ON [PRIMARY]
 
-GO
+--GO
 
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceStatus', @level2type=N'COLUMN',@level2name=N'ID'
-GO
+--EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceStatus', @level2type=N'COLUMN',@level2name=N'ID'
+--GO
 
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'The key of the status' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceStatus', @level2type=N'COLUMN',@level2name=N'Key'
-GO
+--EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'The key of the status' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceStatus', @level2type=N'COLUMN',@level2name=N'Key'
+--GO
 
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'The name of the status' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceStatus', @level2type=N'COLUMN',@level2name=N'Name'
-GO
+--EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'The name of the status' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceStatus', @level2type=N'COLUMN',@level2name=N'Name'
+--GO
 
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceStatus'
-GO
+--EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceStatus'
+--GO
 
 
 
------------------------------------------------------------------------ SPS
+------------------------------------------------------------------------- SPS
 
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SPC_GetShipmentKeys]') AND type in (N'P', N'PC'))
