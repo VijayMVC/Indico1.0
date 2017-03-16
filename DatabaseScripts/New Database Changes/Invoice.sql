@@ -1,7 +1,15 @@
 -- Invoice Changes 
 
+
 USE [Indico]
 GO
+
+----------------------ALTERING TABLE 
+
+ALTER TABLE [dbo].[Invoice] ALTER COLUMN [InvoiceNo] [nvarchar](64) NULL
+ALTER TABLE [dbo].[Invoice] ALTER COLUMN [InvoiceDate] [datetime2](7) NULL
+ALTER TABLE [dbo].[Invoice] ALTER COLUMN [ShipTo] INT NULL
+ALTER TABLE [dbo].[Invoice] ALTER COLUMN [Bank] INT NULL
 
 -------------------------------------------------------------- TABLES
 
@@ -25,6 +33,7 @@ CREATE TABLE [dbo].[InvoiceOrderDetailItem](
  [SizeQty] [int] NULL,
  [SizeSrn] [int] NULL,
  [SizeName] [nvarchar](255) NULL,
+ [IsRemoved] [bit] NOT NULL 
  CONSTRAINT [PK_InvoiceOrderDetailItem] PRIMARY KEY CLUSTERED 
 (
  [ID] ASC
@@ -58,7 +67,7 @@ ALTER TABLE [dbo].[InvoiceOrderDetailItem]  WITH CHECK ADD  CONSTRAINT [FK_Invoi
 REFERENCES [dbo].[Order] ([ID])
 GO
 
-ALTER TABLE [dbo].[InvoiceOrderDetailItem] CHECK CONSTRAINT [FK_InvoiceOrderDetailItem_OrderDetail]
+ALTER TABLE [dbo].[InvoiceOrderDetailItem] WITH CHECK ADD CONSTRAINT [DF_InvoiceOrderDetailItem_IsRemoved] DEFAULT (0) FOR [IsRemoved]
 GO
 
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'ID'
@@ -83,6 +92,8 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ODQ' , @level0
 GO
 
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'Order'
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Is Removed' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'IsRemoved'
 GO
 
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Size Srn' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'SizeSrn'
@@ -125,8 +136,6 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SPC_G
 	DROP PROCEDURE [dbo].[SPC_GetShipmentKeys]
 GO
 
-
-
 CREATE PROCEDURE [dbo].[SPC_GetShipmentKeys] 
 	@WeekId int
 AS
@@ -146,6 +155,7 @@ BEGIN
 	sm.ID AS ShipmentModeID,
 	dca.ID AS ShipToID,
 	pm.ID AS PriceTermID,
+	dp.ID AS PortID,
 	SUM(odq.Qty) AS Qty
  FROM [dbo].[Order] o
 	INNER JOIN [dbo].[OrderDetail] od
@@ -178,16 +188,74 @@ IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[SPC_G
 GO
 
 CREATE PROCEDURE [dbo].[SPC_GetInvoiceOrderDetailItems] 
-	@Distributor nvarchar(128) = '',
-	@Port nvarchar(64) = '',
-	@ShipmentDate datetime2(7) = '',
-	@PaymentMethod nvarchar(64) = '',
-	@Invoice int = NULL
+	@Distributor int =  NULL,
+	@Port int =  NULL,
+	@ShipmentDate datetime2(7) =  NULL,
+	@PaymentMethod int =  NULL,
+	@Invoice int = NULL,
+	@ShipmentMode int = NULL,
+	@Creator int = NULL
 AS
 BEGIN
 	
 	IF (@Invoice IS NULL)
 	BEGIN
+	
+		DECLARE @WeeklyProductionCapacity int
+		SET @WeeklyProductionCapacity = (SELECT TOP 1 ID FROM [dbo].[WeeklyProductionCapacity] WHERE WeekendDate = @ShipmentDate)
+
+		DECLARE @NewInvoiceID int
+		DECLARE @ExistingInvoice int
+		SET @ExistingInvoice = (SELECT TOP 1 ID  FROM [dbo].[Invoice] WHERE 
+			ShipTo =  @Distributor AND WeeklyProductionCapacity = @WeeklyProductionCapacity AND  ShipmentMode = @ShipmentMode AND ShipmentDate = @ShipmentDate )
+
+		IF @ExistingInvoice > 0
+			SET @NewInvoiceID = @ExistingInvoice
+		ELSE 
+		BEGIN
+			DECLARE @Preshipped int
+			SET @Preshipped = (SELECT TOP 1 ID FROM [dbo].[InvoiceStatus] WHERE [Key]= 'PS')
+			INSERT INTO [dbo].[Invoice]
+			   ([InvoiceNo]
+			   ,[InvoiceDate]
+			   ,[ShipTo]
+			   ,[AWBNo]
+			   ,[WeeklyProductionCapacity]
+			   ,[IndimanInvoiceNo]
+			   ,[ShipmentMode]
+			   ,[IndimanInvoiceDate]
+			   ,[Creator]
+			   ,[CreatedDate]
+			   ,[Modifier]
+			   ,[ModifiedDate]
+			   ,[Status]
+			   ,[ShipmentDate]
+			   ,[BillTo]
+			   ,[IsBillTo]
+			   ,[Bank])
+			VALUES
+			   (NULL
+			   ,NULL
+			   ,@Distributor
+			   ,NULL
+			   ,@WeeklyProductionCapacity
+			   ,NULL
+			   ,@ShipmentMode
+			   ,NULL
+			   ,@Creator
+			   ,GETDATE()
+			   ,@Creator
+			   ,GETDATE()
+			   ,@Preshipped
+			   ,@ShipmentDate
+			   ,NULL
+			   ,NULL
+			   ,NULL)
+
+		
+			SET @NewInvoiceID = SCOPE_IDENTITY()
+		END
+
 		IF OBJECT_ID('tempdb..#InvoiceItems') IS NOT NULL DROP TABLE #InvoiceItems
 
 		SELECT
@@ -254,7 +322,7 @@ BEGIN
 				INNER JOIN [dbo].[OrderStatus] os
 					ON o.[Status] = os.ID
 			WHERE odq.Qty > 0 AND  os.ID NOT IN (18,22,23,24,28,31) AND (
-				dca.[CompanyName] = @Distributor AND dp.[Name]  = @Port AND od.ShipmentDate = @ShipmentDate AND pm.[Name] = @PaymentMethod
+				dca.[ID] = @Distributor AND dp.ID  = @Port AND od.ShipmentDate = @ShipmentDate AND pm.ID = @PaymentMethod
 			)
 
 			DECLARE @MidTable TABLE (OrderID int, OrderDetailID int, OrderDetailQuantityID int )
@@ -290,17 +358,17 @@ BEGIN
 				INNER JOIN #InvoiceItems ii
 					ON mt.OrderID = ii.OrderID AND mt.OrderDetailID = ii.OrderDetailID AND mt.OrderDetailQuantityID = ii.OrderDetailQuantityID
 				LEFT OUTER JOIN [dbo].[InvoiceOrderDetailItem] iodi
-					ON mt.OrderDetailID = iodi.OrderDetail
+					ON mt.OrderDetailID = iodi.OrderDetail AND iodi.IsRemoved = 0
 			) AS S
 
 			ON (S.InvoiceOrderDI = T.ID) 
 			WHEN NOT MATCHED
-				THEN INSERT(OrderDetail, FactoryPrice, IndimanPrice, SizeQty, SizeSrn, SizeName, [Order], [OrderDetailQuantity]) 
-					VALUES(S.OrderDetailID, 0.0, 0.0, S.SizeQuantity, S.SizeSrNumber, S.SizeDescription, S.OrderID, S.OrderDetailQuantityID);
+				THEN INSERT(OrderDetail, FactoryPrice, IndimanPrice, SizeQty, SizeSrn, SizeName, [Order], [OrderDetailQuantity], [Invoice]) 
+					VALUES(S.OrderDetailID, 0.0, 0.0, S.SizeQuantity, S.SizeSrNumber, S.SizeDescription, S.OrderID, S.OrderDetailQuantityID, @NewInvoiceID);
 
-			SELECT DISTINCT iodi.ID AS InvoiceOrderDetailItemID , ii.* FROM [dbo].[InvoiceOrderDetailItem] iodi
+			SELECT DISTINCT iodi.ID AS InvoiceOrderDetailItemID , iodi.Invoice , ii.* FROM [dbo].[InvoiceOrderDetailItem] iodi
 				INNER JOIN #InvoiceItems ii
-					ON  iodi.OrderDetail = ii.OrderDetailID AND iodi.[Order] = ii.OrderID AND iodi.[OrderDetailQuantity] = ii.OrderDetailQuantityID
+					ON  iodi.OrderDetail = ii.OrderDetailID AND iodi.[Order] = ii.OrderID AND iodi.[OrderDetailQuantity] = ii.OrderDetailQuantityID AND iodi.IsRemoved = 0
 
 	END
 	ELSE
@@ -333,6 +401,8 @@ BEGIN
 			 ,od.ShipmentDate
 			 ,pm.[Name] PaymentMethod
 			 ,0 AS Processed
+			 ,iodi.ID AS InvoiceOrderDetailItemID
+			 ,iodi.Invoice
 			FROM [dbo].[Order] o
 				INNER JOIN [dbo].[OrderDetail] od
 					ON od.[Order] = o.ID
@@ -370,7 +440,7 @@ BEGIN
 					ON od.PaymentMethod = pm.ID
 				INNER JOIN [dbo].[OrderStatus] os
 					ON o.[Status] = os.ID
-			WHERE odq.Qty > 0 AND  os.ID NOT IN (18,22,23,24,28,31) AND iodi.[Invoice] = @Invoice
+			WHERE odq.Qty > 0 AND  os.ID NOT IN (18,22,23,24,28,31) AND iodi.[Invoice] = @Invoice AND iodi.IsRemoved = 0
 	END
 END
 GO
@@ -443,3 +513,5 @@ FROM [dbo].[Order] o
 		ON o.[Status] = os.ID
 	WHERE odq.Qty > 0 AND  os.ID NOT IN (18,22,23,24,28,31)
 GO
+
+
