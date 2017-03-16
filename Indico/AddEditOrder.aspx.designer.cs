@@ -166,24 +166,6 @@ namespace Indico {
         protected global::System.Web.UI.WebControls.Label lblDistributorAddress;
         
         /// <summary>
-        /// RadComboReservations control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox RadComboReservations;
-        
-        /// <summary>
-        /// litReservationDetail control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label litReservationDetail;
-        
-        /// <summary>
         /// liClient control.
         /// </summary>
         /// <remarks>
@@ -1541,6 +1523,24 @@ namespace Indico {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtIsNew;
+        
+        /// <summary>
+        /// RadComboReservations control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox RadComboReservations;
+        
+        /// <summary>
+        /// litReservationDetail control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label litReservationDetail;
         
         /// <summary>
         /// btnAddOrder control.
