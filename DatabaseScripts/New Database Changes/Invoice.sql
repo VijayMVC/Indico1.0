@@ -18,9 +18,9 @@ CREATE TABLE [dbo].[InvoiceOrderDetailItem](
  [FactoryPrice] [decimal](8, 2) NULL,
  [IndimanPrice] [decimal](8, 2) NULL,
  [OtherCharges] [decimal](8,2) NULL,
- [SizeQty] [int] NULL,
- [SizeSrn] [int] NULL,
- [SizeName] [nvarchar](255) NULL,
+ [IsRemoved] [bit] NOT NULL,
+ [FactoryNotes] [nvarchar](512) NULL,
+ [IndimanNotes] [nvarchar](512) NULL,
  CONSTRAINT [PK_InvoiceOrderDetailItem] PRIMARY KEY CLUSTERED 
 (
  [ID] ASC
@@ -72,7 +72,7 @@ GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Indiman Price' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'IndimanPrice'
 GO
 
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Size Qty' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'SizeQty'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Is Removed' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'IsRemoved'
 GO
 
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ODQ' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'OrderDetailQuantity'
@@ -81,7 +81,10 @@ GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'Order'
 GO
 
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Size Srn' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'SizeSrn'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Factory Notes' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'FactoryNotes'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Indiman Notes' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'IndimanNotes'
 GO
 
 
