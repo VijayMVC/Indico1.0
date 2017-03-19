@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Linq.Dynamic;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Indico.Common;
 using Indico.BusinessObjects;
@@ -72,7 +69,7 @@ namespace Indico
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!this.IsPostBack)
+            if (!IsPostBack)
             {
                 PopulateControls();
             }
@@ -82,7 +79,7 @@ namespace Indico
         {
             if (e.CommandName == RadGrid.FilterCommandName)
             {
-                this.ReBindGrid();
+                ReBindGrid();
             }
         }
 
@@ -127,27 +124,27 @@ namespace Indico
 
         protected void RadInvoice_PageIndexChanged(object sender, Telerik.Web.UI.GridPageChangedEventArgs e)
         {
-            this.ReBindGrid();
+            ReBindGrid();
         }
 
         protected void RadInvoice_SortCommand(object sender, Telerik.Web.UI.GridSortCommandEventArgs e)
         {
-            this.ReBindGrid();
+            ReBindGrid();
         }
 
         protected void HeaderContextMenu_ItemCLick(object sender, RadMenuEventArgs e)
         {
-            this.ReBindGrid();
+            ReBindGrid();
         }
 
         protected void RadInvoice_GroupsChanging(object sender, GridGroupsChangingEventArgs e)
         {
-            this.ReBindGrid();
+            ReBindGrid();
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-            this.PopulateDataGrid();
+            PopulateDataGrid();
         }
 
         protected void btnDelete_Click(object sender, EventArgs e)
@@ -160,14 +157,14 @@ namespace Indico
                 {
                     using (TransactionScope ts = new TransactionScope())
                     {
-                        InvoiceBO objInvoice = new InvoiceBO(this.ObjContext);
+                        InvoiceBO objInvoice = new InvoiceBO(ObjContext);
                         objInvoice.ID = invoiceID;
                         objInvoice.GetObject();
 
                         List<InvoiceOrderBO> lstInvoiceOrder = (new InvoiceOrderBO()).GetAllObject().Where(o => o.Invoice == objInvoice.ID).ToList();
                         foreach (InvoiceOrderBO objDelInvoiceOrder in lstInvoiceOrder)
                         {
-                            InvoiceOrderBO objInvoiceOrder = new InvoiceOrderBO(this.ObjContext);
+                            InvoiceOrderBO objInvoiceOrder = new InvoiceOrderBO(ObjContext);
                             objInvoiceOrder.ID = objDelInvoiceOrder.ID;
                             objInvoiceOrder.GetObject();
 
@@ -176,7 +173,7 @@ namespace Indico
                         }
 
                         objInvoice.Delete();
-                        this.ObjContext.SaveChanges();
+                        ObjContext.SaveChanges();
                         ts.Complete();
                     }
                 }
@@ -184,7 +181,7 @@ namespace Indico
                 {
                     throw ex;
                 }
-                this.PopulateDataGrid();
+                PopulateDataGrid();
             }
 
         }
@@ -192,7 +189,7 @@ namespace Indico
         protected void btnInvoiceDetail_Click(object sender, EventArgs e)
         {
             int id = int.Parse(((System.Web.UI.WebControls.WebControl)(sender)).Attributes["qid"].ToString());
-            //int id = int.Parse(this.hdnSelectedID.Value);
+            //int id = int.Parse(hdnSelectedID.Value);
 
             if (id > 0)
             {
@@ -200,7 +197,7 @@ namespace Indico
                 {
                     string pdfFilePath = Common.GenerateOdsPdf.GenerateJKInvoiceDetail(id);
 
-                    this.DownloadPDFFile(pdfFilePath);
+                    DownloadPDFFile(pdfFilePath);
                 }
                 catch (Exception ex)
                 {
@@ -212,7 +209,7 @@ namespace Indico
         protected void btnPrintInvoiceSummary_Click(object sender, EventArgs e)
         {
             int id = int.Parse(((System.Web.UI.WebControls.WebControl)(sender)).Attributes["qid"].ToString());
-            //int id = int.Parse(this.hdnSelectedID.Value);
+            //int id = int.Parse(hdnSelectedID.Value);
 
             if (id > 0)
             {
@@ -220,7 +217,7 @@ namespace Indico
                 {
                     string pdfFilePath = Common.GenerateOdsPdf.GenerateJKInvoiceSummary(id);
 
-                    this.DownloadPDFFile(pdfFilePath);
+                    DownloadPDFFile(pdfFilePath);
                 }
                 catch (Exception ex)
                 {
@@ -232,7 +229,7 @@ namespace Indico
         protected void btnCombineInvoice_Click(object sender, EventArgs e)
         {
             int id = int.Parse(((System.Web.UI.WebControls.WebControl)(sender)).Attributes["qid"].ToString());
-            //int id = int.Parse(this.hdnSelectedID.Value);
+            //int id = int.Parse(hdnSelectedID.Value);
 
             if (id > 0)
             {
@@ -240,7 +237,7 @@ namespace Indico
                 {
                     string pdfFilePath = Common.GenerateOdsPdf.CombinedInvoice(id);
 
-                    this.DownloadPDFFile(pdfFilePath);
+                    DownloadPDFFile(pdfFilePath);
                 }
                 catch (Exception ex)
                 {
@@ -251,7 +248,7 @@ namespace Indico
 
         /*protected void btnIndimanInvoice_Click(object sender, EventArgs e)
         {
-            int id = int.Parse(this.hdnSelectedID.Value);
+            int id = int.Parse(hdnSelectedID.Value);
 
             if (id > 0)
             {
@@ -259,7 +256,7 @@ namespace Indico
                 {
                     string pdfFilePath = Common.GenerateOdsPdf.GenerateIndimanInvoice(id);
 
-                    this.DownloadPDFFile(pdfFilePath);
+                    DownloadPDFFile(pdfFilePath);
                 }
                 catch (Exception ex)
                 {
@@ -275,72 +272,72 @@ namespace Indico
         private void PopulateControls()
         {
             // Header Text
-            this.litHeaderText.Text = this.ActivePage.Heading;
-            this.PopulateDataGrid();
+            litHeaderText.Text = ActivePage.Heading;
+            PopulateDataGrid();
         }
 
-        private void PopulateDataGrid()
-        {
-            // Hide Controls
-            this.dvEmptyContent.Visible = false;
-            this.dvDataContent.Visible = false;
-            this.dvNoSearchResult.Visible = false;
+        //private void PopulateDataGrid()
+        //{
+        //    // Hide Controls
+        //    dvEmptyContent.Visible = false;
+        //    dvDataContent.Visible = false;
+        //    dvNoSearchResult.Visible = false;
 
-            // Search text
-            string searchText = this.txtSearchInvoiceNo.Text.ToLower().Trim();
+        //    // Search text
+        //    string searchText = txtSearchInvoiceNo.Text.ToLower().Trim();
 
-            // Populate Items
-            List<ReturnInvoiceDetailsBO> lstInvoice = new List<ReturnInvoiceDetailsBO>();
-            if ((searchText != string.Empty) && (searchText != "search"))
-            {
-                lstInvoice = (new ReturnInvoiceDetailsBO()).SearchObjects().Where(o => o.InvoiceNo.ToLower().Contains(searchText) ||
-                                                                                  o.ShipmentMode.ToLower().Contains(searchText) ||
-                                                                                  o.ShipTo.ToLower().Contains(searchText) ||
-                                                                                  o.AWBNo.ToLower().Contains(searchText) ||
-                                                                                  o.IndimanInvoiceNo.ToLower().Contains(searchText)).ToList();
-            }
-            else
-            {
-                lstInvoice = (new ReturnInvoiceDetailsBO()).SearchObjects().OrderByDescending(o => o.Invoice).ToList();
-            }
+        //    // Populate Items
+        //    List<ReturnInvoiceDetailsBO> lstInvoice = new List<ReturnInvoiceDetailsBO>();
+        //    if ((searchText != string.Empty) && (searchText != "search"))
+        //    {
+        //        lstInvoice = (new ReturnInvoiceDetailsBO()).SearchObjects().Where(o => o.InvoiceNo.ToLower().Contains(searchText) ||
+        //                                                                          o.ShipmentMode.ToLower().Contains(searchText) ||
+        //                                                                          o.ShipTo.ToLower().Contains(searchText) ||
+        //                                                                          o.AWBNo.ToLower().Contains(searchText) ||
+        //                                                                          o.IndimanInvoiceNo.ToLower().Contains(searchText)).ToList();
+        //    }
+        //    else
+        //    {
+        //        lstInvoice = (new ReturnInvoiceDetailsBO()).SearchObjects().OrderByDescending(o => o.Invoice).ToList();
+        //    }
 
-            if (this.WeeklyCapacityID > 0)
-            {
-                lstInvoice = lstInvoice.Where(o => o.WeeklyProductionCapacity == this.WeeklyCapacityID).ToList();
-            }
+        //    if (WeeklyCapacityID > 0)
+        //    {
+        //        lstInvoice = lstInvoice.Where(o => o.WeeklyProductionCapacity == WeeklyCapacityID).ToList();
+        //    }
 
-            if (lstInvoice.Count > 0)
-            {
-                this.RadInvoice.AllowPaging = (lstInvoice.Count > this.RadInvoice.PageSize);
-                this.RadInvoice.DataSource = lstInvoice;
-                this.RadInvoice.DataBind();
+        //    if (lstInvoice.Count > 0)
+        //    {
+        //        RadInvoice.AllowPaging = (lstInvoice.Count > RadInvoice.PageSize);
+        //        RadInvoice.DataSource = lstInvoice;
+        //        RadInvoice.DataBind();
 
-                this.dvDataContent.Visible = true;
+        //        dvDataContent.Visible = true;
 
-                Session["Invoice"] = lstInvoice;
-            }
-            else if ((searchText != string.Empty && searchText != "search"))
-            {
-                this.lblSerchKey.Text = searchText + ((searchText != string.Empty) ? " - " : string.Empty);
+        //        Session["Invoice"] = lstInvoice;
+        //    }
+        //    else if ((searchText != string.Empty && searchText != "search"))
+        //    {
+        //        lblSerchKey.Text = searchText + ((searchText != string.Empty) ? " - " : string.Empty);
 
-                this.dvDataContent.Visible = true;
-                this.dvNoSearchResult.Visible = true;
-            }
-            else
-            {
-                this.dvEmptyContent.Visible = true;
-                this.btnAddInvoice.Visible = false;
-            }
+        //        dvDataContent.Visible = true;
+        //        dvNoSearchResult.Visible = true;
+        //    }
+        //    else
+        //    {
+        //        dvEmptyContent.Visible = true;
+        //        btnAddInvoice.Visible = false;
+        //    }
 
-            this.RadInvoice.Visible = (lstInvoice.Count > 0);
-        }
+        //    RadInvoice.Visible = (lstInvoice.Count > 0);
+        //}
 
         private void ReBindGrid()
         {
             if (Session["Invoice"] != null)
             {
-                RadInvoice.DataSource = (List<ReturnInvoiceDetailsBO>)Session["Invoice"];
-                RadInvoice.DataBind();
+                InvoiceGrid.DataSource = (List<ReturnInvoiceDetailsBO>)Session["Invoice"];
+                InvoiceGrid.DataBind();
             }
         }
 

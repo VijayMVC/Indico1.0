@@ -76,13 +76,13 @@ namespace Indico {
         protected global::System.Web.UI.WebControls.Panel panlSearch;
         
         /// <summary>
-        /// txtSearchInvoiceNo control.
+        /// SearchTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSearchInvoiceNo;
+        protected global::System.Web.UI.WebControls.TextBox SearchTextBox;
         
         /// <summary>
         /// btnSearch control.
@@ -103,13 +103,13 @@ namespace Indico {
         protected global::Telerik.Web.UI.RadAjaxLoadingPanel RadAjaxLoadingPanel1;
         
         /// <summary>
-        /// RadInvoice control.
+        /// InvoiceGrid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid RadInvoice;
+        protected global::Telerik.Web.UI.RadGrid InvoiceGrid;
         
         /// <summary>
         /// dvNoSearchResult control.

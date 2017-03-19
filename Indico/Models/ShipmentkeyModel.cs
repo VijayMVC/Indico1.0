@@ -15,5 +15,6 @@ namespace Indico.Models
         public int ShipToID { get; set; }
         public int PriceTermID { get; set; }
         public int Qty { get; set; }
+        public int PortID { get; set; }
     }
 }

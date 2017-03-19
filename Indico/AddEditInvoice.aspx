@@ -220,79 +220,15 @@
                         </asp:RequiredFieldValidator>
                     </div>
                 </div>
-                <%-- </fieldset>--%>
-                <!-- Search Printed Orders -->
-                <!-- / -->
-                <%--<fieldset>--%>
-                <%--  select orders--%>
-                <!-- Not Existing Orders-->
-                <%-- <legend>Not Existing Orders</legend>
-                <asp:DataGrid ID="dgNotExistingInvoiceOrders" runat="server" CssClass="table" AllowCustomPaging="False" PageSize="20"
-                    AllowPaging="false" AllowSorting="true" AutoGenerateColumns="false" GridLines="None"
-                    OnItemDataBound="dgNotExistingInvoiceOrders_ItemDataBound">
-                    <HeaderStyle CssClass="header" />
-                    <PagerStyle CssClass="idata-pager" Mode="NumericPages" />
-                    <Columns>
-                        <asp:BoundColumn HeaderText="Order No." DataField="Order"></asp:BoundColumn>
-                        <asp:BoundColumn HeaderText="Order Type" DataField="OrderType"></asp:BoundColumn>
-                        <asp:BoundColumn HeaderText="Visual Layout" DataField="VisualLayout"></asp:BoundColumn>
-                        <asp:BoundColumn HeaderText="Distributor" DataField="Distributor"></asp:BoundColumn>
-                        <asp:BoundColumn HeaderText="Client" DataField="Client"></asp:BoundColumn>
-                        <asp:BoundColumn HeaderText="Pattern" DataField="Pattern"></asp:BoundColumn>
-                        <asp:BoundColumn HeaderText="Fabric" DataField="Fabric"></asp:BoundColumn>
-                        <asp:BoundColumn HeaderText="Gender" DataField="Gender"></asp:BoundColumn>
-                        <asp:BoundColumn HeaderText="AgeGroup" DataField="AgeGroup"></asp:BoundColumn>
-                        <asp:TemplateColumn HeaderText="Qty">
-                            <ItemTemplate>
-                                <asp:Literal ID="litQty" runat="server"></asp:Literal>
-                            </ItemTemplate>
-                        </asp:TemplateColumn>
-                        <asp:TemplateColumn HeaderText="Add">
-                            <ItemTemplate>
-                                <asp:LinkButton ID="lbAdd" OnClick="lbAdd_Click" runat="server"><i class="icon-plus"></i>Add</asp:LinkButton>
-                            </ItemTemplate>
-                        </asp:TemplateColumn>
-                    </Columns>
-                </asp:DataGrid>
-                <!-- Empty Content -->
-                <div id="dvEmptyNotExistingOrders" runat="server" class="alert alert-info">
-                    <h4>
-                        <asp:Literal ID="litMeassage" runat="server"></asp:Literal></h4>
-                </div>--%>
-                <!-- / -->
-                <!--/-->
 
-
-
-                <h4>Items</h4>
+                <h4>Items
+                    <telerik:RadButton runat="server" CssClass="pull-right" ID="CostSheetButton" OnClick="OnApplyCostSheetPriceButtonCLick" Text="Apply Cost Sheet Price"></telerik:RadButton>
+                </h4>
                 <div id="dvNewContent" runat="server">
-                    <!-- Data grid -->
-                    <%--<telerik:RadAjaxLoadingPanel ID="RadAjaxLoadingPanel1" runat="server" Skin="Metro"
-                        EnableEmbeddedSkins="true">
-                    </telerik:RadAjaxLoadingPanel>
-                    <telerik:RadAjaxManager ID="RadAjaxManager1" runat="server" DefaultLoadingPanelID="RadAjaxLoadingPanel1">
-                        <AjaxSettings>
-                            <telerik:AjaxSetting AjaxControlID="RadInvoice">
-                                <UpdatedControls>
-                                    <telerik:AjaxUpdatedControl ControlID="RadInvoice"></telerik:AjaxUpdatedControl>
-                                </UpdatedControls>
-                            </telerik:AjaxSetting>
-                        </AjaxSettings>
-                    </telerik:RadAjaxManager>--%>
-                    <%--                    <div id="dvFactoryRate" runat="server" class="control-group pull-right">
-                        <label class="control-label">
-                            Factory Rate
-                        </label>
-                        <div class="controls">
-                            <asp:TextBox ID="txtFactoryCost" CssClass="input-small" runat="server"></asp:TextBox>
-                            <button id="btnChangeCost" type="submit" onserverclick="btnChangeCost_ServerClick" runat="server" class="btn btn-success">Change </button>
-                        </div>
-
-                    </div>--%>
                     <telerik:RadGrid ID="ItemGrid" runat="server" AllowPaging="True" AllowFilteringByColumn="true"
                         ShowFooter="true" AutoGenerateColumns="false" OnItemDataBound="OnItemGridDataBind"
-                        Skin="Metro" CssClass="RadGrid_Rounded" AllowSorting="true" EnableEmbeddedSkins="true"
-                        OnItemCommand="RadInvoice_ItemCommand" OnSortCommand="RadInvoice_SortCommand" PageSize="25" OnPageIndexChanged="OnIemtGridPageIndexChanged" OnPageSizeChanged="OnItemGridPageSizeChanged">
+                        Skin="Metro" CssClass="RadGrid_Rounded" AllowSorting="true" EnableEmbeddedSkins="true" 
+                        OnItemCommand="OnItemGridItemCommand"  PageSize="50" OnPageIndexChanged="OnIemtGridPageIndexChanged" OnPageSizeChanged="OnItemGridPageSizeChanged">
                         <GroupingSettings CaseSensitive="false" />
                         <PagerStyle Mode="NextPrevNumericAndAdvanced"></PagerStyle>
                         <MasterTableView AllowFilteringByColumn="true" TableLayout="Auto">
@@ -327,21 +263,21 @@
                                 <telerik:GridBoundColumn UniqueName="AgeGroup" SortExpression="AgeGroup" HeaderText="AgeGroup" FilterControlWidth="75px" CurrentFilterFunction="Contains" AutoPostBackOnFilter="true"
                                     DataField="AgeGroup">
                                 </telerik:GridBoundColumn>
-                                <telerik:GridBoundColumn UniqueName="SizeDescription" SortExpression="SizeDescription" HeaderText="Size Desc" FilterControlWidth="75px" CurrentFilterFunction="Contains" AutoPostBackOnFilter="true" DataField="SizeDescription"></telerik:GridBoundColumn>
+                                <%--<telerik:GridBoundColumn UniqueName="SizeDescription" SortExpression="SizeDescription" HeaderText="Size Desc" FilterControlWidth="75px" CurrentFilterFunction="Contains" AutoPostBackOnFilter="true" DataField="SizeDescription"></telerik:GridBoundColumn>
                                 <telerik:GridBoundColumn UniqueName="SizeQuantity" SortExpression="SizeQuantity" HeaderText="Size Qty" FilterControlWidth="75px" CurrentFilterFunction="EqualTo" AutoPostBackOnFilter="true" DataField="SizeQuantity"></telerik:GridBoundColumn>
-                                <telerik:GridBoundColumn UniqueName="SizeSrNumber" SortExpression="SizeSrNumber" HeaderText="Size Srno" FilterControlWidth="75px" CurrentFilterFunction="EqualTo" AutoPostBackOnFilter="true" DataField="SizeSrNumber"></telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn UniqueName="SizeSrNumber" SortExpression="SizeSrNumber" HeaderText="Size Srno" FilterControlWidth="75px" CurrentFilterFunction="EqualTo" AutoPostBackOnFilter="true" DataField="SizeSrNumber"></telerik:GridBoundColumn>--%>
                                 <telerik:GridBoundColumn UniqueName="CostsheetPrice" SortExpression="CostsheetPrice" HeaderText="Cost Sheet Price" FilterControlWidth="75px" CurrentFilterFunction="EqualTo" AutoPostBackOnFilter="true" DataField="CostsheetPrice"></telerik:GridBoundColumn>
 
                                 <telerik:GridTemplateColumn AllowFiltering="false" FilterControlWidth="200px" UniqueName="OtherCharges">
                                     <HeaderTemplate>
                                         <asp:Label runat="server" Text="Other Charges"></asp:Label>
                                         <br />
-                                        <telerik:RadNumericTextBox runat="server" ID="OtherChargesApplyTextBox" Width="50px">
+                                        <telerik:RadNumericTextBox runat="server" ID="OtherChargesApplyTextBox" CssClass="otherChargesTextBox" Width="50px">
                                         </telerik:RadNumericTextBox>
                                         <telerik:RadButton runat="server" ID="ApplyOtherChargesButton" Text="Apply"></telerik:RadButton>
                                     </HeaderTemplate>
                                     <ItemTemplate>
-                                        <telerik:RadNumericTextBox runat="server" ID="OtherChargesTextBox" Width="50px"></telerik:RadNumericTextBox>
+                                        <telerik:RadNumericTextBox  runat="server" ID="OtherChargesTextBox" OnTextChanged="OnOtherChargesTextChanged" Width="50px" ></telerik:RadNumericTextBox>
                                     </ItemTemplate>
                                 </telerik:GridTemplateColumn>
 
@@ -354,67 +290,35 @@
                                         <telerik:RadButton runat="server" ID="ApplyFactoryPriceButton" Text="Apply"></telerik:RadButton>
                                     </HeaderTemplate>
                                     <ItemTemplate>
-                                        <telerik:RadNumericTextBox runat="server" ID="FactoryPriceTextBox" Width="50px"></telerik:RadNumericTextBox>
+                                        <telerik:RadNumericTextBox runat="server" ID="FactoryPriceTextBox"  OnTextChanged="OnFactoryPriceTextChanged" Width="50px" ></telerik:RadNumericTextBox>
                                     </ItemTemplate>
                                 </telerik:GridTemplateColumn>
 
                                 <telerik:GridBoundColumn UniqueName="TotalPrice" SortExpression="TotalPrice" HeaderText="Total Price" FilterControlWidth="75px" CurrentFilterFunction="EqualTo" AutoPostBackOnFilter="true" DataField="TotalPrice"></telerik:GridBoundColumn>
                                 <telerik:GridBoundColumn UniqueName="Amount" SortExpression="Amount" HeaderText="Amount" FilterControlWidth="75px" CurrentFilterFunction="EqualTo" AutoPostBackOnFilter="true" DataField="Amount"></telerik:GridBoundColumn>
-                                <telerik:GridTemplateColumn AllowFiltering="false" FilterControlWidth="200px" UniqueName="Notes">
+                                <telerik:GridBoundColumn UniqueName="Notes" SortExpression="Notes" HeaderText="Notes" FilterControlWidth="75px" CurrentFilterFunction="EqualTo" AutoPostBackOnFilter="true" DataField="Notes"></telerik:GridBoundColumn>
+
+                              <%--  <telerik:GridTemplateColumn AllowFiltering="false" FilterControlWidth="200px" UniqueName="Notes">
                                     <HeaderTemplate>
                                         <asp:Label runat="server" Text="Notes"></asp:Label>
                                     </HeaderTemplate>
                                     <ItemTemplate>
-                                        <telerik:RadTextBox runat="server" Columns="2" ID="NotesTextArea" Width="150px"></telerik:RadTextBox>
+                                        <telerik:RadTextBox runat="server" Columns="2" ID="NotesTextArea" OnTextChanged="OnNotesChanged" Width="150px"></telerik:RadTextBox>
                                     </ItemTemplate>
-                                </telerik:GridTemplateColumn>
+                                </telerik:GridTemplateColumn>--%>
                                 <telerik:GridTemplateColumn AllowFiltering="false" FilterControlWidth="200px" UniqueName="Remove">
                                     <ItemTemplate>
                                         <telerik:RadButton runat="server" Text="Remove" ToolTip="Remove Item From Invoice"></telerik:RadButton>
                                     </ItemTemplate>
                                 </telerik:GridTemplateColumn>
-                                
-                                <%--
-                                <telerik:GridTemplateColumn HeaderText="Factory Rate" AllowFiltering="false" ItemStyle-Width="70px">
-                                    <ItemTemplate>
-                                        <asp:TextBox ID="txtRate" runat="server" CssClass="irate" Width="50px"></asp:TextBox>
-                                    </ItemTemplate>
-                                </telerik:GridTemplateColumn>
-                                <telerik:GridTemplateColumn HeaderText="Amount" AllowFiltering="false">
-                                    <ItemTemplate>
-                                        <asp:Label ID="lblAmount" runat="server" CssClass="iamount"></asp:Label>
-                                    </ItemTemplate>
-                                    <FooterTemplate>
-                                        <asp:Label ID="lblTotalAmount" runat="server" CssClass="ifooteramount"></asp:Label>
-                                    </FooterTemplate>
-                                </telerik:GridTemplateColumn>
-                                <telerik:GridTemplateColumn HeaderText="Cost Sheet" AllowFiltering="false">
-                                    <ItemTemplate>
-                                        <asp:LinkButton ID="lbCostSheet" OnClick="lbCostSheet_Click" runat="server" CssClass="btn-link" ToolTip=""></asp:LinkButton>
-                                    </ItemTemplate>
-                                </telerik:GridTemplateColumn>
-                                <telerik:GridTemplateColumn HeaderText="" AllowFiltering="false" ItemStyle-Width="70px">
-                                    <ItemTemplate>
-                                        <asp:HyperLink ID="linkDelete" runat="server" CssClass="btn-link iremove" ToolTip="Delete Invoice"><i class="icon-remove"></i>Remove</asp:HyperLink>
-                                    </ItemTemplate>
-                                </telerik:GridTemplateColumn>--%>
                             </Columns>
                         </MasterTableView>
                     </telerik:RadGrid>
                     <!-- / -->
                 </div>
-                <!-- Empty Content -->
-                <div id="dvEmptyContentInvoiceOrders" runat="server" class="alert alert-info">
-                    <h4>There are no select orders added to this invoice.
-                    </h4>
-                    <p>
-                        You can add many orders to this invoice as you like.
-                    </p>
-                </div>
-                <!-- / -->
                 <div class="form-actions">
                     <button id="btnCreateInvoice" runat="server" class="btn btn-primary" validationgroup="validateInvoice"
-                        data-loading-text="Saving..." type="submit" onserverclick="btnCreateInvoice_Click">
+                        data-loading-text="Saving..." type="submit" onserverclick="OnSaveButtonClick">
                         Save Changes</button>
                 </div>
             </div>
@@ -594,6 +498,9 @@
     <asp:HiddenField ID="hdnSelectedID" runat="server" />
     <asp:HiddenField ID="hdnIndexID" runat="server" />
     <asp:HiddenField ID="HiddenField1" runat="server" />
+
+
+
     <!-- Page Scripts -->
     <script type="text/javascript">
         var txtInvoiceDate = "<%=txtInvoiceDate.ClientID %>";

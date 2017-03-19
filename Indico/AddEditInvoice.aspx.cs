@@ -279,26 +279,7 @@ namespace Indico
             ViewState["IsPostBack"] = Session["IsPostBack"];
         }
 
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (!IsPostBack)
-            {
-                InitializeUserInterface();
-                //PopulateControls();
-                //using (var connection = GetIndicoConnnection())
-                //{
-                //    BindData(WeekComboBox, GetWeeks(connection));
-                //}
-                //// loadWeekNo();
-
-                //loadPort();
-                //loadMode();
-                //loadStatus();
-                //loadBanks();
-                //loadBillTo();
-
-            }
-        }
+       
 
 
 
@@ -388,24 +369,23 @@ namespace Indico
             }
         }
 
-        protected void btnCreateInvoice_Click(object sender, EventArgs e)
-        {
+        //protected void btnCreateInvoice_Click(object sender, EventArgs e)
+        //{
+        //    if (Session["InvoiceOrderDetails"] == null)
+        //    {
+        //        CustomValidator cv = new CustomValidator();
+        //        cv.IsValid = false;
+        //        cv.ValidationGroup = "validateInvoice";
+        //        cv.ErrorMessage = "No Shipment details have been added";
+        //        Page.Validators.Add(cv);
+        //    }
 
-            if (Session["InvoiceOrderDetails"] == null)
-            {
-                CustomValidator cv = new CustomValidator();
-                cv.IsValid = false;
-                cv.ValidationGroup = "validateInvoice";
-                cv.ErrorMessage = "No Shipment details have been added";
-                Page.Validators.Add(cv);
-            }
-
-            if (Page.IsValid)
-            {
-                this.ProcessForm();
-                Response.Redirect("/ViewInvoices.aspx");
-            }
-        }
+        //    if (Page.IsValid)
+        //    {
+        //        this.ProcessForm();
+        //        Response.Redirect("/ViewInvoices.aspx");
+        //    }
+        //}
 
         protected void cfvInvoiceNumber_Validate(object sender, ServerValidateEventArgs e)
         {
@@ -477,39 +457,39 @@ namespace Indico
             }
 
         }
-        /*
-        protected void RadComboShipmentKey_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
-        {
-            int id = int.Parse(this.RadComboShipmentKey.SelectedValue.Split(',')[0]);
-            int shipmentid = int.Parse(this.RadComboShipmentKey.SelectedValue.Split(',')[1]);
-            
-            if (id > 0 && shipmentid > 0)
-            {
-                ViewState["DistributorClientAddress"] = id;
-                ViewState["ShipmentID"] = shipmentid;
-                DistributorClientAddressBO objDistributorClientAddress = new DistributorClientAddressBO();
-                objDistributorClientAddress.ID = id;
-                objDistributorClientAddress.GetObject();
 
-                ShipmentModeBO objShipmentMode = new ShipmentModeBO();
-                objShipmentMode.ID = shipmentid;
-                objShipmentMode.GetObject();
+        //protected void RadComboShipmentKey_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        //{
+        //    int id = int.Parse(this.RadComboShipmentKey.SelectedValue.Split(',')[0]);
+        //    int shipmentid = int.Parse(this.RadComboShipmentKey.SelectedValue.Split(',')[1]);
 
-                this.txtShipTo.Text = objDistributorClientAddress.CompanyName;
-                this.ShipmentModeDropDownList.Text = objShipmentMode.Name;
+        //    if (id > 0 && shipmentid > 0)
+        //    {
+        //        ViewState["DistributorClientAddress"] = id;
+        //        ViewState["ShipmentID"] = shipmentid;
+        //        DistributorClientAddressBO objDistributorClientAddress = new DistributorClientAddressBO();
+        //        objDistributorClientAddress.ID = id;
+        //        objDistributorClientAddress.GetObject();
 
-                string state = (objDistributorClientAddress.State != null) ? objDistributorClientAddress.Suburb : string.Empty;
+        //        ShipmentModeBO objShipmentMode = new ShipmentModeBO();
+        //        objShipmentMode.ID = shipmentid;
+        //        objShipmentMode.GetObject();
 
-                this.lblShipmentKeyAddress.Text = objDistributorClientAddress.CompanyName + " , " + objDistributorClientAddress.Address + " , " + objDistributorClientAddress.Suburb + " , " + state + " , " + objDistributorClientAddress.objCountry.ShortName + " , " + objDistributorClientAddress.PostCode;
+        //        //this.txtShipTo.Text = objDistributorClientAddress.CompanyName;
+        //        this.ShipmentModeDropDownList.Text = objShipmentMode.Name;
 
+        //        string state = (objDistributorClientAddress.State != null) ? objDistributorClientAddress.Suburb : string.Empty;
 
-                this.populateInvoiceOrders(0, id, true, shipmentid, false, id, true);
+        //        this.lblShipmentKeyAddress.Text = objDistributorClientAddress.CompanyName + " , " + objDistributorClientAddress.Address + " , " + objDistributorClientAddress.Suburb + " , " + state + " , " + objDistributorClientAddress.objCountry.ShortName + " , " + objDistributorClientAddress.PostCode;
 
 
-            }
-        }
-        */
-        protected void btnDelete_Click(object sender, EventArgs e)
+        //        this.populateInvoiceOrders(0, id, true, shipmentid, false, id, true);
+
+
+        //    }
+        //}
+
+    protected void btnDelete_Click(object sender, EventArgs e)
         {
             //NNM
             int id = int.Parse(this.hdnSelectedID.Value);
@@ -822,7 +802,7 @@ namespace Indico
 
 
 
-        
+
         ///// <summary>
         ///// Populate the controls.
         ///// </summary>
@@ -1146,143 +1126,143 @@ namespace Indico
 
                     #endregion
 
-                    #region Create Invoice Header
+                                #region Create Invoice Header
 
-                    InvoiceBO objInvoice = new InvoiceBO(this.ObjContext);
-                    if (QueryID > 0 || this.CreatedInvoiceId > 0)
-                    {
-                        objInvoice.ID = (this.QueryID > 0) ? this.QueryID : this.CreatedInvoiceId;
-                        objInvoice.GetObject();
-                    }
-                    else
-                    {
-                        objInvoice.Creator = this.LoggedUser.ID;
-                        objInvoice.CreatedDate = DateTime.Now;
-                    }
-                    objInvoice.InvoiceNo = this.txtInvoiceNo.Text;
-                    objInvoice.InvoiceDate = Convert.ToDateTime(this.txtInvoiceDate.Text);
-                    objInvoice.ShipTo = this.DistributorClientAddress;
-                    objInvoice.AWBNo = this.txtAwbNo.Text;
-                    objInvoice.WeeklyProductionCapacity = (this.chkChangeOrderDate.Checked == true) ? objWeeklyProductionCapacity.ID : int.Parse(this.WeekComboBox.SelectedValue);
-                    objInvoice.ShipmentMode = this.ShipmentModeID;
-                    //objInvoice.ShipmentDate = (this.chkChangeOrderDate.Checked == true) ? Convert.ToDateTime(this.txtInvoiceDate.Text) : Convert.ToDateTime(this.ddlShipmentDates.SelectedItem.Text);
-                    objInvoice.Status = int.Parse(this.StatusDropDownList.SelectedValue);
-                    //objInvoice.IsBillTo = this.chkIsBillTo.Checked;
-                    //objInvoice.BillTo = (this.chkIsBillTo.Checked) ? int.Parse(this.BillToDropDownList.SelectedValue) : 22;
-                    objInvoice.Bank = int.Parse(this.BankDropDownList.SelectedValue);
-                    //objInvoice.IndimanInvoiceNo = (this.LoggedUserRoleName == UserRole.IndimanAdministrator) ? this.txtIndimanInvoiceNo.Text : string.Empty;
+                                InvoiceBO objInvoice = new InvoiceBO(this.ObjContext);
+                                if (QueryID > 0 || this.CreatedInvoiceId > 0)
+                                {
+                                    objInvoice.ID = (this.QueryID > 0) ? this.QueryID : this.CreatedInvoiceId;
+                                    objInvoice.GetObject();
+                                }
+                                else
+                                {
+                                    objInvoice.Creator = this.LoggedUser.ID;
+                                    objInvoice.CreatedDate = DateTime.Now;
+                                }
+                                objInvoice.InvoiceNo = this.txtInvoiceNo.Text;
+                                objInvoice.InvoiceDate = Convert.ToDateTime(this.txtInvoiceDate.Text);
+                                objInvoice.ShipTo = this.DistributorClientAddress;
+                                objInvoice.AWBNo = this.txtAwbNo.Text;
+                                objInvoice.WeeklyProductionCapacity = (this.chkChangeOrderDate.Checked == true) ? objWeeklyProductionCapacity.ID : int.Parse(this.WeekComboBox.SelectedValue);
+                                objInvoice.ShipmentMode = this.ShipmentModeID;
+                                //objInvoice.ShipmentDate = (this.chkChangeOrderDate.Checked == true) ? Convert.ToDateTime(this.txtInvoiceDate.Text) : Convert.ToDateTime(this.ddlShipmentDates.SelectedItem.Text);
+                                objInvoice.Status = int.Parse(this.StatusDropDownList.SelectedValue);
+                                //objInvoice.IsBillTo = this.chkIsBillTo.Checked;
+                                //objInvoice.BillTo = (this.chkIsBillTo.Checked) ? int.Parse(this.BillToDropDownList.SelectedValue) : 22;
+                                objInvoice.Bank = int.Parse(this.BankDropDownList.SelectedValue);
+                                //objInvoice.IndimanInvoiceNo = (this.LoggedUserRoleName == UserRole.IndimanAdministrator) ? this.txtIndimanInvoiceNo.Text : string.Empty;
 
-                    //if (this.LoggedUserRoleName == UserRole.IndimanAdministrator)
-                    //{
-                    //    objInvoice.IndimanInvoiceDate = Convert.ToDateTime(this.txtIndimanInvoiceDate.Text);
-                    //}
+                                //if (this.LoggedUserRoleName == UserRole.IndimanAdministrator)
+                                //{
+                                //    objInvoice.IndimanInvoiceDate = Convert.ToDateTime(this.txtIndimanInvoiceDate.Text);
+                                //}
 
-                    objInvoice.Modifier = this.LoggedUser.ID;
-                    objInvoice.ModifiedDate = DateTime.Now;
+                                objInvoice.Modifier = this.LoggedUser.ID;
+                                objInvoice.ModifiedDate = DateTime.Now;
 
-                    this.ObjContext.SaveChanges();
+                                this.ObjContext.SaveChanges();
 
-                    ViewState["InvoiceId"] = objInvoice.ID;
+                                ViewState["InvoiceId"] = objInvoice.ID;
 
-                    #endregion
+                                #endregion
 
-                    #region InvoiceOrderDetail
+                                #region InvoiceOrderDetail
 
-                    foreach (GridDataItem item in ItemGrid.Items)
-                    {
-                        TextBox txtRate = (TextBox)item.FindControl("txtRate");
-                        int id = int.Parse(((System.Web.UI.WebControls.WebControl)(txtRate)).Attributes["invoiceorder"].ToString());
-                        int orderdetail = int.Parse(((System.Web.UI.WebControls.WebControl)(txtRate)).Attributes["orderdetail"].ToString());
+                                foreach (GridDataItem item in ItemGrid.Items)
+                                {
+                                    TextBox txtRate = (TextBox)item.FindControl("txtRate");
+                                    int id = int.Parse(((System.Web.UI.WebControls.WebControl)(txtRate)).Attributes["invoiceorder"].ToString());
+                                    int orderdetail = int.Parse(((System.Web.UI.WebControls.WebControl)(txtRate)).Attributes["orderdetail"].ToString());
 
-                        InvoiceOrderBO objInvoiceOrder = new InvoiceOrderBO(this.ObjContext);
-                        if (id > 0)
-                        {
-                            objInvoiceOrder.ID = id;
-                            objInvoiceOrder.GetObject();
+                                    InvoiceOrderBO objInvoiceOrder = new InvoiceOrderBO(this.ObjContext);
+                                    if (id > 0)
+                                    {
+                                        objInvoiceOrder.ID = id;
+                                        objInvoiceOrder.GetObject();
+                                    }
+
+                                    objInvoiceOrder.Invoice = int.Parse(ViewState["InvoiceId"].ToString());
+                                    objInvoiceOrder.OrderDetail = orderdetail;
+                                    objInvoiceOrder.FactoryPrice = Convert.ToDecimal(txtRate.Text);
+                                    // objInvoiceOrder.IndimanPrice = (this.LoggedUserRoleName == UserRole.IndimanAdministrator) ? Convert.ToDecimal(txtIndimanRate.Text) : Convert.ToDecimal("0");
+
+                                }
+                                this.ObjContext.SaveChanges();
+
+                                #endregion
+
+                                #region Change Order Detail Status
+
+                                List<int> lstOrders = new List<int>();
+                                int orderid = 0;
+                                int odstatus = 0;
+                                int osatus = 0;
+
+
+                                if (this.StatusDropDownList.SelectedValue == "5")
+                                {
+                                    odstatus = 16;
+                                    osatus = 21;
+                                }
+                                else if (this.StatusDropDownList.SelectedValue == "4")
+                                {
+                                    odstatus = 17;
+                                    osatus = 19;
+                                }
+
+                                foreach (GridDataItem item in ItemGrid.Items)
+                                {
+                                    TextBox txtRate = (TextBox)item.FindControl("txtRate");
+                                    int orderdetail = int.Parse(((System.Web.UI.WebControls.WebControl)(txtRate)).Attributes["orderdetail"].ToString());
+
+                                    OrderDetailBO objOrderDetail = new OrderDetailBO(this.ObjContext);
+                                    objOrderDetail.ID = orderdetail;
+                                    objOrderDetail.GetObject();
+
+                                    if (objOrderDetail.Order != orderid)
+                                    {
+                                        lstOrders.Add(objOrderDetail.Order);
+                                        orderid = objOrderDetail.Order;
+                                    }
+
+                                    objOrderDetail.Status = odstatus;
+                                }
+
+                                this.ObjContext.SaveChanges();
+
+
+                                #endregion
+
+                                #region Change Order Status
+
+                                if (lstOrders.Count > 0)
+                                {
+                                    foreach (int order in lstOrders)
+                                    {
+                                        OrderBO objOrder = new OrderBO(this.ObjContext);
+                                        objOrder.ID = order;
+                                        objOrder.GetObject();
+
+                                        objOrder.Status = osatus;
+                                    }
+
+                                    this.ObjContext.SaveChanges();
+                                }
+
+                                #endregion
+
+
+
+                                ts.Complete();
+                            }
+
                         }
-
-                        objInvoiceOrder.Invoice = int.Parse(ViewState["InvoiceId"].ToString());
-                        objInvoiceOrder.OrderDetail = orderdetail;
-                        objInvoiceOrder.FactoryPrice = Convert.ToDecimal(txtRate.Text);
-                        // objInvoiceOrder.IndimanPrice = (this.LoggedUserRoleName == UserRole.IndimanAdministrator) ? Convert.ToDecimal(txtIndimanRate.Text) : Convert.ToDecimal("0");
-
-                    }
-                    this.ObjContext.SaveChanges();
-
-                    #endregion
-
-                    #region Change Order Detail Status
-
-                    List<int> lstOrders = new List<int>();
-                    int orderid = 0;
-                    int odstatus = 0;
-                    int osatus = 0;
-
-
-                    if (this.StatusDropDownList.SelectedValue == "5")
-                    {
-                        odstatus = 16;
-                        osatus = 21;
-                    }
-                    else if (this.StatusDropDownList.SelectedValue == "4")
-                    {
-                        odstatus = 17;
-                        osatus = 19;
-                    }
-
-                    foreach (GridDataItem item in ItemGrid.Items)
-                    {
-                        TextBox txtRate = (TextBox)item.FindControl("txtRate");
-                        int orderdetail = int.Parse(((System.Web.UI.WebControls.WebControl)(txtRate)).Attributes["orderdetail"].ToString());
-
-                        OrderDetailBO objOrderDetail = new OrderDetailBO(this.ObjContext);
-                        objOrderDetail.ID = orderdetail;
-                        objOrderDetail.GetObject();
-
-                        if (objOrderDetail.Order != orderid)
+                        catch (Exception ex)
                         {
-                            lstOrders.Add(objOrderDetail.Order);
-                            orderid = objOrderDetail.Order;
+                            // Log the error
+                            IndicoLogging.log.Error("Error occured while Adding or Updating Invoicing", ex);
                         }
-
-                        objOrderDetail.Status = odstatus;
                     }
-
-                    this.ObjContext.SaveChanges();
-
-
-                    #endregion
-
-                    #region Change Order Status
-
-                    if (lstOrders.Count > 0)
-                    {
-                        foreach (int order in lstOrders)
-                        {
-                            OrderBO objOrder = new OrderBO(this.ObjContext);
-                            objOrder.ID = order;
-                            objOrder.GetObject();
-
-                            objOrder.Status = osatus;
-                        }
-
-                        this.ObjContext.SaveChanges();
-                    }
-
-                    #endregion
-
-
-
-                    ts.Complete();
-                }
-
-            }
-            catch (Exception ex)
-            {
-                // Log the error
-                IndicoLogging.log.Error("Error occured while Adding or Updating Invoicing", ex);
-            }
-        }
 
         public void loadWeekNo()
         {
@@ -1776,7 +1756,7 @@ namespace Indico
             {
                 this.ItemGrid.DataSource = lstInvoiceOrderDetails;
                 this.ItemGrid.DataBind();
-                this.dvEmptyContentInvoiceOrders.Visible = false;
+                //this.dvEmptyContentInvoiceOrders.Visible = false;
           //      this.dvFactoryRate.Visible = true;
                 this.ItemGrid.Visible = true;
 
@@ -1785,7 +1765,7 @@ namespace Indico
             else
             {
                 this.ItemGrid.Visible = false;
-                this.dvEmptyContentInvoiceOrders.Visible = true;
+            //    this.dvEmptyContentInvoiceOrders.Visible = true;
             //    this.dvFactoryRate.Visible = false;
             }
         }
@@ -1842,6 +1822,12 @@ namespace Indico
         //}
 
         #endregion
+
+        protected void CostSheetButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 
     #region Internal Class
