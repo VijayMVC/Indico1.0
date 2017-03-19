@@ -13,8 +13,6 @@ CREATE TABLE [dbo].[InvoiceOrderDetailItem](
  [ID] [int] IDENTITY(1,1) NOT NULL,
  [Invoice] [int] NULL,
  [OrderDetail] [int] NOT NULL,
- [OrderDetailQuantity] [int] NOT NULL,
- [Order] [int] NOT NULL,
  [FactoryPrice] [decimal](8, 2) NULL,
  [IndimanPrice] [decimal](8, 2) NULL,
  [OtherCharges] [decimal](8,2) NULL,
@@ -43,20 +41,6 @@ GO
 ALTER TABLE [dbo].[InvoiceOrderDetailItem] CHECK CONSTRAINT [FK_InvoiceOrderDetailItem_OrderDetail]
 GO
 
-ALTER TABLE [dbo].[InvoiceOrderDetailItem]  WITH CHECK ADD  CONSTRAINT [FK_InvoiceOrderDetailItem_OrderDetailQuantity] FOREIGN KEY([OrderDetailQuantity])
-REFERENCES [dbo].[OrderDetailQty] ([ID])
-GO
-
-ALTER TABLE [dbo].[InvoiceOrderDetailItem] CHECK CONSTRAINT [FK_InvoiceOrderDetailItem_OrderDetailQuantity]
-GO
-
-ALTER TABLE [dbo].[InvoiceOrderDetailItem]  WITH CHECK ADD  CONSTRAINT [FK_InvoiceOrderDetailItem_Oreder] FOREIGN KEY([Order])
-REFERENCES [dbo].[Order] ([ID])
-GO
-
-ALTER TABLE [dbo].[InvoiceOrderDetailItem] CHECK CONSTRAINT [FK_InvoiceOrderDetailItem_OrderDetail]
-GO
-
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'ID'
 GO
 
@@ -73,12 +57,6 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Indiman Price'
 GO
 
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Is Removed' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'IsRemoved'
-GO
-
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'ODQ' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'OrderDetailQuantity'
-GO
-
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'O' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'Order'
 GO
 
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Factory Notes' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'FactoryNotes'
@@ -294,7 +272,7 @@ BEGIN
 
 			ON (S.InvoiceOrderDI = T.ID) 
 			WHEN NOT MATCHED
-				THEN INSERT(OrderDetail, FactoryPrice, IndimanPrice, SizeQty, SizeSrn, SizeName, [Order], [OrderDetailQuantity]) 
+				THEN INSERT(OrderDetail, FactoryPrice, IndimanPrice) 
 					VALUES(S.OrderDetailID, 0.0, 0.0, S.SizeQuantity, S.SizeSrNumber, S.SizeDescription, S.OrderID, S.OrderDetailQuantityID);
 
 			SELECT DISTINCT iodi.ID AS InvoiceOrderDetailItemID , ii.* FROM [dbo].[InvoiceOrderDetailItem] iodi
@@ -305,6 +283,7 @@ BEGIN
 	ELSE
 	BEGIN
 		SELECT
+
 			  'PO-' + CAST(o.ID AS nvarchar(47)) AS PurchaseOrderNumber
 			 ,ROW_NUMBER() OVER(ORDER BY o.ID) AS Sequance
 			 ,o.ID AS OrderID
