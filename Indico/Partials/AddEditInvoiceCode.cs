@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Indico.Models;
 using System.Data;
@@ -10,32 +8,33 @@ using Telerik.Web.UI;
 using System.Web.UI.WebControls;
 using Indico.Common.Extensions;
 using Indico.BusinessObjects;
-using System.Text;
+using DB = Indico.Providers.Data.DapperProvider;
 
 // ReSharper disable once CheckNamespace
 namespace Indico
 {
     public partial class AddEditInvoice
     {
+        public enum InvoiceType
+        {
+            Factory = 1 ,
+            Indiman = 2
+        }
+
         #region Fields
 
+        private string _invoiceTypeParameter;
         private int _currentInvoiceId;
+        private InvoiceModel _currentInvoice;
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        /// ID Of the editing invoice . if 0 this is a new on (not editing)
-        /// </summary>
         private int CurrentInvoiceId
         {
             get
             {
-
-                //if (_currentInvoiceId > -1)
-                //    return _currentInvoiceId;
-
                 _currentInvoiceId = 0;
                 if (Request.QueryString["id"] != null)
                 {
@@ -45,15 +44,26 @@ namespace Indico
             }
         }
 
-        /// <summary>
-        /// Is this a new Invoice or editing existing one
-        /// </summary>
+        private InvoiceModel CurrentInvoice
+        {
+            get
+            {
+                if (CurrentInvoiceId < 1)
+                    return null;
+                return _currentInvoice ?? (_currentInvoice = DB.Invoice(CurrentInvoiceId));
+            }
+        }
+
+        private string InvoiceTypeParameter
+        {
+            get { return _invoiceTypeParameter ?? (_invoiceTypeParameter = Request.QueryString["type"]); }
+
+        }
         private bool IsNew { get { return CurrentInvoiceId < 1; } }
 
         private bool InnertextChanged { get { return ((bool?)Session["InnertextChanged"] ?? false); } set { Session["InnertextChanged"] = value; } }
 
-        // private List<NewShipmentOrderDetailSizeQtyViewModel> OriginalInvoiceItems { get { return Session["OriginalInvoiceItems"] as List<NewShipmentOrderDetailSizeQtyViewModel>; } set { Session["OriginalInvoiceItems"] = value; } }
-        private List<NewShipmentOrderDetailSizeQtyViewModel> InvoiceItems { get { return Session["InvoiceItems"] as List<NewShipmentOrderDetailSizeQtyViewModel>; } set { Session["InvoiceItems"] = value; } }
+        private List<InvoiceOrderDetailItemModel> InvoiceItems { get { return Session["InvoiceItems"] as List<InvoiceOrderDetailItemModel>; } set { Session["InvoiceItems"] = value; } }
 
         private List<ShipmentkeyModel> ShipmentKeys
         {
@@ -66,6 +76,10 @@ namespace Indico
                 Session["ShipmentKeys"] = value;
             }
         }
+
+        public InvoiceType CurrentInvoiceType { get { return (InvoiceType) Session["CurrentInvoiceType"]; } private set { Session["CurrentInvoiceType"] = value; } }
+
+
         #endregion
 
         #region UI Events
@@ -75,12 +89,9 @@ namespace Indico
             var selectedWeekId = Convert.ToInt32(WeekComboBox.SelectedValue);
             if (selectedWeekId < 1)
                 return;
-            using (var connection = GetIndicoConnnection())
-            {
-                var shipmentKeys = GetShipmentKeys(connection, selectedWeekId);
-                BindData(RadComboShipmentKey, shipmentKeys);
-                EnableControl(RadComboShipmentKey);
-            }
+            var shipmentKeys = GetShipmentKeys(selectedWeekId);
+            BindData(RadComboShipmentKey, shipmentKeys);
+            EnableControl(RadComboShipmentKey);
         }
 
         protected void OnShipmentKeyComboBoxSelectionChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -92,45 +103,38 @@ namespace Indico
             var selectedModel = ShipmentKeys[index];
             if (selectedModel == null)
                 return;
-            using (var connection = GetIndicoConnnection())
+            var selectedItem = RadComboShipmentKey.SelectedItem;
+            if (selectedItem == null)
+                return;
+
+            EnableOrDisableInvoiceInformationControls(true);
+            LoadBillToAndShipTo();
+            LoadBanks();
+            LoadShipmentModes();
+            LoadStatus();
+            LoadPorts();
+
+            var weeklyCapacityId = int.Parse(WeekComboBox.SelectedItem.Value);
+            var obj = new WeeklyProductionCapacityBO {ID = weeklyCapacityId};
+            obj.GetObject();
+
+            int invoiceId;
+
+            var objInv = new InvoiceBO {WeeklyProductionCapacity = weeklyCapacityId, ShipTo = selectedModel.ShipToID, ShipmentDate = selectedModel.ShipmentDate};
+            // TODO: Add database fields for below two
+            //objInv.Port = selectedModel.PortID;
+            //objInv.PriceTerm = selectedModel.PriceTermID;
+            var lstInvoices = objInv.SearchObjects();
+
+            if (lstInvoices.Count == 0)
             {
-                var selectedItem = RadComboShipmentKey.SelectedItem;
-                if (selectedItem == null)
-                    return;
-
-                EnableOrDisableInvoiceInformationControls(true);
-                LoadBillToAndShipTo(connection);
-                LoadBanks(connection);
-                LoadShipmentModes(connection);
-                LoadStatus(connection);
-                LoadPorts(connection);
-
-                int weeklyCapacityId = int.Parse(this.WeekComboBox.SelectedItem.Value);
-                WeeklyProductionCapacityBO obj = new WeeklyProductionCapacityBO();
-                obj.ID = weeklyCapacityId;
-                obj.GetObject();
-
-                int invoiceId = 0;
-
-                InvoiceBO objInv = new InvoiceBO();
-                objInv.WeeklyProductionCapacity = weeklyCapacityId;
-                objInv.ShipTo = selectedModel.ShipToID;
-                objInv.ShipmentDate = selectedModel.ShipmentDate;
-                // TODO: Add database fields for below two
-                //objInv.Port = selectedModel.PortID;
-                //objInv.PriceTerm = selectedModel.PriceTermID;
-                List<InvoiceBO> lstInvoices = objInv.SearchObjects();
-
-                if (lstInvoices.Count > 0)
-                {
-                    invoiceId = this.CreateInvoice(connection, weeklyCapacityId, selectedModel.ShipToID, selectedModel.PortID, obj.WeekendDate.Year.ToString() + obj.WeekendDate.Month.ToString().PadLeft(2, '0') + obj.WeekendDate.Day.ToString().PadLeft(2, '0'),
-                        selectedModel.ShipmentDate.GetSQLDateString(), selectedModel.PriceTermID, selectedModel.ShipmentModeID);
-                }
-                else
-                    invoiceId = lstInvoices[0].ID;
-
-                this.LoadInvoice(connection, invoiceId);
+                invoiceId = DB.CreateInvoice(weeklyCapacityId, selectedModel.ShipToID, selectedModel.PortID, obj.WeekendDate.Year + obj.WeekendDate.Month.ToString().PadLeft(2, '0') + obj.WeekendDate.Day.ToString().PadLeft(2, '0'),
+                    selectedModel.ShipmentDate.GetSQLDateString(), selectedModel.PriceTermID, selectedModel.ShipmentModeID, LoggedUser.ID);
             }
+            else
+                invoiceId = lstInvoices[0].ID;
+
+            LoadInvoiceItems(invoiceId);
         }
 
         protected void OnItemGridDataBind(object sender, GridItemEventArgs e)
@@ -140,9 +144,9 @@ namespace Indico
             {
                 var dataItem = item;
 
-                if ((dataItem.ItemIndex > -1 && dataItem.DataItem is NewShipmentOrderDetailSizeQtyViewModel))
+                if ((dataItem.ItemIndex > -1 && dataItem.DataItem is InvoiceOrderDetailItemModel))
                 {
-                    var modelObject = (NewShipmentOrderDetailSizeQtyViewModel)dataItem.DataItem;
+                    var modelObject = (InvoiceOrderDetailItemModel)dataItem.DataItem;
                     if (modelObject.IsRemoved)
                     {
                         item.Visible = false;
@@ -172,79 +176,88 @@ namespace Indico
 
         protected void OnItemGridItemCommand(object sender, GridCommandEventArgs e)
         {
-            if (e.CommandSource is RadButton)
+            var radButton = e.CommandSource as RadButton;
+            if (radButton != null)
             {
-                var button = e.CommandSource as RadButton;
-                if (button.ID == "ApplyOtherChargesButton")
+                var button = radButton;
+                switch (button.ID)
                 {
-                    var textBox = GetControl<RadNumericTextBox>(button.Parent, "OtherChargesApplyTextBox");
-                    decimal value;
-                    if (textBox.Text != null)
+                    case "ApplyOtherChargesButton":
                     {
-                        if (decimal.TryParse(textBox.Text, out value))
+                        var textBox = GetControl<RadNumericTextBox>(button.Parent, "OtherChargesApplyTextBox");
+                        if (textBox.Text != null)
                         {
-                            var gridItems = ItemGrid.Items;
-                            var en = gridItems.GetEnumerator();
-                            var invoiceItems = InvoiceItems;
-                            while (en.MoveNext())
+                            decimal value;
+                            if (decimal.TryParse(textBox.Text, out value))
                             {
-                                var gridItem = en.Current as GridDataItem;
-                                var tb = GetControl<RadNumericTextBox>(gridItem, "OtherChargesTextBox");
-                                var id = int.Parse(tb.Attributes["uid"]);
+                                var gridItems = ItemGrid.Items;
+                                var en = gridItems.GetEnumerator();
+                                var invoiceItems = InvoiceItems;
+                                while (en.MoveNext())
+                                {
+                                    var gridItem = en.Current as GridDataItem;
+                                    var tb = GetControl<RadNumericTextBox>(gridItem, "OtherChargesTextBox");
+                                    var id = int.Parse(tb.Attributes["uid"]);
 
-                                var toUpdate = invoiceItems.FirstOrDefault(i => i.InvoiceOrderDetailItemID == id);
-                                if (toUpdate != null)
-                                    toUpdate.OtherCharges = value;
+                                    var toUpdate = invoiceItems.FirstOrDefault(i => i.InvoiceOrderDetailItemID == id);
+                                    if (toUpdate != null)
+                                        toUpdate.OtherCharges = value;
 
+                                }
+
+                                InvoiceItems = invoiceItems;
                             }
-
-                            InvoiceItems = invoiceItems;
                         }
                     }
-                }
-                else if (button.ID == "ApplyFactoryPriceButton")
-                {
-                    var textBox = GetControl<RadNumericTextBox>(button.Parent, "FactoryPriceApplyTextBox");
-                    decimal value;
-                    if (textBox.Text != null)
+                        break;
+                    case "ApplyFactoryPriceButton":
                     {
-                        if (decimal.TryParse(textBox.Text, out value))
+                        var textBox = GetControl<RadNumericTextBox>(button.Parent, "FactoryPriceApplyTextBox");
+                        if (textBox.Text != null)
                         {
-                            var gridItems = ItemGrid.Items;
-                            var en = gridItems.GetEnumerator();
-                            var invoiceItems = InvoiceItems;
-                            while (en.MoveNext())
+                            decimal value;
+                            if (decimal.TryParse(textBox.Text, out value))
                             {
-                                var gridItem = en.Current as GridDataItem;
-                                var tb = GetControl<RadNumericTextBox>(gridItem, "FactoryPriceTextBox");
-                                var id = int.Parse(tb.Attributes["uid"]);
+                                var gridItems = ItemGrid.Items;
+                                var en = gridItems.GetEnumerator();
+                                var invoiceItems = InvoiceItems;
+                                while (en.MoveNext())
+                                {
+                                    var gridItem = en.Current as GridDataItem;
+                                    var tb = GetControl<RadNumericTextBox>(gridItem, "FactoryPriceTextBox");
+                                    var id = int.Parse(tb.Attributes["uid"]);
 
-                                var toUpdate = invoiceItems.FirstOrDefault(i => i.InvoiceOrderDetailItemID == id);
-                                if (toUpdate != null)
-                                    toUpdate.FactoryPrice = value;
+                                    var toUpdate = invoiceItems.FirstOrDefault(i => i.InvoiceOrderDetailItemID == id);
+                                    if (toUpdate != null)
+                                        toUpdate.FactoryPrice = value;
 
+                                }
+                                InvoiceItems = invoiceItems;
                             }
-                            InvoiceItems = invoiceItems;
                         }
                     }
-                }
-                else if (e.Item is GridDataItem)
-                {
-                    var dataItem = e.Item as GridDataItem;
-                    var index = dataItem.DataSetIndex;
-                    var items = InvoiceItems;
-                    var invoiceItem = items[index];
+                        break;
+                    default:
+                        var item = e.Item as GridDataItem;
+                        if (item != null)
+                        {
+                            var dataItem = item;
+                            var index = dataItem.DataSetIndex;
+                            var items = InvoiceItems;
+                            var invoiceItem = items[index];
 
-                    string id = invoiceItem.InvoiceOrderDetailItemID.ToString();
+                            var id = invoiceItem.InvoiceOrderDetailItemID.ToString();
 
-                    using (var connection = GetIndicoConnnection())
-                    {
-                        RemoveItemInGrid(connection, id);
-                    }
-                    invoiceItem.IsRemoved = true;
-                    InvoiceItems = items;
-                    dataItem.Visible = false;
-                    return;
+                            using (var connection = GetIndicoConnnection())
+                            {
+                                RemoveItemInGrid(connection, id);
+                            }
+                            invoiceItem.IsRemoved = true;
+                            InvoiceItems = items;
+                            dataItem.Visible = false;
+                            return;
+                        }
+                        break;
                 }
             }
             RebindItemGrid();
@@ -269,7 +282,15 @@ namespace Indico
                 var toUpdate = invoiceItems.FirstOrDefault(i => i.InvoiceOrderDetailItemID == id);
                 if (toUpdate != null)
                 {
-                    toUpdate.FactoryPrice = toUpdate.OtherCharges = toUpdate.CostsheetPrice.GetValueOrDefault();
+                    switch (CurrentInvoiceType)
+                    {
+                        case InvoiceType.Factory:
+                            toUpdate.FactoryPrice = toUpdate.FactoryCostsheetPrice.GetValueOrDefault();
+                            break;
+                        case InvoiceType.Indiman:
+                            toUpdate.IndimanPrice = toUpdate.IndimanCostsheetPrice.GetValueOrDefault();
+                            break;
+                    }
                 }
             }
             InvoiceItems = invoiceItems;
@@ -280,35 +301,32 @@ namespace Indico
         {
             if (Page.IsValid)
             {
-                using (var connection = GetIndicoConnnection())
-                {
-                    CreateNewInvoice(connection);
-                }
+                Save();
                 Response.Redirect("/ViewInvoices.aspx");
             }
         }
 
-        protected void btnCreateInvoice_Click(object sender, EventArgs e)
-        {
-            if (InvoiceItems == null)
-            {
-                CustomValidator cv = new CustomValidator();
-                cv.IsValid = false;
-                cv.ValidationGroup = "validateInvoice";
-                cv.ErrorMessage = "No Shipment key have been selected";
-                Page.Validators.Add(cv);
-            }
+        //protected void btnCreateInvoice_Click(object sender, EventArgs e)
+        //{
+        //    if (InvoiceItems == null)
+        //    {
+        //        CustomValidator cv = new CustomValidator();
+        //        cv.IsValid = false;
+        //        cv.ValidationGroup = "validateInvoice";
+        //        cv.ErrorMessage = "No Shipment key have been selected";
+        //        Page.Validators.Add(cv);
+        //    }
 
-            if (Page.IsValid)
-            {
-                using (var connection = GetIndicoConnnection())
-                {
-                    CreateNewInvoice(connection);
-                }
+        //    if (Page.IsValid)
+        //    {
+        //        using (var connection = GetIndicoConnnection())
+        //        {
+        //            CreateNewInvoice(connection);
+        //        }
 
-                Response.Redirect("/ViewInvoices.aspx");
-            }
-        }
+        //        Response.Redirect("/ViewInvoices.aspx");
+        //    }
+        //}
 
         protected void OnOtherChargesTextChanged(object sender, EventArgs e)
         {
@@ -343,9 +361,12 @@ namespace Indico
             InnertextChanged = true;
         }
 
-        protected void OnNotesChanged(object sender, EventArgs e)
+        protected void OnIndimanPriceTextChanged(object sender, EventArgs e)
         {
-            var textBox = sender as RadTextBox;
+            var textBox = sender as RadNumericTextBox;
+            if (textBox == null)
+                return;
+
             var uid = int.Parse(textBox.Attributes["uid"]);
 
             var items = InvoiceItems;
@@ -353,9 +374,10 @@ namespace Indico
 
             if (item != null)
             {
-                item.Notes = textBox.Text;
+                item.IndimanPrice = (decimal)textBox.Value.GetValueOrDefault();
                 InvoiceItems = items;
             }
+            InnertextChanged = true;
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -363,6 +385,39 @@ namespace Indico
             if (!IsPostBack)
             {
                 InitializeUserInterface();
+
+                var currentInvoice = CurrentInvoice;
+                if (currentInvoice == null)
+                {
+                    switch (InvoiceTypeParameter)
+                    {
+                        case "i":
+                            CurrentInvoiceType = InvoiceType.Indiman;
+                            break;
+                        case "f":
+                            CurrentInvoiceType = InvoiceType.Factory;
+                            break;
+                        default:
+                            throw new Exception("Invoice type not provided");
+                    }
+                }
+                else
+                {
+                    CurrentInvoiceType = string.IsNullOrWhiteSpace(CurrentInvoice.IndimanInvoiceNo) ? InvoiceType.Indiman
+                        : InvoiceType.Factory;
+                }
+
+                switch (CurrentInvoiceType)
+                {
+                    case InvoiceType.Factory:
+                        ItemGrid.Columns.FindByUniqueName("IndimanCostsheetPrice").Visible = false;
+                        ItemGrid.Columns.FindByUniqueName("IndimanPrice").Visible = false;
+                        break;
+                    case InvoiceType.Indiman:
+                        ItemGrid.Columns.FindByUniqueName("FactoryCostsheetPrice").Visible = false;
+                        ItemGrid.Columns.FindByUniqueName("FactoryPrice").Visible = false;
+                        break;
+                }
             }
         }
 
@@ -372,46 +427,40 @@ namespace Indico
 
         private void InitializeUserInterface()
         {
-            using (var databaseConnection = GetIndicoConnnection())
-            {
-                if (IsNew)
-                    InitializeUserInterfaceForNewInvoice(databaseConnection);
-                else
-                    InitializeUserInterfaceForExistingInvoice(databaseConnection);
-            }
+            if (IsNew)
+                InitializeUserInterfaceForNewInvoice();
+            else
+                InitializeUserInterfaceForExistingInvoice();
         }
 
-        private void InitializeUserInterfaceForNewInvoice(IDbConnection databaseConnection)
+        private void InitializeUserInterfaceForNewInvoice()
         {
             DisableControl(RadComboShipmentKey);
             EnableOrDisableInvoiceInformationControls(false);
-            BindData(WeekComboBox, GetWeeks(databaseConnection));
+            BindData(WeekComboBox, DB.GetWeekNames(DateTime.Now.Year));
         }
 
-        private void InitializeUserInterfaceForExistingInvoice(IDbConnection connection)
+        private void InitializeUserInterfaceForExistingInvoice()
         {
-            var invoice = GetInvoice(connection, CurrentInvoiceId);
+            var invoice = DB.Invoice(CurrentInvoiceId);
             WeekComboBox.Enabled = false;
-            //BindData(WeekComboBox, GetWeeks(connection));
-            //WeekComboBox.
             txtShipmentDate.Text = invoice.ShipmentDate.ToString("dd MMMM yyyy");
             DisableControl(RadComboShipmentKey);
             txtInvoiceNo.Text = invoice.InvoiceNo;
             txtInvoiceDate.Text = invoice.InvoiceDate.ToString("dd MMMM yyyy");
             txtAwbNo.Text = invoice.AWBNo;
 
-            LoadBillToAndShipTo(connection);
-            LoadBanks(connection);
-            LoadShipmentModes(connection);
-            LoadStatus(connection);
-            LoadPorts(connection);
-            LoadItems(connection, invoice.ID);
+            LoadBillToAndShipTo();
+            LoadBanks();
+            LoadShipmentModes();
+            LoadStatus();
+            LoadPorts();
+            LoadItems(invoice.ID);
 
             ShipToDropDownList.Items.FindByValue(invoice.ShipTo.ToString()).Selected = true;
             BillToDropDownList.Items.FindByValue(invoice.BillTo.ToString()).Selected = true;
             BankDropDownList.Items.FindByValue(invoice.Bank.ToString()).Selected = true;
             ShipmentModeDropDownList.Items.FindByValue(invoice.ShipmentMode.ToString()).Selected = true;
-            //PortDropDownList.Items.FindByValue(invoice..ToString()).Selected = true;
             StatusDropDownList.Items.FindByValue(invoice.Status.ToString()).Selected = true;
         }
 
@@ -423,111 +472,54 @@ namespace Indico
             else DisableControl(controls);
         }
 
-        private IEnumerable<ShipmentkeyModel> GetShipmentKeys(IDbConnection connection, int weekId)
+        private IEnumerable<ShipmentkeyModel> GetShipmentKeys(int weekId)
         {
-            var result = connection.Query<ShipmentkeyModel>(string.Format("EXEC [dbo].[SPC_GetShipmentKeys] {0}", weekId));
-            ShipmentKeys = result.ToList();
-            return result;
+            var shipmentkeyModels = DB.ShipmentKeys(weekId);
+            ShipmentKeys = shipmentkeyModels.ToList();
+            return shipmentkeyModels;
         }
-
-        public static IEnumerable<WeekNoWeekendDateModel> GetWeeks(IDbConnection connection)
+        
+        private void LoadBillToAndShipTo()
         {
-            const string query =
-                @"SELECT * FROM [dbo].WeeklyProductionCapacity WHERE WeekendDate <= DATEADD(MONTH ,1 , GETDATE()) AND DATEPART(yyyy, WeekendDate) >= {0} ORDER BY DATEPART(yyyy, WeekendDate) , WeekNo ";
-            return connection.Query<WeekNoWeekendDateModel>(string.Format(query, DateTime.Now.Year));
-        }
-
-        private static IEnumerable<TextValueModel> GetAddresses(IDbConnection connection)
-        {
-            return connection.Query<TextValueModel>(
-                string.Format(@"SELECT dca.CompanyName + ' ' +  dca.[Address] + ' ' + dca.PostCode + ' ' +  dca.Suburb + ' ' + dca.[State] + dca.Country AS Text, dca.ID AS Value
-	                FROM [dbo].[DistributorClientAddressDetailsView] dca"));
-        }
-
-        private void LoadBillToAndShipTo(IDbConnection connection)
-        {
-            var addresses = GetAddresses(connection).ToList();
+            var addresses = DB.AllDistributorClientAddressNames().ToList();
             BindData(ShipToDropDownList, addresses);
             BindData(BillToDropDownList, addresses);
         }
 
-        private void LoadBanks(IDbConnection connection)
+        private void LoadBanks()
         {
-            const string query = "SELECT [Name] AS [Text], ID AS [Value] FROM [dbo].[Bank] ORDER BY [Name]";
-            var banks = connection.Query<TextValueModel>(query);
+            var banks = DB.AllBankNames();
             BindData(BankDropDownList, banks);
         }
 
-        private void LoadShipmentModes(IDbConnection connection)
+        private void LoadShipmentModes()
         {
-            const string query = "SELECT [Name] AS [Text], ID AS [Value] FROM [dbo].[ShipmentMode] ORDER BY [Name]";
-            var shipmentModes = connection.Query<TextValueModel>(query);
+            var shipmentModes = DB.AllShipmentModeNames();
             BindData(ShipmentModeDropDownList, shipmentModes);
         }
 
-        private void LoadStatus(IDbConnection connection)
+        private void LoadStatus()
         {
-            const string query = "SELECT [Name] AS [Text], ID AS [Value] FROM [dbo].[InvoiceStatus] ORDER BY [Name]";
-            var status = connection.Query<TextValueModel>(query);
-            BindData(StatusDropDownList, status);
+            var statuses = DB.AllInvoiceStatusNames();
+            BindData(StatusDropDownList, statuses);
         }
 
-        private void LoadPorts(IDbConnection connection)
+        private void LoadPorts()
         {
-            const string query = "SELECT [Name] AS [Text], ID AS [Value] FROM [dbo].[DestinationPort] ORDER BY [Name]";
-            var ports = connection.Query<TextValueModel>(query);
+            var ports = DB.AllDestinationPortNames();
             BindData(PortDropDownList, ports);
         }
 
-       // private void LoadItems(IDbConnection connection, int shipTo, int destinationPort, string etd, int priceTerm, int shipmentMode)
-        private int CreateInvoice(IDbConnection connection, int weeklyProductionCapacity, int shipTo, int destinationPort, string weekEndDate, string etd, int priceTerm, int shipmentMode)
+        private void LoadInvoiceItems(int invoiceId)
         {
-            //var query =
-            //     string.Format(@"
-            //          EXEC [dbo].[SPC_GetInvoiceOrderDetailItems]
-            //          @Distributor = {0}, @Port = {1}, @ShipmentDate = '{2}', @PaymentMethod = {3}, @ShipmentMode = {4}, @Creator = {5}",
-            //            shipTo, destinationPort, etd, priceTerm, shipmentMode, LoggedUser.ID);
-
-            var query =
-                 string.Format(@"
-                      EXEC [dbo].[SPC_CreateInvoice]
-                      @WeeklyProductionCapacity = {0}, @DistributorClientAddress = {1}, @Port = '{2}', @WeekEndDate = {3}, @ShipmentDate = {4}, @PaymentMethod = {5}, @ShipmentMode = {6}, @Creator = {7}",
-                        weeklyProductionCapacity, shipTo, destinationPort, weekEndDate, etd, priceTerm, shipmentMode, LoggedUser.ID);
-
-            int invoiceId = int.Parse(connection.Query<int>(query).ToList()[0].ToString());
-
-            return invoiceId;
+            var invoiceItems = DB.InvoiceOrderDetailItemsForInvoice(invoiceId);
+            InvoiceItems = invoiceItems;
+            RebindItemGrid();
         }
 
-        private void LoadInvoice(IDbConnection connection, int invoiceId)
+        private void LoadItems(int invoiceid)
         {
-            //var query =
-            //     string.Format(@"
-            //          EXEC [dbo].[SPC_GetInvoiceOrderDetailItems]
-            //          @Distributor = {0}, @Port = {1}, @ShipmentDate = '{2}', @PaymentMethod = {3}, @ShipmentMode = {4}, @Creator = {5}",
-            //            shipTo, destinationPort, etd, priceTerm, shipmentMode, LoggedUser.ID);
-
-            var query =
-                 string.Format(@"
-                      EXEC [dbo].[SPC_GetInvoiceOrderDetailItemsForEdit]
-                      @InvoiceId = {0}",
-                        invoiceId);
-
-            var invoiceItems = connection.Query<NewFactoryInvoiceViewModel>(query).ToList();
-            // items.ForEach(i => i.IsChanged = false);
-            // InvoiceItems = items;
-            BindData(ItemGrid, invoiceItems);
-        }
-
-        private void LoadItems(IDbConnection connection, int invoiceid)
-        {
-            var query =
-                 string.Format(@"
-                      EXEC [dbo].[SPC_GetInvoiceOrderDetailItemsForEdit]
-                      @InvoiceId = {0}",invoiceid);
-
-            var items = connection.Query<NewShipmentOrderDetailSizeQtyViewModel>(query).ToList();
-            items.ForEach(i => i.IsChanged = false);
+            var items = DB.InvoiceOrderDetailItemsForInvoice(invoiceid);
             InvoiceItems = items;
             BindData(ItemGrid, items);
         }
@@ -543,56 +535,23 @@ namespace Indico
             BindData(ItemGrid, InvoiceItems);
         }
 
-        private void CreateNewInvoice(IDbConnection connection)
+        private void Save()
         {
-            var invoice = InvoiceItems.First().Invoice;
+            var invoice = InvoiceItems.First().InvoiceID;
 
-            const string updateScript =
-                @"
-                    UPDATE [dbo].[Invoice]
-                       SET [InvoiceNo] = '{1}'
-                          ,[AWBNo] = '{2}'
-                          ,[Modifier] = {3}
-                          ,[ModifiedDate] = '{4}'
-                          ,[Status] = {5}
-                          ,[BillTo] = {6}
-                          ,[IsBillTo] = {7}
-                          ,[Bank] = {8}
-                          ,[InvoiceDate] = '{9}'
-                     WHERE ID = {0}";
-
-            connection.Execute(string.Format(updateScript, invoice,
-                txtInvoiceNo.Text, txtAwbNo.Text, LoggedUserRole.ID, DateTime.Now.GetSQLDateString(),
-                Convert.ToInt32(StatusDropDownList.SelectedItem.Value), Convert.ToInt32(BillToDropDownList.SelectedItem.Value), 1, Convert.ToInt32(BankDropDownList.SelectedItem.Value), Convert.ToDateTime(txtInvoiceDate.Text)));
-
-            var invoiceItems = InvoiceItems;
-
-
-            var itemsToUpdate = invoiceItems.Where(i => i.IsChanged).ToList();
-
-
-            if (itemsToUpdate.Count > 0)
+            switch (CurrentInvoiceType)
             {
-                var updateBuilder = new StringBuilder();
-                foreach (var item in itemsToUpdate)
-                {
-
-                    var baseScript =
-                        string.Format(@"
-                        UPDATE [dbo].[InvoiceOrderDetailItem]
-                            SET [OtherCharges] = {0},
-                            [FactoryPrice] = {1}
-                            WHERE ID = {2}", item.OtherCharges, item.FactoryPrice, item.InvoiceOrderDetailItemID);
-                    updateBuilder.AppendLine(baseScript);
-                }
-
-                connection.Execute(updateBuilder.ToString());
+                case InvoiceType.Factory:
+                    DB.UpdateInvoice(invoice, LoggedUser.ID, txtInvoiceNo.Text, txtAwbNo.Text, Convert.ToInt32(StatusDropDownList.SelectedItem.Value), Convert.ToInt32(BillToDropDownList.SelectedItem.Value), Convert.ToInt32(BankDropDownList.SelectedItem.Value), Convert.ToDateTime(txtInvoiceDate.Text).GetSQLDateString());
+                    break;
+                case InvoiceType.Indiman:
+                    DB.UpdateInvoice(invoice, LoggedUser.ID, null, txtAwbNo.Text, Convert.ToInt32(StatusDropDownList.SelectedItem.Value), Convert.ToInt32(BillToDropDownList.SelectedItem.Value),
+                        Convert.ToInt32(BankDropDownList.SelectedItem.Value), Convert.ToDateTime(txtInvoiceDate.Text).GetSQLDateString(), txtInvoiceNo.Text);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
-        }
-
-        private InvoiceModel GetInvoice(IDbConnection connection, int id)
-        {
-            return connection.Query<InvoiceModel>("SELECT * FROM [dbo].[Invoice] WHERE ID = " + id).FirstOrDefault();
+            DB.UpdateChangedInvoiceOrderDetailItemPrices(InvoiceItems);
         }
 
         #endregion
