@@ -739,7 +739,7 @@
                                                             <asp:Literal ID="litHeading" runat="server"></asp:Literal>
                                                         </li>
                                                         <li class="icell-data">
-                                                            <asp:TextBox ID="txtQty" runat="server" CssClass="iintiger" Width="40" onkeyup="javascript:calculateTotalQty();"></asp:TextBox>
+                                                            <asp:TextBox ID="txtQty" runat="server" CssClass="iintiger" Width="40" Height="15" onkeyup="javascript:calculateTotalQty();"></asp:TextBox>
                                                             <asp:HiddenField ID="hdnQtyID" runat="server" Value="0" />
                                                         </li>
                                                     </ul>

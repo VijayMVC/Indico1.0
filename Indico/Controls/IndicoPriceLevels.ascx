@@ -100,7 +100,7 @@
                         FilterControlWidth="50px" DataField="IndimanPrice">
                         <ItemTemplate>
                             <asp:Literal ID="litIndimanPrice" runat="server"></asp:Literal>
-                            <asp:TextBox ID="txtIndimanPrice" runat="server" Width="50px" Style="text-align: right"></asp:TextBox>
+                            <asp:TextBox ID="txtIndimanPrice" runat="server" Width="50px" Height="15px" Style="text-align: right"></asp:TextBox>
                         </ItemTemplate>
                     </telerik:GridTemplateColumn>
                     <telerik:GridTemplateColumn UniqueName="ActMgn" ItemStyle-HorizontalAlign="Right" SortExpression="ActMgn" HeaderText="Margin Value" CurrentFilterFunction="Contains" Groupable="false"

@@ -107,7 +107,7 @@
                                     FilterControlWidth="50px" AutoPostBackOnFilter="false"
                                     DataField="QuotedFOBCost">
                                     <ItemTemplate>
-                                        <asp:TextBox ID="txtFOBCost" CssClass="alignright" runat="server" Width="60px"></asp:TextBox>
+                                        <asp:TextBox ID="txtFOBCost" CssClass="alignright" runat="server" Width="60px" Height="15px"></asp:TextBox>
                                     </ItemTemplate>
                                 </telerik:GridTemplateColumn>
                                 <telerik:GridTemplateColumn UniqueName="ExchangeRate" Groupable="false" AllowFiltering="true" SortExpression="ExchangeRate" CurrentFilterFunction="EqualTo"
@@ -120,7 +120,7 @@
                                         </div>
                                     </HeaderTemplate>
                                     <ItemTemplate>
-                                        <asp:TextBox ID="txtExchangeRate" CssClass="alignright" runat="server" Width="60px"></asp:TextBox>
+                                        <asp:TextBox ID="txtExchangeRate" CssClass="alignright" runat="server" Width="60px" Height="15px"></asp:TextBox>
                                     </ItemTemplate>
                                 </telerik:GridTemplateColumn>
                                 <telerik:GridTemplateColumn UniqueName="QuotedCIF" AllowFiltering="true" Groupable="false" SortExpression="QuotedCIF" CurrentFilterFunction="EqualTo"
@@ -133,7 +133,7 @@
                                         </div>
                                     </HeaderTemplate>
                                     <ItemTemplate>
-                                        <asp:TextBox ID="txtQuotedCIF" runat="server" Width="60px" CssClass="alignright"></asp:TextBox>
+                                        <asp:TextBox ID="txtQuotedCIF" runat="server" Width="60px" CssClass="alignright" Height="15px"></asp:TextBox>
                                     </ItemTemplate>
                                 </telerik:GridTemplateColumn>
                                 <telerik:GridTemplateColumn UniqueName="DutyRate" AllowFiltering="true" Groupable="false" SortExpression="DutyRate" CurrentFilterFunction="EqualTo"
@@ -146,7 +146,7 @@
                                         </div>
                                     </HeaderTemplate>
                                     <ItemTemplate>
-                                        <asp:TextBox ID="txtDutyRate" runat="server" Width="60px" CssClass="alignright"></asp:TextBox>
+                                        <asp:TextBox ID="txtDutyRate" runat="server" Width="60px" CssClass="alignright" Height="15px"></asp:TextBox>
                                     </ItemTemplate>
                                 </telerik:GridTemplateColumn>
                                 <telerik:GridTemplateColumn UniqueName="SMVRate" AllowFiltering="true" Groupable="false" SortExpression="SMVRate" CurrentFilterFunction="EqualTo"
@@ -159,7 +159,7 @@
                                         </div>
                                     </HeaderTemplate>
                                     <ItemTemplate>
-                                        <asp:TextBox ID="txtSMVRate" runat="server" Width="60px" CssClass="alignright"></asp:TextBox>
+                                        <asp:TextBox ID="txtSMVRate" runat="server" Width="60px" CssClass="alignright" Height="15px"></asp:TextBox>
                                     </ItemTemplate>
                                 </telerik:GridTemplateColumn>
                                 <telerik:GridNumericColumn UniqueName="QuotedMP" SortExpression="QuotedMP" HeaderText="Quoted MP" DataFormatString="{0:0.00} " CurrentFilterFunction="EqualTo" DataType="System.Decimal" Aggregate="Sum"
