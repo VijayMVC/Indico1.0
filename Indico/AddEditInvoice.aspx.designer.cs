@@ -229,6 +229,15 @@ namespace Indico {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
         
         /// <summary>
+        /// CostSheetButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton CostSheetButton;
+        
+        /// <summary>
         /// dvNewContent control.
         /// </summary>
         /// <remarks>
@@ -245,15 +254,6 @@ namespace Indico {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid ItemGrid;
-        
-        /// <summary>
-        /// dvEmptyContentInvoiceOrders control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvEmptyContentInvoiceOrders;
         
         /// <summary>
         /// btnCreateInvoice control.

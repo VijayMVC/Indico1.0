@@ -356,7 +356,7 @@ BEGIN
 				iodi.ID AS InvoiceOrderDI
 			FROM @MidTable mt
 				INNER JOIN #InvoiceItems ii
-					ON mt.OrderID = ii.OrderID AND mt.OrderDetailID = ii.OrderDetailID AND mt.OrderDetailQuantityID = ii.OrderDetailQuantityID
+					ON mt.OrderDetailID = ii.OrderDetailID-- AND mt.OrderDetailQuantityID = ii.OrderDetailQuantityID
 				LEFT OUTER JOIN [dbo].[InvoiceOrderDetailItem] iodi
 					ON mt.OrderDetailID = iodi.OrderDetail AND iodi.IsRemoved = 0
 			) AS S

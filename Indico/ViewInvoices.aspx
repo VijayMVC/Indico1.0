@@ -34,9 +34,9 @@
                     <%-- Search Pannel--%>
                     <div class="search-control clearfix">
                         <asp:Panel ID="panlSearch" runat="server">
-                            <asp:TextBox ID="txtSearchInvoiceNo" runat="server" CssClass="search-control-query"
+                            <asp:TextBox ID="SearchTextBox" runat="server" CssClass="search-control-query"
                                 placeholder="Search"></asp:TextBox>
-                            <asp:Button ID="btnSearch" runat="server" Text="Search" OnClick="btnSearch_Click"
+                            <asp:Button ID="btnSearch" runat="server" Text="Search" OnClick="OnSearchButtonClick"
                                 CssClass="search-control-button"></asp:Button>
                         </asp:Panel>
                     </div>
@@ -53,13 +53,13 @@
                             </telerik:AjaxSetting>
                         </AjaxSettings>
                     </telerik:RadAjaxManager>--%>
-                    <telerik:RadGrid ID="RadInvoice" runat="server" AllowPaging="true" AutoGenerateColumns="false"
+                    <telerik:RadGrid ID="InvoiceGrid" runat="server" AllowPaging="true" AutoGenerateColumns="false"
                         Skin="Metro" CssClass="RadGrid_Rounded" ShowStatusBar="true" ShowGroupPanel="true" EnableHeaderContextMenu="true" EnableHeaderContextFilterMenu="true"
-                        AllowFilteringByColumn="true" OnItemCommand="RadInvoice_ItemCommand" GridLines="None"
+                        AllowFilteringByColumn="true" OnItemCommand="OnInvoiceGridItemCommand" GridLines="None"
                         Visible="false" EnableEmbeddedBaseStylesheet="true" EnableEmbeddedSkins="true"
-                        OnItemDataBound="RadInvoice_ItemDataBound" AllowSorting="true" PageSize="20" OnPageIndexChanged="RadInvoice_PageIndexChanged"
-                        OnGroupsChanging="RadInvoice_GroupsChanging" OnSortCommand="RadInvoice_SortCommand">
-                        <HeaderContextMenu OnItemClick="HeaderContextMenu_ItemCLick"></HeaderContextMenu>
+                        OnItemDataBound="OnInvoiceGridDataBound" AllowSorting="true" PageSize="20" OnPageIndexChanged="OnInvoiceGridPageIndexChanged"
+                        OnGroupsChanging="OnInvoiceGridGroupChanging" OnSortCommand="OnInvoiceGridSortCommand">
+                        <HeaderContextMenu OnItemClick="OnInvoiceGridHeaderContextMenuItemClick"></HeaderContextMenu>
                         <GroupingSettings CaseSensitive="false" />
                         <PagerStyle Mode="NextPrevNumericAndAdvanced"></PagerStyle>
                         <MasterTableView ShowFooter="true" ShowGroupFooter="true">
@@ -168,7 +168,7 @@
         Style="display: none;" />
     <script type="text/javascript">
         var hdnSelectedID = "<%=hdnSelectedID.ClientID %>";
-        var txtSearchInvoiceNo = "<%=txtSearchInvoiceNo.ClientID %>";
+        var txtSearchInvoiceNo = "<%=SearchTextBox.ClientID %>";
         var btnSearch = "<%=btnSearch.ClientID %>";
         var btnPrintInvoice = "<%=btnPrintInvoice.ClientID %>";
         var IsPageValid = ('<%=ViewState["IsPageValied"]%>' == 'True') ? true : false;
