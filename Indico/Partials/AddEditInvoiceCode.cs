@@ -112,22 +112,24 @@ namespace Indico
 
                 int invoiceId = 0;
 
-                InvoiceBO objInv = new InvoiceBO();
-                objInv.WeeklyProductionCapacity = weeklyCapacityId;
-                objInv.ShipTo = selectedModel.ShipToID;
-                objInv.ShipmentDate = selectedModel.ShipmentDate;
-                // TODO: Add database fields for below two
-                //objInv.Port = selectedModel.PortID;
-                //objInv.PriceTerm = selectedModel.PriceTermID;
-                List<InvoiceBO> lstInvoices = objInv.SearchObjects();
+                //InvoiceBO objInv = new InvoiceBO();
+                //OrderDetailBO objOrderD = new OrderDetailBO();
 
-                if (lstInvoices.Count > 0)
-                {
+                //objInv.WeeklyProductionCapacity = weeklyCapacityId;
+                //objInv.ShipTo = selectedModel.ShipToID;
+                //objInv.ShipmentDate = selectedModel.ShipmentDate;
+                // TODO: Add database fields for below two
+                //objInv.Port = objOrderD.order selectedModel.PortID;
+                //objInv.PriceTerm = selectedModel.PriceTermID;
+                //List<InvoiceBO> lstInvoices = objInv.SearchObjects();
+
+                //if (lstInvoices.Count > 0)
+                //{
                     invoiceId = this.CreateInvoice(connection, weeklyCapacityId, selectedModel.ShipToID, selectedModel.PortID, obj.WeekendDate.Year.ToString() + obj.WeekendDate.Month.ToString().PadLeft(2, '0') + obj.WeekendDate.Day.ToString().PadLeft(2, '0'),
                         selectedModel.ShipmentDate.GetSQLDateString(), selectedModel.PriceTermID, selectedModel.ShipmentModeID);
-                }
-                else
-                    invoiceId = lstInvoices[0].ID;
+                //}
+                //else
+                //    invoiceId = lstInvoices[0].ID;
 
                 this.LoadInvoice(connection, invoiceId);
             }
@@ -139,6 +141,7 @@ namespace Indico
             if (item != null)
             {
                 var dataItem = item;
+                string itemId; 
 
                 if ((dataItem.ItemIndex > -1 && dataItem.DataItem is NewShipmentOrderDetailSizeQtyViewModel))
                 {
@@ -151,11 +154,14 @@ namespace Indico
 
                     var factoryPriceTextBox = GetControl<RadNumericTextBox>(e.Item, "FactoryPriceTextBox");
                     var otherChargesTextBox = GetControl<RadNumericTextBox>(e.Item, "OtherChargesTextBox");
-                    // var notes = GetControl<RadTextBox>(e.Item, "NotesTextArea");
-                    factoryPriceTextBox.Attributes["uid"] = otherChargesTextBox.Attributes["uid"] = modelObject.InvoiceOrderDetailItemID.ToString();
+                    var notesTextAreaTextBox = GetControl<RadTextBox>(e.Item, "NotesTextArea");
+                    itemId = modelObject.InvoiceOrderDetailItemID.ToString();
+                    factoryPriceTextBox.Attributes["uid"] = itemId;
+                    otherChargesTextBox.Attributes["uid"] = itemId;
+                    notesTextAreaTextBox.Attributes["uid"] = itemId;
                     factoryPriceTextBox.Text = modelObject.FactoryPrice.ToString();
                     otherChargesTextBox.Text = modelObject.OtherCharges.ToString();
-                    //notes.Text = modelObject.Notes;
+                    notesTextAreaTextBox.Text = modelObject.FactoryNotes.ToString();
                 }
             }
         }
@@ -237,10 +243,6 @@ namespace Indico
 
                     string id = invoiceItem.InvoiceOrderDetailItemID.ToString();
 
-                    using (var connection = GetIndicoConnnection())
-                    {
-                        RemoveItemInGrid(connection, id);
-                    }
                     invoiceItem.IsRemoved = true;
                     InvoiceItems = items;
                     dataItem.Visible = false;
@@ -269,7 +271,7 @@ namespace Indico
                 var toUpdate = invoiceItems.FirstOrDefault(i => i.InvoiceOrderDetailItemID == id);
                 if (toUpdate != null)
                 {
-                    toUpdate.FactoryPrice = toUpdate.OtherCharges = toUpdate.CostsheetPrice.GetValueOrDefault();
+                    toUpdate.FactoryPrice = toUpdate.OtherCharges = toUpdate.CostSheetPrice.GetValueOrDefault();
                 }
             }
             InvoiceItems = invoiceItems;
@@ -353,9 +355,10 @@ namespace Indico
 
             if (item != null)
             {
-                item.Notes = textBox.Text;
+                item.FactoryNotes = textBox.Text;
                 InvoiceItems = items;
             }
+            InnertextChanged = true;
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -479,19 +482,13 @@ namespace Indico
             BindData(PortDropDownList, ports);
         }
 
-       // private void LoadItems(IDbConnection connection, int shipTo, int destinationPort, string etd, int priceTerm, int shipmentMode)
+
         private int CreateInvoice(IDbConnection connection, int weeklyProductionCapacity, int shipTo, int destinationPort, string weekEndDate, string etd, int priceTerm, int shipmentMode)
         {
-            //var query =
-            //     string.Format(@"
-            //          EXEC [dbo].[SPC_GetInvoiceOrderDetailItems]
-            //          @Distributor = {0}, @Port = {1}, @ShipmentDate = '{2}', @PaymentMethod = {3}, @ShipmentMode = {4}, @Creator = {5}",
-            //            shipTo, destinationPort, etd, priceTerm, shipmentMode, LoggedUser.ID);
-
             var query =
                  string.Format(@"
                       EXEC [dbo].[SPC_CreateInvoice]
-                      @WeeklyProductionCapacity = {0}, @DistributorClientAddress = {1}, @Port = '{2}', @WeekEndDate = {3}, @ShipmentDate = {4}, @PaymentMethod = {5}, @ShipmentMode = {6}, @Creator = {7}",
+                      @WeeklyProductionCapacity = {0}, @DistributorClientAddress = {1}, @Port = '{2}', @WeekEndDate = '{3}', @ShipmentDate = '{4}', @PaymentMethod = {5}, @ShipmentMode = {6}, @Creator = {7}",
                         weeklyProductionCapacity, shipTo, destinationPort, weekEndDate, etd, priceTerm, shipmentMode, LoggedUser.ID);
 
             int invoiceId = int.Parse(connection.Query<int>(query).ToList()[0].ToString());
@@ -501,21 +498,15 @@ namespace Indico
 
         private void LoadInvoice(IDbConnection connection, int invoiceId)
         {
-            //var query =
-            //     string.Format(@"
-            //          EXEC [dbo].[SPC_GetInvoiceOrderDetailItems]
-            //          @Distributor = {0}, @Port = {1}, @ShipmentDate = '{2}', @PaymentMethod = {3}, @ShipmentMode = {4}, @Creator = {5}",
-            //            shipTo, destinationPort, etd, priceTerm, shipmentMode, LoggedUser.ID);
-
             var query =
                  string.Format(@"
                       EXEC [dbo].[SPC_GetInvoiceOrderDetailItemsForEdit]
                       @InvoiceId = {0}",
                         invoiceId);
 
-            var invoiceItems = connection.Query<NewFactoryInvoiceViewModel>(query).ToList();
-            // items.ForEach(i => i.IsChanged = false);
-            // InvoiceItems = items;
+            var invoiceItems = connection.Query<NewShipmentOrderDetailSizeQtyViewModel>(query).ToList();
+            invoiceItems.ForEach(i => i.IsChanged = false);
+            InvoiceItems = invoiceItems;
             BindData(ItemGrid, invoiceItems);
         }
 
@@ -546,7 +537,6 @@ namespace Indico
         private void CreateNewInvoice(IDbConnection connection)
         {
             var invoice = InvoiceItems.First().Invoice;
-
             const string updateScript =
                 @"
                     UPDATE [dbo].[Invoice]
@@ -563,7 +553,7 @@ namespace Indico
 
             connection.Execute(string.Format(updateScript, invoice,
                 txtInvoiceNo.Text, txtAwbNo.Text, LoggedUserRole.ID, DateTime.Now.GetSQLDateString(),
-                Convert.ToInt32(StatusDropDownList.SelectedItem.Value), Convert.ToInt32(BillToDropDownList.SelectedItem.Value), 1, Convert.ToInt32(BankDropDownList.SelectedItem.Value), Convert.ToDateTime(txtInvoiceDate.Text)));
+                Convert.ToInt32(StatusDropDownList.SelectedItem.Value), Convert.ToInt32(BillToDropDownList.SelectedItem.Value), 1, Convert.ToInt32(BankDropDownList.SelectedItem.Value), txtInvoiceDate.Text));
 
             var invoiceItems = InvoiceItems;
 

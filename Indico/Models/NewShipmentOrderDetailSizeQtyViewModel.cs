@@ -7,7 +7,7 @@ namespace Indico.Models
 
            private decimal _factoryPrice;
 
-           public string PurchaseOrderNumber { get; set; }
+           public string PurchaseOrder { get; set; }
 
            public string OrderType { get; set; }
 
@@ -25,13 +25,11 @@ namespace Indico.Models
 
            public string AgeGroup { get; set; }
 
-           public string SizeDescription { get; set; }
 
-           public int SizeQuantity { get; set; }
+           public int Quantity { get; set; }
 
-           public int SizeSrNumber { get; set; }
 
-           public decimal? CostsheetPrice { get; set; }
+           public decimal? CostSheetPrice { get; set; }
 
            public decimal FactoryPrice { get { return _factoryPrice;  } set { _factoryPrice = value; IsChanged = true; } }
 
@@ -41,7 +39,7 @@ namespace Indico.Models
 
            public decimal Amount { get; set; }
 
-           public string Notes { get; set; }
+           public string FactoryNotes { get; set; }
 
            public bool IsRemoved { get; set; }
 
