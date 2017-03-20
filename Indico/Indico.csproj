@@ -704,6 +704,7 @@
     <Compile Include="Models\InventorySubCategoryModel.cs" />
     <Compile Include="Models\InvItemModel.cs" />
     <Compile Include="Models\InvoiceModel.cs" />
+    <Compile Include="Models\InvoiceOrderDetailItemModel.cs" />
     <Compile Include="Models\ModeModel.cs" />
     <Compile Include="Models\NameIdModel.cs" />
     <Compile Include="Models\NewFactoryInvoiceViewModel.cs" />
@@ -736,6 +737,8 @@
     <Compile Include="Partials\ViewInvoicesCode.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Providers\Data\DapperProvider.General.cs" />
+    <Compile Include="Providers\Data\DapperProvider.Invoice.cs" />
     <Compile Include="Purchaser.aspx.cs">
       <DependentUpon>Purchaser.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1847,10 +1850,10 @@
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>54324</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://www.local-indico.com</IISUrl>
+          <IISUrl>http://local-indico.com</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>http://www.local-indico.com</CustomServerUrl>
+          <CustomServerUrl>http://local-indico.com</CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

@@ -18,6 +18,7 @@ namespace Indico.BusinessObjects
     public partial class AccessoryBO : BusinessObject, IComparable
     {
         #region fields
+
         #region Scalar Fields
         private int id;
         private int _accessoryCategory;

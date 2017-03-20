@@ -233,7 +233,7 @@
                         <PagerStyle Mode="NextPrevNumericAndAdvanced"></PagerStyle>
                         <MasterTableView AllowFilteringByColumn="true" TableLayout="Auto">
                             <Columns>
-                                <telerik:GridBoundColumn UniqueName="PurchaseOrder" SortExpression="PurchaseOrder" HeaderText="Purchase Order" FilterControlWidth="40px" DataField="PurchaseOrder"></telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn UniqueName="PurchaseOrderNumber" SortExpression="PurchaseOrderNumber" HeaderText="Purchase Order" FilterControlWidth="40px" DataField="PurchaseOrderNumber"></telerik:GridBoundColumn>
                                 <telerik:GridBoundColumn UniqueName="OrderType" SortExpression="OrderType" HeaderText="Order Type" CurrentFilterFunction="Contains" FilterControlWidth="75px" AutoPostBackOnFilter="true" DataField="OrderType">
                                 </telerik:GridBoundColumn>
                                 <telerik:GridBoundColumn UniqueName="VisualLayout" SortExpression="VisualLayout"
@@ -263,9 +263,11 @@
                                 <telerik:GridBoundColumn UniqueName="AgeGroup" SortExpression="AgeGroup" HeaderText="AgeGroup" FilterControlWidth="75px" CurrentFilterFunction="Contains" AutoPostBackOnFilter="true"
                                     DataField="AgeGroup">
                                 </telerik:GridBoundColumn>
-                                <telerik:GridBoundColumn UniqueName="Quantity" SortExpression="Quantity" HeaderText="Qty" FilterControlWidth="75px" CurrentFilterFunction="EqualTo" AutoPostBackOnFilter="true" DataField="Quantity"></telerik:GridBoundColumn>                         
-                                <telerik:GridBoundColumn UniqueName="CostSheetPrice" SortExpression="CostSheetPrice" HeaderText="Cost Sheet Price" FilterControlWidth="75px" CurrentFilterFunction="EqualTo" AutoPostBackOnFilter="true" DataField="CostSheetPrice"></telerik:GridBoundColumn>
-
+                                 <telerik:GridBoundColumn UniqueName="Qty" SortExpression="Qty" HeaderText="Qty" FilterControlWidth="75px" CurrentFilterFunction="Contains" AutoPostBackOnFilter="true"
+                                    DataField="Qty">
+                                </telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn UniqueName="FactoryCostsheetPrice" SortExpression="FactoryCostsheetPrice" HeaderText="Cost Sheet Price" FilterControlWidth="75px" CurrentFilterFunction="EqualTo" AutoPostBackOnFilter="true" DataField="FactoryCostsheetPrice" ></telerik:GridBoundColumn>
+                                <telerik:GridBoundColumn UniqueName="IndimanCostsheetPrice" SortExpression="IndimanCostsheetPrice" HeaderText="Cost Sheet Price" FilterControlWidth="75px" CurrentFilterFunction="EqualTo" AutoPostBackOnFilter="true" DataField="IndimanCostsheetPrice" ></telerik:GridBoundColumn>
                                 <telerik:GridTemplateColumn AllowFiltering="false" FilterControlWidth="200px" UniqueName="OtherCharges">
                                     <HeaderTemplate>
                                         <asp:Label runat="server" Text="Other Charges"></asp:Label>
@@ -291,19 +293,24 @@
                                         <telerik:RadNumericTextBox runat="server" ID="FactoryPriceTextBox"  OnTextChanged="OnFactoryPriceTextChanged" Width="50px" ></telerik:RadNumericTextBox>
                                     </ItemTemplate>
                                 </telerik:GridTemplateColumn>
+                                
+                               <telerik:GridTemplateColumn AllowFiltering="false" FilterControlWidth="200px" UniqueName="IndimanPrice">
+                                    <HeaderTemplate>
+                                        <asp:Label runat="server" Text="Indiman Price"></asp:Label>
+                                        <br />
+                                        <telerik:RadNumericTextBox runat="server" ID="IndimanPriceApplyTextBox" Width="50px">
+                                        </telerik:RadNumericTextBox>
+                                        <telerik:RadButton runat="server" ID="ApplyIndimanPriceButton" Text="Apply"></telerik:RadButton>
+                                    </HeaderTemplate>
+                                    <ItemTemplate>
+                                        <telerik:RadNumericTextBox runat="server" ID="IndimanPriceTextBox"  OnTextChanged="OnIndimanPriceTextChanged" Width="50px" ></telerik:RadNumericTextBox>
+                                    </ItemTemplate>
+                                </telerik:GridTemplateColumn>
 
                                 <telerik:GridBoundColumn UniqueName="TotalPrice" SortExpression="TotalPrice" HeaderText="Total Price" FilterControlWidth="75px" CurrentFilterFunction="EqualTo" AutoPostBackOnFilter="true" DataField="TotalPrice"></telerik:GridBoundColumn>
                                 <telerik:GridBoundColumn UniqueName="Amount" SortExpression="Amount" HeaderText="Amount" FilterControlWidth="75px" CurrentFilterFunction="EqualTo" AutoPostBackOnFilter="true" DataField="Amount"></telerik:GridBoundColumn>
-                                <%--<telerik:GridBoundColumn UniqueName="Notes" SortExpression="Notes" HeaderText="Notes" FilterControlWidth="75px" CurrentFilterFunction="EqualTo" AutoPostBackOnFilter="true" DataField="Notes"></telerik:GridBoundColumn>--%>
-
-                              <telerik:GridTemplateColumn AllowFiltering="false" FilterControlWidth="200px" UniqueName="FactoryNotes">
-                                    <HeaderTemplate>
-                                        <asp:Label runat="server" Text="Notes"></asp:Label>
-                                    </HeaderTemplate>
-                                    <ItemTemplate>
-                                        <telerik:RadTextBox runat="server" Columns="2" ID="NotesTextArea" OnTextChanged="OnNotesChanged" Width="150px"></telerik:RadTextBox>
-                                    </ItemTemplate>
-                                </telerik:GridTemplateColumn>
+                                <telerik:GridBoundColumn UniqueName="Notes" SortExpression="Notes" HeaderText="Notes" FilterControlWidth="75px" CurrentFilterFunction="EqualTo" AutoPostBackOnFilter="true" DataField="Notes"></telerik:GridBoundColumn>
+                                
                                 <telerik:GridTemplateColumn AllowFiltering="false" FilterControlWidth="200px" UniqueName="Remove">
                                     <ItemTemplate>
                                         <telerik:RadButton runat="server" Text="Remove" ToolTip="Remove Item From Invoice"></telerik:RadButton>
