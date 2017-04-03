@@ -105,10 +105,13 @@
                                                 <i class="icon-cog"></i><span class="caret"></span></a>
                                             <ul class="dropdown-menu pull-right">
                                                 <li>
-                                                    <asp:HyperLink ID="linkEdit" runat="server" CssClass="btn-link iremove" ToolTip="Edit Invoice"><i class="icon-pencil"></i>Edit</asp:HyperLink>
+                                                    <asp:HyperLink ID="linkEdit" runat="server" CssClass="btn-link" ToolTip="Edit Invoice"><i class="icon-pencil"></i>Edit</asp:HyperLink>
                                                 </li>
                                                 <li>
-                                                    <asp:LinkButton ID="btnInvoiceDetail" runat="server" CssClass="btn-link" OnClick="btnInvoiceDetail_Click" ToolTip="Print Invoice Detail"><i class="icon-download-alt"></i>Print Invoice Detail</asp:LinkButton>
+                                                    <asp:HyperLink ID="linkCreIndiInvoice" runat="server" CssClass="btn-link iremove" ToolTip="Create Indiman Invoice"><i class="icon-pencil"></i>Create Indiman Invoice</asp:HyperLink>
+                                                </li>
+                                                <li>
+                                                    <asp:LinkButton ID="btnInvoiceDetail" runat="server" CssClass="btn-link" OnClick="btnPrintInvoiceDetail_Click" ToolTip="Print Invoice Detail"><i class="icon-download-alt"></i>Print Invoice Detail</asp:LinkButton>
                                                 </li>
                                                 <li>
                                                     <asp:LinkButton ID="btnInvoiceSummary" runat="server" CssClass="btn-link" OnClick="btnPrintInvoiceSummary_Click" ToolTip="Print Invoice Summary"><i class="icon-download-alt"></i>Print Invoice Summary</asp:LinkButton>
@@ -160,7 +163,7 @@
                 Yes</button>
         </div>
     </div>
-    <asp:Button ID="btnPrintInvoice" runat="server" OnClick="btnInvoiceDetail_Click"
+    <asp:Button ID="btnPrintInvoice" runat="server" OnClick="btnPrintInvoiceDetail_Click"
         Style="display: none;" />
     <asp:Button ID="btnPrintInvoiceSummary" runat="server" OnClick="btnPrintInvoiceSummary_Click"
         Style="display: none;" />

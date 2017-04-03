@@ -6,7 +6,7 @@ namespace Indico.Models
     {
         public int ID { get; set; }
         public string DestinationPort { get; set; }
-        public string ShipTo { get; set; }
+        public int ShipTo { get; set; }
         public DateTime ShipmentDate { get; set; }
         public string ShipmentMethod { get; set; }
         public string CompanyName { get; set; }

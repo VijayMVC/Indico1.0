@@ -33,7 +33,7 @@
                     <%-- Search Pannel--%>
                     <div class="search-control clearfix">
                         <asp:Panel ID="panlSearch" runat="server">
-                            <asp:TextBox ID="txtSearchInvoiceNo" runat="server" CssClass="search-control-query"
+                            <asp:TextBox ID="txtSearch" runat="server" CssClass="search-control-query"
                                 placeholder="Search"></asp:TextBox>
                             <asp:Button ID="btnSearch" runat="server" Text="Search" OnClick="btnSearch_Click"
                                 CssClass="search-control-button"></asp:Button>
@@ -56,7 +56,7 @@
                         Skin="Metro" CssClass="RadGrid_Rounded" ShowStatusBar="true" ShowGroupPanel="true" EnableHeaderContextMenu="true" EnableHeaderContextFilterMenu="true"
                         AllowFilteringByColumn="true" OnItemCommand="RadIndimanInvoice_ItemCommand" GridLines="None"
                         Visible="false" EnableEmbeddedBaseStylesheet="true" EnableEmbeddedSkins="true"
-                        OnItemDataBound="RadIndimanInvoice_ItemDataBound" PageSize="20" OnPageIndexChanged="RadIndimanInvoice_PageIndexChanged"
+                        OnItemDataBound="OnInvoiceGridDataBound" PageSize="20" OnPageIndexChanged="RadIndimanInvoice_PageIndexChanged"
                         OnGroupsChanging="RadIndimanInvoice_GroupsChanging" OnSortCommand="RadIndimanInvoice_SortCommand">
                         <HeaderContextMenu OnItemClick="HeaderContextMenu_ItemCLick"></HeaderContextMenu>
                         <GroupingSettings CaseSensitive="false" />
@@ -77,9 +77,13 @@
                                     SortExpression="IndimanInvoiceDate" PickerType="DatePicker" EnableTimeIndependentFiltering="true"
                                     DataFormatString="{0:dd MMMM yyyy}">
                                 </telerik:GridDateTimeColumn>
-                                <telerik:GridBoundColumn UniqueName="InvoiceDate" SortExpression="InvoiceDate" HeaderText="Factory Invoice Date" CurrentFilterFunction="Contains" AutoPostBackOnFilter="true"
-                                    FilterControlWidth="110px" DataField="InvoiceDate">
-                                </telerik:GridBoundColumn>
+                                <telerik:GridDateTimeColumn DataField="InvoiceDate" HeaderText="Factory Invoice Date" FilterControlWidth="110px" CurrentFilterFunction="EqualTo" AutoPostBackOnFilter="true"
+                                    SortExpression="InvoiceDate" PickerType="DatePicker" EnableTimeIndependentFiltering="true"
+                                    DataFormatString="{0:dd MMMM yyyy}">
+                                </telerik:GridDateTimeColumn>
+                                <%--<telerik:GridBoundColumn UniqueName="InvoiceDate" SortExpression="InvoiceDate" HeaderText="Factory Invoice Date" CurrentFilterFunction="Contains" AutoPostBackOnFilter="true"
+                                    FilterControlWidth="110px" DataField="InvoiceDate" DataFormatString="{0:dd MMMM yyyy}">
+                                </telerik:GridBoundColumn>--%>
                                 <telerik:GridBoundColumn UniqueName="ShipTo" SortExpression="ShipTo" HeaderText="Ship To" CurrentFilterFunction="Contains" AutoPostBackOnFilter="true"
                                     FilterControlWidth="110px" DataField="ShipTo">
                                 </telerik:GridBoundColumn>
@@ -102,7 +106,7 @@
                                                 <i class="icon-cog"></i><span class="caret"></span></a>
                                             <ul class="dropdown-menu pull-right">
                                                 <li>
-                                                    <asp:HyperLink ID="linkEdit" runat="server" CssClass="btn-link iremove" ToolTip="Edit Invoice"><i class="icon-pencil"></i>Edit</asp:HyperLink>
+                                                    <asp:HyperLink ID="linkEdit" runat="server" CssClass="btn-link" ToolTip="Edit Invoice"><i class="icon-pencil"></i>Edit</asp:HyperLink>
                                                 </li>
                                                 <li>
                                                     <asp:LinkButton ID="btnIndimanInvoice" runat="server" CssClass="btn-link" OnClick="btnIndimanInvoice_Click" ToolTip="Print Indiman Invoice"><i class="icon-download-alt"></i>Print Indiman Invoice</asp:LinkButton>
@@ -155,7 +159,7 @@
         Style="display: none;" />
     <script type="text/javascript">
         var hdnSelectedID = "<%=hdnSelectedID.ClientID %>";
-        var txtSearchInvoiceNo = "<%=txtSearchInvoiceNo.ClientID %>";
+        var txtSearch = "<%=txtSearch.ClientID %>";
         var btnSearch = "<%=btnSearch.ClientID %>";
         var IsPageValid = ('<%=ViewState["IsPageValied"]%>' == 'True') ? true : false;
         var btnIndimanInvoice = "<%=btnIndimanInvoice.ClientID %>";
@@ -167,7 +171,7 @@
                 $('#requestDelete').modal('show');
             });
 
-            $('#' + txtSearchInvoiceNo).keypress(function (e) {
+            $('#' + txtSearch).keypress(function (e) {
                 if (e.which == 13) {
                     $('#' + btnSearch).click();
                 }

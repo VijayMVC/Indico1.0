@@ -22,5 +22,7 @@ namespace Indico.Models
         public int? BillTo { get; set; }
         public bool? IsBillTo { get; set; }
         public int? Bank { get; set; }
+        public int Port { get; set; }
+        public int PriceTerm { get; set; }
     }
 }

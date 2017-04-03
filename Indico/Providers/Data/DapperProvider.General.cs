@@ -8,6 +8,7 @@ namespace Indico.Providers.Data
 {
     public static partial class DapperProvider
     {
+
         public static List<TextValueModel> AllDistributorClientAddressNames()
         {
             using (var connection = Connection)
@@ -98,7 +99,5 @@ namespace Indico.Providers.Data
 
             return string.Format("[{0}] = {1}{2}{1}", columnName, (value is string || value is DateTime) ? "'" : "", value);
         }
-
-
     }
 }

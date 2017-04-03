@@ -70,5 +70,7 @@
         public int InvoiceID { get; set; }
         public string SizeQuantities { get; set; }
         public double Amount { get; set; }
+        public double Total { get; set; }
+        public double IndimanAmount { get; set; }
     }
 }

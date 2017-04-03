@@ -7,6 +7,11 @@ using Indico.Common;
 using Indico.BusinessObjects;
 using System.Transactions;
 using Telerik.Web.UI;
+using Microsoft.Reporting.WebForms;
+using DB = Indico.Providers.Data.DapperProvider;
+using Indico.BusinessObjects;
+using System.IO;
+using System.Threading;
 
 namespace Indico
 {
@@ -186,22 +191,109 @@ namespace Indico
 
         }
 
-        protected void btnInvoiceDetail_Click(object sender, EventArgs e)
+        protected void btnPrintInvoiceDetail_Click(object sender, EventArgs e)
         {
             int id = int.Parse(((System.Web.UI.WebControls.WebControl)(sender)).Attributes["qid"].ToString());
-            //int id = int.Parse(hdnSelectedID.Value);
 
-            if (id > 0)
+            using (ReportViewer rpt = new ReportViewer())
             {
-                try
-                {
-                    string pdfFilePath = Common.GenerateOdsPdf.GenerateJKInvoiceDetail(id);
+                bool IsFileOpen = false;
+                string reportName = "JK_Detail_Invoice" + DateTime.Now.Ticks.ToString();
+                //string dataFolder = @"~\IndicoData\Temp";
+                //string rdlFileName = "Sales Report";
 
-                    DownloadPDFFile(pdfFilePath);
-                }
-                catch (Exception ex)
+                //rpt.ProcessingMode = ProcessingMode.Local;
+                //rpt.LocalReport.ReportPath = Server.MapPath("~/Reports/JK_Detail_Invoice.rdl");
+
+                //DateTime? selecteddate1 = null;
+                //DateTime? selecteddate2 = null;
+
+                //if (!string.IsNullOrEmpty(this.txtCheckin.Value) && !string.IsNullOrEmpty(this.txtCheckout.Value))
+                //{
+                //    selecteddate1 = Convert.ToDateTime(this.txtCheckin.Value);
+                //    selecteddate2 = Convert.ToDateTime(this.txtCheckout.Value);
+                //}
+
+                rpt.ShowToolBar = false;
+                rpt.SizeToReportContent = true;
+                rpt.ProcessingMode = Microsoft.Reporting.WebForms.ProcessingMode.Local;
+                rpt.LocalReport.ReportPath = Server.MapPath("~/Reports/JK_Detail_Invoice.rdl");
+                rpt.Visible = true;
+
+                List<ReportParameter> parameters = new List<ReportParameter>();
+                ReportParameter parameter = new ReportParameter();
+                parameter.Name = "P_InvoiceId";
+                parameter.Values.Add(id.ToString());
+                parameters.Add(parameter);
+                rpt.LocalReport.SetParameters(parameters);
+
+                ReportDataSource dataSource = new ReportDataSource("DataSet1", DB.GetJKDetailInvoiceInfo(id));
+
+                rpt.LocalReport.DataSources.Clear();
+                rpt.LocalReport.DataSources.Add(dataSource);
+                rpt.LocalReport.Refresh();
+
+                string mimeType, encoding, extension, deviceInfo;
+                string[] streamids;
+                Warning[] warnings;
+                string format = "PDF";
+
+                deviceInfo = "<DeviceInfo>" + "<SimplePageHeaders>True</SimplePageHeaders>" + "</DeviceInfo>";
+
+                byte[] bytes = rpt.LocalReport.Render(format, deviceInfo, out mimeType, out encoding, out extension, out streamids, out warnings);
+
+                string temppath = IndicoConfiguration.AppConfiguration.PathToDataFolder + @"\Temp\" + reportName + ".pdf";
+
+                FileStream stream = null;
+
+                if (File.Exists(temppath))
                 {
-                    IndicoLogging.log.Error("Error occured while printing JKInvoiceOrderDetail from ViewInvoices.aspx", ex);
+                    try
+                    {
+                        stream = File.Open(temppath, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+                    }
+                    catch (IOException)
+                    {
+
+                        IsFileOpen = true;
+                    }
+                    finally
+                    {
+                        if (stream != null)
+                            stream.Close();
+                    }
+                }
+
+                if (File.Exists(temppath) && !IsFileOpen)
+                {
+                    File.Delete(temppath);
+                }
+
+                if (!IsFileOpen)
+                {
+                    using (FileStream fs = new FileStream(temppath, FileMode.Create))
+                    {
+                        fs.Write(bytes, 0, bytes.Length);
+                    }
+                }
+
+                while (File.Exists(temppath))
+                {
+                    Thread.Sleep(1000);
+                    System.Diagnostics.Process.Start(temppath);
+                    break;
+                }
+
+                if (File.Exists(temppath))
+                {
+                    try
+                    {
+                        this.DownloadPDFFile(temppath);
+                    }
+                    catch (Exception ex)
+                    {
+                        IndicoLogging.log.Error("Error occured while printing JKInvoiceOrderDetail from AddEditInvoice.aspx", ex);
+                    }
                 }
             }
         }
@@ -209,22 +301,149 @@ namespace Indico
         protected void btnPrintInvoiceSummary_Click(object sender, EventArgs e)
         {
             int id = int.Parse(((System.Web.UI.WebControls.WebControl)(sender)).Attributes["qid"].ToString());
-            //int id = int.Parse(hdnSelectedID.Value);
 
-            if (id > 0)
+            using (ReportViewer rpt = new ReportViewer())
             {
-                try
-                {
-                    string pdfFilePath = Common.GenerateOdsPdf.GenerateJKInvoiceSummary(id);
+                bool IsFileOpen = false;
+                string reportName = "JK_HSCode_Summary" + DateTime.Now.Ticks.ToString();
+                //string dataFolder = @"~\IndicoData\Temp";
+                //string rdlFileName = "Sales Report";
 
-                    DownloadPDFFile(pdfFilePath);
-                }
-                catch (Exception ex)
+                //rpt.ProcessingMode = ProcessingMode.Local;
+                //rpt.LocalReport.ReportPath = Server.MapPath("~/Reports/JK_Detail_Invoice.rdl");
+
+                //DateTime? selecteddate1 = null;
+                //DateTime? selecteddate2 = null;
+
+                //if (!string.IsNullOrEmpty(this.txtCheckin.Value) && !string.IsNullOrEmpty(this.txtCheckout.Value))
+                //{
+                //    selecteddate1 = Convert.ToDateTime(this.txtCheckin.Value);
+                //    selecteddate2 = Convert.ToDateTime(this.txtCheckout.Value);
+                //}
+
+                rpt.ShowToolBar = false;
+                rpt.SizeToReportContent = true;
+                rpt.ProcessingMode = Microsoft.Reporting.WebForms.ProcessingMode.Local;
+                rpt.LocalReport.ReportPath = Server.MapPath("~/Reports/JK_HSCode_Summary.rdl");
+                rpt.Visible = true;
+
+                List<ReportParameter> parameters = new List<ReportParameter>();
+                ReportParameter parameter = new ReportParameter();
+                parameter.Name = "P_InvoiceId";
+                parameter.Values.Add(id.ToString());
+                parameters.Add(parameter);
+                rpt.LocalReport.SetParameters(parameters);
+
+                ReportDataSource dataSource = new ReportDataSource("DataSet1", DB.GetJKDetailSummeryInvoiceInfo(id));
+
+                rpt.LocalReport.DataSources.Clear();
+                rpt.LocalReport.DataSources.Add(dataSource);
+                rpt.LocalReport.Refresh();
+
+                string mimeType, encoding, extension, deviceInfo;
+                string[] streamids;
+                Warning[] warnings;
+                string format = "PDF";
+
+                deviceInfo = "<DeviceInfo>" + "<SimplePageHeaders>True</SimplePageHeaders>" + "</DeviceInfo>";
+
+                byte[] bytes = rpt.LocalReport.Render(format, deviceInfo, out mimeType, out encoding, out extension, out streamids, out warnings);
+
+                string temppath = IndicoConfiguration.AppConfiguration.PathToDataFolder + @"\Temp\" + reportName + ".pdf";
+
+                FileStream stream = null;
+
+                if (File.Exists(temppath))
                 {
-                    IndicoLogging.log.Error("Error occured while printing JKInvoiceSummary from ViewInvoices.aspx", ex);
+                    try
+                    {
+                        stream = File.Open(temppath, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+                    }
+                    catch (IOException)
+                    {
+
+                        IsFileOpen = true;
+                    }
+                    finally
+                    {
+                        if (stream != null)
+                            stream.Close();
+                    }
+                }
+
+                if (File.Exists(temppath) && !IsFileOpen)
+                {
+                    File.Delete(temppath);
+                }
+
+                if (!IsFileOpen)
+                {
+                    using (FileStream fs = new FileStream(temppath, FileMode.Create))
+                    {
+                        fs.Write(bytes, 0, bytes.Length);
+                    }
+                }
+
+                while (File.Exists(temppath))
+                {
+                    Thread.Sleep(1000);
+                    System.Diagnostics.Process.Start(temppath);
+                    break;
+                }
+
+                if (File.Exists(temppath))
+                {
+                    try
+                    {
+                        this.DownloadPDFFile(temppath);
+                    }
+                    catch (Exception ex)
+                    {
+                        IndicoLogging.log.Error("Error occured while printing JKInvoiceOrderDetail from AddEditInvoice.aspx", ex);
+                    }
                 }
             }
         }
+
+        //protected void btnInvoiceDetail_Click(object sender, EventArgs e)
+        //{
+        //    int id = int.Parse(((System.Web.UI.WebControls.WebControl)(sender)).Attributes["qid"].ToString());
+        //    //int id = int.Parse(hdnSelectedID.Value);
+
+        //    if (id > 0)
+        //    {
+        //        try
+        //        {
+        //            string pdfFilePath = Common.GenerateOdsPdf.GenerateJKInvoiceDetail(id);
+
+        //            DownloadPDFFile(pdfFilePath);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            IndicoLogging.log.Error("Error occured while printing JKInvoiceOrderDetail from ViewInvoices.aspx", ex);
+        //        }
+        //    }
+        //}
+
+        //protected void btnPrintInvoiceSummary_Click(object sender, EventArgs e)
+        //{
+        //    int id = int.Parse(((System.Web.UI.WebControls.WebControl)(sender)).Attributes["qid"].ToString());
+        //    //int id = int.Parse(hdnSelectedID.Value);
+
+        //    if (id > 0)
+        //    {
+        //        try
+        //        {
+        //            string pdfFilePath = Common.GenerateOdsPdf.GenerateJKInvoiceSummary(id);
+
+        //            DownloadPDFFile(pdfFilePath);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            IndicoLogging.log.Error("Error occured while printing JKInvoiceSummary from ViewInvoices.aspx", ex);
+        //        }
+        //    }
+        //}
 
         protected void btnCombineInvoice_Click(object sender, EventArgs e)
         {

@@ -14,7 +14,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Web;
+using Indico.Providers.Data;
 using Excel = Microsoft.Office.Interop.Excel;
+using DB = Indico.Providers.Data.DapperProvider;
 
 namespace Indico.Common
 {
@@ -1247,7 +1249,7 @@ namespace Indico.Common
             int rowIndex = 1;
 
             jkinvoicedetailhtmlstring = jkinvoicedetailhtmlstring.Replace("<$invoiceno$>", objInvoice.InvoiceNo);
-            jkinvoicedetailhtmlstring = jkinvoicedetailhtmlstring.Replace("<$shipmentdate$>", objInvoice.InvoiceDate.ToString("dd MMMM yyyy"));
+            jkinvoicedetailhtmlstring = jkinvoicedetailhtmlstring.Replace("<$shipmentdate$>", objInvoice.InvoiceDate.ToString("dd/MM/yyyy"));
             jkinvoicedetailhtmlstring = jkinvoicedetailhtmlstring.Replace("<$shipcompanyname$>", objInvoice.objShipTo.CompanyName);
             jkinvoicedetailhtmlstring = jkinvoicedetailhtmlstring.Replace("<$shipcompanyaddress$>", objInvoice.objShipTo.Address + "  " + objInvoice.objShipTo.State);
             jkinvoicedetailhtmlstring = jkinvoicedetailhtmlstring.Replace("<$shipcompanypostalcode$>", objInvoice.objShipTo.PostCode + "  " + objInvoice.objShipTo.objCountry.ShortName);
@@ -1263,18 +1265,21 @@ namespace Indico.Common
 
             List<ReturnWeeklyAddressDetailsBO> lstWeeklyAddressDetils = new List<ReturnWeeklyAddressDetailsBO>();
 
-            lstWeeklyAddressDetils = OrderDetailBO.GetOrderDetailsAddressDetails(objInvoice.objWeeklyProductionCapacity.WeekendDate, objInvoice.objShipTo.CompanyName, objInvoice.ShipmentMode);
+            //lstWeeklyAddressDetils = OrderDetailBO.GetOrderDetailsAddressDetails(objInvoice.objWeeklyProductionCapacity.WeekendDate, objInvoice.objShipTo.CompanyName, objInvoice.ShipmentMode);
+            lstWeeklyAddressDetils = DB.GetOrderDetailsAddressDetails(objInvoice.ID);
 
             List<IGrouping<string, ReturnWeeklyAddressDetailsBO>> lstAddressOrderDetails = lstWeeklyAddressDetils.GroupBy(o => o.Distributor).ToList();
 
             invoicedetail = "<table cellpadding=\"1\" cellspacing=\"0\" style=\"font-size: 8px\" border=\"0.5\" width=\"100%\"><tr>" +
-                            "<th border=\"0\" width=\"13%\"><b>Type</b></th>" +
+                            "<th border=\"0\" width=\"12%\"><b>Type</b></th>" +
                             "<th border=\"0\" width=\"5%\"><b>Qty</b></th>" +
                             "<th border=\"0\" width=\"8%\"><b>VL</b></th>" +
-                            "<th border=\"0\" width=\"25%\"><b>Sizes</b></th>" +
-                            "<th border=\"0\"  width=\"35%\"><b>Description</b></th>" +
-                            "<th border=\"0\" width=\"6%\"><b>USD</b></th>" +
-                            "<th border=\"0\" width=\"8%\"><b>AMOUNT</b></th></tr>";
+                            "<th border=\"0\" width=\"20%\"><b>Sizes</b></th>" +
+                            "<th border=\"0\"  width=\"30%\"><b>Description</b></th>" +
+                            "<th border=\"0\" width=\"6%\"><b>Price</b></th>" +
+                            "<th border=\"0\" width=\"6%\"><b>Other</b></th>" +
+                            "<th border=\"0\" width=\"6%\"><b>Total</b></th>" +
+                            "<th border=\"0\" width=\"7%\"><b>Amount</b></th></tr>";
 
             foreach (IGrouping<string, ReturnWeeklyAddressDetailsBO> distributor in lstAddressOrderDetails)
             {
@@ -1287,7 +1292,9 @@ namespace Indico.Common
 
                 foreach (ReturnWeeklyAddressDetailsBO item in lstOrderDetailsGroup)
                 {
-                    List<InvoiceOrderBO> lstInvoiceOrder = objInvoice.InvoiceOrdersWhereThisIsInvoice.Where(o => o.OrderDetail == item.OrderDetail).ToList();
+                    var lstInvoiceOrder = DB.GetInvoiceOrderdetailsForPDF(objInvoice.ID, item.OrderDetail.Value);
+
+                   // List<InvoiceOrderBO> lstInvoiceOrder = objInvoice.InvoiceOrdersWhereThisIsInvoice.Where(o => o.OrderDetail == item.OrderDetail).ToList();
 
                     if (lstInvoiceOrder.Count > 0)
                     {
@@ -1305,6 +1312,7 @@ namespace Indico.Common
                         }
 
                         decimal factoryprice = (lstInvoiceOrder.Count > 0 && lstInvoiceOrder[0].FactoryPrice != null) ? (decimal)lstInvoiceOrder[0].FactoryPrice : 0;
+                        decimal othercharges = (lstInvoiceOrder.Count > 0 && lstInvoiceOrder[0].OtherCharges != null) ? (decimal)lstInvoiceOrder[0].OtherCharges : 0;
 
                         total = (decimal)(item.Quantity * factoryprice);
                         totalamount = totalamount + total;
@@ -1312,14 +1320,16 @@ namespace Indico.Common
                         totoalqty = totoalqty + (int)item.Quantity;
 
                         invoicedetail += "<tr>" +
-                                         "<td style=\"line-height:10px;\" width=\"13%\">" + item.OrderType + "<br>" + item.PurONo + "</td>" +
+                                         "<td style=\"line-height:10px;\" width=\"12%\">" + item.OrderType + "<br>" + item.PurONo + "</td>" +
                                          "<td style=\"line-height:10px;\" width=\"5%\">" + item.Quantity + "</td>" +
                                          "<td style=\"line-height:10px;\" width=\"8%\">" + item.VisualLayout + " </td>" +
-                                         "<td style=\"line-height:10px;\" width=\"25%\">" + item.Client + "<br>" + orderdetailqty.TrimEnd(',') + "</td>" +
+                                         "<td style=\"line-height:10px;\" width=\"20%\">" + item.Client + "<br>" + orderdetailqty.TrimEnd(',') + "</td>" +
                                          //"<td style=\"line-height:10px;\" width=\"35%\">" + item.Pattern + "<br>" + item.Fabric + " </td>" +
-                                         "<td style=\"line-height:10px;\" width=\"35%\">" + item.Pattern + "<br>" + item.FabricCode + " " + item.FabricMaterial + "</td>" +
+                                         "<td style=\"line-height:10px;\" width=\"30%\">" + item.Pattern + "<br>" + item.FabricCode + " " + item.FabricMaterial + "</td>" +
                                          "<td style=\"line-height:10px;\" width=\"6%\" >" + factoryprice.ToString("0.00") + "</td>" +
-                                         "<td style=\"line-height:10px;\" width=\"8%\">" + total.ToString("0.00") + "</td></tr>";
+                                         "<td style=\"line-height:10px;\" width=\"6%\" >" + othercharges.ToString("0.00") + "</td>" +
+                                         "<td style=\"line-height:10px;\" width=\"6%\" >" + (factoryprice + othercharges).ToString("0.00") + "</td>" +
+                                         "<td style=\"line-height:10px;\" width=\"7%\">" + total.ToString("0.00") + "</td></tr>";
 
                         rowIndex++;
 
@@ -1490,7 +1500,7 @@ namespace Indico.Common
             int rowIndex = 1;
 
             jkinvoicesummaryhtmlstring = jkinvoicesummaryhtmlstring.Replace("<$invoicenumber$>", objInvoice.InvoiceNo);
-            jkinvoicesummaryhtmlstring = jkinvoicesummaryhtmlstring.Replace("<$shipmentdate$>", objInvoice.InvoiceDate.ToString("dd MMMM yyyy"));
+            jkinvoicesummaryhtmlstring = jkinvoicesummaryhtmlstring.Replace("<$shipmentdate$>", objInvoice.InvoiceDate.ToString("dd/MM/yyyy"));
             jkinvoicesummaryhtmlstring = jkinvoicesummaryhtmlstring.Replace("<$mode$>", objInvoice.objShipmentMode.Name);
             jkinvoicesummaryhtmlstring = jkinvoicesummaryhtmlstring.Replace("<$awbno$>", objInvoice.AWBNo);
             jkinvoicesummaryhtmlstring = jkinvoicesummaryhtmlstring.Replace("<$companyname$>", objInvoice.objShipTo.CompanyName);
@@ -1506,7 +1516,7 @@ namespace Indico.Common
 
             List<ReturnWeeklyAddressDetailsBO> lstWeeklyAddressDetils = new List<ReturnWeeklyAddressDetailsBO>();
 
-            lstWeeklyAddressDetils = OrderDetailBO.GetOrderDetailsAddressDetails(objInvoice.objWeeklyProductionCapacity.WeekendDate, objInvoice.objShipTo.CompanyName, objInvoice.ShipmentMode);
+            lstWeeklyAddressDetils = DB.GetOrderDetailsAddressDetails(objInvoice.ID);
 
             List<IGrouping<string, ReturnWeeklyAddressDetailsBO>> lstAddressOrderDetails = lstWeeklyAddressDetils.GroupBy(o => (o.HSCode != null) ? o.HSCode : string.Empty).ToList();
 
@@ -1532,12 +1542,14 @@ namespace Indico.Common
                 List<ReturnWeeklyAddressDetailsBO> lstOrderDetailsGroup = hscode.ToList();
 
                 foreach (ReturnWeeklyAddressDetailsBO item in lstOrderDetailsGroup)
-                {
+                { 
                     PatternBO objPattern = new PatternBO();
                     objPattern.ID = (int)item.PatternID;
                     objPattern.GetObject();
 
-                    List<InvoiceOrderBO> lstInvoiceOrder = objInvoice.InvoiceOrdersWhereThisIsInvoice.Where(o => o.OrderDetail == item.OrderDetail).ToList();
+                    //**SDS List<InvoiceOrderBO> lstInvoiceOrder = objInvoice.InvoiceOrdersWhereThisIsInvoice.Where(o => o.OrderDetail == item.OrderDetail).ToList();
+
+                    var lstInvoiceOrder = DB.GetInvoiceOrderdetailsForPDF(objInvoice.ID, item.OrderDetail.Value);
 
                     if (lstInvoiceOrder.Count > 0)
                     {
@@ -2014,7 +2026,7 @@ namespace Indico.Common
 
             List<ReturnWeeklyAddressDetailsBO> lstWeeklyAddressDetils = new List<ReturnWeeklyAddressDetailsBO>();
 
-            lstWeeklyAddressDetils = OrderDetailBO.GetOrderDetailsAddressDetails(objInvoice.objWeeklyProductionCapacity.WeekendDate, objInvoice.objShipTo.CompanyName, objInvoice.ShipmentMode);
+            lstWeeklyAddressDetils = DB.GetOrderDetailsAddressDetails(objInvoice.ID);
 
             List<IGrouping<string, ReturnWeeklyAddressDetailsBO>> lstAddressOrderDetails = lstWeeklyAddressDetils.GroupBy(o => o.Distributor).ToList();
 
@@ -2039,7 +2051,8 @@ namespace Indico.Common
 
                 foreach (ReturnWeeklyAddressDetailsBO item in lstOrderDetailsGroup)
                 {
-                    List<InvoiceOrderBO> lstInvoiceOrder = objInvoice.InvoiceOrdersWhereThisIsInvoice.Where(o => o.OrderDetail == item.OrderDetail).ToList();
+                    //List<InvoiceOrderBO> lstInvoiceOrder = objInvoice.InvoiceOrdersWhereThisIsInvoice.Where(o => o.OrderDetail == item.OrderDetail).ToList();
+                    var lstInvoiceOrder = DB.GetInvoiceOrderdetailsForPDF(objInvoice.ID, item.OrderDetail.Value);
 
                     if (lstInvoiceOrder.Count > 0)
                     {

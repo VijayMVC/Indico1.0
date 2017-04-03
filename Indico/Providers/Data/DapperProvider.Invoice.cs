@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using Indico.BusinessObjects;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Indico.Providers.Data
         {
             using (var connection = Connection)
             {
-                const string query = "SELECT * FROM [dbo].[Invoice]";
+                var query = string.Format(@"SELECT * FROM [dbo].[Invoice] WHERE ID = {0}", id);
                 return connection.Query<InvoiceModel>(query).FirstOrDefault();
             }
         }
@@ -40,12 +41,18 @@ namespace Indico.Providers.Data
                     if (!indiman)
                     {
                         foreach (var item in items)
-                            item.Amount = (double)(item.Qty.GetValueOrDefault() * item.FactoryPrice.GetValueOrDefault());
+                        {
+                            item.Amount = (double)(item.Qty.GetValueOrDefault() * (item.FactoryPrice.GetValueOrDefault() + item.OtherCharges));
+                            item.Total = (double)(item.FactoryPrice.GetValueOrDefault() + item.OtherCharges);
+                        }
                     }
-                    else 
+                    else
                     {
                         foreach (var item in items)
-                            item.Amount = (double)(item.Qty.GetValueOrDefault() * item.IndimanPrice.GetValueOrDefault());
+                        {
+                            item.Amount = (double)(item.Qty.GetValueOrDefault() * (item.IndimanPrice.GetValueOrDefault() + item.OtherCharges));
+                            item.Total = (double)(item.IndimanPrice.GetValueOrDefault() + item.OtherCharges);
+                        }
                     }
                 }
 
@@ -72,7 +79,24 @@ namespace Indico.Providers.Data
             }
         }
 
-        public static void UpdateInvoice(int invoice, int modifier, string invoiceNumber = "", string awbNumber= "", int? status = null, int? billTo = null, int? bank = null, string invoiceDate = null, string indimanInvoiceNumber = null, string indimanInvoiceDate = null)
+        public static List<InvoiceModel> Invoice(int weeklyProductionCapacity, int shipTo, string shipmentDate)
+        {
+            using (var connection = Connection)
+            {
+                const string query =
+                    @"
+                    SELECT [ID]
+                          ,[ShipTo]
+                          ,[WeeklyProductionCapacity]
+                          ,[ShipmentDate]
+                      FROM [dbo].[Invoice]
+                    GO WHERE ShipTo = {0} AND WeeklyProductionCapacity = {1} AND ShipmentDate= '{2}'";
+
+                return connection.Query<InvoiceModel>(string.Format(query, shipTo, weeklyProductionCapacity, shipmentDate)).ToList();
+            }
+        }
+
+        public static void UpdateInvoice(int invoice, int modifier, string invoiceNumber = "", string awbNumber = "", int? status = null, int? billTo = null, int? bank = null, string invoiceDate = null, string indimanInvoiceNumber = null, string indimanInvoiceDate = null)
         {
             using (var connection = Connection)
             {
@@ -82,10 +106,10 @@ namespace Indico.Providers.Data
                      WHERE ID = {1}";
 
                 var updateValue = new List<string>();
-                updateValue.AddRange(new [] { UpdateField("Modifier", modifier), UpdateField("ModifiedDate", DateTime.Now.GetSQLDateString())
-                    , UpdateField("InvoiceNo", invoiceNumber), UpdateField("AWBNo", awbNumber) 
+                updateValue.AddRange(new[] { UpdateField("Modifier", modifier), UpdateField("ModifiedDate", (DateTime.Now).ToString("yyyy-MM-dd HH:mm:ss.fff"))
+                    , UpdateField("InvoiceNo", invoiceNumber), UpdateField("AWBNo", awbNumber)
                     , UpdateField("Status", status),UpdateField("BillTo", billTo), UpdateField("Bank",bank), UpdateField("InvoiceDate",invoiceDate)
-                    , UpdateField("IndimanInvoiceNo", indimanInvoiceNumber), UpdateField("IndimanInvoiceDate", indimanInvoiceNumber)} );
+                    , UpdateField("IndimanInvoiceNo", indimanInvoiceNumber), UpdateField("IndimanInvoiceDate", indimanInvoiceDate)});
 
                 var update = updateValue.Where(u => !string.IsNullOrWhiteSpace(u))
                     .Aggregate((c, n) => c + "," + n);
@@ -102,18 +126,18 @@ namespace Indico.Providers.Data
 
                 if (itemsToUpdate.Count > 0)
                 {
-                    var updateBuilder = new StringBuilder();
-                    foreach (var baseScript in itemsToUpdate.Select(item => string.Format(@"
+                    StringBuilder updateBuilder = new StringBuilder();
+                    foreach (string baseScript in itemsToUpdate.Select(item => string.Format(@"
                         UPDATE [dbo].[InvoiceOrderDetailItem]
                             SET [OtherCharges] = {0},
                             [FactoryPrice] = {1},
                             [IndimanPrice] = {2}
-                            WHERE ID = {3}", item.OtherCharges, item.FactoryPrice, item.IndimanPrice, item.InvoiceOrderDetailItemID)))
+                            WHERE ID = {3} ", item.OtherCharges, item.FactoryPrice, item.IndimanPrice, item.InvoiceOrderDetailItemID)))
                     {
                         updateBuilder.AppendLine(baseScript);
                     }
-
-                    connection.Execute(updateBuilder.ToString());
+                    string fullQueryString = updateBuilder.ToString();
+                    connection.Execute(fullQueryString);
                 }
             }
         }
@@ -126,7 +150,51 @@ namespace Indico.Providers.Data
                 var result = connection.Query<ShipmentkeyModel>(string.Format("EXEC [dbo].[SPC_GetShipmentKeys] {0}", weekId));
                 return result.ToList();
             }
+        }
 
+        public static List<ReturnWeeklyAddressDetailsBO> GetOrderDetailsAddressDetails(int invoiceID)
+        {
+            using (var connection = Connection)
+            {
+                var result = connection.Query<ReturnWeeklyAddressDetailsBO>(string.Format("EXEC [dbo].[SPC_GetJKInvoiceSummaryDetails] {0}", invoiceID));
+                return result.ToList();
+            }
+        }
+
+        public static List<InvoiceOrderDetailsForPDfGenarating> GetInvoiceOrderdetailsForPDF(int invoiceID, int invOrderDetailsId)
+        {
+            using (var connection = Connection)
+            {
+                var result = connection.Query<InvoiceOrderDetailsForPDfGenarating>(string.Format("SELECT InvoiceID, OrderDetailID, FactoryPrice, IndimanPrice, OtherCharges FROM [dbo].[GetInvoiceOrderDetailPriceView] WHERE InvoiceID = {0} AND OrderDetailID = {1}", invoiceID, invOrderDetailsId));
+                return result.ToList();
+            }
+        }
+
+        public static List<JKDetailInvoiceInfoModel> GetJKDetailInvoiceInfo(int invoiceID)
+        {
+            using (var connection = Connection)
+            {
+                var result = connection.Query<JKDetailInvoiceInfoModel>(string.Format("EXEC [dbo].[SPC_GetJKDetailInvoiceInfo] {0}", invoiceID));
+                return result.ToList();
+            }
+        }
+
+        public static List<JKSummeryInvoiceInfoModel> GetJKDetailSummeryInvoiceInfo(int invoiceID)
+        {
+            using (var connection = Connection)
+            {
+                var result = connection.Query<JKSummeryInvoiceInfoModel>(string.Format("EXEC [dbo].[SPC_GetJKSummeryInvoiceInfo] {0}", invoiceID));
+                return result.ToList();
+            }
+        }
+
+        public static List<IndimanDetailInvoiceInfoModel> GetIndimanDetailInvoiceInfo(int invoiceID)
+        {
+            using (var connection = Connection)
+            {
+                var result = connection.Query<IndimanDetailInvoiceInfoModel>(string.Format("EXEC [dbo].[SPC_GetIndimanDetailInvoiceInfo] {0}", invoiceID));
+                return result.ToList();
+            }
         }
     }
 }

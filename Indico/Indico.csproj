@@ -75,16 +75,12 @@
       <HintPath>..\Assemblies\Log4Net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ReportViewer.2012.Runtime.11.0.3452.0\lib\Microsoft.ReportViewer.Common.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Assemblies\Microsoft.ReportViewer.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ReportViewer.2012.Runtime.11.0.3452.0\lib\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ReportViewer.2012.Runtime.11.0.3452.0\lib\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\ReportViewer.WebForms.12.0.2402.20\lib\Microsoft.ReportViewer.WebForms.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -139,6 +135,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AddEditInvoice.aspx" />
+    <Content Include="AddEditOrder - Copy.aspx" />
     <Content Include="AddReservation.aspx" />
     <Content Include="CloneOrder.aspx" />
     <Content Include="Content\css\chosen-sprite%402x.png" />
@@ -174,7 +172,6 @@
     <Content Include="AddEditClientOrder.aspx" />
     <Content Include="AddEditFactoryCostSheet.aspx" />
     <Content Include="AddEditIndimanPrice.aspx" />
-    <Content Include="AddEditInvoice.aspx" />
     <Content Include="AddEditOrder.aspx" />
     <Content Include="AddEditPattern.aspx" />
     <Content Include="Content\css\bootstrap-theme.css" />
@@ -623,6 +620,13 @@
     <Content Include="Welcome.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddEditInvoice.aspx.cs">
+      <DependentUpon>AddEditInvoice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddEditInvoice.aspx.designer.cs">
+      <DependentUpon>AddEditInvoice.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AddReservation.aspx.cs">
       <DependentUpon>AddReservation.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -642,6 +646,7 @@
     </Compile>
     <Compile Include="Common\CustomModels.cs" />
     <Compile Include="Common\Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Common\GeneratePDF.cs" />
     <Compile Include="Common\ImageService.cs" />
     <Compile Include="Common\MyobService.cs" />
     <Compile Include="Common\ZohoProvider.cs" />
@@ -695,19 +700,27 @@
       <DependentUpon>Issues.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\AddressIdModel.cs" />
+    <Compile Include="Models\CountryModel.cs" />
+    <Compile Include="Models\CustomeModels.cs" />
+    <Compile Include="Models\DistributorClientAddressModel.cs" />
     <Compile Include="Models\DistributorModel.cs" />
     <Compile Include="Models\DrillDownModel.cs" />
     <Compile Include="Models\FiveWeekDetailsModel.cs" />
     <Compile Include="Models\GetNonDevelopedPatternsModel.cs" />
     <Compile Include="Models\GetPatternDevelopmentHistoryModel.cs" />
     <Compile Include="Models\GetPatternDevelopmentsModel.cs" />
+    <Compile Include="Models\IndimanDetailInvoiceInfoModel.cs" />
     <Compile Include="Models\InventorySubCategoryModel.cs" />
     <Compile Include="Models\InvItemModel.cs" />
     <Compile Include="Models\InvoiceModel.cs" />
     <Compile Include="Models\InvoiceOrderDetailItemModel.cs" />
+    <Compile Include="Models\InvoiceOrderDetailsForPDfGenarating.cs" />
+    <Compile Include="Models\JKDetailInvoiceInfoModel.cs" />
+    <Compile Include="Models\JKSummeryInvoiceInfoModel.cs" />
     <Compile Include="Models\ModeModel.cs" />
     <Compile Include="Models\NameIdModel.cs" />
     <Compile Include="Models\NewFactoryInvoiceViewModel.cs" />
+    <Compile Include="Models\NewIndimanInvoiceViewModel.cs" />
     <Compile Include="Models\NewShipmentOrderDetailSizeQtyViewModel.cs" />
     <Compile Include="Models\OrderDrillDownMedel.cs" />
     <Compile Include="Models\OrderReservationsLoadModel.cs" />
@@ -732,6 +745,9 @@
       <DependentUpon>OrderDrillDown.aspx</DependentUpon>
     </Compile>
     <Compile Include="Partials\AddEditInvoiceCode.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Partials\ViewIndimanInvoicesCode.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Partials\ViewInvoicesCode.cs">
@@ -864,13 +880,6 @@
     </Compile>
     <Compile Include="AddEditIndimanPrice.aspx.designer.cs">
       <DependentUpon>AddEditIndimanPrice.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="AddEditInvoice.aspx.cs">
-      <DependentUpon>AddEditInvoice.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="AddEditInvoice.aspx.designer.cs">
-      <DependentUpon>AddEditInvoice.aspx</DependentUpon>
     </Compile>
     <Compile Include="AddEditOrder.aspx.cs">
       <DependentUpon>AddEditOrder.aspx</DependentUpon>
@@ -1796,6 +1805,19 @@
   <ItemGroup>
     <Content Include="Content\css\bootstrap-theme.min.css.map" />
     <Content Include="Content\css\bootstrap.min.css.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reports\Report1.rdl" />
+    <Content Include="Reports\Report2.rdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reports\JK_Detail_Invoice.rdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reports\Indiman_Invoice.rdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reports\JK_HSCode_Summary.rdl" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

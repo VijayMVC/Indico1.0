@@ -279,12 +279,6 @@ namespace Indico
             ViewState["IsPostBack"] = Session["IsPostBack"];
         }
 
-       
-
-
-
-
-
         protected void RadInvoice_ItemDataBound(object sender, GridItemEventArgs e)
         {
             //GridPagerItem item = (GridPagerItem)e.Item;
@@ -441,7 +435,7 @@ namespace Indico
                 var shipmentKey = (ShipmentkeyModel)item.DataItem;
 
                 var litShipTo = GetControl<Literal>(item, "litShipTo");
-                litShipTo.Text = shipmentKey.ShipTo;
+                litShipTo.Text = shipmentKey.CompanyName;
 
                 var litWeek = GetControl<Literal>(item, "litDestinationPort");
                 litWeek.Text = shipmentKey.DestinationPort;
@@ -489,69 +483,67 @@ namespace Indico
         //    }
         //}
 
-    protected void btnDelete_Click(object sender, EventArgs e)
-        {
-            //NNM
-            int id = int.Parse(this.hdnSelectedID.Value);
-            int indexid = int.Parse(this.hdnIndexID.Value);
+    //protected void btnDelete_Click(object sender, EventArgs e)
+    //    {
+    //        //NNM
+    //        int id = int.Parse(this.hdnSelectedID.Value);
+    //        int indexid = int.Parse(this.hdnIndexID.Value);
+    //        try
+    //        {
+    //            if (id > 0)
+    //            {
+    //                using (TransactionScope ts = new TransactionScope())
+    //                {
+    //                    InvoiceOrderBO objInvoiceOrder = new InvoiceOrderBO(this.ObjContext);
+    //                    objInvoiceOrder.ID = id;
+    //                    objInvoiceOrder.GetObject();
 
+    //                    objInvoiceOrder.Delete();
 
-            try
-            {
-                if (id > 0)
-                {
-                    using (TransactionScope ts = new TransactionScope())
-                    {
-                        InvoiceOrderBO objInvoiceOrder = new InvoiceOrderBO(this.ObjContext);
-                        objInvoiceOrder.ID = id;
-                        objInvoiceOrder.GetObject();
+    //                    this.ObjContext.SaveChanges();
+    //                    ts.Complete();
 
-                        objInvoiceOrder.Delete();
+    //                }
+    //                this.populateInvoiceOrders(this.QueryID, this.DistributorClientAddress, false, this.ShipmentModeID, false);
+    //            }
+    //            else
+    //            {
+    //                if (indexid > -1)
+    //                {
+    //                    List<ReturnInvoiceOrderDetailViewBO> lstInvoiceOrderDetailView = (List<ReturnInvoiceOrderDetailViewBO>)Session["InvoiceOrderDetails"];
+    //                    List<ReturnInvoiceOrderDetailViewBO> lstNotInvoiceOrderDetail = new List<ReturnInvoiceOrderDetailViewBO>();
 
-                        this.ObjContext.SaveChanges();
-                        ts.Complete();
+    //                    #region Add
 
-                    }
-                    this.populateInvoiceOrders(this.QueryID, this.DistributorClientAddress, false, this.ShipmentModeID, false);
-                }
-                else
-                {
-                    if (indexid > -1)
-                    {
-                        List<ReturnInvoiceOrderDetailViewBO> lstInvoiceOrderDetailView = (List<ReturnInvoiceOrderDetailViewBO>)Session["InvoiceOrderDetails"];
-                        List<ReturnInvoiceOrderDetailViewBO> lstNotInvoiceOrderDetail = new List<ReturnInvoiceOrderDetailViewBO>();
+    //                    //lstNotInvoiceOrderDetail.AddRange(lstInvoiceOrderDetailView.Where(o => o.OrderDetail == orderdetail).ToList());
 
-                        #region Add
+    //                    Session["NotInvoiceOrderDetails"] = lstNotInvoiceOrderDetail;
 
-                        //lstNotInvoiceOrderDetail.AddRange(lstInvoiceOrderDetailView.Where(o => o.OrderDetail == orderdetail).ToList());
+    //                    this.PopulateNotExistingOrderGrid(lstNotInvoiceOrderDetail);
 
-                        Session["NotInvoiceOrderDetails"] = lstNotInvoiceOrderDetail;
+    //                    #endregion
 
-                        this.PopulateNotExistingOrderGrid(lstNotInvoiceOrderDetail);
+    //                    #region Remove
 
-                        #endregion
+    //                    lstInvoiceOrderDetailView.RemoveAt(indexid);
 
-                        #region Remove
+    //                    Session["InvoiceOrderDetails"] = lstInvoiceOrderDetailView;
 
-                        lstInvoiceOrderDetailView.RemoveAt(indexid);
+    //                    this.PopulateInvoiceOrderGrid(lstInvoiceOrderDetailView);
 
-                        Session["InvoiceOrderDetails"] = lstInvoiceOrderDetailView;
-
-                        this.PopulateInvoiceOrderGrid(lstInvoiceOrderDetailView);
-
-                        #endregion
-                    }
-                }
+    //                    #endregion
+    //                }
+    //            }
 
                 // changing the orderdetail shipment date and scheduled date and delete the packing list details
                 //this.ChangeOrderDetails(orderdetail, id); // NNM ()
 
-            }
-            catch (Exception ex)
-            {
-                IndicoLogging.log.Error("Error occured while deleting or removing order details from the AddEditInvoicePage.aspx", ex);
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        IndicoLogging.log.Error("Error occured while deleting or removing order details from the AddEditInvoicePage.aspx", ex);
+        //    }
+        //}
         /*
         protected void ddlShipmentDates_SelectedIndexChanged(object sender, EventArgs e)
         {
