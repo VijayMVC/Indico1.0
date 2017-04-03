@@ -174,7 +174,7 @@ FROM (SELECT
 								ELSE (CAST((SELECT it.[Name] FROM [Indico].[dbo].[Item] it WHERE it.[ID] = i.[Parent]) AS nvarchar(64)))
 						END) AS nvarchar (64)), '') AS ItemName,
 			inv.IsRemoved,
-			qi.Qty,
+			qi.Qty
 	FROM [dbo].[Invoice] invoice
 	    INNER JOIN  [dbo].[InvoiceOrderDetailItem] inv
 			ON invoice.ID = inv.Invoice
