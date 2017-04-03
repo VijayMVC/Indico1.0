@@ -1,13 +1,128 @@
-
-/****** Object:  StoredProcedure [dbo].[SPC_CreateInvoice]    Script Date: 4/3/2017 4:24:25 PM ******/
-DROP PROCEDURE [dbo].[SPC_CreateInvoice]
+USE [Indico]
 GO
 
-/****** Object:  StoredProcedure [dbo].[SPC_CreateInvoice]    Script Date: 4/3/2017 4:24:25 PM ******/
+ALTER TABLE [dbo].[Invoice]
+	ADD [Port] [int] NULL
+GO
+
+ALTER TABLE [dbo].[Invoice]  WITH CHECK ADD  CONSTRAINT [FK_Invoice_Port] FOREIGN KEY([Port])
+REFERENCES [dbo].[DestinationPort] ([ID])
+GO
+
+ALTER TABLE [dbo].[Invoice] CHECK CONSTRAINT [FK_Invoice_Port]
+GO
+
+ALTER TABLE [dbo].[Invoice]
+	ADD [PriceTerm] [int] NULL
+GO
+
+
+ALTER TABLE [dbo].[Invoice]  WITH CHECK ADD  CONSTRAINT [FK_Invoice_PriceTerm] FOREIGN KEY([PriceTerm])
+REFERENCES [dbo].[PaymentMethod] ([ID])
+GO
+
+ALTER TABLE [dbo].[Invoice] CHECK CONSTRAINT [FK_Invoice_PriceTerm]
+GO
+
+--**-**--**--**--**-**--**--**--**-**--**--**--**-**--**--**
+
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[InvoiceOrderDetailItem](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Invoice] [int] NULL,
+	[OrderDetail] [int] NOT NULL,
+	[FactoryPrice] [decimal](8, 2) NULL,
+	[IndimanPrice] [decimal](8, 2) NULL,
+	[OtherCharges] [decimal](8, 2) NULL,
+	[IsRemoved] [bit] NOT NULL,
+	[FactoryNotes] [nvarchar](512) NULL,
+	[IndimanNotes] [nvarchar](512) NULL,
+ CONSTRAINT [PK_InvoiceOrderDetailItem] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[InvoiceOrderDetailItem]  WITH CHECK ADD  CONSTRAINT [FK_InvoiceOrderDetailItem_Invoice] FOREIGN KEY([Invoice])
+REFERENCES [dbo].[Invoice] ([ID])
+GO
+
+ALTER TABLE [dbo].[InvoiceOrderDetailItem] CHECK CONSTRAINT [FK_InvoiceOrderDetailItem_Invoice]
+GO
+
+ALTER TABLE [dbo].[InvoiceOrderDetailItem]  WITH CHECK ADD  CONSTRAINT [FK_InvoiceOrderDetailItem_OrderDetail] FOREIGN KEY([OrderDetail])
+REFERENCES [dbo].[OrderDetail] ([ID])
+GO
+
+ALTER TABLE [dbo].[InvoiceOrderDetailItem] CHECK CONSTRAINT [FK_InvoiceOrderDetailItem_OrderDetail]
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'ID'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'The ID of the menu item' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'Invoice'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'The ID of the Role' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'OrderDetail'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Factory Price' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'FactoryPrice'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Indiman Price' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'IndimanPrice'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Is Removed' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'IsRemoved'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Factory Notes' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'FactoryNotes'
+GO
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Indiman Notes' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'InvoiceOrderDetailItem', @level2type=N'COLUMN',@level2name=N'IndimanNotes'
+GO
+
+
+--**-**--**--**--**-**--**--**--**-**--**--**--**-**--**--**
+
+
+IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[GetInvoiceOrderDetailPriceView]'))
+DROP VIEW [dbo].[GetInvoiceOrderDetailPriceView]
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE VIEW [dbo].[GetInvoiceOrderDetailPriceView]
+AS
+
+	SELECT	i.ID AS InvoiceID,
+			od.OrderDetail AS OrderDetailID,
+			FactoryPrice, 
+			IndimanPrice,
+			OtherCharges
+	FROM	[dbo].[Invoice] i
+			INNER JOIN [dbo].[InvoiceOrderDetailItem] od
+				ON i.ID = od.Invoice
+
+
+GO
+
+--**-**--**--**--**-**--**--**--**-**--**--**--**-**--**--**
+
+IF EXISTS ( SELECT * 
+            FROM   sysobjects 
+            WHERE  id = object_id(N'[dbo].[SPC_CreateInvoice]') 
+                   and OBJECTPROPERTY(id, N'IsProcedure') = 1 )
+BEGIN
+    DROP PROCEDURE [dbo].[SPC_CreateInvoice]
+END
 GO
 
 CREATE PROCEDURE [dbo].[SPC_CreateInvoice] 
@@ -88,24 +203,17 @@ BEGIN
 	SELECT @InvoiceId
 END		
 
-
 GO
 
+--**-**--**--**--**-**--**--**--**-**--**--**--**-**--**--**
 
-
-
-
-
-
-/****** Object:  StoredProcedure [dbo].[SPC_GetIndimanDetailInvoiceInfo]    Script Date: 4/3/2017 4:25:01 PM ******/
-DROP PROCEDURE [dbo].[SPC_GetIndimanDetailInvoiceInfo]
-GO
-
-/****** Object:  StoredProcedure [dbo].[SPC_GetIndimanDetailInvoiceInfo]    Script Date: 4/3/2017 4:25:01 PM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
+IF EXISTS ( SELECT * 
+            FROM   sysobjects 
+            WHERE  id = object_id(N'[dbo].[SPC_GetIndimanDetailInvoiceInfo]') 
+                   and OBJECTPROPERTY(id, N'IsProcedure') = 1 )
+BEGIN
+    DROP PROCEDURE [dbo].[SPC_GetIndimanDetailInvoiceInfo]
+END
 GO
 
 CREATE PROCEDURE [dbo].[SPC_GetIndimanDetailInvoiceInfo] (	
@@ -219,19 +327,16 @@ BEGIN
 END
 GO
 
+--**-**--**--**--**-**--**--**--**-**--**--**--**-**--**--**
 
-
-/****** Object:  StoredProcedure [dbo].[SPC_GetInvoiceOrderDetailItems]    Script Date: 4/3/2017 4:25:21 PM ******/
-DROP PROCEDURE [dbo].[SPC_GetInvoiceOrderDetailItems]
+IF EXISTS ( SELECT * 
+            FROM   sysobjects 
+            WHERE  id = object_id(N'[dbo].[SPC_GetInvoiceOrderDetailItems]') 
+                   and OBJECTPROPERTY(id, N'IsProcedure') = 1 )
+BEGIN
+    DROP PROCEDURE [dbo].[SPC_GetInvoiceOrderDetailItems]
+END
 GO
-
-/****** Object:  StoredProcedure [dbo].[SPC_GetInvoiceOrderDetailItems]    Script Date: 4/3/2017 4:25:21 PM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 
 CREATE PROCEDURE [dbo].[SPC_GetInvoiceOrderDetailItems] 
 	@InvoiceId int = NULL
@@ -346,25 +451,17 @@ END
 
 GO
 
+--**-**--**--**--**-**--**--**--**-**--**--**--**-**--**--**
 
 
-
-
-/****** Object:  StoredProcedure [dbo].[SPC_GetInvoiceOrderDetails]    Script Date: 4/3/2017 4:25:53 PM ******/
-DROP PROCEDURE [dbo].[SPC_GetInvoiceOrderDetails]
+IF EXISTS ( SELECT * 
+            FROM   sysobjects 
+            WHERE  id = object_id(N'[dbo].[SPC_GetInvoiceOrderDetails]') 
+                   and OBJECTPROPERTY(id, N'IsProcedure') = 1 )
+BEGIN
+    DROP PROCEDURE [dbo].[SPC_GetInvoiceOrderDetails]
+END
 GO
-
-/****** Object:  StoredProcedure [dbo].[SPC_GetInvoiceOrderDetails]    Script Date: 4/3/2017 4:25:53 PM ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
-
-
-
-/****** Script for SelectTopNRows command from SSMS  ******/
 
 CREATE PROC [dbo].[SPC_GetInvoiceOrderDetails]
 (
@@ -524,6 +621,183 @@ AS BEGIN
 							  (od.[ShipmentDate] = @P_WeekEndDate)*/
 			END
 		
+END
+
+
+GO
+
+
+
+--**-**--**--**--**-**--**--**--**-**--**--**--**-**--**--**
+
+
+IF EXISTS ( SELECT * 
+            FROM   sysobjects 
+            WHERE  id = object_id(N'[dbo].[SPC_GetJKInvoiceSummaryDetails]') 
+                   and OBJECTPROPERTY(id, N'IsProcedure') = 1 )
+BEGIN
+    DROP PROCEDURE [dbo].[SPC_GetJKInvoiceSummaryDetails]
+END
+GO
+
+CREATE PROCEDURE [dbo].[SPC_GetJKInvoiceSummaryDetails] (	
+	@P_InvoiceId int
+)	
+AS 
+BEGIN
+	
+		SELECT	   od.[ID] AS OrderDetail
+				  ,ot.[Name] AS OrderType
+				  ,vl.[NamePrefix] + ISNULL(CAST(vl.[NameSuffix] AS nvarchar(255)),'') AS VisualLayout
+				  ,od.[VisualLayout] AS VisualLayoutID
+				  ,od.[Pattern] AS PatternID
+				  ,p.[Number] + ' - ' + p.[NickName] AS Pattern
+				  ,od.[FabricCode] AS FabricID
+				  --,fc.[Code] + ' - ' + fc.[Name] AS Fabric
+				  ,fc.[Code] AS FabricCode
+				  ,fc.[Name] AS FabricName
+				  ,fc.[Material] AS FabricMaterial				  
+				  ,od.[VisualLayoutNotes] AS VisualLayoutNotes      
+				  ,od.[Order] AS 'Order'
+				  ,ISNULL(od.[Label], 0) AS Label
+				  ,ISNULL(ods.[Name], 'New') AS OrderDetailStatus
+				  ,ISNULL(od.[Status], 0) AS OrderDetailStatusID
+				  ,od.[ShipmentDate] AS ShipmentDate
+				  ,od.[SheduledDate] AS SheduledDate      
+				  ,od.[RequestedDate] AS RequestedDate
+				  ,ISNULL((SELECT SUM(odq.[Qty]) FROM [dbo].[OrderDetailQty] odq WHERE odq.[OrderDetail] = od.[ID]),0) AS Quantity       
+				  ,ISNULL(o.[OldPONo], '') AS 'PurONo'
+				  ,c.[Name] AS Distributor
+				  ,u.[GivenName] + ' ' + u.[FamilyName] AS Coordinator
+				  ,cl.[Name] AS Client
+				  ,os.[Name] AS OrderStatus
+				  ,o.[Status] AS OrderStatusID				  
+				  ,ISNULL(o.[ShipmentMode], 0) AS ShimentModeID
+				  ,ISNULL(shm.[Name], 'AIR') AS ShipmentMode
+				  ,ISNULL(dca.[CompanyName], '') AS 'CompanyName'
+				  ,ISNULL(dca.[Address],'') AS 'Address'
+				  ,ISNULL(dca.[Suburb],'')  AS 'Suberb' 
+				  ,ISNULL(dca.[State],'') AS 'State'
+				  ,ISNULL(dca.[PostCode],'')  AS 'PostCode'				 
+				  ,ISNULL(coun.[ShortName],'') AS 'Country'
+				  ,ISNULL(dca.[ContactName],'') + ' ' + ISNULL(dca.[ContactPhone],'') AS 'ContactDetails'
+				  ,o.[IsWeeklyShipment] AS 'IsWeeklyShipment'
+				  ,o.[IsAdelaideWareHouse] AS 'IsAdelaideWareHouse'
+				  ,ISNULL(od.[DespatchTo], 0) AS 'ShipTo'
+				  ,ISNULL(CAST((SELECT CASE
+										WHEN (p.[SubItem] IS NULL)
+											THEN  	('')
+										ELSE (CAST((SELECT TOP 1 hsc.[Code] FROM [dbo].[HSCode] hsc WHERE hsc.[ItemSubCategory] = p.[SubItem] AND hsc.[Gender] = p.[Gender]) AS nvarchar(64)))
+								END) AS nvarchar (64)), '') AS 'HSCode'
+			  FROM [Indico].[dbo].[Invoice] i	
+				JOIN [Indico].[dbo].[InvoiceOrderDetailItem] iod				
+					ON i.ID = iod.Invoice			
+				JOIN [Indico].[dbo].[OrderDetail] od				
+					ON iod.OrderDetail = od.ID 
+				LEFT OUTER JOIN [dbo].[VisualLayout] vl
+					ON od.[VisualLayout] = vl.[ID]
+				LEFT OUTER JOIN [dbo].[Pattern] p 
+					ON od.[Pattern] = p.[ID]
+				LEFT OUTER JOIN [dbo].[FabricCode] fc
+					ON od.[FabricCode] = fc.[ID]
+				LEFT OUTER JOIN [dbo].[OrderDetailStatus] ods
+					ON od.[Status] = ods.[ID]
+				LEFT OUTER JOIN [dbo].[OrderType] ot
+					ON od.[OrderType] = ot.[ID]
+				INNER JOIN [dbo].[Order] o
+					ON od.[Order] = o.[ID]	
+				LEFT OUTER JOIN [dbo].[Company] c
+					ON c.[ID] = o.[Distributor]
+				LEFT OUTER JOIN [dbo].[User] u
+					ON c.[Coordinator] = u.[ID]
+				LEFT OUTER JOIN [dbo].[Client] cl
+					ON o.[Client] = cl.[ID]
+				LEFT OUTER JOIN [dbo].[OrderStatus] os
+					ON o.[Status] = os.[ID]				
+				LEFT OUTER JOIN [dbo].[ShipmentMode] shm
+					ON o.[ShipmentMode] = shm.[ID] 
+				LEFT OUTER JOIN [dbo].[DistributorClientAddress] dca
+					ON od.[DespatchTo] = dca.[ID]
+				LEFT OUTER JOIN [dbo].[Country] coun
+					ON dca.[Country] = coun.[ID]
+			WHERE i.ID = @p_InvoiceId
+			ORDER BY cl.[Name]
+
+	END 
+
+
+
+GO
+
+--**-**--**--**--**-**--**--**--**-**--**--**--**-**--**--**
+
+
+IF EXISTS ( SELECT * 
+            FROM   sysobjects 
+            WHERE  id = object_id(N'[dbo].[SPC_GetJKSummeryInvoiceInfo]') 
+                   and OBJECTPROPERTY(id, N'IsProcedure') = 1 )
+BEGIN
+    DROP PROCEDURE [dbo].[SPC_GetJKSummeryInvoiceInfo]
+END
+GO
+
+CREATE PROCEDURE [dbo].[SPC_GetJKSummeryInvoiceInfo] (	
+	@P_InvoiceId int
+)	
+AS 
+BEGIN
+	IF OBJECT_ID('tempdb..#QtyInfo') IS NOT NULL DROP TABLE #QtyInfo
+	SELECT iod.ID AS InvoiceOrderDetailItemID,
+			SUM(odq.Qty) AS Qty INTO #QtyInfo
+	FROM [dbo].[Invoice] invoice
+	    INNER JOIN  [dbo].[InvoiceOrderDetailItem] iod
+			ON invoice.ID = iod.Invoice
+		INNER JOIN [Indico].[dbo].[OrderDetail] od
+			ON iod.OrderDetail = od.ID
+		INNER JOIN [Indico].[dbo].[OrderDetailQty] odq
+			ON odq.OrderDetail = od.ID
+	GROUP BY iod.ID	
+		
+	SELECT 	DISTINCT 
+			invoice.InvoiceDate AS InvoiceDate,
+			invoice.InvoiceNo AS JkInvoiceNo,	
+			(qi.Qty) AS SumOfQty,
+			((inv.FactoryPrice + inv.OtherCharges) * qi.Qty) AS Val, 
+			dca.CompanyName AS CompanyName,
+			dca.[Address] AS [Address],
+			dca.Suburb AS Suburb,
+			dca.[State] AS [State],
+			dca.PostCode AS PostCode,
+			cn.ShortName AS ShortName,
+			dca.ContactName AS ContactName,
+			dca.ContactPhone AS ContactPhone,
+			i.Name AS dbo_Item_Name,
+			fc.Filaments AS Filaments,
+			hsc.Code AS HS_Code,
+			g.Name AS Gender
+	FROM [dbo].[Invoice] invoice
+	    INNER JOIN  [dbo].[InvoiceOrderDetailItem] inv
+			ON invoice.ID = inv.Invoice
+		INNER JOIN #QtyInfo qi
+			ON inv.ID = qi.InvoiceOrderDetailItemID		
+		INNER JOIN [Indico].[dbo].[OrderDetail] od
+			ON inv.OrderDetail = od.ID
+		INNER JOIN [Indico].[dbo].[DistributorClientAddress] dca
+			ON invoice.ShipTo = dca.[ID]		
+		INNER JOIN [Indico].[dbo].[Country] cn
+			ON cn.[ID] = dca.[Country]				
+		INNER JOIN [Indico].[dbo].[Pattern] p
+			ON od.Pattern = p.ID
+		INNER JOIN [Indico].[dbo].[FabricCode] fc
+			ON od.FabricCode = fc.ID
+		LEFT OUTER JOIN [Indico].[dbo].[Gender] g
+			ON p.Gender = g.ID
+		LEFT OUTER JOIN [Indico].[dbo].[Item] i
+			ON p.[SubItem] = i.ID
+		LEFT OUTER JOIN [Indico].[dbo].[HSCode] hsc
+			ON p.[SubItem] = hsc.ItemSubCategory
+				AND hsc.Gender = g.ID 
+	WHERE invoice.ID = @P_InvoiceId 
 END
 
 GO
