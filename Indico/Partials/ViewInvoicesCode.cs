@@ -5,9 +5,7 @@ using System.Data;
 using Dapper;
 using Telerik.Web.UI;
 using System.Web.UI.WebControls;
-using Indico.Common.Extensions;
 using System.Linq;
-using System.Web;
 
 
 namespace Indico

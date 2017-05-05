@@ -518,7 +518,7 @@ namespace Indico
                 PopulateVlImage(VisualLayoutId, 0);
 
                 //populate Reservations
-                PopulateReservations(VisualLayoutId, 0);
+               // PopulateReservations(VisualLayoutId, 0);
 
                 int orderDetailId = int.Parse(hdnSelectedID.Value);
 
@@ -641,12 +641,12 @@ namespace Indico
                         linkDelete.Visible = true;
                     }
 
-                    PopulateReservations(objTempOD.VisualLayout, 0, true);
+                //    PopulateReservations(objTempOD.VisualLayout, 0, true);
 
                     if (objTempOD.Reservation > 0)
                     {
                         RadComboReservations.Items.FindItemByValue(objTempOD.Reservation.ToString()).Selected = true;
-                        PopulateReservationsDetails(objTempOD.Reservation);
+                        // PopulateReservationsDetails(objTempOD.Reservation);
                     }
 
                     List<OrderDetailQtyBO> lstODQty = lstExsistingSizes.OrderBy(o => o.objSize.SeqNo).ToList();
@@ -896,7 +896,7 @@ namespace Indico
         protected void RadComboReservations_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             int id = (!string.IsNullOrEmpty(RadComboReservations.SelectedValue)) ? int.Parse(RadComboReservations.SelectedValue) : 0;
-            PopulateReservationsDetails(id);
+         //   PopulateReservationsDetails(id);
         }
 
         protected void btnCancelled_ServerClick(object sender, EventArgs e)
@@ -1679,7 +1679,7 @@ namespace Indico
                         totalPRice += (decimal.Parse((objOD.EditedPrice ?? 0).ToString()) * ((decimal)(1 + (objOrderDetail.DistributorSurcharge ?? 0) / (decimal)100.00))) * qty;
                     }
 
-                    PopulateReservations(0, 0);
+                   // PopulateReservations(0, 0);
                     PopulateBillingDetails(totalPRice, objOrder);
 
                     btnSubmit.Visible = !(LoggedUserRoleName == UserRole.FactoryAdministrator || LoggedUserRoleName == UserRole.FactoryCoordinator);
@@ -2222,7 +2222,7 @@ namespace Indico
                     totalPRice += (decimal.Parse(objOD.DistributorEditedPrice) * ((decimal)(1 + (decimal.Parse(objOD.DistributorSurcharge)) / (decimal)100.00))) * qty;
                 }
 
-                PopulateReservations(0, 0);
+               // PopulateReservations(0, 0);
                 PopulateBillingDetails(totalPRice, null);
 
                 this.ListOrderDetails = lstOrderDetails;

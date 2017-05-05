@@ -17,9 +17,9 @@ IF OBJECT_ID('dbo.InvoiceOrderDetailItem', 'U') IS NOT NULL
   DROP TABLE  [dbo].[InvoiceOrderDetailItem]
 GO
 
-IF OBJECT_ID('dbo.InvoiceStatus', 'U') IS NOT NULL 
-  DROP TABLE  [dbo].[InvoiceStatus]
-GO
+--IF OBJECT_ID('dbo.InvoiceStatus', 'U') IS NOT NULL 
+--  DROP TABLE  [dbo].[InvoiceStatus]
+--GO
 
 CREATE TABLE [dbo].[InvoiceOrderDetailItem](
  [ID] [int] IDENTITY(1,1) NOT NULL,

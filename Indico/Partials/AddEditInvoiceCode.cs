@@ -108,11 +108,11 @@ namespace Indico
                 return;
 
             EnableOrDisableInvoiceInformationControls(true);
-            this.LoadBillToAndShipTo();
-            this.LoadBanks();
-            this.LoadShipmentModes();
-            this.LoadStatus();
-            this.LoadPorts();
+            LoadBillToAndShipTo();
+            LoadBanks();
+            LoadShipmentModes();
+            LoadStatus();
+            LoadPorts();
 
             var weeklyCapacityId = int.Parse(WeekComboBox.SelectedItem.Value);
             var obj = new WeeklyProductionCapacityBO { ID = weeklyCapacityId };
@@ -133,7 +133,7 @@ namespace Indico
                 dvNewContent.Visible = true;
                 CostSheetButton.Visible = true;
                 ItemsPanel.Visible = true;
-                this.LoadInvoiceItems(invoiceId);
+                LoadInvoiceItems(invoiceId);
             }
         }
 
@@ -400,7 +400,7 @@ namespace Indico
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            int id = int.Parse(this.hdnSelectedID.Value);
+            int id = int.Parse(hdnSelectedID.Value);
             var items = InvoiceItems;
             foreach (InvoiceOrderDetailItemModel od in items)
             {
@@ -539,7 +539,7 @@ namespace Indico
                     default:
                         break;
                 }
-                this.InitializeUserInterface();
+                InitializeUserInterface();
             }
         }
 
@@ -558,7 +558,7 @@ namespace Indico
         private void InitializeUserInterfaceForNewInvoice()
         {
             DisableControl(RadComboShipmentKey);
-            this.EnableOrDisableInvoiceInformationControls(false);
+            EnableOrDisableInvoiceInformationControls(false);
             BindData(WeekComboBox, DB.GetWeekNames(DateTime.Now.Year));
         }
 
@@ -583,20 +583,20 @@ namespace Indico
                 txtInvoiceDate.Enabled = false;
             }
 
-            this.LoadBillToAndShipTo();
-            this.LoadBanks();
-            this.LoadShipmentModes();
-            this.GetShipmentkey(invoice.ShipTo.Value, invoice.ShipmentMode, invoice.Port, invoice.ShipmentDate, invoice.PriceTerm, invoice.WeeklyProductionCapacity);
-            this.GetWeek(invoice.WeeklyProductionCapacity, DateTime.Now.Year);
-            this.LoadStatus();
-            this.LoadPorts();
-            //*SDS this.LoadItems(invoice.ID);
+            LoadBillToAndShipTo();
+            LoadBanks();
+            LoadShipmentModes();
+            GetShipmentkey(invoice.ShipTo.Value, invoice.ShipmentMode, invoice.Port, invoice.ShipmentDate, invoice.PriceTerm, invoice.WeeklyProductionCapacity);
+            GetWeek(invoice.WeeklyProductionCapacity, DateTime.Now.Year);
+            LoadStatus();
+            LoadPorts();
+            //*SDS LoadItems(invoice.ID);
 
             btnCreateInvoice.Visible = true;
             dvNewContent.Visible = true;
             CostSheetButton.Visible = true;
             ItemsPanel.Visible = true;
-            this.LoadInvoiceItems(invoice.ID);
+            LoadInvoiceItems(invoice.ID);
 
 
             //RadComboShipmentKey.Items.FindItemByValue(DB.ShipmentKeys).Selected = true;

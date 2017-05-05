@@ -395,7 +395,7 @@
                                     </telerik:GridTemplateColumn>
                                     <telerik:GridTemplateColumn AllowFiltering="false" FilterControlWidth="200px" UniqueName="Remove">
                                         <ItemTemplate>
-                                            <asp:HyperLink ID="linkDelete" runat="server" CssClass="btn-link idelete" ToolTip="Delete this item"><i class="icon-trash"></i>Delete</asp:HyperLink>
+                                            <asp:HyperLink ID="linkDelete" runat="server" CssClass="btn-link idelete" ToolTip="Delete this item"><i class="icon-trash"></i></asp:HyperLink>
                                         </ItemTemplate>
                                     </telerik:GridTemplateColumn>
                                 </Columns>
@@ -404,7 +404,7 @@
                         <!-- / -->
                     </div>
                     <div class="form-actions">
-                        <button id="btnCreateInvoice" runat="server" class="btn btn-primary" validationgroup="validateInvoice"
+                        <button id="btnCreateInvoice" runat="server" class="btn btn-primary" style="margin-left: -180px;" validationgroup="validateInvoice"
                             data-loading-text="Saving..." type="submit" onserverclick="OnSaveButtonClick">
                             Save Changes</button>
                     </div>
@@ -639,10 +639,9 @@
             });
 
 
-            $('.factoryprice').click(function () {
-                $('#' + hdnSelectedID)[0].value = $(this).attr('uid');
-                alert("Hello! I am an alert box!!");;
-            });
+            //$('.factoryprice').click(function () {
+            //    $('#' + hdnSelectedID)[0].value = $(this).attr('uid');
+            //});
 
             //$('.iremove').click(function () {
             //    $('#' + hdnSelectedID).val($(this).attr('qid'));
